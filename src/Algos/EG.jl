@@ -1,10 +1,10 @@
 struct EG
   n_asset::Int
-  b::Matrix{Float64}
+  weights::Matrix{Float64}
   budgets::Vector{Float64}
 end;
 
-function EG(adj_close::Matrix{Float64}, initial_budget=1, eta=0.5)
+function EG(adj_close::Matrix{Float64}, initial_budget=1, eta=0.05)
   # Calculate relative prices
   @views relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
 
@@ -34,13 +34,3 @@ function EG(adj_close::Matrix{Float64}, initial_budget=1, eta=0.5)
 
   EG(n_assets, b, budget)
 end;
-
-using CSV
-using DataFrames
-df = CSV.read(raw"E:\Python Forks\universal-portfolios\universal\data\sp500.csv", DataFrame);
-df = df[1:20, 1:2];
-df = Matrix(df);
-df = permutedims(df);
-
-crp = EG(df)
-crp.budgets

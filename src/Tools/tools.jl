@@ -20,3 +20,9 @@ function simplex_proj(b::Vector)
 
   max.(b .- tmax, 0.)
 end;
+
+function mc_simplex(d, points)
+  a = sort(rand(d, points), dims=2)
+  a = [zeros(d) a ones(d)]
+  diff(a, dims=2)
+end;

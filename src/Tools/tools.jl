@@ -22,7 +22,7 @@ function simplex_proj(b::Vector)
 end;
 
 function mc_simplex(d, points)
-  a = sort(rand(d, points), dims=2)
-  a = [zeros(d) a ones(d)]
+  a = sort(rand(points, d), dims=2)
+  a = [zeros(points) a ones(points)]
   diff(a, dims=2)
 end;

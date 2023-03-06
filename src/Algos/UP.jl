@@ -1,61 +1,49 @@
-include("../tools.jl");
+include("../Tools/tools.jl");
 
-Base.@kwdef mutable struct UP
+struct UP
   n_assets::Int
-  t::Int
-  n_eval::Int = 10_000
-  leverage::Float64 = 1.0
-  W::Matrix{Float64} = ones(n_assets, t) ./ n_assets
-  S::Matrix{Float64} = ones(n_assets, 1)
+  weights::Matrix{Float64}
+  budgets::Vector{Float64}
 end;
 
-"""
-  init_weights(n_assets::Int)
+function UP(
+  adj_close::Matrix{Float64},
+  initial_budget=1.,
+  eval_points::Int=10^4,
+  leverage=1.,
+  frequency::Int=1,
+  min_history::Int=0)
 
-Initialize the weights of the portfolio.
+  relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
+  n_assets, n_periods = size(relative_prices)
 
-# Arguments
-- `n_assets::Int`: Number of assets in the portfolio.
+  # Initialize weights
+  weights = zeros(n_assets, n_periods+1)
+  weights[:, 1] = ones(n_assets) / n_assets
 
-# Returns
-- `::Vector{Float64}`: Array of weights.
-"""
-function init_weights!(up::UP, n_assets::Int)
-  up.W .= ones(n_assets) ./ n_assets
-end;
+  W = mc_simplex(n_assets-1, eval_points)
+  m = size(W, 1)
+  S = reshape(ones(m), m, 1)
 
-# !error DimensionMismatch: array could not be broadcast to match destination
-# n_samlpes = 100
-# size(mc_simplex(n_samlpes - 1, up.n_eval)) = (99, 10001)
-# size(up.W) = (5,)
-function init_step!(up::UP, X::Matrix{Float64})
-  n_samlpes = size(X, 2)
-  up.W .= mc_simplex(n_samlpes-1, up.n_eval)
-  leverage = max(up.leverage, 1.0 / n_samlpes)
-  stretch = (leverage - 1.0 / n_samlpes) / (1.0 - 1.0 / n_samlpes)
-  up.W .= (up.W - 1.0 / n_samlpes) * stretch + 1.0 / n_samlpes
-end;
+  leverage_ = max(leverage, 1/n_periods)
+  stretch = (leverage_-1/n_periods)/(1-1/n_periods)
 
-function step(up::UP, close_t::Vector{Float64})
-  b = up.S .* (up.W .* close_t)
-  b ./ sum(b)
-end;
-
-function weights(X::Matrix{Float64})
-  B = zeros(size(X))
-  up = UP(n_assets=size(X, 1))
-  init_step!(up, X)
-  last_b = up.W
-  for t in 1:size(X, 2)
-    B[:, t] = last_b
-    last_b = step(up, X)
+  # Update weights
+  for t in axes(weights, 2)[1:end-1]
+    n = length(relative_prices[:, t])
+    S = S.*(W*reshape(relative_prices[:, t], n, 1))
+    b = W'*S
+    weights[:, t+1] = b./sum(b)
   end
-  B
+
+  # budgets
+  budgets = zeros(n_periods+1)
+  budgets[1] = initial_budget
+
+  # for t in 1:n_periods
+  for t in axes(relative_prices, 2)
+    budgets[t+1] = budgets[t] * sum(weights[:, t] .* relative_prices[:, t])
+  end
+
+  return UP(n_assets, weights, budgets)
 end;
-
-using CSV, DataFrames
-df = CSV.read(raw"src\sp500.csv", DataFrame);
-df = Matrix(df[1:100, 1:5])
-df = permutedims(df)
-
-weights(df)

@@ -17,6 +17,7 @@ function RPRT(
   @assert w≥2 "Window length (w) must be greater than 1"
 
   n_assets, n_periods = size(adj_close)
+  relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   θ, ϵ= theta, epsilon
   ϕ = adj_close[:, 2]./adj_close[:, 1]
 
@@ -33,7 +34,7 @@ function RPRT(
 
     last_relative_price = adj_close[:, t]./adj_close[:, t-1]
 
-    prediction = predict_relative_price(adj_close[:, t-w+1:t])
+    prediction = predict_relative_price(relative_prices[:, t-w+1:t-1])
 
     # predicted d
     dₚ = diagm(vec(prediction))
@@ -66,7 +67,7 @@ function RPRT(
 
     b[:, t] = simplex_proj(w_)
   end
-
+  b = b./sum(b, dims=1)
   budgets = ones(n_periods)*initial_budget
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
 
@@ -77,6 +78,6 @@ function RPRT(
   RPRT(n_assets, b, budgets)
 end;
 
-function predict_relative_price(adj_close::Matrix{Float64})
-  mean(adj_close, dims=2)./adj_close[:, end]
+function predict_relative_price(relative_price::Matrix{Float64})
+  mean(relative_price, dims=2)./relative_price[:, end]
 end;

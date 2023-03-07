@@ -9,16 +9,15 @@ struct RPRT
 end;
 
 function RPRT(
-  adj_close::Matrix{Float64},
-  w::Int64,
+  adj_close::Matrix{Float64};
+  w::Int64=5,
   initial_budget::Int=1,
-  θ::Float64=0.8,
-  ϵ=50)
+  theta::Float64=0.8,
+  epsilon=50)
   @assert w≥2 "Window length (w) must be greater than 1"
 
-  n_assets = size(adj_close, 1)
-  n_periods = size(adj_close, 2)
-
+  n_assets, n_periods = size(adj_close)
+  θ, ϵ= theta, epsilon
   ϕ = adj_close[:, 2]./adj_close[:, 1]
 
   # Initialize the weights
@@ -27,7 +26,7 @@ function RPRT(
 
   for t in axes(adj_close, 2)
 
-    if t≤1 || t<w
+    if t==1 || t<w
       b[:, t] = last_b
       continue
     end
@@ -36,8 +35,8 @@ function RPRT(
 
     prediction = predict_relative_price(adj_close[:, t-w+1:t])
 
-    # prediction[:] results in a 1D array (Vector)
-    d_pred = diagm(prediction[:])
+    # predicted d
+    dₚ = diagm(vec(prediction))
 
     # predicted γ
     γₚ = θ * last_relative_price ./ (θ*last_relative_price+ϕ)
@@ -50,15 +49,15 @@ function RPRT(
     # Update the b
     meanϕₚ = mean(ϕₚ)
 
-    cond = norm(ϕₚ .- meanϕₚ)^2
-    if cond == 0
-      λ = 1
+    condition = norm(ϕₚ .- meanϕₚ)^2
+    if condition == 0
+      λ = 0
     else
-      λ = max(0., ϵ.-(ϕₚ'*b[:, t])/cond)
+      λ = max(0., ϵ.-(ϕₚ'*b[:, t])/condition)
     end
 
     if λ≠0
-      w_ = b[:, t] .+ (d_pred*(ϕₚ .- meanϕₚ)).*λ
+      w_ = b[:, t] .+ (dₚ*(ϕₚ .- meanϕₚ)).*λ
     else
       w_ = b[:, t]
     end
@@ -67,7 +66,7 @@ function RPRT(
 
     b[:, t] = simplex_proj(w_)
   end
-  b = b./sum(b, dims=1)
+
   budgets = ones(n_periods)*initial_budget
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
 
@@ -79,5 +78,5 @@ function RPRT(
 end;
 
 function predict_relative_price(adj_close::Matrix{Float64})
-  mean(adj_close, dims=2)./adj_close[:, 1]
+  mean(adj_close, dims=2)./adj_close[:, end]
 end;

@@ -3,19 +3,19 @@ function simplex_proj(b::Vector)
   cond = false
 
   sorted_b = sort(b, rev=true)
-  tmpsum = 0.
 
+  tmpsum = 0.
   for i in 1:n_assets-1
     tmpsum += sorted_b[i]
     tmax = (tmpsum - 1.)/i
-    if tmax≥sorted_b[i]
+    if tmax≥sorted_b[i+1]
       cond = true
       break
     end
   end
 
   if !cond
-    tmax = (tmpsum + sorted_b[n_assets] - 1.)/n_assets
+    tmax = (tmpsum + sorted_b[n_assets-1] - 1.)/n_assets
   end
 
   max.(b .- tmax, 0.)

@@ -27,7 +27,7 @@ function RPRT(
 
   for t in axes(adj_close, 2)
 
-    if t==1 || t<w
+    if t<w
       b[:, t] = last_b
       continue
     end
@@ -69,7 +69,6 @@ function RPRT(
   end
   b = b./sum(b, dims=1)
   budgets = ones(n_periods)*initial_budget
-  relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
 
   for t in axes(adj_close, 2)[1:end-1]
     budgets[t+1] = budgets[t] * sum(relative_prices[:, t] .* b[:, t])

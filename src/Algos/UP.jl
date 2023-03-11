@@ -6,13 +6,37 @@ struct UP
   budgets::Vector{Float64}
 end;
 
+"""
+    UP(adj_close::Matrix{Float64}, initial_budget=1., eval_points::Int=10^4, leverage=1., frequency::Int=1, min_history::Int=0)
+
+Universal Portfolio (UP) algorithm.
+
+Calculate the Universal Portfolio (UP) weights and budgets
+using the given historical prices and parameters.
+
+# Arguments
+- `adj_close::Matrix{Float64}`: Historical adjusted close prices.
+- `initial_budget=1.`: Initial budget.
+- `eval_points::Int=10^4`: Number of evaluation points.
+- `leverage=1.`: Leverage value.
+
+# Returns
+- `::UP(n_assets, weights, budgets)`: Universal Portfolio (UP) object.
+
+# References
+- [1] [Universal Portfolios](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x)
+
+# Examples
+```julia
+```
+
+"""
 function UP(
   adj_close::Matrix{Float64},
   initial_budget=1.,
   eval_points::Int=10^4,
-  leverage=1.,
-  frequency::Int=1,
-  min_history::Int=0)
+  leverage=1.
+  )
 
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   n_assets, n_periods = size(relative_prices)

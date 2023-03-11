@@ -1,0 +1,16 @@
+name = "OPS"
+uuid = "038f9fe3-14bd-47ca-b081-2e00e8c46dfa"
+authors = ["Shayan Davoodi"]
+version = "1.0.0-DEV"
+
+[deps]
+Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

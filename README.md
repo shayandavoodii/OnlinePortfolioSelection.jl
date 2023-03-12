@@ -41,12 +41,12 @@ julia> ?function_name
 - [] Implement $B^NN$
 - etc.
 
-## 📝Contributing
-Contributions are warmly welcome. Please feel free to open an issue and discuss the changes you want to make. Afterward, fork the repo and make the changes. Then, open a pull request and I will review and hopefully merge it.
+## 👨‍💻Contributing
+Contributions are warmly welcome. Please feel free to open an issue and discuss the changes you want to make. Afterward, fork the repo and make the changes. Then, open a pull request, and I will review and hopefully merge it.
 
-## 📝License
+## 📑License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/shayandavoodii/OPS.jl/blob/main/LICENSE) file for details.
 
 ## 📧Contact
-If you have any questions or suggestions, please feel free to contact me via email: sh0davoodi@gmail.com
-or feel free to open an issue in the repo.
+If you have any questions or suggestions, please feel free to contact me via email: sh0davoodi@gmail.com  
+Or feel free to open an issue in the repo.

@@ -32,13 +32,13 @@ julia> ?function_name
 ```
 
 ## 📝To-do list
-- [] Implement BCRP
-- [] Implement CORN
-- [] Implement DRICORN
-- [] Implement BS
-- [] Implement Anticor
-- [] Implement $B^k$
-- [] Implement $B^NN$
+- [ ] Implement BCRP
+- [ ] Implement CORN
+- [ ] Implement DRICORN
+- [ ] Implement BS
+- [ ] Implement Anticor
+- [ ] Implement $B^k$
+- [ ] Implement $B^NN$
 - etc.
 
 ## 👨‍💻Contributing

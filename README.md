@@ -38,7 +38,7 @@ julia> ?function_name
 - [ ] Implement BS
 - [ ] Implement Anticor
 - [ ] Implement $B^k$
-- [ ] Implement $B^NN$
+- [ ] Implement $B^{NN}$
 - etc.
 
 ## 👨‍💻Contributing

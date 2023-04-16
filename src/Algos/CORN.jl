@@ -13,21 +13,24 @@ end;
 
 """
     CORNU(
-      adj_close::Matrix{Float64},
-      horizon::Int,
-      w::Int,
-      rho::Float64;
+      adj_close::Matrix{T},
+      horizon::M,
+      w::M,
+      rho::T;
       initial_budget=1
-    )
+    ) where {T<:Float64, M<:Int}
 
 Run CORN-U algorithm.
 
 # Arguments
-- `adj_close::Matrix{Float64}`: Adjusted close prices of assets.
-- `horizon::Int`: The number of periods to invest.
-- `w::Int`: maximum length of time window to be examined.
-- `rho::Float64`: The correlation coefficient threshold.
+- `adj_close::Matrix{T}`: Adjusted close prices of assets.
+- `horizon::M`: The number of periods to invest.
+- `w::M`: maximum length of time window to be examined.
+- `rho::T`: The correlation coefficient threshold.
 - `initial_budget=1`: The initial budget for investment.
+
+!!! warning "Beware!"
+    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
 - `CORN`: An object of type `CORN`.
@@ -62,12 +65,12 @@ julia> model.type
 ```
 """
 function CORNU(
-  adj_close::Matrix{Float64},
-  horizon::Int,
-  w::Int,
-  rho::Float64;
+  adj_close::Matrix{T},
+  horizon::M,
+  w::M,
+  rho::T;
   initial_budget=1
-)
+) where {T<:Float64, M<:Int}
 
   0≤rho<1 || throw(ArgumentError("The value of `rho` should be in the range of [0, 1)."))
 
@@ -80,17 +83,17 @@ function CORNU(
 
   q = 1/w
 
-  Sₜ = Vector{Float64}(undef, horizon+1)
+  Sₜ = Vector{T}(undef, horizon+1)
   Sₜ[1] = initial_budget
 
   # Store the budgets of experts in each period t
-  Sₜ_ = zeros(Float64, n_experts, horizon+1)
+  Sₜ_ = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= initial_budget
 
-  weights = zeros(Float64, n_assets, horizon)
+  weights = zeros(T, n_assets, horizon)
 
   for t ∈ 0:horizon-1
-    bₜ = Matrix{Float64}(undef, n_assets, n_experts)
+    bₜ = Matrix{T}(undef, n_assets, n_experts)
     for ω ∈ 1:w
       b = corn_expert(relative_prices, horizon, ω, rho, t, n_assets)
       bₜ[:, ω] = b
@@ -106,22 +109,25 @@ end;
 """
     CORNK(
       adj_close::Matrix{Float64},
-      horizon::Int,
-      k::Int,
-      w::Int,
-      p::Int;
+      horizon::T,
+      k::T,
+      w::T,
+      p::T;
       initial_budget=1
-    )
+    ) where T<:Int
 
 Run CORN-K algorithm.
 
 # Arguments
 - `adj_close::Matrix{Float64}`: Adjusted close prices of assets.
-- `horizon::Int`: The number of periods to invest.
-- `k::Int`: The number of top experts to be selected.
-- `w::Int`: maximum length of time window to be examined.
-- `p::Int`: maximum number of correlation coefficient thresholds.
+- `horizon::T`: The number of periods to invest.
+- `k::T`: The number of top experts to be selected.
+- `w::T`: maximum length of time window to be examined.
+- `p::T`: maximum number of correlation coefficient thresholds.
 - `initial_budget=1`: The initial budget for investment.
+
+!!! warning "Beware!"
+    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
 - `CORN`: An object of type `CORN`.
@@ -157,12 +163,12 @@ julia> model.type
 """
 function CORNK(
   adj_close::Matrix{Float64},
-  horizon::Int,
-  k::Int,
-  w::Int,
-  p::Int;
+  horizon::T,
+  k::T,
+  w::T,
+  p::T;
   initial_budget=1
-)
+) where T<:Int
 
   p<2 && throw(ArgumentError("The value of `p` should be more than 1."))
 
@@ -212,35 +218,35 @@ end;
 
 """
     corn_expert(
-      relative_prices::Matrix{Float64},
-      horizon::Int,
-      w::Int,
-      rho::Float64,
-      t::Int,
-      n_assets::Int
-    )
+      relative_prices::Matrix{T},
+      horizon::S,
+      w::S,
+      rho::T,
+      t::S,
+      n_assets::S
+    ) where {T<:Float64, S<:Int}
 
 Create an expert to perform the algorithm according to the given parameters.
 
 # Arguments
-- `relative_prices::Matrix{Float64}`: Relative prices of assets.
-- `horizon::Int`: The number of periods to invest.
-- `w::Int`: length of time window to be examined.
-- `rho::Float64`: correlation coefficient threshold.
-- `t::Int`: index of the period to perform the algorithm.
-- `n_assets::Int`: number of assets.
+- `relative_prices::Matrix{T}`: Relative prices of assets.
+- `horizon::S`: The number of periods to invest.
+- `w::S`: length of time window to be examined.
+- `rho::T`: correlation coefficient threshold.
+- `t::S`: index of the period to perform the algorithm.
+- `n_assets::S`: number of assets.
 
 # Returns
 - `Vector{Float64}`: Weights of assets.
 """
 function corn_expert(
-  relative_prices::Matrix{Float64},
-  horizon::Int,
-  w::Int,
-  rho::Float64,
-  t::Int,
-  n_assets::Int
-)
+  relative_prices::Matrix{T},
+  horizon::S,
+  w::S,
+  rho::T,
+  t::S,
+  n_assets::S
+) where {T<:Float64, S<:Int}
 
   horizon≥size(relative_prices, 2) && throw(ArgumentError("""The "horizon" ($horizon) is \
     bigger than data samples $(size(relative_prices, 2)).\nYou should either decrease \
@@ -300,8 +306,8 @@ Find similar time windows based on the correlation coefficient threshold.
 # Returns
 - `Vector{Int}`: Index of similar time windows.
 """
-function locate_sim(rel_price::Matrix{Float64}, w::Int, T::Int, ρ::Float64)
-  idx_day_after_tw = Vector{Int}()
+function locate_sim(rel_price::Matrix{T1}, w::T2, T::T2, ρ::T1) where {T1<:Float64, T2<:Int}
+  idx_day_after_tw = Vector{T2}()
 
   # current time window
   curr_tw = Base.Flatten(rel_price[:, end-w+1:end])

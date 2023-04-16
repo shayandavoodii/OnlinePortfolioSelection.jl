@@ -1,6 +1,5 @@
 src/t.py
-*Manifest.toml
 src/t copy.py
-
 src/test/
 test.jl
+*Manifest.toml

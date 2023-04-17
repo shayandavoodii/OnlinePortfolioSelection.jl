@@ -10,3 +10,8 @@ push!(LOAD_PATH,"../src/")
   @info "Run unit tests in CORN.jl"
   include("CORN.jl")
 end
+
+@testset "DRICORNK.jl" begin
+  @info "Run unit tests in DRICORNK.jl"
+  include("DRICORNK.jl")
+end

@@ -3,7 +3,28 @@ using Statistics
 using Ipopt
 
 include("../Tools/tools.jl")
+include("../Tools/cornfam.jl")
 
+"""
+    CORN
+
+A `CORN` object that contains the weights of the portfolio, Sₙ, and the number of assets.
+
+# Fields
+- `n_asset::Int`: Number of assets in the portfolio.
+- `b::Matrix{Float64}`: Weights of the created portfolios.
+- `budgets::Vector{Float64}`: Budget during the investment horizon.
+- `type::String`: The type of CORN algorithm. It can be either "CORN-U" or "CORN-K".
+
+The formula for calculating the cumulative return of the portfolio is as follows:
+
+```math
+{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
+```
+
+where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
+of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-th period.
+"""
 struct CORN
   n_asset::Int
   b::Matrix{Float64}
@@ -290,79 +311,4 @@ function corn_expert(
   @assert isapprox(1., sum(weight), atol=1e-2)
   weight = weight ./ sum(weight)
   return weight
-end;
-
-"""
-    locate_sim(rel_price::Matrix{Float64}, w::Int, T::Int, ρ::Float64)
-
-Find similar time windows based on the correlation coefficient threshold.
-
-# Arguments
-- `rel_price::Matrix{Float64}`: Relative prices of assets.
-- `w::Int`: length of time window.
-- `T::Int`: Total number of periods.
-- `ρ::Float64`: correlation coefficient threshold.
-
-# Returns
-- `Vector{Int}`: Index of similar time windows.
-"""
-function locate_sim(rel_price::Matrix{T1}, w::T2, T::T2, ρ::T1) where {T1<:Float64, T2<:Int}
-  idx_day_after_tw = Vector{T2}()
-
-  # current time window
-  curr_tw = Base.Flatten(rel_price[:, end-w+1:end])
-
-  # Number of time windows
-  n_tw = T-w+1
-
-  # n_tw-1: because we don't want to calculate corr between the
-  # currrent w and itself. So, the current time window is excluded.
-  for idx_tw=1:n_tw-1
-    twᵢ = Base.Flatten(rel_price[:, idx_tw:w+idx_tw-1])
-    if cor(collect(curr_tw), collect(twᵢ))≥ρ
-      push!(idx_day_after_tw, idx_tw)
-    end
-  end
-
-  idx_day_after_tw
-end;
-
-"""
-    S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}}
-
-Calculate the budget of the current period.
-
-# Arguments
-- `prev_s::Float64`: Budget of the previous period.
-- `w::Vector{Float64}`: Weights of assets.
-- `rel_pr::Vector{Float64}`: Relative prices of assets in the current period.
-
-# Returns
-- `Float64`: Budget of the current period.
-"""
-S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}} = prev_s*sum(w.*rel_pr);
-
-"""
-    final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:Float64
-
-Calculate the final weights of assets according to the experts.
-
-# Arguments
-- `q::T`: The portion of contribution made by each of the experts.
-- `s::Vector{T}`: Total wealth achieved by each expert in the current period.
-- `b::Matrix{T}`: Weights of assets achieved by each expert in the current period.
-
-# Returns
-- `Vector{T}`: Final weights of assets in the current period.
-"""
-function final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:Float64
-  numerator_ = zeros(T, size(b, 1))
-  denominator_ = zero(T)
-  for idx_expert ∈ eachindex(s)
-    qs = q*s[idx_expert]
-    numerator_+=qs*b[:, idx_expert]
-    denominator_+=qs
-  end
-
-  numerator_/denominator_
 end;

@@ -1,4 +1,4 @@
-const METHODS1 = (:CORN, :DRICORN)
+const METHODS1 = (:CORN, :DRICORN, :DRICORNK)
 
 function simplex_proj(b::Vector)
   n_assets = length(b)
@@ -79,3 +79,27 @@ function budg_dur_time(
 
   budgets
 end
+
+"""
+    normalizer!(vec::Vector)::Vector{Float64}
+
+Force normilize the given vector.
+
+This function is used to normalize the weights of assets in situations where the sum of the weights is not exactly 1. (in some situation the sum of the weights is 0.999999999 or 1.000000001 due to inexactness of Ipopt solver)
+"""
+normalizer!(vec::Vector)::Vector{Float64} = vec ./= sum(vec);
+
+"""
+    S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}}
+
+Calculate the budget of the current period.
+
+# Arguments
+- `prev_s::Float64`: Budget of the previous period.
+- `w::Vector{Float64}`: Weights of assets.
+- `rel_pr::Vector{Float64}`: Relative prices of assets in the current period.
+
+# Returns
+- `Float64`: Budget of the current period.
+"""
+S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}} = prev_s*sum(w.*rel_pr);

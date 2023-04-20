@@ -15,3 +15,8 @@ end
   @info "Run unit tests in DRICORNK.jl"
   include("DRICORNK.jl")
 end
+
+@testset "metrics.jl" begin
+  @info "Run unit tests in metrics.jl"
+  include("metrics.jl")
+end

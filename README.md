@@ -33,8 +33,8 @@ julia> ?function_name
 
 ## 📝To-do list
 - [ ] Implement BCRP
-- [ ] Implement CORN
-- [ ] Implement DRICORN
+- [x] ~~Implement CORN~~
+- [x] ~~Implement DRICORN~~
 - [ ] Implement BS
 - [ ] Implement Anticor
 - [ ] Implement $B^k$

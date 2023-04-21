@@ -45,13 +45,24 @@ Calculate the cumulative return of investment during a period of time.
 !!! warning
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
 
+!!! note
+    If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last `size(weights, 2)` columns of `rel_pr` will be used.
+
 # Returns
 - `all_sn::Vector{T}`: the cumulative return of investment during the investment period.
 """
 function Sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Float64
   n_periods = size(rel_pr, 2)
+  n_periods<size(weights, 2) && throw(ArgumentError("The number of samples in the \
+    `weights` argument ($(size(weights, 2))) does not match the number of samples in \
+    the `rel_pr` argument ($n_periods)"
+  ))
+  size(weights, 1) ≠ size(rel_pr, 1) && throw(ArgumentError("The number of stocks in \
+    the `weights` argument ($(size(weights, 1))) does not match the number of stocks in \
+    the `rel_pr` argument ($(size(rel_pr, 1)))"
+  ))
 
-  if size(weights, 2) ≠ n_periods
+  if size(weights, 2)<n_periods
     rel_pr = rel_pr[:, end-size(weights, 2)+1:end]
     n_periods = size(rel_pr, 2)
   end
@@ -161,6 +172,10 @@ Calculate the metrics of an OPS algorithm.
 !!! warning
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
 
+!!! note
+    If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last `size(weights, 2)` \
+    columns of `rel_pr` will be used.
+
 # Returns
 - `::OPSMetrics`: the metrics of the OPS algorithm.
 """
@@ -172,8 +187,14 @@ function OPSMetrics(
   dpy::S=252
 ) where {T<:Float64, S<:Int}
 
-  all_sn = Sn(weights, rel_pr, init_inv=init_inv)
   n_periods = size(rel_pr, 2)
+
+  if size(weights, 2)<n_periods
+    rel_pr = rel_pr[:, end-size(weights, 2)+1:end]
+    n_periods = size(rel_pr, 2)
+  end
+
+  all_sn = Sn(weights, rel_pr, init_inv=init_inv)
   σₚ = std(diff(all_sn)) * sqrt(dpy)
   apy = APY(all_sn[end], n_periods, dpy=dpy)
   ann_Sharpe = Ann_Sharpe(apy, Rf, σₚ)

@@ -92,13 +92,13 @@ function DRICORNK(
   initial_budget=1
 ) where {T<:Float64, M<:Int}
 
-  p<2 && throw(ArgumentError("The value of `p` should be more than 1."))
+  p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
 
   n_experts = w*(p+1)
 
-  k>n_experts && throw(ArgumentError(
+  k>n_experts && ArgumentError(
     "The value of k ($k) is more than number of experts ($n_experts)"
-  ))
+  ) |> throw
 
   # Calculate relative prices
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
@@ -185,11 +185,11 @@ function dricorn_expert(
   lambda::T
 ) where {T<:Float64, S<:Int}
 
-  horizon≥size(relative_prices, 2) && throw(ArgumentError("""The "horizon" ($horizon) is \
+  horizon≥size(relative_prices, 2) && ArgumentError("""The "horizon" ($horizon) is \
     bigger than data samples $(size(relative_prices, 2)).\nYou should either decrease \
     the "horizon" or add more data samples. (At least $(horizon-size(relative_prices, 2)) \
     more data samples are needed)."""
-  ))
+  ) |> throw
 
   ρ = rho
 
@@ -214,7 +214,7 @@ function dricorn_expert(
 
   # Calculate β of each asset through the last month (20 days)
   β = zeros(T, n_assets, length(idx_days))
-  for i=1:n_assets
+  for i ∈ 1:n_assets
     β[i, :] .= cor(asset_ret[i, end-horizon+t-20:end-horizon+t], market_ret[end-horizon+t-20:end-horizon+t])/var(market_ret[end-horizon+t-20:end-horizon+t])
   end
 

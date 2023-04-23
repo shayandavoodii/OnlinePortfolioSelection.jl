@@ -2,7 +2,7 @@ include("../Tools/tools.jl");
 
 struct UP
   n_assets::Int
-  weights::Matrix{Float64}
+  b::Matrix{Float64}
   budgets::Vector{Float64}
 end;
 
@@ -36,7 +36,7 @@ function UP(
   initial_budget=1.,
   eval_points::Int=10^4,
   leverage=1.
-  )
+)
 
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   n_assets, n_periods = size(relative_prices)
@@ -53,7 +53,7 @@ function UP(
   stretch = (leverage_-1/n_periods)/(1-1/n_periods)
 
   # Update weights
-  for t in axes(weights, 2)[1:end-1]
+  for t ∈ axes(weights, 2)[1:end-1]
     n = length(relative_prices[:, t])
     S = S.*(W*reshape(relative_prices[:, t], n, 1))
     b = W'*S
@@ -64,8 +64,7 @@ function UP(
   budgets = zeros(n_periods+1)
   budgets[1] = initial_budget
 
-  # for t in 1:n_periods
-  for t in axes(relative_prices, 2)
+  for t ∈ axes(relative_prices, 2)
     budgets[t+1] = budgets[t] * sum(weights[:, t] .* relative_prices[:, t])
   end
 

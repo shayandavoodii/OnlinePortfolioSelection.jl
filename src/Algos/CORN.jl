@@ -93,7 +93,7 @@ function CORNU(
   initial_budget=1
 ) where {T<:Float64, M<:Int}
 
-  0≤rho<1 || throw(ArgumentError("The value of `rho` should be in the range of [0, 1)."))
+  0≤rho<1 || ArgumentError("The value of `rho` should be in the range of [0, 1).") |> throw
 
   n_experts = w
 
@@ -191,13 +191,13 @@ function CORNK(
   initial_budget=1
 ) where T<:Int
 
-  p<2 && throw(ArgumentError("The value of `p` should be more than 1."))
+  p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
 
   n_experts = w*(p+1)
 
-  k>n_experts && throw(ArgumentError(
+  k>n_experts && ArgumentError(
     "The value of k ($k) is more than number of experts ($n_experts)"
-  ))
+  ) |> throw
 
   # Calculate relative prices
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
@@ -269,11 +269,11 @@ function corn_expert(
   n_assets::S
 ) where {T<:Float64, S<:Int}
 
-  horizon≥size(relative_prices, 2) && throw(ArgumentError("""The "horizon" ($horizon) is \
+  horizon≥size(relative_prices, 2) && ArgumentError("""The "horizon" ($horizon) is \
     bigger than data samples $(size(relative_prices, 2)).\nYou should either decrease \
     the "horizon" or add more data samples. (At least $(horizon-size(relative_prices, 2)) \
     more data samples are needed)."""
-  ))
+  ) |> throw
 
   ρ = rho
 
@@ -307,8 +307,6 @@ function corn_expert(
   weight = value.(b)
 
   weight = round.(abs.(weight), digits=3)
-  # @show sum(weight)
-  @assert isapprox(1., sum(weight), atol=1e-2)
-  weight = weight ./ sum(weight)
+  isapprox(1., sum(weight), atol=1e-2) || normalizer!(weight)
   return weight
 end;

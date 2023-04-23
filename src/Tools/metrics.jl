@@ -1,7 +1,7 @@
 using Printf
 
 """
-    OPSMetrics(APY::T, Ann_Sharpe::T, MDD::T, Calmar::T) where {T<:Float64}
+    OPSMetrics(Sn::Vector{T}, APY::T, Ann_Sharpe::T, MDD::T, Calmar::T) where {T<:Float64}
 
 A struct to store the metrics of the OPS algorithm.
 
@@ -23,7 +23,6 @@ struct OPSMetrics{T<:Float64}
 end;
 
 function Base.show(io::IO, metrics::OPSMetrics)
-  # println("-"^10, " Metrics ", "-"^10, " " ,"-"^1, " Value ", "-"^1)
   @printf(io, "%29s: %.3f\n", "Cumulative Return", metrics.Sn[end])
   @printf(io, "%29s: %.3f\n", "APY", metrics.APY)
   @printf(io, "%s: %.3f\n", "Annualized Standard Deviation", metrics.Ann_Std)
@@ -53,14 +52,14 @@ Calculate the cumulative return of investment during a period of time.
 """
 function Sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Float64
   n_periods = size(rel_pr, 2)
-  n_periods<size(weights, 2) && throw(ArgumentError("The number of samples in the \
+  n_periods<size(weights, 2) && ArgumentError("The number of samples in the \
     `weights` argument ($(size(weights, 2))) does not match the number of samples in \
     the `rel_pr` argument ($n_periods)"
-  ))
-  size(weights, 1) ≠ size(rel_pr, 1) && throw(ArgumentError("The number of stocks in \
+  ) |> throw
+  size(weights, 1) ≠ size(rel_pr, 1) && ArgumentError("The number of stocks in \
     the `weights` argument ($(size(weights, 1))) does not match the number of stocks in \
     the `rel_pr` argument ($(size(rel_pr, 1)))"
-  ))
+  ) |> throw
 
   if size(weights, 2)<n_periods
     rel_pr = rel_pr[:, end-size(weights, 2)+1:end]
@@ -159,7 +158,8 @@ Calmar(APY::T, MDD::T) where T<:Float64 = APY/MDD;
       rel_pr::Matrix{T};
       init_inv::T=1.,
       Rf::T=0.02
-    ) where T<:Float64
+      dpy::S=252
+    ) where {T<:Float64, S<:Int}
 
 Calculate the metrics of an OPS algorithm.
 
@@ -168,6 +168,7 @@ Calculate the metrics of an OPS algorithm.
 - `rel_pr::Matrix{T}`: the relative price of the stocks.
 - `init_inv::T=1`: the initial investment.
 - `Rf::T=0.02`: the risk-free rate of return.
+- `dpy::S=252`: the number of days in a year.
 
 !!! warning
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
@@ -195,7 +196,7 @@ function OPSMetrics(
   end
 
   all_sn = Sn(weights, rel_pr, init_inv=init_inv)
-  σₚ = std(diff(all_sn)) * sqrt(dpy)
+  σₚ = (all_sn |> diff |> std) * sqrt(dpy)
   apy = APY(all_sn[end], n_periods, dpy=dpy)
   ann_Sharpe = Ann_Sharpe(apy, Rf, σₚ)
   MDD_ = MDD(all_sn)

@@ -1,29 +1,29 @@
 """
-    locate_sim(rel_price::Matrix{Float64}, w::Int, T::Int, ρ::Float64)
+    locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float64, S<:Int}
 
 Find similar time windows based on the correlation coefficient threshold.
 
 # Arguments
-- `rel_price::Matrix{Float64}`: Relative prices of assets.
-- `w::Int`: length of time window.
-- `T::Int`: Total number of periods.
-- `ρ::Float64`: correlation coefficient threshold.
+- `rel_price::Matrix{T1}`: Relative prices of assets.
+- `w::S`: length of time window.
+- `T::S`: Total number of periods.
+- `ρ::T1`: correlation coefficient threshold.
 
 # Returns
-- `Vector{Int}`: Index of similar time windows.
+- `Vector{S}`: Index of similar time windows.
 """
-function locate_sim(rel_price::Matrix{T1}, w::T2, T::T2, ρ::T1) where {T1<:Float64, T2<:Int}
-  idx_day_after_tw = Vector{T2}()
+function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float64, S<:Int}
+  idx_day_after_tw = Vector{S}()
 
   # current time window
-  curr_tw = Base.Flatten(rel_price[:, end-w+1:end])
+  curr_tw = rel_price[:, end-w+1:end] |> Base.Flatten
 
   # Number of time windows
   n_tw = T-w+1
 
   # n_tw-1: because we don't want to calculate corr between the
   # currrent w and itself. So, the current time window is excluded.
-  for idx_tw=1:n_tw-1
+  for idx_tw ∈ 1:n_tw-1
     twᵢ = Base.Flatten(rel_price[:, idx_tw:w+idx_tw-1])
     if cor(collect(curr_tw), collect(twᵢ))≥ρ
       push!(idx_day_after_tw, idx_tw)

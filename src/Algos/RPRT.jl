@@ -2,11 +2,11 @@ using Statistics
 using LinearAlgebra
 include("../Tools/tools.jl");
 
-struct RPRT
+struct RPRT{T<:Float64}
   n_assets::Int
-  b::Matrix{Float64}
-  budgets::Vector{Float64}
-end;
+  b::Matrix{T}
+  budgets::Vector{T}
+end
 
 function RPRT(
   adj_close::Matrix{T};
@@ -21,7 +21,7 @@ function RPRT(
   n_assets, n_periods = size(adj_close)
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   θ, ϵ= theta, epsilon
-  ϕ = adj_close[:, 2]./adj_close[:, 1]
+  ϕ = relative_prices[:, 1]
 
   # Initialize the weights
   b = zeros(n_assets, n_periods)
@@ -53,17 +53,10 @@ function RPRT(
     meanϕₚ = mean(ϕₚ)
 
     condition = norm(ϕₚ .- meanϕₚ)^2
-    if condition == 0
-      λ = 0
-    else
-      λ = max(0., ϵ.-(ϕₚ'*b[:, t])/condition)
-    end
 
-    if λ≠0
-      w_ = b[:, t] .+ (dₚ*(ϕₚ .- meanϕₚ)).*λ
-    else
-      w_ = b[:, t]
-    end
+    λ = iszero(condition) ? 0 : max(0., ϵ.-(ϕₚ'*b[:, t])/condition)
+
+    w_ = iszero(λ) ? b[:, t] : b[:, t] .+ (dₚ*(ϕₚ .- meanϕₚ)).*λ
 
     clamp!(w_, -1e10, 1e10)
 
@@ -77,8 +70,8 @@ function RPRT(
   end
 
   RPRT(n_assets, b, budgets)
-end;
+end
 
 function predict_relative_price(relative_price::Matrix{Float64})
   mean(relative_price, dims=2)./relative_price[:, end]
-end;
+end

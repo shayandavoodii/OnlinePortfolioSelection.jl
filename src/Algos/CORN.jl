@@ -284,10 +284,9 @@ function corn_expert(
   # index of similar time windows
   idx_tws = locate_sim(relative_prices_, w, n_periods, ρ)
 
-  if isempty(idx_tws)
-    return fill(1/n_assets, n_assets)
-  end
-  # index of a day after similar time windows
+  isempty(idx_tws) && return fill(1/n_assets, n_assets)
+
+    # index of a day after similar time windows
   idx_days = idx_tws.+w
 
   model = Model(Ipopt.Optimizer)

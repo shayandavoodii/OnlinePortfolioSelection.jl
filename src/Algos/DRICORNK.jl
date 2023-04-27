@@ -111,7 +111,7 @@ function DRICORNK(
 
   n_assets = size(relative_prices, 1)
 
-  P = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ∈0:p)
+  P = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ=0:p)
 
   q = 1/k
 
@@ -205,9 +205,7 @@ function dricorn_expert(
   # index of similar time windows
   idx_tws = locate_sim(relative_prices_, w, n_periods, ρ)
 
-  if isempty(idx_tws)
-    return fill(1/n_assets, n_assets)
-  end
+  isempty(idx_tws) && return fill(1/n_assets, n_assets)
 
   # index of a day after similar time windows
   idx_days = idx_tws.+w

@@ -14,13 +14,10 @@ Find similar time windows based on the correlation coefficient threshold.
 """
 function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float64, S<:Int}
   idx_day_after_tw = Vector{S}()
-
   # current time window
   curr_tw = rel_price[:, end-w+1:end] |> Base.Flatten
-
   # Number of time windows
   n_tw = T-w+1
-
   # n_tw-1: because we don't want to calculate corr between the
   # currrent w and itself. So, the current time window is excluded.
   for idx_tw ∈ 1:n_tw-1
@@ -29,9 +26,8 @@ function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float6
       push!(idx_day_after_tw, idx_tw)
     end
   end
-
-  idx_day_after_tw
-end;
+  return idx_day_after_tw
+end
 
 """
     final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:Float64
@@ -54,8 +50,7 @@ function final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:Flo
     numerator_+=qs*b[:, idx_expert]
     denominator_+=qs
   end
-
   bₜ = numerator_/denominator_
   normalizer!(bₜ)
-  bₜ
-end;
+  return bₜ
+end

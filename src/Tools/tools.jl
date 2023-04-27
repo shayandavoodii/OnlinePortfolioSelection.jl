@@ -3,9 +3,7 @@ const METHODS1 = (:CORN, :DRICORN, :DRICORNK)
 function simplex_proj(b::Vector)
   n_assets = length(b)
   cond = false
-
   sorted_b = sort(b, rev=true)
-
   tmpsum = 0.
   for i in 1:n_assets-1
     tmpsum += sorted_b[i]
@@ -15,19 +13,17 @@ function simplex_proj(b::Vector)
       break
     end
   end
-
   if !cond
     tmax = (tmpsum + sorted_b[n_assets-1] - 1.)/n_assets
   end
-
-  max.(b .- tmax, 0.)
-end;
+  return max.(b .- tmax, 0.)
+end
 
 function mc_simplex(d, points)
   a = sort(rand(points, d), dims=2)
   a = [zeros(points) a ones(points)]
   diff(a, dims=2)
-end;
+end
 
 """
     invest(
@@ -61,7 +57,7 @@ function invest(
   if method ∈ METHODS1
     return budg_dur_time(horizon, weights, reltv_pr, initial_budget)
   end
-end;
+end
 
 function budg_dur_time(
   horizon::Int,
@@ -72,12 +68,10 @@ function budg_dur_time(
   # Calculate budgets
   budgets = zeros(T, horizon+1)
   budgets[1] = initial_budget
-
   for t in 1:horizon
     @views budgets[t+1] = budgets[t] * sum(reltv_pr[:, end-horizon+t] .* weights[:, t])
   end
-
-  budgets
+  return budgets
 end
 
 """
@@ -87,7 +81,7 @@ Force normilize the given vector.
 
 This function is used to normalize the weights of assets in situations where the sum of the weights is not exactly 1. (in some situation the sum of the weights is 0.999999999 or 1.000000001 due to inexactness of Ipopt solver)
 """
-normalizer!(vec::Vector)::Vector{Float64} = vec ./= sum(vec);
+normalizer!(vec::Vector)::Vector{Float64} = vec ./= sum(vec)
 
 """
     S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}}
@@ -102,4 +96,4 @@ Calculate the budget of the current period.
 # Returns
 - `Float64`: Budget of the current period.
 """
-S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}} = prev_s*sum(w.*rel_pr);
+S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}} = prev_s*sum(w.*rel_pr)

@@ -30,7 +30,7 @@ struct CORN
   b::Matrix{Float64}
   budgets::Vector{Float64}
   type::String
-end;
+end
 
 """
     CORNU(
@@ -94,25 +94,17 @@ function CORNU(
 ) where {T<:Float64, M<:Int}
 
   0≤rho<1 || ArgumentError("The value of `rho` should be in the range of [0, 1).") |> throw
-
   n_experts = w
-
   # Calculate relative prices
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-
   n_assets = size(relative_prices, 1)
-
   q = 1/w
-
   Sₜ = Vector{T}(undef, horizon+1)
   Sₜ[1] = initial_budget
-
   # Store the budgets of experts in each period t
   Sₜ_ = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= initial_budget
-
   weights = zeros(T, n_assets, horizon)
-
   for t ∈ 0:horizon-1
     bₜ = Matrix{T}(undef, n_assets, n_experts)
     for ω ∈ 1:w
@@ -123,9 +115,8 @@ function CORNU(
     weights[:, t+1] = final_weights(q, Sₜ_[:, t+2], bₜ)
     Sₜ[t+2] = Sₜ[t+1] * sum(weights[:, t+1] .* relative_prices[:, end-horizon+t+1])
   end
-
-  CORN(n_assets, weights, Sₜ, "CORN-U")
-end;
+  return CORN(n_assets, weights, Sₜ, "CORN-U")
+end
 
 """
     CORNK(
@@ -192,30 +183,21 @@ function CORNK(
 ) where T<:Int
 
   p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
-
   n_experts = w*(p+1)
-
   k>n_experts && ArgumentError(
     "The value of k ($k) is more than number of experts ($n_experts)"
   ) |> throw
 
   # Calculate relative prices
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-
   n_assets = size(relative_prices, 1)
-
   P = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ∈0:p)
-
   q = 1/k
-
   weights = zeros(Float64, n_assets, horizon)
-
   Sₜ = Vector{Float64}(undef, horizon+1)
   Sₜ[1] = initial_budget
-
   Sₜ_ = zeros(Float64, n_experts, horizon+1)
   Sₜ_[:, 1] .= initial_budget
-
   for t ∈ 0:horizon-1
     bₜ = Matrix{Float64}(undef, n_assets, n_experts)
     expert = 1
@@ -234,8 +216,8 @@ function CORNK(
     Sₜ[t+2] = Sₜ[t+1] * sum(weights[:, t+1] .* relative_prices[:, end-horizon+t+1])
   end
 
-  CORN(n_assets, weights, Sₜ, "CORN-K")
-end;
+  return CORN(n_assets, weights, Sₜ, "CORN-K")
+end
 
 """
     corn_expert(
@@ -276,36 +258,24 @@ function corn_expert(
   ) |> throw
 
   ρ = rho
-
   relative_prices_ = relative_prices[:, 1:end-horizon+t]
-
   n_periods = size(relative_prices_, 2)
-
   # index of similar time windows
   idx_tws = locate_sim(relative_prices_, w, n_periods, ρ)
-
   isempty(idx_tws) && return fill(1/n_assets, n_assets)
-
-    # index of a day after similar time windows
+  # index of a day after similar time windows
   idx_days = idx_tws.+w
-
   model = Model(Ipopt.Optimizer)
   set_silent(model)
-
   @variables(model, begin
     0<=b[i=1:n_assets]<=1
   end)
-
   @constraint(model, sum(b[i] for i = 1:n_assets) == 1)
-
   h = [sum(b.*relative_prices_[:, idx]) for idx∈idx_days]
   @NLobjective(model, Max, *(h...))
-
   optimize!(model)
-
   weight = value.(b)
-
   weight = round.(abs.(weight), digits=3)
   isapprox(1., sum(weight), atol=1e-2) || normalizer!(weight)
   return weight
-end;
+end

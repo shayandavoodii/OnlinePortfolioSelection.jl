@@ -20,7 +20,7 @@ struct OPSMetrics{T<:Float64}
   Ann_Sharpe::T
   MDD::T
   Calmar::T
-end;
+end
 
 function Base.show(io::IO, metrics::OPSMetrics)
   @printf(io, "%29s: %.3f\n", "Cumulative Return", metrics.Sn[end])
@@ -29,7 +29,7 @@ function Base.show(io::IO, metrics::OPSMetrics)
   @printf(io, "%29s: %.3f\n", "Annualized Sharpe Ratio", metrics.Ann_Sharpe)
   @printf(io, "%29s: %.3f\n", "Maximum Drawdown", metrics.MDD)
   @printf(io, "%29s: %.3f\n", "Calmar Ratio", metrics.Calmar)
-end;
+end
 
 """
     Sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Float64
@@ -65,16 +65,13 @@ function Sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Floa
     rel_pr = rel_pr[:, end-size(weights, 2)+1:end]
     n_periods = size(rel_pr, 2)
   end
-
   all_sn = zeros(T, n_periods+1)
   all_sn[1] = init_inv
-
   for t ∈ 2:n_periods+1
       all_sn[t] = all_sn[t-1] * (rel_pr[:, t-1]' * weights[:, t-1])
   end
-
-  all_sn
-end;
+  return all_sn
+end
 
 """
     APY(Sn::Float64, n_periods::S; dpy::S=252) where S<:Int
@@ -91,8 +88,8 @@ Calculate the Annual Percentage Yield (APY) of investment.
 """
 function APY(Sn::Float64, n_periods::S; dpy::S=252) where S<:Int
   y = n_periods/dpy
-  (Sn)^(1/y) - 1
-end;
+  return (Sn)^(1/y) - 1
+end
 
 """
     Ann_Sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:Float64
@@ -124,19 +121,15 @@ function MDD(Sn::Vector{T}) where T<:Float64
   n_periods = length(Sn)
   max_sn = zeros(T, n_periods)
   max_sn[1] = Sn[1]
-
   for t ∈ 2:n_periods
       max_sn[t] = max(max_sn[t-1], Sn[t])
   end
-
   max_dd = zeros(T, n_periods)
-
   for t ∈ 1:n_periods
       max_dd[t] = (max_sn[t] - Sn[t])/max_sn[t]
   end
-
-  maximum(max_dd)
-end;
+  return maximum(max_dd)
+end
 
 """
     Calmar(APY::T, MDD::T) where T<:Float64
@@ -189,18 +182,15 @@ function OPSMetrics(
 ) where {T<:Float64, S<:Int}
 
   n_periods = size(rel_pr, 2)
-
   if size(weights, 2)<n_periods
     rel_pr = rel_pr[:, end-size(weights, 2)+1:end]
     n_periods = size(rel_pr, 2)
   end
-
   all_sn = Sn(weights, rel_pr, init_inv=init_inv)
   σₚ = (all_sn |> diff |> std) * sqrt(dpy)
   apy = APY(all_sn[end], n_periods, dpy=dpy)
   ann_Sharpe = Ann_Sharpe(apy, Rf, σₚ)
   MDD_ = MDD(all_sn)
   calmar = Calmar(apy, MDD_)
-
-  OPSMetrics(all_sn, apy, σₚ, ann_Sharpe, MDD_, calmar)
-end;
+  return OPSMetrics(all_sn, apy, σₚ, ann_Sharpe, MDD_, calmar)
+end

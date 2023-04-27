@@ -28,7 +28,7 @@ struct DRICORNK
   n_asset::Int
   b::Matrix{Float64}
   budgets::Vector{Float64}
-end;
+end
 
 """
     DRICORNK(
@@ -93,36 +93,25 @@ function DRICORNK(
 ) where {T<:Float64, M<:Int}
 
   p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
-
   n_experts = w*(p+1)
-
   k>n_experts && ArgumentError(
     "The value of k ($k) is more than number of experts ($n_experts)"
   ) |> throw
 
   # Calculate relative prices
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-
   # Market's return
   market_ret = log.(adj_close_market[2:end] ./ adj_close_market[1:end-1])
-
   # Stocks' return
   asset_ret = log.(relative_prices)
-
   n_assets = size(relative_prices, 1)
-
   P = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ=0:p)
-
   q = 1/k
-
   weights = zeros(T, n_assets, horizon)
-
   Sₜ = Vector{T}(undef, horizon+1)
   Sₜ[1] = initial_budget
-
   Sₜ_ = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= initial_budget
-
   for t ∈ 0:horizon-1
     bₜ = Matrix{T}(undef, n_assets, n_experts)
     expert = 1
@@ -141,8 +130,8 @@ function DRICORNK(
     Sₜ[t+2] = Sₜ[t+1] * sum(weights[:, t+1] .* relative_prices[:, end-horizon+t+1])
   end
 
-  DRICORNK(n_assets, weights, Sₜ)
-end;
+  return DRICORNK(n_assets, weights, Sₜ)
+end
 
 """
     dricorn_expert(
@@ -192,48 +181,33 @@ function dricorn_expert(
   ) |> throw
 
   ρ = rho
-
   relative_prices_ = relative_prices[:, 1:end-horizon+t]
-
   n_periods = size(relative_prices_, 2)
-
   # Coefficient behind βₚ. Check if the market return is at least 20% higher
   # than the return of 20 days before the current time window. If it is, then
   # the coefficient is 1. Otherwise, it is -1.
   market_ret[end-horizon+t]/market_ret[end-horizon+t-20] ≥ 1.2 ? c = 1 : c = -1
-
   # index of similar time windows
   idx_tws = locate_sim(relative_prices_, w, n_periods, ρ)
-
   isempty(idx_tws) && return fill(1/n_assets, n_assets)
-
   # index of a day after similar time windows
   idx_days = idx_tws.+w
-
   # Calculate β of each asset through the last month (20 days)
   β = zeros(T, n_assets, length(idx_days))
   for i ∈ 1:n_assets
     β[i, :] .= cor(asset_ret[i, end-horizon+t-20:end-horizon+t], market_ret[end-horizon+t-20:end-horizon+t])/var(market_ret[end-horizon+t-20:end-horizon+t])
   end
-
   model = Model(Ipopt.Optimizer)
   set_silent(model)
-
   @variables(model, begin
     0<=b[i=1:n_assets]<=1
   end)
-
   @constraint(model, sum(b) == 1)
-
   @expression(model, h, (b' * relative_prices_[:, idx_days] .+ lambda*c.*(b'*β)))
-
   @NLobjective(model, Max, prod(h[i] for i=eachindex(h)))
-
   optimize!(model)
-
   weight = value.(b)
-
   weight = round.(abs.(weight), digits=3)
   isapprox(1., sum(weight), atol=1e-2) || normalizer!(weight)
   return weight
-end;
+end

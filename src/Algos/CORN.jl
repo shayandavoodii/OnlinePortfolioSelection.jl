@@ -57,7 +57,7 @@ Run CORN-U algorithm.
 - `CORN`: An object of type `CORN`.
 
 # Reference
-- [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
+- [1] [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
 
 # Examples
 ```julia
@@ -145,7 +145,7 @@ Run CORN-K algorithm.
 - `CORN`: An object of type `CORN`.
 
 # Reference
-- [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
+- [1] [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
 
 # Examples
 ```julia

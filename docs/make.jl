@@ -8,7 +8,6 @@ makedocs(;
     authors="Shayan Davoodi <sh0davoodi@gmail.com>",
     sitename="OPS.jl",
     format=Documenter.HTML(;
-        prettyurls=get(ENV, "CI", "false") == "true",
         canonical="https://shayandavoodii.github.io/OPS.jl",
         prettyurls = get(ENV, "CI", nothing) == "true"
     ),

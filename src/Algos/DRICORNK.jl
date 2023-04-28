@@ -15,7 +15,7 @@ include("../Types/Algorithms.jl")
       w::M,
       p::M;
       lambda::T=1e-3,
-      initial_budget=1
+      init_budg=1
     ) where {T<:Float64, M<:Int}
 
 Run the DRICORNK algorithm.
@@ -28,7 +28,7 @@ Run the DRICORNK algorithm.
 - `w::M`: maximum length of time window to be examined.
 - `p::M`: maximum number of correlation coefficient thresholds.
 - `lambda::T=1e-3`: The regularization parameter.
-- `initial_budget=1`: The initial budget for investment.
+- `init_budg=1`: The initial budget for investment.
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -65,7 +65,7 @@ function DRICORNK(
   w::M,
   p::M;
   lambda::T=1e-3,
-  initial_budget=1
+  init_budg=1
 ) where {T<:Float64, M<:Int}
 
   p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
@@ -85,9 +85,9 @@ function DRICORNK(
   q = 1/k
   weights = zeros(T, n_assets, horizon)
   Sₜ = Vector{T}(undef, horizon+1)
-  Sₜ[1] = initial_budget
+  Sₜ[1] = init_budg
   Sₜ_ = zeros(T, n_experts, horizon+1)
-  Sₜ_[:, 1] .= initial_budget
+  Sₜ_[:, 1] .= init_budg
   for t ∈ 0:horizon-1
     bₜ = Matrix{T}(undef, n_assets, n_experts)
     expert = 1

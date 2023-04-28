@@ -4,7 +4,7 @@ include("../Types/Algorithms.jl");
 """
     UP(
       adj_close::Matrix{Float64};
-      initial_budget=1.,
+      init_budg=1.,
       eval_points::Int=10^4,
       leverage=1.,
       frequency::Int=1,
@@ -18,7 +18,7 @@ using the given historical prices and parameters.
 
 # Arguments
 - `adj_close::Matrix{Float64}`: Historical adjusted close prices.
-- `initial_budget=1.`: Initial budget.
+- `init_budg=1.`: Initial budget.
 - `eval_points::Int=10^4`: Number of evaluation points.
 - `leverage=1.`: Leverage value.
 
@@ -50,7 +50,7 @@ true
 """
 function UP(
   adj_close::Matrix{Float64};
-  initial_budget=1.,
+  init_budg=1.,
   eval_points::Int=10^4,
   leverage=1.
 )
@@ -76,7 +76,7 @@ function UP(
   end
 
   # budgets
-  Snₜ = Sn(relative_prices, weights, initial_budget)
+  Snₜ = Sn(relative_prices, weights, init_budg)
 
   return OPSAlgorithm(n_assets, weights, Snₜ, "UP")
 end

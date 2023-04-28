@@ -7,7 +7,7 @@ include("../Types/Algorithms.jl");
     RPRT(
       adj_close::Matrix{T};
       w::Int64=5,
-      initial_budget::Int=1,
+      init_budg::Int=1.,
       theta::T=0.8,
       epsilon=50
     ) where T<:Float64
@@ -17,7 +17,7 @@ Run RPRT algorithm.
 # Arguments
 - `adj_close::Matrix{T}`: Adjusted close prices of assets.
 - `w::Int64=5`: maximum length of time window to be examined.
-- `initial_budget::Int=1`: The initial budget for investment.
+- `init_budg::Int=1.`: The initial budget for investment.
 - `theta::T=0.8`: The threshold for the relative price.
 - `epsilon=50`: The threshold for the condition of the portfolio.
 
@@ -52,7 +52,7 @@ true
 function RPRT(
   adj_close::Matrix{T};
   w::Int64=5,
-  initial_budget=1.,
+  init_budg=1.,
   theta::T=0.8,
   epsilon=50
 ) where T<:Float64
@@ -90,7 +90,7 @@ function RPRT(
   end
   normalizer!(b)
 
-  Snₜ = Sn(relative_prices, b, initial_budget)
+  Snₜ = Sn(relative_prices, b, init_budg)
 
   return OPSAlgorithm(n_assets, b, Snₜ, "RPRT")
 end

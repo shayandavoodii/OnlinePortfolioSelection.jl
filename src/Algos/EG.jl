@@ -2,7 +2,7 @@ include("../Tools/tools.jl")
 include("../Types/Algorithms.jl")
 
 """
-    EG(adj_close::Matrix{Float64}, initial_budget=1, eta=0.05)
+    EG(adj_close::Matrix{Float64}, init_budg=1., eta=0.05)
 
 Exponential Gradient (EG) algorithm.
 
@@ -12,7 +12,7 @@ an EG object.
 
 # Arguments
 - `adj_close::Matrix{Float64}`: Historical adjusted close prices.
-- `initial_budget=1.`: Initial budget.
+- `init_budg=1.`: Initial budget.
 - `eta=0.05`: Learning rate.
 
 !!! warning "Beware!"
@@ -41,7 +41,7 @@ julia> sum(eg.b, dims=1) .|> isapprox(1.0) |> all
 true
 ```
 """
-function EG(adj_close::Matrix{Float64}; initial_budget=1., eta=0.05)
+function EG(adj_close::Matrix{Float64}; init_budg=1., eta=0.05)
   # Calculate relative prices
   @views relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   n_assets, n_periods = size(adj_close)
@@ -60,7 +60,7 @@ function EG(adj_close::Matrix{Float64}; initial_budget=1., eta=0.05)
   end
 
   # Calculate cumulative return
-  Snₜ = Sn(relative_prices, b, initial_budget)
+  Snₜ = Sn(relative_prices, b, init_budg)
 
   return OPSAlgorithm(n_assets, b, Snₜ, "EG")
 end

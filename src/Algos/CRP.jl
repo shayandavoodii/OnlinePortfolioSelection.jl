@@ -2,13 +2,13 @@ include("../Tools/tools.jl")
 include("../Types/Algorithms.jl")
 
 """
-    CRP(adj_close::Matrix{T}, initial_budget=1) where T<:Float64
+    CRP(adj_close::Matrix{T}, init_budg=1) where T<:Float64
 
 Run Constant Rebalanced Portfolio (CRP) algorithm.
 
 # Arguments
 - `adj_close::Matrix{Float64}`: adjusted close prices
-- `initial_budget::Float64`: initial budget
+- `init_budg::Float64`: initial budget
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -36,7 +36,7 @@ julia> sum(crp.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
 """
-function CRP(adj_close::Matrix{T}; initial_budget=1.) where T<:Float64
+function CRP(adj_close::Matrix{T}; init_budg=1.) where T<:Float64
   # Calculate relative prices
   @views relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   n_assets, n_periods = size(adj_close)
@@ -45,7 +45,7 @@ function CRP(adj_close::Matrix{T}; initial_budget=1.) where T<:Float64
   b = fill(1/n_assets, (n_assets, n_periods))
 
   # Calculate budgets
-  Snₜ = Sn(relative_prices, b, initial_budget)
+  Snₜ = Sn(relative_prices, b, init_budg)
 
   return OPSAlgorithm(n_assets, b, Snₜ, "CRP")
 end

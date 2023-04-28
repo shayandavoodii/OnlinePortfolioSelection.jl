@@ -12,7 +12,7 @@ include("../Types/Algorithms.jl")
       horizon::M,
       w::M,
       rho::T;
-      initial_budget=1
+      init_budg=1
     ) where {T<:Float64, M<:Int}
 
 Run CORN-U algorithm.
@@ -22,7 +22,7 @@ Run CORN-U algorithm.
 - `horizon::M`: The number of periods to invest.
 - `w::M`: maximum length of time window to be examined.
 - `rho::T`: The correlation coefficient threshold.
-- `initial_budget=1`: The initial budget for investment.
+- `init_budg=1`: The initial budget for investment.
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -62,9 +62,9 @@ julia> model.type
 function CORNU(
   adj_close::Matrix{T},
   horizon::M,
-  w::M,
-  rho::T;
-  initial_budget=1
+  w::M;
+  rho::T=0.2,
+  init_budg=1
 ) where {T<:Float64, M<:Int}
 
   0≤rho<1 || ArgumentError("The value of `rho` should be in the range of [0, 1).") |> throw
@@ -74,10 +74,10 @@ function CORNU(
   n_assets = size(relative_prices, 1)
   q = 1/w
   Sₜ = Vector{T}(undef, horizon+1)
-  Sₜ[1] = initial_budget
+  Sₜ[1] = init_budg
   # Store the budgets of experts in each period t
   Sₜ_ = zeros(T, n_experts, horizon+1)
-  Sₜ_[:, 1] .= initial_budget
+  Sₜ_[:, 1] .= init_budg
   weights = zeros(T, n_assets, horizon)
   for t ∈ 0:horizon-1
     bₜ = Matrix{T}(undef, n_assets, n_experts)
@@ -99,7 +99,7 @@ end
       k::T,
       w::T,
       p::T;
-      initial_budget=1
+      init_budg=1
     ) where T<:Int
 
 Run CORN-K algorithm.
@@ -110,7 +110,7 @@ Run CORN-K algorithm.
 - `k::T`: The number of top experts to be selected.
 - `w::T`: maximum length of time window to be examined.
 - `p::T`: maximum number of correlation coefficient thresholds.
-- `initial_budget=1`: The initial budget for investment.
+- `init_budg=1`: The initial budget for investment.
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -153,7 +153,7 @@ function CORNK(
   k::T,
   w::T,
   p::T;
-  initial_budget=1
+  init_budg=1
 ) where T<:Int
 
   p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
@@ -169,9 +169,9 @@ function CORNK(
   q = 1/k
   weights = zeros(Float64, n_assets, horizon)
   Sₜ = Vector{Float64}(undef, horizon+1)
-  Sₜ[1] = initial_budget
+  Sₜ[1] = init_budg
   Sₜ_ = zeros(Float64, n_experts, horizon+1)
-  Sₜ_[:, 1] .= initial_budget
+  Sₜ_[:, 1] .= init_budg
   for t ∈ 0:horizon-1
     bₜ = Matrix{Float64}(undef, n_assets, n_experts)
     expert = 1

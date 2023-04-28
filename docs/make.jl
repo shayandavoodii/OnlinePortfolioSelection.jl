@@ -26,5 +26,5 @@ makedocs(;
 
 deploydocs(;
     repo="github.com/shayandavoodii/OPS.jl.git",
-    devbranch="master",
+    devbranch="main",
 )

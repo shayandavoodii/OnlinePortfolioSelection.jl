@@ -33,6 +33,8 @@ using the given historical prices and parameters.
 
 # Examples
 ```julia
+julia> using OnlinePortfolioSelection
+
 julia> typeof(adj_close), size(adj_close)
 (Matrix{Float64}, (3, 30))
 

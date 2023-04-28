@@ -35,7 +35,7 @@ Run CORN-U algorithm.
 
 # Examples
 ```julia
-julia> using OPS
+julia> using OnlinePortfolioSelection
 
 julia> adj_close = rand(5, 100);
 

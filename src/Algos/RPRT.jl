@@ -32,7 +32,7 @@ Run RPRT algorithm.
 
 # Examples
 ```julia
-julia> using OPS
+julia> using OnlinePortfolioSelection
 
 julia> typeof(adj_close), size(adj_close)
 (Matrix{Float64}, (3, 10))

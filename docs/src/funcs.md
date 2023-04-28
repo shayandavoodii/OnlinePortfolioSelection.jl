@@ -1,6 +1,6 @@
 # API
 
 ```@autodocs
-Modules = [OPS]
+Modules = [OnlinePortfolioSelection]
 Private = false
 ```

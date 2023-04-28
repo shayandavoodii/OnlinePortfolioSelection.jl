@@ -9,7 +9,9 @@ adj_close = [
   @testset "with default arguments" begin
     eg = EG(adj_close)
 
-    @test isa(eg, EG)
+    @test isa(eg, OPSAlgorithm)
+
+    @test eg.alg == "EG"
 
     @test sum(eg.b, dims=1) .|> isapprox(1.0) |> all
 
@@ -19,7 +21,9 @@ adj_close = [
   @testset "with custom arguments" begin
     eg = EG(adj_close, initial_budget=1e2, eta=0.2)
 
-    @test isa(eg, EG)
+    @test isa(eg, OPSAlgorithm)
+
+    @test eg.alg == "EG"
 
     @test sum(eg.b, dims=1) .|> isapprox(1.0) |> all
 

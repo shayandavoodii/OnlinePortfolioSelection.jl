@@ -48,6 +48,8 @@ adj_close_market = rand(30);
       2
     )
 
+    @test res.alg == "DRICORN-K"
+
     @test sum(res.b, dims=1) .|> isapprox(1.) |> all
   end
 end

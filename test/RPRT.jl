@@ -9,7 +9,9 @@ adj_close = [
   @testset "with default arguments" begin
     rprt = RPRT(adj_close)
 
-    @test isa(rprt, RPRT)
+    @test isa(rprt, OPSAlgorithm)
+
+    @test rprt.alg == "RPRT"
 
     @test sum(rprt.b, dims=1) .|> isapprox(1.0) |> all
 
@@ -19,7 +21,9 @@ adj_close = [
   @testset "with custom arguments" begin
     rprt = RPRT(adj_close, initial_budget=1e2, w=4, theta=0.5, epsilon=30)
 
-    @test isa(rprt, RPRT)
+    @test isa(rprt, OPSAlgorithm)
+
+    @test rprt.alg == "RPRT"
 
     @test sum(rprt.b, dims=1) .|> isapprox(1.0) |> all
 

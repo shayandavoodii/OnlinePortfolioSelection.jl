@@ -29,6 +29,8 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
         0.5
       );
 
+      @test res.alg == "CORN-U"
+
       @test sum(res.b, dims=1) .|> isapprox(1.) |> all
     end
 
@@ -61,6 +63,8 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
         4,
         2
       );
+
+      @test res.alg == "CORN-K"
 
       @test sum(res.b, dims=1) .|> isapprox(1.) |> all
     end

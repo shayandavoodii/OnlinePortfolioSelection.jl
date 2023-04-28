@@ -10,7 +10,9 @@ adj_close = [
   @testset "with default arguments" begin
     up = UP(adj_close)
 
-    @test isa(up, UP)
+    @test isa(up, OPSAlgorithm)
+
+    @test up.alg == "UP"
 
     @test sum(up.b, dims=1) .|> isapprox(1.0) |> all
 
@@ -20,8 +22,10 @@ adj_close = [
   @testset "with custom arguments" begin
     up = UP(adj_close, initial_budget=1e2, eval_points=10^5, leverage=1.5)
 
-    @test isa(up, UP)
-    
+    @test isa(up, OPSAlgorithm)
+
+    @test up.alg == "UP"
+
     @test sum(up.b, dims=1) .|> isapprox(1.0) |> all
 
     @test up.n_assets == size(adj_close, 1)

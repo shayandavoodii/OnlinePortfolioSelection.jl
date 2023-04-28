@@ -9,7 +9,9 @@ adj_close = [
   @testset "with default arguments" begin
     crp = CRP(adj_close)
 
-    @test isa(crp, CRP)
+    @test isa(crp, OPSAlgorithm)
+
+    @test crp.alg == "CRP"
 
     @test sum(crp.b, dims=1) .|> isapprox(1.0) |> all
 
@@ -19,7 +21,9 @@ adj_close = [
   @testset "with custom arguments" begin
     crp = CRP(adj_close, initial_budget=1e2)
 
-    @test isa(crp, CRP)
+    @test isa(crp, OPSAlgorithm)
+
+    @test crp.alg == "CRP"
 
     @test sum(crp.b, dims=1) .|> isapprox(1.0) |> all
 

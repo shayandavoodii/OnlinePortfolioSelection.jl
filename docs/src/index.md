@@ -79,7 +79,7 @@ julia> plot(
 ```
 
 ```@raw html
-<img src="assets/cumulative_budgets.png" width="70%">
+<img src="assets/cumulative_budgets.png" width="100%">
 ```
 
 The plot shows that the cumulative return of CORN-K outperforms the other algorithms almost all the time. Note that the initial investment for all of the algorithms is set to 1 (this can be modified by setting the keyword argument `init_budg` for each algorithm).Now, let's investigate the performance of the algorithms in terms of some of prominent performance metrics:

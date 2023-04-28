@@ -4,9 +4,7 @@
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://shayandavoodii.github.io/OPS.jl/stable/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://shayandavoodii.github.io/OPS.jl/dev/)
 [![CI](https://github.com/shayandavoodii/OPS.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/shayandavoodii/OPS.jl/actions/workflows/ci.yml)
-[![Build Status](https://travis-ci.com/shayandavoodii/OPS.jl.svg?branch=master)](https://travis-ci.com/shayandavoodii/OPS.jl)
-[![Coverage](https://codecov.io/gh/shayandavoodii/OPS.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/shayandavoodii/OPS.jl)
-[![Coverage](https://coveralls.io/repos/github/shayandavoodii/OPS.jl/badge.svg?branch=master)](https://coveralls.io/github/shayandavoodii/OPS.jl?branch=master)
+[![codecov](https://codecov.io/github/shayandavoodii/OPS.jl/branch/main/graph/badge.svg?token=BSZJR7AL1O)](https://codecov.io/github/shayandavoodii/OPS.jl)
 </div>
 
 This repo contains some benchmark methods for Online Portfolio Selection (OPS). The methods are implemented in Julia and can be used for research purposes. The repo is still under development, and more methods will be added. Hopefully, novel methods will be added to the repo after completing the major benchmark methods.

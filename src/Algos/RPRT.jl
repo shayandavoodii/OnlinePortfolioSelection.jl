@@ -2,16 +2,85 @@ using Statistics
 using LinearAlgebra
 include("../Tools/tools.jl");
 
+"""
+    RPRT
+
+A `RPRT` object.
+
+# Fields
+- `n_assets::Int`: Number of assets in the portfolio.
+- `b::Matrix{T}`: Weights of the created portfolios.
+- `budgets::Vector{T}`: cumulative return of the portfolio.
+
+!!! note
+    The rows of `b` represent the assets and the columns represent the time periods.
+
+The formula for calculating the cumulative return of the portfolio is as follows:
+
+```math
+{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
+```
+
+where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
+of weights of the portfolio at time ``t`` and ``x_t`` is the vector of relative prices of \
+the assets at time ``t``.
+"""
 struct RPRT{T<:Float64}
   n_assets::Int
   b::Matrix{T}
   budgets::Vector{T}
 end
 
+"""
+    RPRT(
+      adj_close::Matrix{T};
+      w::Int64=5,
+      initial_budget::Int=1,
+      theta::T=0.8,
+      epsilon=50
+    ) where T<:Float64
+
+Run RPRT algorithm.
+
+# Arguments
+- `adj_close::Matrix{T}`: Adjusted close prices of assets.
+- `w::Int64=5`: maximum length of time window to be examined.
+- `initial_budget::Int=1`: The initial budget for investment.
+- `theta::T=0.8`: The threshold for the relative price.
+- `epsilon=50`: The threshold for the condition of the portfolio.
+
+!!! warning "Beware!"
+    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
+
+# Returns
+- `::RPRT`: An object of type `RPRT`.
+
+# Reference
+- [1] [Reweighted Price Relative Tracking System for Automatic Portfolio Optimization](https://ieeexplore.ieee.org/document/8411138/)
+
+# Examples
+```julia
+julia> using OPS
+
+julia> typeof(adj_close), size(adj_close)
+(Matrix{Float64}, (3, 10))
+
+julia> rprt = RPRT(adj_close);
+
+julia> rprt.b
+3×10 Matrix{Float64}:
+ 0.333333  0.333333  0.333333  0.333333  0.0       0.0369806  0.315476  0.382559  0.942964   0.678569
+ 0.333333  0.333333  0.333333  0.333333  0.464174  0.694045   0.137325  0.392694  0.0313677  0.0
+ 0.333333  0.333333  0.333333  0.333333  0.535826  0.268975   0.547199  0.224747  0.0256685  0.321431
+
+julia> sum(rprt.b, dims=1) .|> isapprox(1.) |> all
+true
+```
+"""
 function RPRT(
   adj_close::Matrix{T};
   w::Int64=5,
-  initial_budget::Int=1,
+  initial_budget=1.,
   theta::T=0.8,
   epsilon=50
 ) where T<:Float64
@@ -24,12 +93,13 @@ function RPRT(
   # Initialize the weights
   b = zeros(n_assets, n_periods)
   last_b = ones(n_assets)/n_assets
+
   for t ∈ axes(adj_close, 2)
     if t<w
       b[:, t] = last_b
       continue
     end
-    last_relative_price = adj_close[:, t]./adj_close[:, t-1]
+    last_relative_price = relative_prices[:, t-w+(w-1)]
     prediction = predict_relative_price(relative_prices[:, t-w+1:t-1])
     # predicted d
     dₚ = vec(prediction) |> diagm
@@ -46,12 +116,13 @@ function RPRT(
     clamp!(w_, -1e10, 1e10)
     b[:, t] = simplex_proj(w_)
   end
-  b = b./sum(b, dims=1)
-  budgets = ones(n_periods)*initial_budget
-  for t ∈ axes(adj_close, 2)[1:end-1]
-    budgets[t+1] = budgets[t] * sum(relative_prices[:, t] .* b[:, t])
-  end
-  return RPRT(n_assets, b, budgets)
+  normalizer!(b)
+
+  Snₜ = Sn(relative_prices, b, initial_budget)
+
+  return RPRT(n_assets, b, Snₜ)
 end
 
-predict_relative_price(relative_price::Matrix{Float64}) = mean(relative_price, dims=2)./relative_price[:, end]
+function predict_relative_price(relative_price::Matrix{Float64})
+  return mean(relative_price, dims=2)./relative_price[:, end]
+end

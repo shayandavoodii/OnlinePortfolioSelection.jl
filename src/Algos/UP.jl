@@ -1,13 +1,43 @@
 include("../Tools/tools.jl");
 
-struct UP
+"""
+    UP{T<:Float64}
+
+An object of type `UP`.
+
+# Fields
+- `n_assets::Int`: Number of assets in the portfolio.
+- `b::Matrix{T}`: Weights of the created portfolios.
+- `budgets::Vector{T}`: cumulative return of the portfolio.
+
+!!! note
+    The rows of `b` represent the assets and the columns represent the time periods.
+
+The formula for calculating the cumulative return of the portfolio is as follows:
+
+```math
+{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
+```
+
+where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
+of weights of the portfolio at time ``t`` and ``x_t`` is the vector of relative prices of \
+the assets at time ``t``.
+"""
+struct UP{T<:Float64}
   n_assets::Int
-  b::Matrix{Float64}
-  budgets::Vector{Float64}
+  b::Matrix{T}
+  budgets::Vector{T}
 end
 
 """
-    UP(adj_close::Matrix{Float64}, initial_budget=1., eval_points::Int=10^4, leverage=1., frequency::Int=1, min_history::Int=0)
+    UP(
+      adj_close::Matrix{Float64};
+      initial_budget=1.,
+      eval_points::Int=10^4,
+      leverage=1.,
+      frequency::Int=1,
+      min_history::Int=0
+    )
 
 Universal Portfolio (UP) algorithm.
 
@@ -20,6 +50,9 @@ using the given historical prices and parameters.
 - `eval_points::Int=10^4`: Number of evaluation points.
 - `leverage=1.`: Leverage value.
 
+!!! warning "Beware!"
+    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
+
 # Returns
 - `::UP(n_assets, weights, budgets)`: Universal Portfolio (UP) object.
 
@@ -28,11 +61,23 @@ using the given historical prices and parameters.
 
 # Examples
 ```julia
-```
+julia> typeof(adj_close), size(adj_close)
+(Matrix{Float64}, (3, 30))
 
+julia> up = UP(adj_close);
+
+julia> up.b
+3×30 Matrix{Float64}:
+ 0.333333  0.331149  0.33204   0.331716  …  0.326788  0.325788  0.325829  0.326222
+ 0.333333  0.336058  0.335239  0.336304     0.343405  0.342161  0.342283  0.340693
+ 0.333333  0.332793  0.33272   0.331981     0.329807  0.332051  0.331888  0.333086
+
+julia> sum(up.b, dims=1) .|> isapprox(1.) |> all
+true
+```
 """
 function UP(
-  adj_close::Matrix{Float64},
+  adj_close::Matrix{Float64};
   initial_budget=1.,
   eval_points::Int=10^4,
   leverage=1.
@@ -42,24 +87,24 @@ function UP(
   n_assets, n_periods = size(relative_prices)
   # Initialize weights
   weights = zeros(n_assets, n_periods+1)
-  weights[:, 1] = ones(n_assets) / n_assets
+  weights[:, 1] = fill(1/n_assets, n_assets)
   W = mc_simplex(n_assets-1, eval_points)
   m = size(W, 1)
   S = reshape(ones(m), m, 1)
   leverage_ = max(leverage, 1/n_periods)
   stretch = (leverage_-1/n_periods)/(1-1/n_periods)
+
   # Update weights
   for t ∈ axes(weights, 2)[1:end-1]
     n = length(relative_prices[:, t])
     S = S.*(W*reshape(relative_prices[:, t], n, 1))
     b = W'*S
-    weights[:, t+1] = b./sum(b)
+    normalizer!(b)
+    weights[:, t+1] = b
   end
+
   # budgets
-  budgets = zeros(n_periods+1)
-  budgets[1] = initial_budget
-  for t ∈ axes(relative_prices, 2)
-    budgets[t+1] = budgets[t] * sum(weights[:, t] .* relative_prices[:, t])
-  end
-  return UP(n_assets, weights, budgets)
+  Snₜ = Sn(relative_prices, weights, initial_budget)
+
+  return UP(n_assets, weights, Snₜ)
 end

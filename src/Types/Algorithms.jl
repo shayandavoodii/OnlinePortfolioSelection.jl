@@ -1,13 +1,13 @@
 """
     OPSAlgorithm{T<:Float64}
 
-A `CORN` object that contains the weights of the portfolio, Sₙ, and the number of assets.
+A `OPSAlgorithm` object that contains the result of running the algorithm.
 
 # Fields
 - `n_asset::Int`: Number of assets in the portfolio.
 - `b::Matrix{T}`: Weights of the created portfolios.
 - `budgets::Vector{T}`: Budget during the investment horizon.
-- `type::String`: The type of CORN algorithm. It can be either "CORN-U" or "CORN-K".
+- `alg::String`: Name of the algorithm.
 
 The formula for calculating the cumulative return of the portfolio is as follows:
 

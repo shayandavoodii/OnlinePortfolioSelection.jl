@@ -10,8 +10,8 @@ include("../Types/Algorithms.jl")
     CORNU(
       adj_close::Matrix{T},
       horizon::M,
-      w::M,
-      rho::T;
+      w::M;
+      rho::T,
       init_budg=1
     ) where {T<:Float64, M<:Int}
 
@@ -21,7 +21,7 @@ Run CORN-U algorithm.
 - `adj_close::Matrix{T}`: Adjusted close prices of assets.
 - `horizon::M`: The number of periods to invest.
 - `w::M`: maximum length of time window to be examined.
-- `rho::T`: The correlation coefficient threshold.
+- `rho::T=0.2`: The correlation coefficient threshold.
 - `init_budg=1`: The initial budget for investment.
 
 !!! warning "Beware!"

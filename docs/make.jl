@@ -1,15 +1,15 @@
 push!(LOAD_PATH,"../src/")
-using OPS
+using OnlinePortfolioSelection
 using Documenter
 
-DocMeta.setdocmeta!(OPS, :DocTestSetup, :(using OPS); recursive=true)
+DocMeta.setdocmeta!(OnlinePortfolioSelection, :DocTestSetup, :(using OnlinePortfolioSelection); recursive=true)
 
 makedocs(;
-    modules=[OPS],
+    modules=[OnlinePortfolioSelection],
     authors="Shayan Davoodi <sh0davoodi@gmail.com>",
-    sitename="OPS.jl",
+    sitename="OnlinePortfolioSelection.jl",
     format=Documenter.HTML(;
-        canonical="https://shayandavoodii.github.io/OPS.jl",
+        canonical="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl",
         prettyurls = get(ENV, "CI", nothing) == "true"
     ),
     pages=Any[
@@ -25,6 +25,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/shayandavoodii/OPS.jl.git",
+    repo="github.com/shayandavoodii/OnlinePortfolioSelection.jl.git",
     devbranch="main",
 )

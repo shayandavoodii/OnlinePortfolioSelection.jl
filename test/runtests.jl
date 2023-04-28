@@ -1,4 +1,4 @@
-using OPS
+using OnlinePortfolioSelection
 using JuMP
 using Ipopt
 using Test

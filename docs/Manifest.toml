@@ -62,7 +62,7 @@ uuid = "a63ad114-7e13-5084-954f-fe012c677804"
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 version = "1.2.0"
 
-[[deps.OPS]]
+[[deps.OnlinePortfolioSelection]]
 path = ".."
 uuid = "038f9fe3-14bd-47ca-b081-2e00e8c46dfa"
 version = "1.0.0-DEV"

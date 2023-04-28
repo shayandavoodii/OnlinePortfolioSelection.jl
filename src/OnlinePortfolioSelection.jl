@@ -1,4 +1,4 @@
-module OPS
+module OnlinePortfolioSelection
 
 include("Algos/CRP.jl")
 include("Algos/EG.jl")

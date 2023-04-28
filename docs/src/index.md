@@ -1,6 +1,6 @@
 ```@meta
 DocTestSetup  = quote
-    using OPS
+    using OnlinePortfolioSelection
 end
 ```
 

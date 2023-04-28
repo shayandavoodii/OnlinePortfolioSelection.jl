@@ -12,9 +12,9 @@ makedocs(;
         canonical="https://shayandavoodii.github.io/OPS.jl",
         prettyurls = get(ENV, "CI", nothing) == "true"
     ),
-    pages=[
+    pages=Any[
         "Home" => "index.md",
-        "OPS Strategies" => [
+        "OPS Strategies" => Any[
           "Benchmark" => "benchmark.md",
           "Follow the Loser" => "FL.md",
           "Follow the Winner" => "FW.md",

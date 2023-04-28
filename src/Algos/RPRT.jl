@@ -1,35 +1,7 @@
 using Statistics
 using LinearAlgebra
 include("../Tools/tools.jl");
-
-"""
-    RPRT
-
-A `RPRT` object.
-
-# Fields
-- `n_assets::Int`: Number of assets in the portfolio.
-- `b::Matrix{T}`: Weights of the created portfolios.
-- `budgets::Vector{T}`: cumulative return of the portfolio.
-
-!!! note
-    The rows of `b` represent the assets and the columns represent the time periods.
-
-The formula for calculating the cumulative return of the portfolio is as follows:
-
-```math
-{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
-```
-
-where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
-of weights of the portfolio at time ``t`` and ``x_t`` is the vector of relative prices of \
-the assets at time ``t``.
-"""
-struct RPRT{T<:Float64}
-  n_assets::Int
-  b::Matrix{T}
-  budgets::Vector{T}
-end
+include("../Types/Algorithms.jl");
 
 """
     RPRT(
@@ -53,7 +25,7 @@ Run RPRT algorithm.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::RPRT`: An object of type `RPRT`.
+- `::OPSAlgorithm(n_assets, b, budgets, alg)`: An object of type `OPSAlgorithm`.
 
 # Reference
 - [1] [Reweighted Price Relative Tracking System for Automatic Portfolio Optimization](https://ieeexplore.ieee.org/document/8411138/)
@@ -120,7 +92,7 @@ function RPRT(
 
   Snₜ = Sn(relative_prices, b, initial_budget)
 
-  return RPRT(n_assets, b, Snₜ)
+  return OPSAlgorithm(n_assets, b, Snₜ, "RPRT")
 end
 
 function predict_relative_price(relative_price::Matrix{Float64})

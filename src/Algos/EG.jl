@@ -1,32 +1,5 @@
 include("../Tools/tools.jl")
-
-"""
-    EG{T<:Float64}
-
-An object of type `EG`.
-
-# Fields
-- `n_asset::Int`: number of assets
-- `b::Matrix{T}`: Matrix of weights
-- `budgets::Vector{T}`: cumulative return
-
-!!! note
-    The rows of `b` represent the assets and the columns represent the time periods.
-
-where cumulative return is calculated as follows:
-
-```math
-{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
-```
-
-where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
-of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-th period.
-"""
-struct EG{T<:Float64}
-  n_assets::Int
-  b::Matrix{T}
-  budgets::Vector{T}
-end
+include("../Types/Algorithms.jl")
 
 """
     EG(adj_close::Matrix{Float64}, initial_budget=1, eta=0.05)
@@ -46,7 +19,7 @@ an EG object.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::EG(n_assets, weights, budgets)`: Exponential Gradient (EG) object.
+- `::OPSAlgorithm(n_assets, b, budgets, alg)`: OPSAlgorithm object.
 
 # References
 - [1] On-Line Portfolio Selection Using Multiplicative Updates](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058)
@@ -89,5 +62,5 @@ function EG(adj_close::Matrix{Float64}; initial_budget=1., eta=0.05)
   # Calculate cumulative return
   Snₜ = Sn(relative_prices, b, initial_budget)
 
-  return EG(n_assets, b, Snₜ)
+  return OPSAlgorithm(n_assets, b, Snₜ, "EG")
 end

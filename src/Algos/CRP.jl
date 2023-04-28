@@ -1,31 +1,5 @@
 include("../Tools/tools.jl")
-
-"""
-    CRP
-
-An object of type `CRP`.
-
-# Fields
-- `n_asset::Int`: number of assets
-- `b::Matrix{T}`: Matrix of weights
-- `budgets::Vector{T}`: budget
-
-!!! note
-    The rows of `b` represent the assets and the columns represent the time periods.
-
-```math
-{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
-```
-
-where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
-of weights of the portfolio at time ``t`` and ``x_t`` is the vector of relative prices of \
-the assets at time ``t``.
-"""
-struct CRP{T<:Float64}
-  n_assets::Int
-  b::Matrix{T}
-  budgets::Vector{T}
-end
+include("../Types/Algorithms.jl")
 
 """
     CRP(adj_close::Matrix{T}, initial_budget=1) where T<:Float64
@@ -40,7 +14,7 @@ Run Constant Rebalanced Portfolio (CRP) algorithm.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::CRP`: CRP object
+- `::OPSAlgorithm(n_assets, b, budgets, alg)`: OPSAlgorithm object
 
 # References
 - [1] [Universal Portfolios](https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9965.1991.tb00002.x)
@@ -73,5 +47,5 @@ function CRP(adj_close::Matrix{T}; initial_budget=1.) where T<:Float64
   # Calculate budgets
   Snₜ = Sn(relative_prices, b, initial_budget)
 
-  return CRP(n_assets, b, Snₜ)
+  return OPSAlgorithm(n_assets, b, Snₜ, "CRP")
 end

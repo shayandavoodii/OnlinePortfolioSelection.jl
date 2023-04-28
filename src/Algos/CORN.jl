@@ -4,33 +4,7 @@ using Ipopt
 
 include("../Tools/tools.jl")
 include("../Tools/cornfam.jl")
-
-"""
-    CORN
-
-A `CORN` object that contains the weights of the portfolio, Sₙ, and the number of assets.
-
-# Fields
-- `n_asset::Int`: Number of assets in the portfolio.
-- `b::Matrix{Float64}`: Weights of the created portfolios.
-- `budgets::Vector{Float64}`: Budget during the investment horizon.
-- `type::String`: The type of CORN algorithm. It can be either "CORN-U" or "CORN-K".
-
-The formula for calculating the cumulative return of the portfolio is as follows:
-
-```math
-{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
-```
-
-where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
-of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-th period.
-"""
-struct CORN
-  n_asset::Int
-  b::Matrix{Float64}
-  budgets::Vector{Float64}
-  type::String
-end
+include("../Types/Algorithms.jl")
 
 """
     CORNU(
@@ -54,7 +28,7 @@ Run CORN-U algorithm.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `CORN`: An object of type `CORN`.
+- `::OPSAlgorithm(n_assets, b, budgets, alg)`: An object of type `OPSAlgorithm`.
 
 # Reference
 - [1] [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
@@ -115,7 +89,7 @@ function CORNU(
     weights[:, t+1] = final_weights(q, Sₜ_[:, t+2], bₜ)
     Sₜ[t+2] = Sₜ[t+1] * sum(weights[:, t+1] .* relative_prices[:, end-horizon+t+1])
   end
-  return CORN(n_assets, weights, Sₜ, "CORN-U")
+  return OPSAlgorithm(n_assets, weights, Sₜ, "CORN-U")
 end
 
 """
@@ -142,7 +116,7 @@ Run CORN-K algorithm.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `CORN`: An object of type `CORN`.
+- `::OPSAlgorithm(n_assets, b, budgets, alg)`: An object of type `OPSAlgorithm`.
 
 # Reference
 - [1] [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
@@ -216,7 +190,7 @@ function CORNK(
     Sₜ[t+2] = Sₜ[t+1] * sum(weights[:, t+1] .* relative_prices[:, end-horizon+t+1])
   end
 
-  return CORN(n_assets, weights, Sₜ, "CORN-K")
+  return OPSAlgorithm(n_assets, weights, Sₜ, "CORN-K")
 end
 
 """

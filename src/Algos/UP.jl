@@ -1,33 +1,5 @@
 include("../Tools/tools.jl");
-
-"""
-    UP{T<:Float64}
-
-An object of type `UP`.
-
-# Fields
-- `n_assets::Int`: Number of assets in the portfolio.
-- `b::Matrix{T}`: Weights of the created portfolios.
-- `budgets::Vector{T}`: cumulative return of the portfolio.
-
-!!! note
-    The rows of `b` represent the assets and the columns represent the time periods.
-
-The formula for calculating the cumulative return of the portfolio is as follows:
-
-```math
-{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
-```
-
-where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
-of weights of the portfolio at time ``t`` and ``x_t`` is the vector of relative prices of \
-the assets at time ``t``.
-"""
-struct UP{T<:Float64}
-  n_assets::Int
-  b::Matrix{T}
-  budgets::Vector{T}
-end
+include("../Types/Algorithms.jl");
 
 """
     UP(
@@ -54,7 +26,7 @@ using the given historical prices and parameters.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::UP(n_assets, weights, budgets)`: Universal Portfolio (UP) object.
+- `::OPSAlgorithm(n_assets, b, budgets, alg)`: OPSAlgorithm object.
 
 # References
 - [1] [Universal Portfolios](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x)
@@ -106,5 +78,5 @@ function UP(
   # budgets
   Snₜ = Sn(relative_prices, weights, initial_budget)
 
-  return UP(n_assets, weights, Snₜ)
+  return OPSAlgorithm(n_assets, weights, Snₜ, "UP")
 end

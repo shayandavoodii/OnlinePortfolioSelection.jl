@@ -1,4 +1,4 @@
-CurrentModule = OPS
+```@meta
 DocTestSetup  = quote
     using OPS
 end

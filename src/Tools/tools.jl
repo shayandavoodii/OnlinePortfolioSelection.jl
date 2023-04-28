@@ -75,13 +75,84 @@ function budg_dur_time(
 end
 
 """
+    Sn(
+      rel_pr::AbstractMatrix{T},
+      w::AbstractMatrix{T},
+      init_budg
+    ) where T<:Float64
+
+Calculate the cumulative return of portfolio.
+
+# Arguments
+- `rel_pr::AbstractMatrix{T}`: The relative prices of the assets in each period.
+- `w::AbstractMatrix{T}`: The weights of the assets in each period.
+- `init_budg`: The initial budget.
+
+!!! warning "Beware!"
+    `rel_pr` and `w` should be a matrix of size `n_assets` × `n_periods`.
+"""
+function Sn(
+  rel_pr::AbstractMatrix{T},
+  w::AbstractMatrix{T},
+  init_budg
+) where T<:Float64
+
+  n_periods = size(rel_pr, 2)
+  budgets = zeros(T, n_periods+1)
+  budgets[1] = init_budg
+  for t ∈ 1:n_periods
+    budgets[t+1] = S(budgets[t], w[:, t], rel_pr[:, t])
+  end
+
+  return budgets
+end
+
+"""
+    normalizer!(mat::Matrix{T}) where T<:Float64
+
+Force normilize the given matrix column by column.
+
+# Arguments
+- `mat::Matrix{T}`: The matrix that is going to be normalized.
+
+# Returns
+- `::Nothing`: The matrix is normalized in place.
+
+# Example
+```julia
+julia> mat = rand(3, 3);
+
+julia> normalizer!(mat)
+
+julia> sum(mat, dims=1) .|> isapprox(1.0) |> all
+true
+```
+"""
+function normalizer!(mat::Matrix{T}) where T<:Float64
+  @inbounds @simd for idx_col ∈ axes(mat, 2)
+    @views normalizer!(mat[:, idx_col])
+  end
+end
+
+"""
     normalizer!(vec::Vector)::Vector{Float64}
 
 Force normilize the given vector.
 
-This function is used to normalize the weights of assets in situations where the sum of the weights is not exactly 1. (in some situation the sum of the weights is 0.999999999 or 1.000000001 due to inexactness of Ipopt solver)
+This function is used to normalize the weights of assets in situations where the sum of \
+the weights is not exactly 1. (in some situation the sum of the weights is 0.999999999 or \
+1.000000001 due to inexactness of Ipopt solver)
+
+# Arguments
+- `vec::Vector{Float64}`: The vector that is going to be normalized.
+
+# Returns
+- `::Nothing`: The vector is normalized in place.
+
+# methods
+
 """
-normalizer!(vec::Vector)::Vector{Float64} = vec ./= sum(vec)
+normalizer!(vec::AbstractVector)::Vector{Float64} = vec ./= sum(vec)
 
 """
     S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}}

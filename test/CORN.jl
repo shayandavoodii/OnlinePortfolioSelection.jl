@@ -10,14 +10,14 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
         adj_close,
         3,
         3,
-        1.
+        rho=1.
       )
 
       @test_throws ArgumentError CORNU(
         adj_close,
         3,
         3,
-        -0.5
+        rho=-0.5
       )
     end
 
@@ -26,7 +26,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
         adj_close,
         3,
         3,
-        0.5
+        rho=0.5
       );
 
       @test res.alg == "CORN-U"
@@ -39,7 +39,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
         adj_close,
         30,
         3,
-        0.1
+        rho=0.1
       )
     end
   end

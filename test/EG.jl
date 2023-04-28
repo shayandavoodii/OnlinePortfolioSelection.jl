@@ -19,7 +19,7 @@ adj_close = [
   end
 
   @testset "with custom arguments" begin
-    eg = EG(adj_close, initial_budget=1e2, eta=0.2)
+    eg = EG(adj_close, init_budg=1e2, eta=0.2)
 
     @test isa(eg, OPSAlgorithm)
 

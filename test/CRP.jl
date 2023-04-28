@@ -19,7 +19,7 @@ adj_close = [
   end
 
   @testset "with custom arguments" begin
-    crp = CRP(adj_close, initial_budget=1e2)
+    crp = CRP(adj_close, init_budg=1e2)
 
     @test isa(crp, OPSAlgorithm)
 

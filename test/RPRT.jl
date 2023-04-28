@@ -19,7 +19,7 @@ adj_close = [
   end
 
   @testset "with custom arguments" begin
-    rprt = RPRT(adj_close, initial_budget=1e2, w=4, theta=0.5, epsilon=30)
+    rprt = RPRT(adj_close, init_budg=1e2, w=4, theta=0.5, epsilon=30)
 
     @test isa(rprt, OPSAlgorithm)
 

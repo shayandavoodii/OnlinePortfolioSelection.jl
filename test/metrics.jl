@@ -46,7 +46,7 @@ adj_close_market = rand(40);
       adj_close,
       7,
       2,
-      0.8,
+      rho=0.8,
     )
 
     met = OPSMetrics(

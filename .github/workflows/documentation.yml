@@ -21,8 +21,8 @@ jobs:
           julia --project=docs -e '
             import Pkg; Pkg.add("Documenter")
             using Documenter: doctest
-            using OPS
-            doctest(OPS)'
+            using OnlinePortfolioSelection
+            doctest(OnlinePortfolioSelection)'
       - run: julia --project=docs docs/make.jl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

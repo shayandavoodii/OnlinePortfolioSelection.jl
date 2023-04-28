@@ -29,7 +29,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
         0.5
       );
 
-      @test all(isapprox.(1., sum(res.b, dims=1)))
+      @test sum(res.b, dims=1) .|> isapprox(1.) |> all
     end
 
     @testset "invalid horizon" begin
@@ -62,7 +62,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
         2
       );
 
-      @test all(isapprox.(1., sum(res.b, dims=1)))
+      @test sum(res.b, dims=1) .|> isapprox(1.) |> all
     end
 
     @testset "invalid horizon" begin

@@ -48,6 +48,6 @@ adj_close_market = rand(30);
       2
     )
 
-    @test all(isapprox.(1., sum(res.b, dims=1)))
+    @test sum(res.b, dims=1) .|> isapprox(1.) |> all
   end
 end

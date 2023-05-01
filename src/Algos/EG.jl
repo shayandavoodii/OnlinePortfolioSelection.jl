@@ -1,5 +1,4 @@
 include("../Tools/tools.jl")
-include("../Types/Algorithms.jl")
 
 """@docs
     eg(adj_close::Matrix{Float64}, init_budg=1., eta=0.05)

@@ -1,5 +1,4 @@
 include("../Tools/tools.jl")
-include("../Types/Algorithms.jl")
 
 """@docs
     crp(adj_close::Matrix{T}, init_budg=1) where T<:Float64

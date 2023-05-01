@@ -4,7 +4,6 @@ using Ipopt
 
 include("../Tools/tools.jl")
 include("../Tools/cornfam.jl")
-include("../Types/Algorithms.jl")
 
 """@docs
     dricornk(

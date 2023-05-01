@@ -1,5 +1,4 @@
 include("../Tools/tools.jl");
-include("../Types/Algorithms.jl");
 
 """@docs
     up(

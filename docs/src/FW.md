@@ -10,7 +10,7 @@ See [`up`](@ref).
 
 ### Run UP
 **Note:** This package is meant to be used by researchers **NOT FOR MARKET PRACTITIONERS**.
-Let's run the algorithm on the real market data. The data is collected as noted in the ["Fetch Financial Data"]() section.
+Let's run the algorithm on the real market data. The data is collected as noted in the ["Fetch Data"](@ref) section.
 
 Let's run the algorithm on the given data (named as `prices`):
 
@@ -80,7 +80,7 @@ See [`EG`](@ref).
 
 ### Run EG
 
-Let's run the algorithm on the real market data. The data is collected as noted in the ["Fetch Financial Data"]() section.
+Let's run the algorithm on the real market data. The data is collected as noted in the ["Fetch Data"](@ref) section.
 
 ```julia
 juila> using OnlinePortfolioSelection

@@ -4,7 +4,7 @@ Some strategies in the context of online portfolio selection are considered as b
 See [`crp`](@ref).
 
 ### Run CRP
-Let's run the algorithm on the real market data. Assume the data (named as `prices`) is collected as noted in the ["Fetch Financial Data"]() section.
+Let's run the algorithm on the real market data. Assume the data (named as `prices`) is collected as noted in the ["Fetch Data"](@ref) section.
 
 ```julia
 juila> using OnlinePortfolioSelection

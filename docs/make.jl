@@ -14,11 +14,12 @@ makedocs(;
     ),
     pages=Any[
         "Home" => "index.md",
+        "Fetch Financial Data" =>"fetchdata.md",
         "OPS Strategies" => Any[
           "Benchmark" => "benchmark.md",
-          "Follow the Loser" => "FL.md",
+          # "Follow the Loser" => "FL.md",
           "Follow the Winner" => "FW.md",
-          "Pattern-matching" => "PM.md",
+          "Pattern-Matching" => "PM.md",
         ],
         "Functions" => "funcs.md"
     ],

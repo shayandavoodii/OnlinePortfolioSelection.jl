@@ -1,6 +1,6 @@
 using Printf
 
-"""
+"""@docs
     OPSMetrics(Sn::Vector{T}, APY::T, Ann_Sharpe::T, MDD::T, Calmar::T) where {T<:Float64}
 
 A struct to store the metrics of the OPS algorithm.
@@ -31,8 +31,8 @@ function Base.show(io::IO, metrics::OPSMetrics)
   @printf(io, "%29s: %.3f\n", "Calmar Ratio", metrics.Calmar)
 end
 
-"""
-    Sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Float64
+"""@docs
+    sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Float64
 
 Calculate the cumulative return of investment during a period of time.
 
@@ -50,7 +50,7 @@ Calculate the cumulative return of investment during a period of time.
 # Returns
 - `all_sn::Vector{T}`: the cumulative return of investment during the investment period.
 """
-function Sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Float64
+function sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Float64
   n_periods = size(rel_pr, 2)
   n_periods<size(weights, 2) && ArgumentError("The number of samples in the \
     `weights` argument ($(size(weights, 2))) does not match the number of samples in \
@@ -73,8 +73,24 @@ function Sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Floa
   return all_sn
 end
 
+"""@docs
+    ann_std(cum_ret::Vector{Float64}; dpy)
+
+Calculate the Annualized Standard Deviation (σₚ) of portfolio.
+
+# Arguments
+- `cum_ret::Vector{Float64}`: the cumulative return of investment during the investment period.
+- `dpy`: the number of days in a year.
+
+# Returns
+- `::Float64`: the Annualized Standard Deviation (σₚ) of portfolio.
 """
-    APY(Sn::Float64, n_periods::S; dpy::S=252) where S<:Int
+function ann_std(cum_ret::Vector{Float64}; dpy)
+  return (cum_ret |> diff |> std) * sqrt(dpy)
+end
+
+"""@docs
+    apy(Sn::Float64, n_periods::S; dpy::S=252) where S<:Int
 
 Calculate the Annual Percentage Yield (APY) of investment.
 
@@ -86,13 +102,13 @@ Calculate the Annual Percentage Yield (APY) of investment.
 # Returns
 - `::Float64`: the APY of investment.
 """
-function APY(Sn::Float64, n_periods::S; dpy::S=252) where S<:Int
+function apy(Sn::Float64, n_periods::S; dpy::S=252) where S<:Int
   y = n_periods/dpy
   return (Sn)^(1/y) - 1
 end
 
-"""
-    Ann_Sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:Float64
+"""@docs
+    ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:Float64
 
 Calculate the Annualized Sharpe Ratio of investment.
 
@@ -104,10 +120,10 @@ Calculate the Annualized Sharpe Ratio of investment.
 # Returns
 - `::Float64`: the Annualized Sharpe Ratio of investment.
 """
-Ann_Sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:Float64 = (APY - Rf)/sigma_prtf;
+ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:Float64 = (APY - Rf)/sigma_prtf;
 
-"""
-    MDD(Sn::Vector{T}) where T<:Float64
+"""@docs
+    mdd(Sn::Vector{T}) where T<:Float64
 
 Calculate the Maximum Drawdown (MDD) of investment.
 
@@ -117,7 +133,7 @@ Calculate the Maximum Drawdown (MDD) of investment.
 # Returns
 - `::Float64`: the MDD of investment.
 """
-function MDD(Sn::Vector{T}) where T<:Float64
+function mdd(Sn::Vector{T}) where T<:Float64
   n_periods = length(Sn)
   max_sn = zeros(T, n_periods)
   max_sn[1] = Sn[1]
@@ -131,8 +147,8 @@ function MDD(Sn::Vector{T}) where T<:Float64
   return maximum(max_dd)
 end
 
-"""
-    Calmar(APY::T, MDD::T) where T<:Float64
+"""@docs
+    calmar(APY::T, MDD::T) where T<:Float64
 
 Calculate the Calmar Ratio of investment.
 
@@ -143,9 +159,9 @@ Calculate the Calmar Ratio of investment.
 # Returns
 - `::Float64`: the Calmar Ratio of investment.
 """
-Calmar(APY::T, MDD::T) where T<:Float64 = APY/MDD;
+calmar(APY::T, MDD::T) where T<:Float64 = APY/MDD;
 
-"""
+"""@docs
     OPSMetrics(
       weights::Matrix{T},
       rel_pr::Matrix{T};
@@ -186,11 +202,11 @@ function OPSMetrics(
     rel_pr = rel_pr[:, end-size(weights, 2)+1:end]
     n_periods = size(rel_pr, 2)
   end
-  all_sn = Sn(weights, rel_pr, init_inv=init_inv)
-  σₚ = (all_sn |> diff |> std) * sqrt(dpy)
-  apy = APY(all_sn[end], n_periods, dpy=dpy)
-  ann_Sharpe = Ann_Sharpe(apy, Rf, σₚ)
-  MDD_ = MDD(all_sn)
-  calmar = Calmar(apy, MDD_)
-  return OPSMetrics(all_sn, apy, σₚ, ann_Sharpe, MDD_, calmar)
+  all_sn = sn(weights, rel_pr, init_inv=init_inv)
+  σₚ = ann_std(all_sn, dpy=dpy)
+  APY = apy(all_sn[end], n_periods, dpy=dpy)
+  ann_Sharpe = ann_sharpe(APY, Rf, σₚ)
+  MDD = mdd(all_sn)
+  Calmar = calmar(APY, MDD)
+  return OPSMetrics(all_sn, APY, σₚ, ann_Sharpe, MDD, Calmar)
 end

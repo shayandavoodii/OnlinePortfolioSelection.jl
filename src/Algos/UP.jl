@@ -1,8 +1,8 @@
 include("../Tools/tools.jl");
 include("../Types/Algorithms.jl");
 
-"""
-    UP(
+"""@docs
+    up(
       adj_close::Matrix{Float64};
       init_budg=1.,
       eval_points::Int=10^4,
@@ -26,7 +26,7 @@ using the given historical prices and parameters.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, budgets, alg)`: OPSAlgorithm object.
+- `::OPSAlgorithm(n_assets, b, alg)`: OPSAlgorithm object.
 
 # References
 - [1] [Universal Portfolios](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x)
@@ -38,19 +38,19 @@ julia> using OnlinePortfolioSelection
 julia> typeof(adj_close), size(adj_close)
 (Matrix{Float64}, (3, 30))
 
-julia> up = UP(adj_close);
+julia> m_up = up(adj_close);
 
-julia> up.b
+julia> m_up.b
 3×30 Matrix{Float64}:
  0.333333  0.331149  0.33204   0.331716  …  0.326788  0.325788  0.325829  0.326222
  0.333333  0.336058  0.335239  0.336304     0.343405  0.342161  0.342283  0.340693
  0.333333  0.332793  0.33272   0.331981     0.329807  0.332051  0.331888  0.333086
 
-julia> sum(up.b, dims=1) .|> isapprox(1.) |> all
+julia> sum(m_up.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
 """
-function UP(
+function up(
   adj_close::Matrix{Float64};
   init_budg=1.,
   eval_points::Int=10^4,
@@ -77,8 +77,5 @@ function UP(
     weights[:, t+1] = b
   end
 
-  # budgets
-  Snₜ = Sn(relative_prices, weights, init_budg)
-
-  return OPSAlgorithm(n_assets, weights, Snₜ, "UP")
+  return OPSAlgorithm(n_assets, weights, "UP")
 end

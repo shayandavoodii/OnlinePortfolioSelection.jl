@@ -6,8 +6,8 @@ include("../Tools/tools.jl")
 include("../Tools/cornfam.jl")
 include("../Types/Algorithms.jl")
 
-"""
-    DRICORNK(
+"""@docs
+    dricornk(
       adj_close::Matrix{T},
       adj_close_market::Vector{T},
       horizon::M,
@@ -34,30 +34,24 @@ Run the DRICORNK algorithm.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, budgets, alg)`: An object of type `OPSAlgorithm`.
+- `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
 
 # Reference
 - [1] [DRICORN-K: A Dynamic RIsk CORrelation-driven Non-parametric Algorithm for Online Portfolio Selection](https://www.doi.org/10.1007/978-3-030-66151-9_12)
 
 # Example
 ```julia
-julia> using OPS
+julia> using OnlinePortfolioSelection
 
 julia> stocks_adj, market_adj = rand(10, 100), rand(100);
 
-julia> dricornk = DRICORNK(stocks_adj, market_adj, 5, 2, 4, 3);
+julia> m_dricornk = dricornk(stocks_adj, market_adj, 5, 2, 4, 3);
 
-julia> dricornk.budgets
-6-element Vector{Float64}:
-   1.0
-   3.473117165390519
-   5.68035943256069
-  16.98710435236131
- 108.58630004976507
- 323.6896116088503
+julia> sum(m_dricornk.b, dims=1) .|> isapprox(1.) |> all
+true
 ```
 """
-function DRICORNK(
+function dricornk(
   adj_close::Matrix{T},
   adj_close_market::Vector{T},
   horizon::M,
@@ -84,8 +78,6 @@ function DRICORNK(
   P = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ=0:p)
   q = 1/k
   weights = zeros(T, n_assets, horizon)
-  Sₜ = Vector{T}(undef, horizon+1)
-  Sₜ[1] = init_budg
   Sₜ_ = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
   for t ∈ 0:horizon-1
@@ -103,10 +95,9 @@ function DRICORNK(
     end
     idx_top_k = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
     weights[:, t+1] = final_weights(q, Sₜ_[idx_top_k, t+2], bₜ[:, idx_top_k])
-    Sₜ[t+2] = Sₜ[t+1] * sum(weights[:, t+1] .* relative_prices[:, end-horizon+t+1])
   end
 
-  return OPSAlgorithm(n_assets, weights, Sₜ, "DRICORN-K")
+  return OPSAlgorithm(n_assets, weights, "DRICORN-K")
 end
 
 """

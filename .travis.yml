@@ -26,8 +26,8 @@ jobs:
           Pkg.develop(PackageSpec(path=pwd()))
           Pkg.instantiate()
           using Documenter: DocMeta, doctest
-          using OPS
-          DocMeta.setdocmeta!(OPS, :DocTestSetup, :(using OPS); recursive=true)
+          using OnlinePortfolioSelection
+          DocMeta.setdocmeta!(OnlinePortfolioSelection, :DocTestSetup, :(using OnlinePortfolioSelection); recursive=true)
           doctest(OPS)
           include("docs/make.jl")'
       after_success: skip

@@ -24,39 +24,6 @@ function mc_simplex(d, points)
 end
 
 """
-    Sn(
-      rel_pr::AbstractMatrix{T},
-      w::AbstractMatrix{T},
-      init_inv
-    ) where T<:Float64
-
-Calculate the cumulative return of portfolio.
-
-# Arguments
-- `rel_pr::AbstractMatrix{T}`: The relative prices of the assets in each period.
-- `w::AbstractMatrix{T}`: The weights of the assets in each period.
-- `init_inv`: The initial budget.
-
-!!! warning "Beware!"
-    `rel_pr` and `w` should be a matrix of size `n_assets` × `n_periods`.
-"""
-function Sn(
-  rel_pr::AbstractMatrix{T},
-  w::AbstractMatrix{T},
-  init_inv
-) where T<:Float64
-
-  n_periods = size(rel_pr, 2)
-  budgets = zeros(T, n_periods+1)
-  budgets[1] = init_inv
-  for t ∈ 1:n_periods
-    budgets[t+1] = S(budgets[t], w[:, t], rel_pr[:, t])
-  end
-
-  return budgets
-end
-
-"""
     normalizer!(mat::Matrix{T}) where T<:Float64
 
 Force normilize the given matrix column by column.

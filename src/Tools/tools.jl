@@ -27,7 +27,7 @@ end
     Sn(
       rel_pr::AbstractMatrix{T},
       w::AbstractMatrix{T},
-      init_budg
+      init_inv
     ) where T<:Float64
 
 Calculate the cumulative return of portfolio.
@@ -35,7 +35,7 @@ Calculate the cumulative return of portfolio.
 # Arguments
 - `rel_pr::AbstractMatrix{T}`: The relative prices of the assets in each period.
 - `w::AbstractMatrix{T}`: The weights of the assets in each period.
-- `init_budg`: The initial budget.
+- `init_inv`: The initial budget.
 
 !!! warning "Beware!"
     `rel_pr` and `w` should be a matrix of size `n_assets` × `n_periods`.
@@ -43,12 +43,12 @@ Calculate the cumulative return of portfolio.
 function Sn(
   rel_pr::AbstractMatrix{T},
   w::AbstractMatrix{T},
-  init_budg
+  init_inv
 ) where T<:Float64
 
   n_periods = size(rel_pr, 2)
   budgets = zeros(T, n_periods+1)
-  budgets[1] = init_budg
+  budgets[1] = init_inv
   for t ∈ 1:n_periods
     budgets[t+1] = S(budgets[t], w[:, t], rel_pr[:, t])
   end

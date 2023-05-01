@@ -6,14 +6,14 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
   @testset "CORN-U" begin
 
     @testset "invalid ρ" begin
-      @test_throws ArgumentError CORNU(
+      @test_throws ArgumentError cornu(
         adj_close,
         3,
         3,
         rho=1.
       )
 
-      @test_throws ArgumentError CORNU(
+      @test_throws ArgumentError cornu(
         adj_close,
         3,
         3,
@@ -22,7 +22,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
     end
 
     @testset "valid ρ" begin
-      res = CORNU(
+      res = cornu(
         adj_close,
         3,
         3,
@@ -35,7 +35,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
     end
 
     @testset "invalid horizon" begin
-      @test_throws ArgumentError CORNU(
+      @test_throws ArgumentError cornu(
         adj_close,
         30,
         3,
@@ -46,7 +46,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
 
   @testset "CORN-K" begin
     @testset "invalid p" begin
-      @test_throws ArgumentError CORNK(
+      @test_throws ArgumentError cornk(
         adj_close,
         3,
         3,
@@ -56,7 +56,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
     end
 
     @testset "valid p" begin
-      res = CORNK(
+      res = cornk(
         adj_close,
         2,
         3,
@@ -70,7 +70,7 @@ adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
     end
 
     @testset "invalid horizon" begin
-      @test_throws ArgumentError CORNK(
+      @test_throws ArgumentError cornk(
         adj_close,
         30,
         3,

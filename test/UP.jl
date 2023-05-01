@@ -8,26 +8,26 @@ adj_close = [
 
 @testset "UP.jl" begin
   @testset "with default arguments" begin
-    up = UP(adj_close)
+    m_up = up(adj_close)
 
-    @test isa(up, OPSAlgorithm)
+    @test isa(m_up, OPSAlgorithm)
 
-    @test up.alg == "UP"
+    @test m_up.alg == "UP"
 
-    @test sum(up.b, dims=1) .|> isapprox(1.0) |> all
+    @test sum(m_up.b, dims=1) .|> isapprox(1.0) |> all
 
-    @test up.n_assets == size(adj_close, 1)
+    @test m_up.n_assets == size(adj_close, 1)
   end
 
   @testset "with custom arguments" begin
-    up = UP(adj_close, init_budg=1e2, eval_points=10^5, leverage=1.5)
+    m_up = up(adj_close, init_budg=1e2, eval_points=10^5, leverage=1.5)
 
-    @test isa(up, OPSAlgorithm)
+    @test isa(m_up, OPSAlgorithm)
 
-    @test up.alg == "UP"
+    @test m_up.alg == "UP"
 
-    @test sum(up.b, dims=1) .|> isapprox(1.0) |> all
+    @test sum(m_up.b, dims=1) .|> isapprox(1.0) |> all
 
-    @test up.n_assets == size(adj_close, 1)
+    @test m_up.n_assets == size(adj_close, 1)
   end
 end

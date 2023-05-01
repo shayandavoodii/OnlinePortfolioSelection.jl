@@ -7,26 +7,26 @@ adj_close = [
 
 @testset "EG.jl" begin
   @testset "with default arguments" begin
-    eg = EG(adj_close)
+    m_eg = eg(adj_close)
 
-    @test isa(eg, OPSAlgorithm)
+    @test isa(m_eg, OPSAlgorithm)
 
-    @test eg.alg == "EG"
+    @test m_eg.alg == "EG"
 
-    @test sum(eg.b, dims=1) .|> isapprox(1.0) |> all
+    @test sum(m_eg.b, dims=1) .|> isapprox(1.0) |> all
 
-    @test eg.n_assets == size(adj_close, 1)
+    @test m_eg.n_assets == size(adj_close, 1)
   end
 
   @testset "with custom arguments" begin
-    eg = EG(adj_close, init_budg=1e2, eta=0.2)
+    m_eg = eg(adj_close, init_budg=1e2, eta=0.2)
 
-    @test isa(eg, OPSAlgorithm)
+    @test isa(m_eg, OPSAlgorithm)
 
-    @test eg.alg == "EG"
+    @test m_eg.alg == "EG"
 
-    @test sum(eg.b, dims=1) .|> isapprox(1.0) |> all
+    @test sum(m_eg.b, dims=1) .|> isapprox(1.0) |> all
 
-    @test eg.n_assets == size(adj_close, 1)
+    @test m_eg.n_assets == size(adj_close, 1)
   end
 end

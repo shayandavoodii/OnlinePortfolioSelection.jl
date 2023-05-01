@@ -5,7 +5,7 @@ adj_close_market = rand(30);
 @testset "DRICORNK" begin
   @testset "Arument Errors" begin
     @testset "invalid p" begin
-      @test_throws ArgumentError DRICORNK(
+      @test_throws ArgumentError dricornk(
         adj_close,
         adj_close_market,
         3,
@@ -16,7 +16,7 @@ adj_close_market = rand(30);
     end
 
     @testset "invalid horizon" begin
-      @test_throws ArgumentError DRICORNK(
+      @test_throws ArgumentError dricornk(
         adj_close,
         adj_close_market,
         31,
@@ -27,7 +27,7 @@ adj_close_market = rand(30);
     end
 
     @testset "invalid k" begin
-      @test_throws ArgumentError DRICORNK(
+      @test_throws ArgumentError dricornk(
         adj_close,
         adj_close_market,
         3,
@@ -39,7 +39,7 @@ adj_close_market = rand(30);
   end
 
   @testset "All good" begin
-    res = DRICORNK(
+    res = dricornk(
       adj_close,
       adj_close_market,
       2,

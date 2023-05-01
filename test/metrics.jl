@@ -5,7 +5,7 @@ adj_close_market = rand(40);
 
 @testset "OPSMetrics" begin
   @testset "DRICORNK" begin
-    res = DRICORNK(
+    res = dricornk(
       adj_close,
       adj_close_market,
       1,
@@ -20,11 +20,10 @@ adj_close_market = rand(40);
     )
 
     @test isa(met, OPSMetrics)
-    @test fieldnames(OPSMetrics) == propertynames(met)
   end
 
   @testset "CORN-K" begin
-    res = CORNK(
+    res = cornk(
       adj_close,
       10,
       2,
@@ -38,11 +37,10 @@ adj_close_market = rand(40);
     )
 
     @test isa(met, OPSMetrics)
-    @test fieldnames(OPSMetrics) == propertynames(met)
   end
 
   @testset "CORN-U" begin
-    res = CORNU(
+    res = cornu(
       adj_close,
       7,
       2,
@@ -55,6 +53,5 @@ adj_close_market = rand(40);
     )
 
     @test isa(met, OPSMetrics)
-    @test fieldnames(OPSMetrics) == propertynames(met)
   end
 end

@@ -6,7 +6,6 @@ A `OPSAlgorithm` object that contains the result of running the algorithm.
 # Fields
 - `n_asset::Int`: Number of assets in the portfolio.
 - `b::Matrix{T}`: Weights of the created portfolios.
-- `budgets::Vector{T}`: Budget during the investment horizon.
 - `alg::String`: Name of the algorithm.
 
 The formula for calculating the cumulative return of the portfolio is as follows:
@@ -21,6 +20,5 @@ of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-t
 struct OPSAlgorithm{T<:Float64}
   n_assets::Int
   b::Matrix{T}
-  budgets::Vector{T}
   alg::String
 end

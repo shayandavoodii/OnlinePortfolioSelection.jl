@@ -6,8 +6,8 @@ include("../Tools/tools.jl")
 include("../Tools/cornfam.jl")
 include("../Types/Algorithms.jl")
 
-"""
-    CORNU(
+"""@docs
+    cornu(
       adj_close::Matrix{T},
       horizon::M,
       w::M;
@@ -28,7 +28,7 @@ Run CORN-U algorithm.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, budgets, alg)`: An object of type `OPSAlgorithm`.
+- `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
 
 # Reference
 - [1] [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
@@ -39,27 +39,16 @@ julia> using OnlinePortfolioSelection
 
 julia> adj_close = rand(5, 100);
 
-julia> model = CORNU(adj_close, 10, 5, 0.5);
-
-julia> model.budgets
-11-element Vector{Float64}:
-   1.0
-   2.712148607094074
-   3.9049548118405513
-   9.079571226009149
-  15.550023500498401
-  60.15172309699462
-  32.32354281989587
- 110.76798827023994
- 148.34814522333753
- 206.383234246206
- 463.69154027959627
+julia> model = cornu(adj_close, 10, 5, 0.5);
 
 julia> model.type
 "CORN-U"
+
+julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
+true
 ```
 """
-function CORNU(
+function cornu(
   adj_close::Matrix{T},
   horizon::M,
   w::M;
@@ -73,8 +62,6 @@ function CORNU(
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   n_assets = size(relative_prices, 1)
   q = 1/w
-  Sₜ = Vector{T}(undef, horizon+1)
-  Sₜ[1] = init_budg
   # Store the budgets of experts in each period t
   Sₜ_ = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
@@ -87,13 +74,12 @@ function CORNU(
       Sₜ_[ω, t+2] = S(Sₜ_[ω, t+1], b, relative_prices[:, end-horizon+t+1])
     end
     weights[:, t+1] = final_weights(q, Sₜ_[:, t+2], bₜ)
-    Sₜ[t+2] = Sₜ[t+1] * sum(weights[:, t+1] .* relative_prices[:, end-horizon+t+1])
   end
-  return OPSAlgorithm(n_assets, weights, Sₜ, "CORN-U")
+  return OPSAlgorithm(n_assets, weights, "CORN-U")
 end
 
-"""
-    CORNK(
+"""@docs
+    cornk(
       adj_close::Matrix{Float64},
       horizon::T,
       k::T,
@@ -116,7 +102,7 @@ Run CORN-K algorithm.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, budgets, alg)`: An object of type `OPSAlgorithm`.
+- `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
 
 # Reference
 - [1] [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
@@ -127,27 +113,16 @@ julia> using OPS
 
 julia> adj_close = rand(5, 100);
 
-julia> model = CORNK(adj_close, 10, 3, 5, 3);
-
-julia> model.budgets
-11-element Vector{Float64}:
-    1.0
-    0.9245593797606169
-    1.2661989745602595
-    1.9287471593384662
-   13.920366533737552
-   34.95772014332745
-   37.275738278098444
-  151.14402066138192
-  186.3883800018429
-  208.7067031619314
- 8593.328131580158
+julia> model = cornk(adj_close, 10, 3, 5, 3);
 
 julia> model.type
 "CORN-K"
+
+julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
+true
 ```
 """
-function CORNK(
+function cornk(
   adj_close::Matrix{Float64},
   horizon::T,
   k::T,
@@ -168,8 +143,6 @@ function CORNK(
   P = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ∈0:p)
   q = 1/k
   weights = zeros(Float64, n_assets, horizon)
-  Sₜ = Vector{Float64}(undef, horizon+1)
-  Sₜ[1] = init_budg
   Sₜ_ = zeros(Float64, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
   for t ∈ 0:horizon-1
@@ -187,10 +160,9 @@ function CORNK(
     end
     idx_top_k = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
     weights[:, t+1] = final_weights(q, Sₜ_[idx_top_k, t+2], bₜ[:, idx_top_k])
-    Sₜ[t+2] = Sₜ[t+1] * sum(weights[:, t+1] .* relative_prices[:, end-horizon+t+1])
   end
 
-  return OPSAlgorithm(n_assets, weights, Sₜ, "CORN-K")
+  return OPSAlgorithm(n_assets, weights, "CORN-K")
 end
 
 """

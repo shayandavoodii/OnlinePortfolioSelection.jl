@@ -9,9 +9,8 @@ include("Algos/DRICORNK.jl")
 include("Tools/metrics.jl")
 include("Types/Algorithms.jl")
 
-export UP, EG, RPRT, UP, CORNU, CORNK, DRICORNK, CRP
-export OPSMetrics, Sn, APY, MDD, Calmar, Ann_Sharpe
+export up, eg, cornu, cornk, dricornk, crp
+export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm
-
 
 end #module

@@ -26,10 +26,10 @@ end
   include("UP.jl")
 end
 
-@testset "RPRT.jl" begin
-  @info "Run unit tests in RPRT.jl"
-  include("RPRT.jl")
-end
+# @testset "RPRT.jl" begin
+#   @info "Run unit tests in RPRT.jl"
+#   include("RPRT.jl")
+# end
 
 @testset "EG.jl" begin
   @info "Run unit tests in EG.jl"

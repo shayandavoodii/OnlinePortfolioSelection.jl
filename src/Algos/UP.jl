@@ -1,6 +1,6 @@
 include("../Tools/tools.jl");
 
-"""@docs
+"""
     up(
       adj_close::Matrix{Float64};
       init_budg=1.,

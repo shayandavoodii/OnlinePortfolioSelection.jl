@@ -5,7 +5,7 @@ using Ipopt
 include("../Tools/tools.jl")
 include("../Tools/cornfam.jl")
 
-"""@docs
+"""
     dricornk(
       adj_close::Matrix{T},
       adj_close_market::Vector{T},

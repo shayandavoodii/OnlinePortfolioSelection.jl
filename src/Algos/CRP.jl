@@ -1,6 +1,6 @@
 include("../Tools/tools.jl")
 
-"""@docs
+"""
     crp(adj_close::Matrix{T}, init_budg=1) where T<:Float64
 
 Run Constant Rebalanced Portfolio (CRP) algorithm.

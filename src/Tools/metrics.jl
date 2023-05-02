@@ -1,4 +1,4 @@
-"""@docs
+"""
     OPSMetrics(Sn::Vector{T}, APY::T, Ann_Sharpe::T, MDD::T, Calmar::T) where {T<:Float64}
 
 A struct to store the metrics of the OPS algorithm.
@@ -62,7 +62,7 @@ function sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Floa
   return all_sn
 end
 
-"""@docs
+"""
     ann_std(cum_ret::Vector{Float64}; dpy)
 
 Calculate the Annualized Standard Deviation (σₚ) of portfolio.
@@ -78,7 +78,7 @@ function ann_std(cum_ret::Vector{Float64}; dpy)
   return (cum_ret |> diff |> std) * sqrt(dpy)
 end
 
-"""@docs
+"""
     apy(Sn::Float64, n_periods::S; dpy::S=252) where S<:Int
 
 Calculate the Annual Percentage Yield (APY) of investment.
@@ -96,7 +96,7 @@ function apy(Sn::Float64, n_periods::S; dpy::S=252) where S<:Int
   return (Sn)^(1/y) - 1
 end
 
-"""@docs
+"""
     ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:Float64
 
 Calculate the Annualized Sharpe Ratio of investment.
@@ -111,7 +111,7 @@ Calculate the Annualized Sharpe Ratio of investment.
 """
 ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:Float64 = (APY - Rf)/sigma_prtf;
 
-"""@docs
+"""
     mdd(Sn::Vector{T}) where T<:Float64
 
 Calculate the Maximum Drawdown (MDD) of investment.
@@ -136,7 +136,7 @@ function mdd(Sn::Vector{T}) where T<:Float64
   return maximum(max_dd)
 end
 
-"""@docs
+"""
     calmar(APY::T, MDD::T) where T<:Float64
 
 Calculate the Calmar Ratio of investment.
@@ -150,7 +150,7 @@ Calculate the Calmar Ratio of investment.
 """
 calmar(APY::T, MDD::T) where T<:Float64 = APY/MDD;
 
-"""@docs
+"""
     OPSMetrics(
       weights::Matrix{T},
       rel_pr::Matrix{T};

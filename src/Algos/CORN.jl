@@ -5,7 +5,7 @@ using Ipopt
 include("../Tools/tools.jl")
 include("../Tools/cornfam.jl")
 
-"""@docs
+"""
     cornu(
       adj_close::Matrix{T},
       horizon::M,
@@ -77,7 +77,7 @@ function cornu(
   return OPSAlgorithm(n_assets, weights, "CORN-U")
 end
 
-"""@docs
+"""
     cornk(
       adj_close::Matrix{Float64},
       horizon::T,

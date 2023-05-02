@@ -1,9 +1,10 @@
 <div align="center">
 
-# OnlinePortfolioSelection.jl
+<img src="Banner.png" width="100%" height="auto" />
 
 |  |     |
 | -------------------- | --- |
+| Stable Documentation | [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/) |
 | Dev Documentation    | [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/)    |
 | Tests                | [![CI](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/actions/workflows/ci.yml)    |
 

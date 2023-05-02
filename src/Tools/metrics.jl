@@ -1,5 +1,3 @@
-using Printf
-
 """@docs
     OPSMetrics(Sn::Vector{T}, APY::T, Ann_Sharpe::T, MDD::T, Calmar::T) where {T<:Float64}
 
@@ -22,16 +20,7 @@ struct OPSMetrics{T<:Float64}
   Calmar::T
 end
 
-function Base.show(io::IO, metrics::OPSMetrics)
-  @printf(io, "%29s: %.3f\n", "Cumulative Return", metrics.Sn[end])
-  @printf(io, "%29s: %.3f\n", "APY", metrics.APY)
-  @printf(io, "%s: %.3f\n", "Annualized Standard Deviation", metrics.Ann_Std)
-  @printf(io, "%29s: %.3f\n", "Annualized Sharpe Ratio", metrics.Ann_Sharpe)
-  @printf(io, "%29s: %.3f\n", "Maximum Drawdown", metrics.MDD)
-  @printf(io, "%29s: %.3f\n", "Calmar Ratio", metrics.Calmar)
-end
-
-"""@docs
+"""
     sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Float64
 
 Calculate the cumulative return of investment during a period of time.

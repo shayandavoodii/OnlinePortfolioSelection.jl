@@ -1,9 +1,9 @@
-function simplex_proj(b::Vector)
+function simplex_proj(b::Vector{Float64})
   n_assets = length(b)
   cond = false
   sorted_b = sort(b, rev=true)
   tmpsum = 0.
-  for i in 1:n_assets-1
+  for i ∈ 1:n_assets-1
     tmpsum += sorted_b[i]
     tmax = (tmpsum - 1.)/i
     if tmax≥sorted_b[i+1]
@@ -14,13 +14,37 @@ function simplex_proj(b::Vector)
   if !cond
     tmax = (tmpsum + sorted_b[n_assets-1] - 1.)/n_assets
   end
+
   return max.(b .- tmax, 0.)
 end
 
-function mc_simplex(d, points)
+"""
+    mc_simplex(d::S, points::S) where {S<:Int}
+
+Generate a simplex with the size of `points` × (`d`+1).
+
+# Arguments
+- `d::Int`: The dimension of the simplex.
+- `points::Int`: The number of points in the simplex.
+
+# Returns
+- `::Matrix{Float64}`: The simplex.
+
+# Example
+```julia
+julia> res = mc_simplex(2, 1)
+1×3 Matrix{Float64}:
+ 0.14692  0.00824556  0.844835
+
+julia> sum(res, dims=2)
+1×1 Matrix{Float64}:
+ 1.0
+```
+"""
+function mc_simplex(d::S, points::S)::Matrix{Float64} where {S<:Int}
   a = sort(rand(points, d), dims=2)
   a = [zeros(points) a ones(points)]
-  diff(a, dims=2)
+  return diff(a, dims=2)
 end
 
 """

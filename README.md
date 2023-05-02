@@ -7,6 +7,7 @@
 | Stable Documentation | [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/) |
 | Dev Documentation    | [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/)    |
 | Tests                | [![CI](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/actions/workflows/ci.yml)    |
+| Coverage | [![codecov](https://codecov.io/gh/shayandavoodii/OnlinePortfolioSelection.jl/branch/main/graph/badge.svg?token=BSZJR7AL1O)](https://codecov.io/gh/shayandavoodii/OnlinePortfolioSelection.jl) |
 
 
 </div>

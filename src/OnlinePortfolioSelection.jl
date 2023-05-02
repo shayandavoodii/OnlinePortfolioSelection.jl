@@ -8,6 +8,7 @@ include("Algos/CORN.jl")
 include("Algos/DRICORNK.jl")
 include("Tools/metrics.jl")
 include("Types/Algorithms.jl")
+include("Tools/show.jl")
 
 export up, eg, cornu, cornk, dricornk, crp
 export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Follow the Winner · OnlinePortfolioSelection.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link rel="canonical" href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/FW/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">OnlinePortfolioSelection.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../fetchdata/">Fetch Financial Data</a></li><li><span class="tocitem">OPS Strategies</span><ul><li><a class="tocitem" href="../benchmark/">Benchmark</a></li><li class="is-active"><a class="tocitem" href>Follow the Winner</a><ul class="internal"><li><a class="tocitem" href="#Universal-Portfolio"><span>Universal Portfolio</span></a></li><li><a class="tocitem" href="#Exponential-Gradient"><span>Exponential Gradient</span></a></li></ul></li><li><a class="tocitem" href="../PM/">Pattern-Matching</a></li></ul></li><li><a class="tocitem" href="../funcs/">Functions</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">OPS Strategies</a></li><li class="is-active"><a href>Follow the Winner</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Follow the Winner</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/docs/src/FW.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Follow-the-Winner-(FW)"><a class="docs-heading-anchor" href="#Follow-the-Winner-(FW)">Follow the Winner (FW)</a><a id="Follow-the-Winner-(FW)-1"></a><a class="docs-heading-anchor-permalink" href="#Follow-the-Winner-(FW)" title="Permalink"></a></h1><p>Follow the Winner (FW) strategies believe that the best performing asset in the past will continue to perform well in the future. The following FW strategies are implemented in this package so far:</p><ol><li>Universal Portfolio (UP)</li><li>Exponential Gradient (EG)</li></ol><h2 id="Universal-Portfolio"><a class="docs-heading-anchor" href="#Universal-Portfolio">Universal Portfolio</a><a id="Universal-Portfolio-1"></a><a class="docs-heading-anchor-permalink" href="#Universal-Portfolio" title="Permalink"></a></h2><p>Universal Portfolio (UP) is a FW strategy proposed by <a href="https://doi.org/10.1111/j.1467-9965.1991.tb00002.x">Cover (1991)</a>. The Universal Portfolio algorithm is a portfolio selection algorithm from the field of machine learning and information theory. UP aims to maximize the cumulative reurn of the portfolio during the investment horizon. The algorithm is based on the performance of the stock market on each day and the proportion of wealth invested in each stock. </p><p>See <a href="../funcs/#OnlinePortfolioSelection.up-Tuple{Matrix{Float64}}"><code>up</code></a>.</p><h3 id="Run-UP"><a class="docs-heading-anchor" href="#Run-UP">Run UP</a><a id="Run-UP-1"></a><a class="docs-heading-anchor-permalink" href="#Run-UP" title="Permalink"></a></h3><p><strong>Note:</strong> This package is meant to be used by researchers <strong>NOT FOR MARKET PRACTITIONERS</strong>. Let&#39;s run the algorithm on the real market data. The data is collected as noted in the <a href="@ref">&quot;Fetch-Data&quot;</a> section.</p><p>Let&#39;s run the algorithm on the given data (named as <code>prices</code>):</p><pre><code class="language-julia hljs">juila&gt; using OnlinePortfolioSelection
+
+julia&gt; size(prices)
+(17, 5)
+
+# OnlinePortfolioSelection suppose that the data is in the form of a matrix
+# where each row is the price vector of the assets at a specific time period.
+julia&gt; prices = prices |&gt; permutedims;
+
+# Let&#39;s run the algorithm on the last 5 days of the data.
+julia&gt; m_up = up(prices[:, end-4:end], eval_points=100);
+
+juila&gt; m_up.b
+5×5 Matrix{Float64}:
+ 0.2  0.216518  0.216638  0.21681   0.216542
+ 0.2  0.203395  0.203615  0.203754  0.203528
+ 0.2  0.191899  0.191793  0.192316  0.192473
+ 0.2  0.193023  0.192302  0.191687  0.19208
+ 0.2  0.195164  0.195652  0.195433  0.195377</code></pre><p>One can calculate the cumulative wealth during the investment period by using the <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{Matrix{T}, Matrix{T}}} where T&lt;:Float64"><code>sn</code></a> function:</p><pre><code class="language-julia hljs">julia&gt; rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia&gt; sn(m_up.b, rel_price)
+6-element Vector{Float64}:
+ 1.0
+ 0.9879822623031318
+ 0.9856240412854884
+ 0.9874863498385578
+ 0.9778277061434468
+ 0.9718529924971879</code></pre><p>The result indicates that if we had invested in the given period, we would have lost ~2.8% of our wealth. Note that <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{Matrix{T}, Matrix{T}}} where T&lt;:Float64"><code>sn</code></a> automatically takes the last 5 relative prices in this case. Now, let&#39;s investiagte the performance of the algorithm according to some of the prominent metrics:</p><pre><code class="language-julia hljs">julia&gt; results = OPSMetrics(m_up.b, rel_price)
+
+            Cumulative Return: 0.972
+                          APY: -0.763
+Annualized Standard Deviation: 0.088
+      Annualized Sharpe Ratio: -8.857
+             Maximum Drawdown: 0.028
+                 Calmar Ratio: -27.101
+
+julia&gt; results.
+APY         Ann_Sharpe  Ann_Std     Calmar      MDD         Sn
+
+julia&gt; results.MDD
+0.02814700750281207</code></pre><p>It is worht mentioning that each metric can be accessed individually by writing <code>results.</code> and pressing <code>Tab</code> key. Note that one can individually investigate the performance of the algorithm regarding each metric. See <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{Matrix{T}, Matrix{T}}} where T&lt;:Float64"><code>sn</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_std-Tuple{Vector{Float64}}"><code>ann_std</code></a>, <a href="../funcs/#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{Float64, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:Float64"><code>ann_sharpe</code></a>, <a href="../funcs/#OnlinePortfolioSelection.mdd-Union{Tuple{Vector{T}}, Tuple{T}} where T&lt;:Float64"><code>mdd</code></a>, and <a href="../funcs/#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:Float64"><code>calmar</code></a>.</p><h2 id="Exponential-Gradient"><a class="docs-heading-anchor" href="#Exponential-Gradient">Exponential Gradient</a><a id="Exponential-Gradient-1"></a><a class="docs-heading-anchor-permalink" href="#Exponential-Gradient" title="Permalink"></a></h2><p>Exponential Gradient (EG) is a FW strategy proposed by <a href="https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058">Helmbold et al. (1998)</a>. Authors claim that EG can achieve almost the same wealth as the best constantrebalanced portfolio (BCRP) determined in hindsight from the actual market outcomes. the algorithm is very simple to implement and requires only constant storage and computing time per stock in each trading period.</p><p>See <a href="@ref"><code>EG</code></a>.</p><h3 id="Run-EG"><a class="docs-heading-anchor" href="#Run-EG">Run EG</a><a id="Run-EG-1"></a><a class="docs-heading-anchor-permalink" href="#Run-EG" title="Permalink"></a></h3><p>Let&#39;s run the algorithm on the real market data. The data is collected as noted in the <a href="@ref">&quot;Fetch-Data&quot;</a> section.</p><pre><code class="language-julia hljs">juila&gt; using OnlinePortfolioSelection
+
+julia&gt; size(prices)
+(17, 5)
+
+# OnlinePortfolioSelection suppose that the data is in the form of a matrix
+# where each row is the price vector of the assets at a specific time period.
+julia&gt; prices = prices |&gt; permutedims;
+
+# Let&#39;s run the algorithm on the last 5 days of the data.
+julia&gt; m_eg = eg(prices[:, end-4:end], eta=0.02);
+
+juila&gt; m_eg.b
+5×5 Matrix{Float64}:
+ 0.2  0.200001  0.200016  0.20003   0.199997
+ 0.2  0.200049  0.200073  0.200087  0.200064
+ 0.2  0.19999   0.199973  0.200029  0.200051
+ 0.2  0.199937  0.199846  0.19978   0.199827
+ 0.2  0.200023  0.200092  0.200074  0.200061 </code></pre><p>One can calculate the cumulative wealth during the investment period by using the <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{Matrix{T}, Matrix{T}}} where T&lt;:Float64"><code>sn</code></a> function:</p><pre><code class="language-julia hljs">julia&gt; rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia&gt; sn(m_eg.b, rel_price)
+6-element Vector{Float64}:
+ 1.0
+ 0.9879822623031318
+ 0.9854825989102248
+ 0.98713136445759
+ 0.9773624367829401
+ 0.9716549466747438</code></pre><p>The result indicates that if we had invested in the given period, we would have lost ~2.8% of our wealth. Note that <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{Matrix{T}, Matrix{T}}} where T&lt;:Float64"><code>sn</code></a> automatically takes the last 5 relative prices in this case. Now, let&#39;s investiagte the performance of the algorithm according to some of the prominent metrics:</p><pre><code class="language-julia hljs">julia&gt; results = OPSMetrics(m_eg.b, rel_price)
+
+            Cumulative Return: 0.972
+                          APY: -0.765
+Annualized Standard Deviation: 0.087
+      Annualized Sharpe Ratio: -9.005
+             Maximum Drawdown: 0.028
+                 Calmar Ratio: -26.9
+
+julia&gt; results.
+APY         Ann_Sharpe  Ann_Std     Calmar      MDD         Sn
+
+julia&gt; results.MDD
+0.028345053325256164</code></pre><p>It is worht mentioning that each metric can be accessed individually by writing <code>results.</code> and pressing <code>Tab</code> key. Note that one can individually investigate the performance of the algorithm regarding each metric. See <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{Matrix{T}, Matrix{T}}} where T&lt;:Float64"><code>sn</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_std-Tuple{Vector{Float64}}"><code>ann_std</code></a>, <a href="../funcs/#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{Float64, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:Float64"><code>ann_sharpe</code></a>, <a href="../funcs/#OnlinePortfolioSelection.mdd-Union{Tuple{Vector{T}}, Tuple{T}} where T&lt;:Float64"><code>mdd</code></a>, and <a href="../funcs/#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:Float64"><code>calmar</code></a>.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../benchmark/">« Benchmark</a><a class="docs-footer-nextpage" href="../PM/">Pattern-Matching »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Tuesday 2 May 2023 08:44">Tuesday 2 May 2023</span>. Using Julia version 1.8.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

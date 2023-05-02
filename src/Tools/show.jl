@@ -1,3 +1,4 @@
+# COV_EXCL_START
 using Printf
 
 function Base.show(io::IO, metrics::OPSMetrics)
@@ -8,3 +9,4 @@ function Base.show(io::IO, metrics::OPSMetrics)
   Printf.@printf(io, "%29s: %.3f\n", "Maximum Drawdown", metrics.MDD)
   Printf.@printf(io, "%29s: %.3f\n", "Calmar Ratio", metrics.Calmar)
 end
+# COV_EXCL_STOP

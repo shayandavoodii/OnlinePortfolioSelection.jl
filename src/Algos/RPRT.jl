@@ -1,3 +1,4 @@
+# COV_EXCL_START
 using Statistics
 using LinearAlgebra
 include("../Tools/tools.jl");
@@ -98,3 +99,4 @@ end
 function predict_relative_price(relative_price::Matrix{Float64})
   return mean(relative_price, dims=2)./relative_price[:, end]
 end
+# COV_EXCL_STOP

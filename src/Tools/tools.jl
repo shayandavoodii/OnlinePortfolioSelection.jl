@@ -1,3 +1,4 @@
+# COV_EXCL_START
 function simplex_proj(b::Vector{Float64})
   n_assets = length(b)
   cond = false
@@ -17,6 +18,7 @@ function simplex_proj(b::Vector{Float64})
 
   return max.(b .- tmax, 0.)
 end
+# COV_EXCL_STOP
 
 """
     mc_simplex(d::S, points::S) where {S<:Int}

@@ -40,3 +40,8 @@ end
   @info "Run unit tests in CRP.jl"
   include("CRP.jl")
 end
+
+@testset "BS.jl" begin
+  @info "Run unit tests in BS.jl"
+  include("BS.jl")
+end

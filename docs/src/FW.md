@@ -10,7 +10,7 @@ See [`up`](@ref).
 
 ### Run UP
 **Note:** This package is meant to be used by researchers **NOT FOR MARKET PRACTITIONERS**.
-Let's run the algorithm on the real market data. The data is collected as noted in the ["Fetch-Data"](@ref) section.
+Let's run the algorithm on the real market data. The data is collected as noted in the [Fetch Data](@ref) section.
 
 Let's run the algorithm on the given data (named as `prices`):
 
@@ -71,12 +71,12 @@ julia> results.MDD
 0.02814700750281207
 ```
 
-It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref).
+It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Exponential Gradient
 Exponential Gradient (EG) is a FW strategy proposed by [Helmbold et al. (1998)](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058). Authors claim that EG can achieve almost the same wealth as the best constantrebalanced portfolio (BCRP) determined in hindsight from the actual market outcomes. the algorithm is very simple to implement and requires only constant storage and computing time per stock in each trading period.
 
-See [`EG`](@ref).
+See [`eg`](@ref).
 
 ### Run EG
 
@@ -139,4 +139,4 @@ julia> results.MDD
 0.028345053325256164
 ```
 
-It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref).
+It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the <kbd>Tab</kbd> key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.

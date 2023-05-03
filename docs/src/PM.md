@@ -1,9 +1,9 @@
 # Pattern-matching algorithms
 
 Pattern-matching algorithms are one of most popular algorithms in the context of online portfolio selection. The main idea behind these algorithms is to find a pattern in the past price data and use it to predict the future price. These strategies are in consensus with technical analysts perspective. Technical analysts believe that the historical patterns in the price data will repeat in the future. The following pattern-matching algorithms are implemented in this package so far:
-1. Correlation-driven Nonparametric Learning
-    1.1. CORN-U
-    1.2. CORN-K
+1. Correlation-driven Nonparametric Learning  
+1.1. CORN-U  
+1.2. CORN-K
 2. Dynamic RIsk CORrelation-driven Non-parametric
 
 ## Correlation-driven Nonparametric Learning

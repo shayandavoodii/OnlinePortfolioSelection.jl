@@ -1,5 +1,3 @@
-include("../Tools/tools.jl")
-
 """
     crp(adj_close::Matrix{T}, init_budg=1) where T<:Float64
 
@@ -40,7 +38,7 @@ true
 function crp(adj_close::Matrix{T}; init_budg=1.) where T<:Float64
   # Calculate relative prices
   @views relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-  n_assets, n_periods = size(adj_close)
+  n_assets, n_periods    = size(adj_close)
 
   # Calculate initial weights
   b = fill(1/n_assets, (n_assets, n_periods))

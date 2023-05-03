@@ -2,9 +2,6 @@ using JuMP
 using Statistics
 using Ipopt
 
-include("../Tools/tools.jl")
-include("../Tools/cornfam.jl")
-
 """
     dricornk(
       adj_close::Matrix{T},
@@ -73,26 +70,39 @@ function dricornk(
   market_ret = log.(adj_close_market[2:end] ./ adj_close_market[1:end-1])
   # Stocks' return
   asset_ret = log.(relative_prices)
-  n_assets = size(relative_prices, 1)
-  P = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ=0:p)
-  q = 1/k
-  weights = zeros(T, n_assets, horizon)
-  Sₜ_ = zeros(T, n_experts, horizon+1)
+  n_assets  = size(relative_prices, 1)
+  P         = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ=0:p)
+  q         = 1/k
+  weights   = zeros(T, n_assets, horizon)
+  Sₜ_       = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
   for t ∈ 0:horizon-1
     bₜ = Matrix{T}(undef, n_assets, n_experts)
     expert = 1
     for ω ∈ 1:w
       for ρ ∈ P
-        b = dricorn_expert(relative_prices, asset_ret, market_ret, horizon, ω, ρ, t, n_assets, lambda)
-        bₜ[:, expert] = b
+        b = dricorn_expert(
+          relative_prices,
+          asset_ret,
+          market_ret,
+          horizon,
+          ω,
+          ρ,
+          t,
+          n_assets,
+          lambda
+        )
+
+        bₜ[:, expert]    = b
         Sₜ_[expert, t+2] = S(
           Sₜ_[expert, t+1], b, relative_prices[:, end-horizon+t+1]
         )
+
         expert += 1
       end
     end
-    idx_top_k = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
+
+    idx_top_k       = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
     weights[:, t+1] = final_weights(q, Sₜ_[idx_top_k, t+2], bₜ[:, idx_top_k])
   end
 
@@ -146,13 +156,14 @@ function dricorn_expert(
     more data samples are needed)."""
   ) |> throw
 
-  ρ = rho
-  relative_prices_ = relative_prices[:, 1:end-horizon+t]
-  n_periods = size(relative_prices_, 2)
+  shift            = horizon+t
+  ρ                = rho
+  relative_prices_ = relative_prices[:, 1:end-shift]
+  n_periods        = size(relative_prices_, 2)
   # Coefficient behind βₚ. Check if the market return is at least 20% higher
   # than the return of 20 days before the current time window. If it is, then
   # the coefficient is 1. Otherwise, it is -1.
-  market_ret[end-horizon+t]/market_ret[end-horizon+t-20] ≥ 1.2 ? c = 1 : c = -1
+  market_ret[end-shift]/market_ret[end-shift-20] ≥ 1.2 ? c = 1 : c = -1
   # index of similar time windows
   idx_tws = locate_sim(relative_prices_, w, n_periods, ρ)
   isempty(idx_tws) && return fill(1/n_assets, n_assets)
@@ -161,10 +172,15 @@ function dricorn_expert(
   # Calculate β of each asset through the last month (20 days)
   β = zeros(T, n_assets, length(idx_days))
   for i ∈ 1:n_assets
-    β[i, :] .= cor(asset_ret[i, end-horizon+t-20:end-horizon+t], market_ret[end-horizon+t-20:end-horizon+t])/var(market_ret[end-horizon+t-20:end-horizon+t])
+    β[i, :] .= cor(
+      asset_ret[i, end-shift-20:end-shift],
+      market_ret[end-shift-20:end-shift]
+    )/var(market_ret[end-shift-20:end-shift])
   end
+
   model = Model(Ipopt.Optimizer)
   set_silent(model)
+
   @variables(model, begin
     0<=b[i=1:n_assets]<=1
   end)
@@ -175,5 +191,6 @@ function dricorn_expert(
   weight = value.(b)
   weight = round.(abs.(weight), digits=3)
   isapprox(1., sum(weight), atol=1e-2) || normalizer!(weight)
+
   return weight
 end

@@ -1,5 +1,3 @@
-include("../Tools/tools.jl")
-
 """
     eg(adj_close::Matrix{Float64}, init_budg=1., eta=0.05)
 
@@ -45,7 +43,7 @@ true
 function eg(adj_close::Matrix{Float64}; init_budg=1., eta=0.05)
   # Calculate relative prices
   @views relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-  n_assets, n_periods = size(adj_close)
+  n_assets, n_periods    = size(adj_close)
 
   # Initialiate Vector of weights
   b = fill(1/n_assets, (n_assets, n_periods))

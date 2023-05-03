@@ -2,9 +2,6 @@ using JuMP
 using Statistics
 using Ipopt
 
-include("../Tools/tools.jl")
-include("../Tools/cornfam.jl")
-
 """
     cornu(
       adj_close::Matrix{T},
@@ -57,23 +54,27 @@ function cornu(
 
   0≤rho<1 || ArgumentError("The value of `rho` should be in the range of [0, 1).") |> throw
   n_experts = w
+
   # Calculate relative prices
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-  n_assets = size(relative_prices, 1)
-  q = 1/w
+  n_assets        = size(relative_prices, 1)
+  q               = 1/w
+
   # Store the budgets of experts in each period t
-  Sₜ_ = zeros(T, n_experts, horizon+1)
+  Sₜ_        = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
-  weights = zeros(T, n_assets, horizon)
+  weights    = zeros(T, n_assets, horizon)
   for t ∈ 0:horizon-1
     bₜ = Matrix{T}(undef, n_assets, n_experts)
     for ω ∈ 1:w
-      b = corn_expert(relative_prices, horizon, ω, rho, t, n_assets)
-      bₜ[:, ω] = b
+      b           = corn_expert(relative_prices, horizon, ω, rho, t, n_assets)
+      bₜ[:, ω]    = b
       Sₜ_[ω, t+2] = S(Sₜ_[ω, t+1], b, relative_prices[:, end-horizon+t+1])
     end
+
     weights[:, t+1] = final_weights(q, Sₜ_[:, t+2], bₜ)
   end
+
   return OPSAlgorithm(n_assets, weights, "CORN-U")
 end
 
@@ -138,26 +139,27 @@ function cornk(
 
   # Calculate relative prices
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-  n_assets = size(relative_prices, 1)
-  P = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ∈0:p)
-  q = 1/k
-  weights = zeros(Float64, n_assets, horizon)
-  Sₜ_ = zeros(Float64, n_experts, horizon+1)
-  Sₜ_[:, 1] .= init_budg
+  n_assets        = size(relative_prices, 1)
+  P               = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ∈0:p)
+  q               = 1/k
+  weights         = zeros(Float64, n_assets, horizon)
+  Sₜ_             = zeros(Float64, n_experts, horizon+1)
+  Sₜ_[:, 1]      .= init_budg
   for t ∈ 0:horizon-1
     bₜ = Matrix{Float64}(undef, n_assets, n_experts)
     expert = 1
     for ω ∈ 1:w
       for ρ ∈ P
-        b = corn_expert(relative_prices, horizon, ω, ρ, t, n_assets)
-        bₜ[:, expert] = b
+        b                = corn_expert(relative_prices, horizon, ω, ρ, t, n_assets)
+        bₜ[:, expert]    = b
         Sₜ_[expert, t+2] = S(
           Sₜ_[expert, t+1], b, relative_prices[:, end-horizon+t+1]
         )
         expert += 1
       end
     end
-    idx_top_k = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
+
+    idx_top_k       = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
     weights[:, t+1] = final_weights(q, Sₜ_[idx_top_k, t+2], bₜ[:, idx_top_k])
   end
 
@@ -202,16 +204,19 @@ function corn_expert(
     more data samples are needed)."""
   ) |> throw
 
-  ρ = rho
+  ρ                = rho
   relative_prices_ = relative_prices[:, 1:end-horizon+t]
-  n_periods = size(relative_prices_, 2)
+  n_periods        = size(relative_prices_, 2)
+
   # index of similar time windows
   idx_tws = locate_sim(relative_prices_, w, n_periods, ρ)
   isempty(idx_tws) && return fill(1/n_assets, n_assets)
+
   # index of a day after similar time windows
   idx_days = idx_tws.+w
-  model = Model(Ipopt.Optimizer)
+  model    = Model(Ipopt.Optimizer)
   set_silent(model)
+
   @variables(model, begin
     0<=b[i=1:n_assets]<=1
   end)
@@ -222,5 +227,6 @@ function corn_expert(
   weight = value.(b)
   weight = round.(abs.(weight), digits=3)
   isapprox(1., sum(weight), atol=1e-2) || normalizer!(weight)
+
   return weight
 end

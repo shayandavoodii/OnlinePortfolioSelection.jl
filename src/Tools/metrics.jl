@@ -51,14 +51,16 @@ function sn(weights::Matrix{T}, rel_pr::Matrix{T}; init_inv::T=1.) where T<:Floa
   ) |> throw
 
   if size(weights, 2)<n_periods
-    rel_pr = rel_pr[:, end-size(weights, 2)+1:end]
+    rel_pr    = rel_pr[:, end-size(weights, 2)+1:end]
     n_periods = size(rel_pr, 2)
   end
-  all_sn = zeros(T, n_periods+1)
+
+  all_sn    = zeros(T, n_periods+1)
   all_sn[1] = init_inv
   for t ∈ 2:n_periods+1
       all_sn[t] = all_sn[t-1] * (rel_pr[:, t-1]' * weights[:, t-1])
   end
+
   return all_sn
 end
 
@@ -124,15 +126,18 @@ Calculate the Maximum Drawdown (MDD) of investment.
 """
 function mdd(Sn::Vector{T}) where T<:Float64
   n_periods = length(Sn)
-  max_sn = zeros(T, n_periods)
+  max_sn    = zeros(T, n_periods)
   max_sn[1] = Sn[1]
+
   for t ∈ 2:n_periods
       max_sn[t] = max(max_sn[t-1], Sn[t])
   end
+
   max_dd = zeros(T, n_periods)
   for t ∈ 1:n_periods
       max_dd[t] = (max_sn[t] - Sn[t])/max_sn[t]
   end
+
   return maximum(max_dd)
 end
 
@@ -188,14 +193,16 @@ function OPSMetrics(
 
   n_periods = size(rel_pr, 2)
   if size(weights, 2)<n_periods
-    rel_pr = rel_pr[:, end-size(weights, 2)+1:end]
+    rel_pr    = rel_pr[:, end-size(weights, 2)+1:end]
     n_periods = size(rel_pr, 2)
   end
-  all_sn = sn(weights, rel_pr, init_inv=init_inv)
-  σₚ = ann_std(all_sn, dpy=dpy)
-  APY = apy(all_sn[end], n_periods, dpy=dpy)
+
+  all_sn     = sn(weights, rel_pr, init_inv=init_inv)
+  σₚ         = ann_std(all_sn, dpy=dpy)
+  APY        = apy(all_sn[end], n_periods, dpy=dpy)
   ann_Sharpe = ann_sharpe(APY, Rf, σₚ)
-  MDD = mdd(all_sn)
-  Calmar = calmar(APY, MDD)
+  MDD        = mdd(all_sn)
+  Calmar     = calmar(APY, MDD)
+
   return OPSMetrics(all_sn, APY, σₚ, ann_Sharpe, MDD, Calmar)
 end

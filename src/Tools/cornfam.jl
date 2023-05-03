@@ -21,11 +21,10 @@ function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float6
   # n_tw-1: because we don't want to calculate corr between the
   # currrent w and itself. So, the current time window is excluded.
   for idx_tw ∈ 1:n_tw-1
-    twᵢ = Base.Flatten(rel_price[:, idx_tw:w+idx_tw-1])
-    if cor(collect(curr_tw), collect(twᵢ))≥ρ
-      push!(idx_day_after_tw, idx_tw)
-    end
+    twᵢ = rel_price[:, idx_tw:w+idx_tw-1] |> Base.Flatten
+    cor(collect(curr_tw), collect(twᵢ))≥ρ && push!(idx_day_after_tw, idx_tw)
   end
+
   return idx_day_after_tw
 end
 
@@ -43,12 +42,12 @@ Calculate the final weights of assets according to the experts.
 - `Vector{T}`: Final weights of assets in the current period.
 """
 function final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:Float64
-  numerator_ = zeros(T, size(b, 1))
+  numerator_   = zeros(T, size(b, 1))
   denominator_ = zero(T)
   for idx_expert ∈ eachindex(s)
-    qs = q*s[idx_expert]
-    numerator_+=qs*b[:, idx_expert]
-    denominator_+=qs
+    qs           = q*s[idx_expert]
+    numerator_   += qs*b[:, idx_expert]
+    denominator_ += qs
   end
   bₜ = numerator_/denominator_
   normalizer!(bₜ)

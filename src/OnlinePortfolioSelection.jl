@@ -10,6 +10,8 @@ include("Tools/metrics.jl")
 include("Types/Algorithms.jl")
 include("Tools/show.jl")
 include("Algos/BS.jl")
+include("Tools/tools.jl")
+include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs
 export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar

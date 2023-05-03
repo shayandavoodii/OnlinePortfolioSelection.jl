@@ -9,12 +9,22 @@ adj_close = [
   @testset "with default arguments" begin
     res = bs(adj_close)
 
-    @test sum(res.b, dims=1) .|> isapprox(1.) |> all
+    @test res.b[:, 1] == ones(Float64, size(adj_close, 1))/size(adj_close, 1)
+
+    # Test if just one asset is selected for each period except the first period
+    @test sum(res.b[:, 2:end], dims=1) .|> isequal(1.) |> all
+
+    @test size(res.b) == size(adj_close)
   end
 
   @testset "with last_n=2" begin
     res = bs(adj_close, last_n=2)
 
-    @test sum(res.b, dims=1) .|> isapprox(1.) |> all
+    @test res.b[:, 1] == ones(Float64, size(adj_close, 1))/size(adj_close, 1)
+
+    # Test if just one asset is selected for each period except the first period
+    @test sum(res.b[:, 2:end], dims=1) .|> isequal(1.) |> all
+
+    @test size(res.b) == size(adj_close)
   end
 end

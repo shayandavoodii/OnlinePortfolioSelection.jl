@@ -1,5 +1,3 @@
-include("../Tools/tools.jl");
-
 """
     up(
       adj_close::Matrix{Float64};

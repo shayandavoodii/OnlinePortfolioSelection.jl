@@ -1,3 +1,38 @@
+"""
+    bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:Float64}
+
+Run the Best So Far algorithm on the given data.
+
+# Arguments
+- `adj_close::Matrix{T}`: A matrix of adjusted closing prices of assets.
+- `last_n::Int`: The number of periods to look back for the performance of each asset. If `last_n` is 0, then the performance is calculated from the first period to the previous period.
+
+!!! warning "Beware!"
+    The `adj_close` matrix should be in the order of assets x periods.
+
+# References
+- [KERNEL-BASED SEMI-LOG-OPTIMAL EMPIRICAL PORTFOLIO SELECTION STRATEGIES](https://doi.org/10.1142/S0219024907004251)
+
+# Example
+```julia
+julia> using OnlinePortfolioSelection
+
+julia> adj_close = rand(5, 10);
+
+julia> model = bs(adj_close, last_n=2);
+
+julia> model.b
+5×10 Matrix{Float64}:
+ 0.2  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
+ 0.2  0.0  0.0  1.0  0.0  1.0  0.0  0.0  0.0  0.0
+ 0.2  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.2  1.0  1.0  0.0  0.0  0.0  1.0  0.0  1.0  1.0
+ 0.2  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
+
+julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
+true
+```
+"""
 function bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:Float64}
   n_assets, n_periods = size(adj_close)
 
@@ -6,7 +41,7 @@ function bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:Float64}
 
   b = zeros(T, n_assets, n_periods)
   # For the first period, assign 1/n_assets to each asset
-  b[:, 1] .= 1/n_assets
+  b[:, 1] .= one(T)/n_assets
   for t ∈ 2:n_periods
 
     # Calculate the performance of each asset
@@ -27,8 +62,6 @@ function bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:Float64}
         # Otherwise, the performance is the product of relative prices from the
         # first period to the previous period
         perf_each_ast = prod(relative_prices[:, 1:t-1], dims=2)
-        # Get the last column of the `perf_each_ast`
-        perf_each_ast = last(perf_each_ast, n_assets)
       end
 
       # Get the last column of the `perf_each_ast`

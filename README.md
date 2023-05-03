@@ -25,7 +25,7 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Run-UP)        | Follow the Winner | ✔      |     |
 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
 | RPRT      | Follow the loser  |        | ✔   |
-| BS        | Follow the winner | ✔     |     |
+| BS        | Benchmark (Market) | ✔     |     |
 
 </div>
 
@@ -54,7 +54,7 @@ pkg> add https://github.com/shayandavoodii/OnlinePortfolioSelection.jl.git
 - [ ] Implement BCRP
 - [x] ~~Implement CORN~~
 - [x] ~~Implement DRICORN~~
-- [ ] Implement BS
+- [x] ~~Implement BS~~
 - [ ] Implement Anticor
 - [ ] Implement $B^k$
 - [ ] Implement $B^{NN}$

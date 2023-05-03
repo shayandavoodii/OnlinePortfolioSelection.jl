@@ -20,6 +20,7 @@ makedocs(;
           "Follow the Winner" => "FW.md",
           "Pattern-Matching" => "PM.md",
         ],
+        "Performance Evaluation" => "performance_eval.md",
         "Functions" => "funcs.md"
     ],
 )

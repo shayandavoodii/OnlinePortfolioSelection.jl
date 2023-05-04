@@ -17,4 +17,19 @@ export up, eg, cornu, cornk, dricornk, crp, bs
 export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm
 
+using PrecompileTools
+
+if VERSION≥v"1.9.0-rc3"
+  @setup_workload begin
+    adj_close = rand(3, 23)
+    market_adjclose = rand(23)
+
+    @compile_workload begin
+      cornu(adj_close, 1, 2)
+      cornk(adj_close, 1, 2, 2, 2)
+      dricornk(adj_close, market_adjclose, 1, 2, 2, 2)
+    end
+  end
+end
+
 end #module

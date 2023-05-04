@@ -17,11 +17,11 @@
 <ol>
   <li><a href="#about">About</a></li>
   <li><a href="#installation">Installation</a></li>
-  <li><a href="#📝to-do-list">📝TODO LIST</a></li>
-  <li><a href="#👨‍💻contributing">👨‍💻Contributing</a></li>
-  <li><a href="#🔮motivation">🔮Motivation</a></li>
-  <li><a href="#📑license">📑License</a></li>
-  <li><a href="#📧contact">📧Contact</a></li>
+  <li><a href="#📝to-do-list">TODO LIST</a></li>
+  <li><a href="#👨‍💻contributing">Contributing</a></li>
+  <li><a href="#🔮motivation">Motivation</a></li>
+  <li><a href="#📑license">License</a></li>
+  <li><a href="#📧contact">Contact</a></li>
 </ol>
 
 <!-- About -->
@@ -72,7 +72,7 @@ pkg> add https://github.com/shayandavoodii/OnlinePortfolioSelection.jl.git
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
-<!-- 📝TODO LIST -->
+<!-- TODO LIST -->
 ## 📝To-do list
 - [ ] Implement BCRP
 - [x] ~~Implement CORN~~
@@ -85,7 +85,7 @@ pkg> add https://github.com/shayandavoodii/OnlinePortfolioSelection.jl.git
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
-<!-- 👨‍💻Contributing -->
+<!-- Contributing -->
 ## 👨‍💻Contributing
 
 <div align="justify">
@@ -94,7 +94,7 @@ Contributions are warmly welcome. Please feel free to open an issue and discuss 
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
-<!-- 🔮Motivation -->
+<!-- Motivation -->
 ## 🔮Motivation
 <div align="justify">
 Since my M.Sc. thesis is in the field of OPS, I thought it would be a worthwhile idea to implement some of the benchmark methods to use them to perform benchmarking experiments to compare the performance of my proposed method with the existing methods in the literature. Afterward, I thought it would be a good idea to share the repo with the community so that other researchers can use the methods for their research purposes and put time into developing novel strategies rather than implementing the existing ones. Hence, I decided to share the repo with the community, and hopefully, it will be helpful for other researchers.
@@ -102,13 +102,13 @@ Since my M.Sc. thesis is in the field of OPS, I thought it would be a worthwhile
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
-<!-- 📑License -->
+<!-- License -->
 ## 📑License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/LICENSE) file for details.
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
-<!-- 📧Contact -->
+<!-- Contact -->
 ## 📧Contact
 If you have any questions or suggestions, please feel free to contact me via email: sh0davoodi@gmail.com  
 Or feel free to open an issue in the repo.

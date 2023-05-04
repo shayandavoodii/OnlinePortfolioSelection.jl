@@ -37,11 +37,11 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 | [CORN-U]()    | Pattern-Matching  | ✔      |     |
 | [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
 | [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching  | ✔      |     |
-| [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#Run-CRP)       | Benchmark         | ✔      |     |
+| [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#Run-CRP)       | Benchmark (Market) | ✔      |     |
 | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Run-UP)        | Follow the Winner | ✔      |     |
 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
 | RPRT      | Follow the loser  |        | ✔   |
-| BS        | Benchmark (Market) | ✔     |     |
+| [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
 
 </div>
 
@@ -51,7 +51,9 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 ## Installation
 
 <div align="justify">
+
 The latest stable version of the package can be installed by running the following command in the Julia REPL after pressing `]`:
+
 </div>
 
 ```julia

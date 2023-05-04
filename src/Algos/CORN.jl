@@ -7,7 +7,7 @@ using Ipopt
       adj_close::Matrix{T},
       horizon::M,
       w::M;
-      rho::T,
+      rho::T=0.2,
       init_budg=1
     ) where {T<:Float64, M<:Int}
 
@@ -109,7 +109,7 @@ Run CORN-K algorithm.
 
 # Examples
 ```julia
-julia> using OPS
+julia> using OnlinePortfolioSelection
 
 julia> adj_close = rand(5, 100);
 

@@ -30,7 +30,7 @@ Calculate the cumulative return of investment during a period of time.
 - `rel_pr::Matrix{T}`: the relative price of the stocks.
 - `init_inv::T=1`: the initial investment.
 
-!!! warning
+!!! warning "Beware!"
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
 
 !!! note

@@ -9,7 +9,8 @@ makedocs(;
     sitename="OnlinePortfolioSelection.jl",
     format=Documenter.HTML(;
         canonical="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl",
-        prettyurls = get(ENV, "CI", nothing) == "true"
+        prettyurls = get(ENV, "CI", nothing) == "true",
+        sidebar_sitename = false
     ),
     pages=Any[
         "Home" => "index.md",

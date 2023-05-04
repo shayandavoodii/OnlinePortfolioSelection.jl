@@ -10,6 +10,9 @@ Run the Best So Far algorithm on the given data.
 !!! warning "Beware!"
     The `adj_close` matrix should be in the order of assets x periods.
 
+# Returns
+- `::OPSAlgorithm(n_assets, b, alg)`: An instance of `OPSAlgorithm`.
+
 # References
 - [KERNEL-BASED SEMI-LOG-OPTIMAL EMPIRICAL PORTFOLIO SELECTION STRATEGIES](https://doi.org/10.1142/S0219024907004251)
 

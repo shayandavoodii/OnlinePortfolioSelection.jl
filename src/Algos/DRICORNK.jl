@@ -63,6 +63,11 @@ function dricornk(
   k>n_experts && ArgumentError(
     "The value of k ($k) is more than number of experts ($n_experts)"
   ) |> throw
+  size(adj_close, 2)-horizon>21 || ArgumentError(
+    "DRICORN-K needs adequate number of data samples to determine the \
+    market condition. With considering the passed arguments, you have to at least add \
+    $(21-size(adj_close, 2)+horizon+1) more samples."
+  ) |> throw
 
   # Calculate relative prices
   relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]

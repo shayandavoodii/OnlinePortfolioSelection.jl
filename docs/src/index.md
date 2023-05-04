@@ -7,15 +7,15 @@ end
 # Introduction
 
 Online Portfolio Selection (OPS) strategies are trading algorithms that sequentially allocate capital among a group of assets to maximize the final returns of the investment. It is a fundamental problem in computational finance that has been extensively studied across several research communities, including finance, statistics, artificial intelligence, machine learning, and data mining. From an online machine learning perspective, it is formulated as a sequential decision problem and there are a variety of state-of-the-art approaches that have been developed to solve it. These approaches are grouped into several major categories, including benchmarks, “Follow-the-Winner” approaches, “Follow-the-Loser” approaches, “Pattern-Matching” based approaches, and "Meta-Learning" Algorithms[1](https://arxiv.org/abs/1212.2129).
-This package provides an efficient implementation of OPS algorithms. The algorithms are implemented in Julia in a fully type-stable manner. All the algorithms return an object of type `OPSAlgorithm` which can be used to query the portfolio weights, number of assets, and the name of the algorithm. Eight algorithms are implemented so far and more will be added in the future. The available algorithms are:
+This package provides an efficient implementation of OPS algorithms. The algorithms are implemented in Julia in a fully type-stable manner. All the algorithms return an object of type `OPSAlgorithm` which can be used to query the portfolio weights, number of assets, and the name of the algorithm. Seven algorithms are implemented so far and more will be added in the future. The available algorithms are:
 
 1. Constant Rebalanced Portfolio (CRP)
 2. Exponential Gradient (EG)
 3. Universal Portfolio (UP)
-4. Correlation-driven Nonparametric Learning  
+4. Correlation-driven Nonparametric Learning
 4.1. CORN-U  
 4.2. CORN-K
-5. Dynamic RIsk CORrelation-driven Non-parametric
+5. Dynamic RIsk CORrelation-driven Non-parametric (DRICORN-K)
 6. Best Stock (BS)
 
 # Installation
@@ -95,7 +95,7 @@ julia> plot(
 <img src="assets/cumulative_budgets.png" width="100%">
 ```
 
-The plot shows that the cumulative return of CORN-K outperforms the other algorithms almost all the time. Note that the initial investment for all of the algorithms is set to 1 (this can be modified by setting the keyword argument `init_budg` for each algorithm).Now, let's investigate the performance of the algorithms in terms of some of prominent performance metrics:
+The plot shows that the cumulative return of CORN-K outperforms the other algorithms almost all the time. Note that the initial investment for all of the algorithms is set to 1 (this can be modified by setting the keyword argument `init_budg` for each algorithm). Now, let's investigate the performance of the algorithms in terms of some of prominent performance metrics:
 
 ```julia
 julia> all_metrics = OPSMetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr));

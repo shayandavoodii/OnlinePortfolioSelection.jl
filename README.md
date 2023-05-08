@@ -2,12 +2,36 @@
 
 <img src="Banner.png" width="100%" height="auto" />
 
-|  |     |
-| -------------------- | --- |
-| Dev Documentation    | [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/)    |
-| Tests                | [![CI](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/actions/workflows/ci.yml)    |
-| Coverage | [![codecov](https://codecov.io/gh/shayandavoodii/OnlinePortfolioSelection.jl/branch/main/graph/badge.svg?token=BSZJR7AL1O)](https://codecov.io/gh/shayandavoodii/OnlinePortfolioSelection.jl) |
-
+<table>
+    <!-- Docs -->
+    <tr>
+        <td>Documentation (Latest)</td>
+        <td>
+            <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/"><img src="https://img.shields.io/badge/docs-dev-blue.svg"/></a>
+        </td>
+    </tr>
+    <!-- Tests -->
+    <tr>
+        <td>Continuous Integration</td>
+        <td>
+            <a href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/actions/workflows/ci.yml"><img src="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/actions/workflows/ci.yml/badge.svg"/></a>
+        </td>
+    </tr>
+    <!-- Coverage -->
+    <tr>
+        <td>Coverage</td>
+        <td>
+            <a href="https://codecov.io/gh/shayandavoodii/OnlinePortfolioSelection.jl"><img src="https://codecov.io/gh/shayandavoodii/OnlinePortfolioSelection.jl/branch/main/graph/badge.svg?token=BSZJR7AL1O"/></a>
+        </td>
+    </tr>
+    <!-- DOI -->
+    <tr>
+        <td>DOI</td>
+        <td>
+            <a href="https://zenodo.org/badge/latestdoi/604664429"><img src="https://zenodo.org/badge/604664429.svg"/></a>
+        </td>
+    </tr>
+</table>
 
 </div>
 
@@ -40,7 +64,7 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#Run-CRP)       | Benchmark (Market) | ✔      |     |
 | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Run-UP)        | Follow the Winner | ✔      |     |
 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
-| RPRT      | Follow the loser  |        | ✔   |
+| RPRT      | Follow the Loser  |        | ✔   |
 | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
 
 </div>
@@ -99,7 +123,7 @@ Contributions are warmly welcome. Please feel free to open an issue and discuss 
 <!-- Motivation -->
 ## Motivation
 <div align="justify">
-Since my M.Sc. thesis is in the field of OPS, I thought it would be a worthwhile idea to implement some of the benchmark methods to use them to perform benchmarking experiments to compare the performance of my proposed method with the existing methods in the literature. Afterward, I thought it would be a good idea to share the repo with the community so that other researchers can use the methods for their research purposes and put time into developing novel strategies rather than implementing the existing ones. Hence, I decided to share the repo with the community, and hopefully, it will be helpful for other researchers.
+Since my M.Sc. thesis is in the field of OPS, I thought it would be a worthwhile idea to implement some of the benchmark methods to use them to perform benchmarking experiments to compare the performance of my proposed method with the existing methods in the literature. Afterward, I thought it would be a good idea to bundle the repo as an open-source package, and share it with the community so that other researchers can use the methods for their research purposes and put time into developing novel strategies rather than implementing the existing ones. Furthermore, because of my personal interest in the OPS field, I will continue to develop the package and add more algorithms to it. I hope this package will be useful for the community and will be used by other researchers in the field.
 </div>
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>

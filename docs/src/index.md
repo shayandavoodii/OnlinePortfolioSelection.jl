@@ -13,8 +13,8 @@ This package provides an efficient implementation of OPS algorithms. The algorit
 2. Exponential Gradient (EG)
 3. Universal Portfolio (UP)
 4. Correlation-driven Nonparametric Learning
-4.1. CORN-U  
-4.2. CORN-K
+- 4.1 CORN-U
+- 4.2 CORN-K
 5. Dynamic RIsk CORrelation-driven Non-parametric (DRICORN-K)
 6. Best Stock (BS)
 
@@ -30,6 +30,12 @@ or
 
 ```julia
 julia> using Pkg; Pkg.add("OnlinePortfolioSelection")
+```
+
+or even
+
+```julia
+juila> using Pkg; pkg"add OnlinePortfolioSelection"
 ```
 
 The dev version can be installed usint the following command:

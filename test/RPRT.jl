@@ -7,30 +7,30 @@ adj_close = [
 
 @testset "RPRT Algorithm" begin
   @testset "with default arguments" begin
-    rprt = RPRT(adj_close)
+    m_rprt = rprt(adj_close)
 
-    @test isa(rprt, OPSAlgorithm)
+    @test isa(m_rprt, OPSAlgorithm)
 
-    @test rprt.alg == "RPRT"
+    @test m_rprt.alg == "RPRT"
 
-    @test sum(rprt.b, dims=1) .|> isapprox(1.0) |> all
+    @test sum(m_rprt.b, dims=1) .|> isapprox(1.0) |> all
 
-    @test rprt.n_assets == size(adj_close, 1)
+    @test m_rprt.n_assets == size(adj_close, 1)
   end
 
   @testset "with custom arguments" begin
-    rprt = RPRT(adj_close, init_budg=1e2, w=4, theta=0.5, epsilon=30)
+    m_rprt = rprt(adj_close, w=4, theta=0.5, epsilon=30)
 
-    @test isa(rprt, OPSAlgorithm)
+    @test isa(m_rprt, OPSAlgorithm)
 
-    @test rprt.alg == "RPRT"
+    @test m_rprt.alg == "RPRT"
 
-    @test sum(rprt.b, dims=1) .|> isapprox(1.0) |> all
+    @test sum(m_rprt.b, dims=1) .|> isapprox(1.0) |> all
 
-    @test rprt.n_assets == size(adj_close, 1)
+    @test m_rprt.n_assets == size(adj_close, 1)
   end
 
   @testset "Invalide `w`" begin
-    @test_throws ArgumentError RPRT(adj_close, w=1)
+    @test_throws ArgumentError rprt(adj_close, w=1)
   end
 end

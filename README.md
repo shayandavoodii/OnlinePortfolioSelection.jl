@@ -64,7 +64,7 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#Run-CRP)       | Benchmark (Market) | ✔      |     |
 | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Run-UP)        | Follow the Winner | ✔      |     |
 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
-| RPRT      | Follow the Loser  |        | ✔   |
+| RPRT      | Follow the Loser  | ✔       |    |
 | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
 
 </div>

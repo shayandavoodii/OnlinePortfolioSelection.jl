@@ -2,7 +2,7 @@ module OnlinePortfolioSelection
 
 include("Algos/CRP.jl")
 include("Algos/EG.jl")
-# include("Algos/RPRT.jl")
+include("Algos/RPRT.jl")
 include("Algos/UP.jl")
 include("Algos/CORN.jl")
 include("Algos/DRICORNK.jl")
@@ -13,7 +13,7 @@ include("Algos/BS.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
-export up, eg, cornu, cornk, dricornk, crp, bs
+export up, eg, cornu, cornk, dricornk, crp, bs, rprt
 export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm
 

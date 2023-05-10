@@ -10,6 +10,7 @@ julia> startdt, enddt = "2023-04-01", "2023-04-27";
 
 julia> querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
 
+# In the Julia 1.9.0 and above, the following line can be replaced with `prices = stack(querry)`
 julia> prices = reduce(hcat, querry);
 
 # Let's make a DataFrame out of it for better visualization of the data

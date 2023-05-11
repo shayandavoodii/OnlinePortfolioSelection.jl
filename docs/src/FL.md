@@ -1,5 +1,5 @@
 # Follow the Loser (FL)
-follow the loser has been introduced by Borodin and [Vincent (2004)](https://proceedings.neurips.cc/paper/2003/hash/8c9f32e03aeb2e3000825c8c875c4edd-Abstract.html) in which, the investment weight is transferred from a stock provided a better performance in the past to a stock with unfavorable performance, since the approach considers that a stock with an undesirable performance in the past is able to provide a desirable return in the future. In this package, the following FL strategie is implemented so far:
+follow the loser has been introduced by Borodin and [Vincent (2004)](https://proceedings.neurips.cc/paper/2003/hash/8c9f32e03aeb2e3000825c8c875c4edd-Abstract.html) in which, the investment weight is transferred from a stock provided a better performance in the past to a stock with unfavorable performance, since the approach considers that a stock with an undesirable performance in the past is able to provide a desirable return in the future. In this package, the following FL strategy is implemented so far:
 1. Reweighted Price Relative Tracking System for Automatic Portfolio Optimization
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
@@ -38,7 +38,7 @@ juila> m_rprt.b
  0.2  0.2  0.0  0.0  0.0
  0.2  0.2  1.0  1.0  1.0
  0.2  0.2  0.0  0.0  0.0
- ```
+```
 
 One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 

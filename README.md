@@ -56,16 +56,16 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 </div>
 <div align="center">
 
-| Algorithm | Strategy          | Stable | Dev |
-| --------- | ----------------- |:------:|:---:|
-| [CORN-U]()    | Pattern-Matching  | ✔      |     |
-| [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
-| [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching  | ✔      |     |
-| [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#Run-CRP)       | Benchmark (Market) | ✔      |     |
-| [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Run-UP)        | Follow the Winner | ✔      |     |
-| [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
-| RPRT      | Follow the Loser  | ✔       |    |
-| [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
+| Row № | Algorithm | Strategy          | Stable | Dev |
+|:---:| --------- | ----------------- |:------:|:---:|
+| 1 | [CORN-U]()    | Pattern-Matching  | ✔      |     |
+| 2 | [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
+| 3 | [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching  | ✔      |     |
+| 4 | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#Run-CRP)       | Benchmark (Market) | ✔      |     |
+| 5 | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Run-UP)        | Follow the Winner | ✔      |     |
+| 6 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
+| 7 | RPRT      | Follow the Loser  | ✔       |    |
+| 8 | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
 
 </div>
 

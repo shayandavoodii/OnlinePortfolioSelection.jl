@@ -37,7 +37,7 @@ julia> adj_close = rand(5, 100);
 
 julia> model = cornu(adj_close, 10, 5, 0.5);
 
-julia> model.type
+julia> model.alg
 "CORN-U"
 
 julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
@@ -115,7 +115,7 @@ julia> adj_close = rand(5, 100);
 
 julia> model = cornk(adj_close, 10, 3, 5, 3);
 
-julia> model.type
+julia> model.alg
 "CORN-K"
 
 julia> sum(model.b, dims=1) .|> isapprox(1.) |> all

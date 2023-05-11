@@ -76,7 +76,7 @@ function normalizer!(mat::Matrix{T}) where T<:Float64
 end
 
 """
-    normalizer!(vec::Vector)::Vector{Float64}
+    normalizer!(vec::AbstractVector)::Vector{Float64}
 
 Force normilize the given vector.
 

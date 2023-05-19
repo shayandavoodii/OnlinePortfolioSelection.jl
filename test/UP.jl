@@ -20,7 +20,7 @@ adj_close = [
   end
 
   @testset "with custom arguments" begin
-    m_up = up(adj_close, init_budg=1e2, eval_points=10^5, leverage=1.5)
+    m_up = up(adj_close, eval_points=10^5)
 
     @test isa(m_up, OPSAlgorithm)
 

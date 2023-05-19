@@ -109,3 +109,207 @@ Calculate the budget of the current period.
 - `Float64`: Budget of the current period.
 """
 S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}} = prev_s*sum(w.*rel_pr)
+
+"""
+    rolling(f::Function, m::Matrix{T}, window::Int)
+
+Rolling window function. Applies `f` to each window of `m` of size `window`.
+
+!!! warning "Beware!"
+    Keep in mind that `m` is a matrix, in which each column represents an asset
+    and each row represents a sample. Therefore, the window is applied to each
+    asset.
+
+# Arguments
+- `f::Function`: function to apply to each window for each asset (Applies on a Vector{T})
+- `m::Matrix{T}`: matrix to apply the rolling window to
+- `window::Int`: size of the window
+
+# Returns
+- `res::Matrix{T}`: matrix of the results of applying `f` to each window for each asset
+
+# Example
+```julia
+julia> test = [
+       1. 2. 3.
+       4. 5. 6.
+       7. 8. 9.
+       10. 11. 12.
+      ];
+
+julia> rolling(mean, test, 3)
+2×3 Matrix{Float64}:
+ 4.0  5.0  6.0
+ 7.0  8.0  9.0
+```
+"""
+function rolling(f::Function, m::Matrix{T}, window::Int) where T
+  n, k = size(m)
+  n-window ≥ 0 || ArgumentError("Window size is too large. Decrease it. \
+    Also, you can leave `window` value as is, and instead increase the number of samples."
+  ) |> throw
+  res  = Matrix{T}(undef, n-window+1, k)
+  @inbounds @simd for idx_col ∈ 1:k
+    for idx_row ∈ 1:n-window+1
+      res[idx_row, idx_col] = f(m[idx_row:idx_row+window-1, idx_col])
+    end
+  end
+
+  return res
+end;
+
+function rolling(f::Function, v::Vector{T}, window::Int) where T
+  n   = length(v)
+  res = Vector{T}(undef, n-window+1)
+  @inbounds @simd for idx ∈ 1:n-window+1
+    res[idx] = f(v[idx:idx+window-1])
+  end
+
+  return res
+end;
+
+"""
+    shift(m::AbstractMatrix, window::Int)
+
+Shifts `m` (a matrix) by `window` rows.
+
+!!! warning "Beware!"
+    Keep in mind that `m` is a matrix, in which each column represents an asset
+    and each row represents a sample. Therefore, the window is applied to each
+    asset.
+
+# Arguments
+- `m::AbstractMatrix`: matrix to shift
+- `window::Int`: number of rows to shift
+
+# Example
+```julia
+julia> test = [
+       1. 2. 3.
+       4. 5. 6.
+       7. 8. 9.
+       10. 11. 12.
+      ];
+
+julia> shift(test, 2)
+2×3 Matrix{Float64}:
+ 1.0  2.0  3.0
+ 4.0  5.0  6.0
+```
+"""
+shift(m::AbstractMatrix, window::Int) = m[1:end-window, :]
+
+"""
+    shift(v::AbstractVector, window::Int)
+
+Shifts `v` (a vector) by `window` rows.
+
+# Arguments
+- `v::AbstractVector`: vector to shift
+- `window::Int`: number of elements to shift
+
+# Returns
+- `v_shifted::Vector`: shifted vector
+
+# Example
+```julia
+julia> test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+julia> shift(test, 2)
+8-element Vector{Int64}:
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+```
+"""
+shift(v::AbstractVector, window::Int) = v[1:end-window]
+
+"""
+    shift(f::Function, window::Int, v::Vararg{AbstractVector, N}) where N
+
+Shifts each vector in `v` by `window` number of elements and applies `f` to the \
+shifted vectors.
+
+# Arguments
+- `f::Function`: function to apply to each shifted vector
+- `window::Int`: number of elements to shift
+- `v::Vararg{AbstractVector, N}`: vectors to shift and broadcast `f` to
+
+# Returns
+- `::Vector`: result of broadcasting the `f` function to the shifted vectors
+
+# Example
+```julia
+julia> test1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+julia> test2 = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
+
+julia> shift(*, 2, test1, test2)
+8-element Vector{Int64}:
+ 10
+ 18
+ 24
+ 28
+ 30
+ 30
+ 28
+ 24
+```
+"""
+function shift(f::Function, window::Int, v::Vararg{AbstractVector, N}) where N
+  isequal(length.(v)...) || DimensionMismatch("All vectors must have the same length \
+    The lengths are:\n$(length.(v))
+  ") |> throw
+  v = shift.(v, window)
+  return broadcast(f, v...)
+end
+
+"""
+    rcorrelation(m1::AbstractMatrix, m2::AbstractMatrix, window::Int)
+
+Calculate the rolling correlation between `m1` and `m2` with a window of size `window`.
+
+!!! warning "Beware!"
+    Keep in mind that `m1` and `m2` are matrices, in which each column represents an asset
+    and each row represents a sample. Therefore, the window is applied to each
+    asset.
+
+# Arguments
+- `m1::AbstractMatrix`: first matrix to calculate the rolling correlation
+- `m2::AbstractMatrix`: second matrix to calculate the rolling correlation
+- `window::Int`: size of the window
+
+# Returns
+- `rcor::Array{Float64, 3}`: rolling correlation matrix
+"""
+function rcorrelation(m1::AbstractMatrix, m2::AbstractMatrix, window::Int)
+  s_m1, s_m2 = size(m1), size(m2)
+  # s_m2[1]-window+1 ≥ 1 || DimensionMismatch("considering the given `window` \
+  #   ($(window)), m1 and m2 must have at least $(1-(s_m2[1]-window+1)) more rows"
+  # ) |> throw
+
+
+  nperiods, nassets = s_m1
+  m₁, m₂            = rolling.(mean, [m1, m2], window)
+  m₁², m₂²          = rolling.(mean, [m1.^2, m2.^2], window)
+  # m₁, m₁²           = shift.([m₁, m₁²], window)
+  rcor              = Array{Float64, 3}(undef, nassets, nassets, nperiods-(2*window)+1)
+
+  for i ∈ 1:nassets
+    for j ∈ 1:nassets
+      xx            = m₁²[:, i] .- m₁[:, i].^2
+      yy            = m₂²[:, j] .- m₂[:, j].^2
+      xy            = m1[s_m1[1]-s_m2[1]+1:end, i] .* m2[:, j]
+      numerator_    = rolling(mean, xy, window) .- m₁[s_m1[1]-s_m2[1]+1:end, i].*m₂[:, j]
+      denominator_  = sqrt.(xx[s_m1[1]-s_m2[1]+1:end].*yy)
+      rcor[i, j, :] = numerator_ ./ denominator_
+    end
+  end
+
+  return rcor, m₁[s_m1[1]-s_m2[1]+1:end, :]
+end

@@ -19,6 +19,8 @@ This package provides an efficient implementation of OPS algorithms. The algorit
 6. Best Stock (BS)
 7. Reweighted Price Relative Tracking (RPRT)
 
+The available methods can be viewed by calling the [`opsmethods`](@ref) function.
+
 # Installation
 
 The latest stable version of the package can be installed by running the following command in the Julia REPL after pressing `]`:

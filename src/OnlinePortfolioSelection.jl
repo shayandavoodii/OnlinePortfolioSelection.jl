@@ -15,9 +15,7 @@ include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt
 export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar
-export OPSAlgorithm
-
-using PrecompileTools
+export OPSAlgorithm, opsmethods
 
 if VERSION≥v"1.9.0-rc3"
   @setup_workload begin
@@ -30,6 +28,42 @@ if VERSION≥v"1.9.0-rc3"
       dricornk(adj_close, market_adjclose, 1, 2, 2, 2)
     end
   end
+end
+
+"""
+    opsmethods()
+
+Print the available methods in the package.
+
+# Example
+```julia
+julia> using OnlinePortfolioSelection
+
+julia> opsmethods()
+
+      ===== OnlinePortfolioSelection.jl =====
+            Currently available methods
+       =====================================
+
+        up: Universal Portfolio - Call `up`
+        eg: Exponential Gradient - Call `eg`
+     cornu: CORN-U - Call `cornu`
+          ⋮
+```
+"""
+function opsmethods()
+  println("\n", " "^5, " ===== OnlinePortfolioSelection.jl =====")
+  println(" "^5, " "^7, "Currently available methods")
+  println(" "^6, " ", "="^37, "\n")
+  println("        up: Universal Portfolio - Call `up`")
+  println("        eg: Exponential Gradient - Call `eg`")
+  println("     cornu: CORN-U - Call `cornu`")
+  println("     cornk: CORN-K - Call `cornk`")
+  println("  dricornk: DRICORN-K - Call `dricornk`")
+  println("       crp: Constant Rebalanced Portfolio - Call `crp`")
+  println("        bs: Best Stock - Call `bs`")
+  println("      rprt: Reweighted Price Relative Tracking - Call `rprt`")
+  println("   anticor: Anticor - Call `anticor`")
 end
 
 end #module

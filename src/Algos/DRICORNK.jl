@@ -1,7 +1,3 @@
-using JuMP
-using Statistics
-using Ipopt
-
 """
     dricornk(
       adj_close::Matrix{T},

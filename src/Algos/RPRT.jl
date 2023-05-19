@@ -1,6 +1,3 @@
-using Statistics
-using LinearAlgebra
-
 """
     rprt(
       adj_close::Matrix{T};

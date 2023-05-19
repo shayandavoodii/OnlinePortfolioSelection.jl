@@ -1,5 +1,11 @@
 module OnlinePortfolioSelection
 
+using Statistics
+using LinearAlgebra
+using JuMP
+using Ipopt
+using PrecompileTools
+
 include("Algos/CRP.jl")
 include("Algos/EG.jl")
 include("Algos/RPRT.jl")
@@ -9,7 +15,6 @@ include("Algos/DRICORNK.jl")
 include("Tools/metrics.jl")
 include("Types/Algorithms.jl")
 include("Tools/show.jl")
-include("Algos/BS.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 

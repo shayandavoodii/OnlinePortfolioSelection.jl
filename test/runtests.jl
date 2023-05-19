@@ -45,3 +45,8 @@ end
   @info "Run unit tests in BS.jl"
   include("BS.jl")
 end
+
+@testset "Anticor.jl" begin
+  @info "Run unit tests in Anticor.jl"
+  include("Anticor.jl")
+end

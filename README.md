@@ -40,10 +40,15 @@
 <!-- TABLE OF CONTENTS -->
 <ol>
   <li><a href="#about">About</a></li>
-  <li><a href="#installation">Installation</a></li>
+  <li><a href="#quick-start">Quick Start</a></li>
+  <ul>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#example">Example</a></li>
+  </ul>
   <li><a href="#to-do-list">TODO LIST</a></li>
-  <li><a href="#contributing">Contributing</a></li>
+  <li><a href="#contribution">Contribution</a></li>
   <li><a href="#motivation">Motivation</a></li>
+  <li><a href="#citation">Citation</a></li>
   <li><a href="#license">License</a></li>
   <li><a href="#contact">Contact</a></li>
 </ol>
@@ -58,22 +63,26 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 
 | Row № | Algorithm | Strategy          | Stable | Dev |
 |:---:| --------- | ----------------- |:------:|:---:|
-| 1 | [CORN-U]()    | Pattern-Matching  | ✔      |     |
-| 2 | [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
-| 3 | [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching  | ✔      |     |
-| 4 | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#Run-CRP)       | Benchmark (Market) | ✔      |     |
-| 5 | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Run-UP)        | Follow the Winner | ✔      |     |
-| 6 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
-| 7 | RPRT      | Follow the Loser  | ✔       |    |
-| 8 | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/stable/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
+| 1 | [CORN-U](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
+| 2 | [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
+| 3 | [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching  | ✔      |     |
+| 4 | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#CRP)       | Benchmark (Market) | ✔      |     |
+| 5 | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Universal-Portfolio)        | Follow the Winner | ✔      |     |
+| 6 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
+| 7 | [RPRT](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))      | Follow the Loser  | ✔       |    |
+| 8 | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
 | 9 | Anticorn  | Follow the Loser  | ✔       |    |
 
 </div>
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
+---
+<!-- Quick Start -->
+## Quick Start
+
 <!-- Installation -->
-## Installation
+### Installation
 
 <div align="justify">
 
@@ -99,6 +108,72 @@ pkg> add https://github.com/shayandavoodii/OnlinePortfolioSelection.jl.git
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
+<!-- Example -->
+### Example
+All the available strategies can be found by running the following command after importing the package:
+
+```julia
+julia> using OnlinePortfolioSelection
+
+julia> opsmethods()
+```
+
+In summary, all the implemented algorithms' names appear with lowercase letters. All of the strategies, return an object of type `OPSAlgorithm` in which the following fields are incorporated:
+
+```julia
+julia> fieldnames(OPSAlgorithm)
+(:n_assets, :b, :alg)
+```
+
+where `n_assets` conveys the number of assets, `b` contains the corresponding weights of each asset in each investment period, and `alg` repersents the name of the algorithm which resulted the output. In order to get more information about a specific strategy, you can type `?` in the REPL and then call the name of the strategy. For example, to get more information about the `CORN-K` strategy, you can run the following command:
+
+```julia
+help?> cornk
+```
+
+Finally, to run the `CORN-K` strategy, you can run the following commands
+
+```julia
+juila> using OnlinePortfolioSelection
+
+# Generate a random price matrix. The rows are the assets, and the columns represent the time.
+julia> adj_close_random = rand(10, 100);
+
+# Set the parameters of the strategy
+julia> hor = 10; # The investment horizon
+julia> nexp = 5; # The number of experts
+julia> ml_tw = 3; # The maximum length of the time windows to be examined
+julia> ml_cor = 5; # The maximum number of correlation coefficients to be examined
+
+# Run the algorithm
+julia> m_cornk = cornk(adj_close_random, hor, nexp, ml_tw, ml_cor)
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+# Get weights
+julia> m_cornk.b
+10×10 Matrix{Float64}:
+ 0.088856    0.147974     …  0.00084875  0.223069
+ 0.0         0.0             0.00347507  0.0
+ 0.101514    0.000792416     0.00100889  0.0553558
+ 0.00913491  0.0805729       0.00100889  0.10233
+ 0.683795    0.0             0.31303     0.0
+ 0.00913491  0.0          …  0.0         0.0407096
+ 0.0350864   0.0208009       0.251554    0.239765
+ 0.0         0.219552        0.395477    0.0
+ 0.0232303   0.349871        0.0131345   0.163805
+ 0.0492489   0.180437        0.0204634   0.174965
+```
+
+Further information about the implemented strategies and the API can be found in the [documentation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/).
+
+<p align="right">🆙<a href="#top">Table of cotents</a></p>
+
+---
+
 <!-- TODO LIST -->
 ## To-do list
 - [ ] Implement BCRP
@@ -112,8 +187,8 @@ pkg> add https://github.com/shayandavoodii/OnlinePortfolioSelection.jl.git
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
-<!-- Contributing -->
-## Contributing
+<!-- Contribution -->
+## Contribution
 
 <div align="justify">
 Contributions are warmly welcome. Please feel free to open an issue and discuss the changes you want to make. Afterward, fork the repo and make the changes. Then, open a pull request, and I will review and hopefully merge it.
@@ -125,6 +200,32 @@ Contributions are warmly welcome. Please feel free to open an issue and discuss 
 ## Motivation
 <div align="justify">
 Since my M.Sc. thesis is in the field of OPS, I thought it would be a worthwhile idea to implement some of the benchmark methods to use them to perform benchmarking experiments to compare the performance of my proposed method with the existing methods in the literature. Afterward, I thought it would be a good idea to bundle the repo as an open-source package, and share it with the community so that other researchers can use the methods for their research purposes and put time into developing novel strategies rather than implementing the existing ones. Furthermore, because of my personal interest in the OPS field, I will continue to develop the package and add more algorithms to it. I hope this package will be useful for the community and will be used by other researchers in the field.
+</div>
+
+<p align="right">🆙<a href="#top">Table of cotents</a></p>
+
+<!-- Citation -->
+## Citation
+
+<div align="justify">
+If you use the package in your research, please cite the package using the following BibTeX entry:
+</div>
+
+```bibtex
+@software{shayan_davoodi_2023_7923120,
+  author       = {Shayan Davoodi},
+  title        = {shayandavoodii/OnlinePortfolioSelection.jl: v1.3.0},
+  month        = may,
+  year         = 2023,
+  publisher    = {Zenodo},
+  version      = {v1.3.0},
+  doi          = {10.5281/zenodo.7905042},
+  url          = {https://doi.org/10.5281/zenodo.7905042}
+}
+```
+
+<div align="justify">
+Other citation styles can be found <a href="https://doi.org/10.5281/zenodo.7905042">here</a> at the bottom of the page (Export section).
 </div>
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>

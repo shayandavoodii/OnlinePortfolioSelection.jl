@@ -6,27 +6,13 @@ adj_close = [
 ]
 
 @testset "CRP.jl" begin
-  @testset "with default arguments" begin
-    m_crp = crp(adj_close)
+  m_crp = crp(adj_close)
 
-    @test isa(m_crp, OPSAlgorithm)
+  @test isa(m_crp, OPSAlgorithm)
 
-    @test m_crp.alg == "CRP"
+  @test m_crp.alg == "CRP"
 
-    @test sum(m_crp.b, dims=1) .|> isapprox(1.0) |> all
+  @test sum(m_crp.b, dims=1) .|> isapprox(1.0) |> all
 
-    @test m_crp.n_assets == size(adj_close, 1)
-  end
-
-  @testset "with custom arguments" begin
-    m_crp = crp(adj_close, init_budg=1e2)
-
-    @test isa(m_crp, OPSAlgorithm)
-
-    @test m_crp.alg == "CRP"
-
-    @test sum(m_crp.b, dims=1) .|> isapprox(1.0) |> all
-
-    @test m_crp.n_assets == size(adj_close, 1)
-  end
+  @test m_crp.n_assets == size(adj_close, 1)
 end

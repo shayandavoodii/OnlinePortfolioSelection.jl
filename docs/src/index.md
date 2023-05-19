@@ -20,6 +20,8 @@ This package provides an efficient implementation of OPS algorithms. The algorit
 7. Reweighted Price Relative Tracking (RPRT)
 8. Anti-Correlation (Anticor)
 
+The available methods can be viewed by calling the [`opsmethods`](@ref) function.
+
 # Installation
 
 The latest stable version of the package can be installed by running the following command in the Julia REPL after pressing `]`:

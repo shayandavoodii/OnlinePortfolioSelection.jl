@@ -1,5 +1,5 @@
 """
-    eg(adj_close::Matrix{Float64}, init_budg=1., eta=0.05)
+    eg(adj_close::Matrix{Float64}; eta=0.05)
 
 Exponential Gradient (EG) algorithm.
 
@@ -9,7 +9,6 @@ an EG object.
 
 # Arguments
 - `adj_close::Matrix{Float64}`: Historical adjusted close prices.
-- `init_budg=1.`: Initial budget.
 - `eta=0.05`: Learning rate.
 
 !!! warning "Beware!"
@@ -40,21 +39,23 @@ julia> sum(m_eg.b, dims=1) .|> isapprox(1.0) |> all
 true
 ```
 """
-function eg(adj_close::Matrix{Float64}; init_budg=1., eta=0.05)
+function eg(adj_close::Matrix{Float64}; eta=0.05)
   # Calculate relative prices
   @views relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   n_assets, n_periods    = size(adj_close)
 
   # Initialiate Vector of weights
-  b = fill(1/n_assets, (n_assets, n_periods))
+  b = fill(1/n_assets, n_assets, n_periods)
 
   # Calculate weights
   for t ∈ 2:n_periods
-    prev_b = b[:, t-1]
-    w = prev_b .* exp.(
-      eta.*relative_prices[:, t-1]/sum(relative_prices[:, t-1].*prev_b)
+    last_b   = b[:, t-1]
+    last_rel = relative_prices[:, t-1]
+    w        = last_b .* exp.(
+      eta.*last_rel/sum(last_rel.*last_b)
     )
-    normalizer!(w)
+
+    isapprox(sum(w), 1.0, atol=1e-7) || normalizer!(w)
     b[:, t] = w
   end
 

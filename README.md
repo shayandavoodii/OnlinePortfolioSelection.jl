@@ -71,6 +71,7 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 | 6 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
 | 7 | [RPRT](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))      | Follow the Loser  | ✔       |    |
 | 8 | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
+| 9 | Anticorn  | Follow the Loser  | ✔       |    |
 
 </div>
 
@@ -179,7 +180,7 @@ Further information about the implemented strategies and the API can be found in
 - [x] ~~Implement CORN~~
 - [x] ~~Implement DRICORN~~
 - [x] ~~Implement BS~~
-- [ ] Implement Anticor
+- [x] ~~Implement Anticor~~
 - [ ] Implement $B^k$
 - [ ] Implement $B^{NN}$
 - etc.

@@ -63,7 +63,7 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 
 | Row № | Algorithm | Strategy          | Stable | Dev |
 |:---:| --------- | ----------------- |:------:|:---:|
-| 1 | [CORN-U]()    | Pattern-Matching  | ✔      |     |
+| 1 | [CORN-U](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
 | 2 | [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
 | 3 | [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching  | ✔      |     |
 | 4 | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#CRP)       | Benchmark (Market) | ✔      |     |

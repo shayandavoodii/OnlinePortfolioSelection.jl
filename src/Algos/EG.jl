@@ -37,7 +37,7 @@ true
 ```
 
 # References
-- [1] On-Line Portfolio Selection Using Multiplicative Updates](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058)
+- [1] [On-Line Portfolio Selection Using Multiplicative Updates](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058)
 """
 function eg(adj_close::Matrix{Float64}; eta=0.05)
   # Calculate relative prices

@@ -37,6 +37,7 @@ if VERSION≥v"1.9.0-rc3"
   end
 end
 
+# COV_EXCL_START
 """
     opsmethods()
 
@@ -72,5 +73,6 @@ function opsmethods()
   println("      rprt: Reweighted Price Relative Tracking - Call `rprt`")
   println("   anticor: Anticor - Call `anticor`")
 end
+# COV_EXCL_STOP
 
 end #module

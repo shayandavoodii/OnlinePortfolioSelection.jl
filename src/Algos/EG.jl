@@ -17,9 +17,6 @@ an EG object.
 # Returns
 - `::OPSAlgorithm(n_assets, b, alg)`: OPSAlgorithm object.
 
-# References
-- [1] On-Line Portfolio Selection Using Multiplicative Updates](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058)
-
 # Examples
 ```julia
 julia> using OnlinePortfolioSelection
@@ -38,6 +35,9 @@ julia> m_eg.b
 julia> sum(m_eg.b, dims=1) .|> isapprox(1.0) |> all
 true
 ```
+
+# References
+- [1] On-Line Portfolio Selection Using Multiplicative Updates](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058)
 """
 function eg(adj_close::Matrix{Float64}; eta=0.05)
   # Calculate relative prices

@@ -23,9 +23,6 @@ using the given historical prices and parameters.
 # Returns
 - `::OPSAlgorithm(n_assets, b, alg)`: OPSAlgorithm object.
 
-# References
-- [1] [Universal Portfolios](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x)
-
 # Examples
 ```julia
 julia> using OnlinePortfolioSelection
@@ -44,6 +41,9 @@ julia> m_up.b
 julia> sum(m_up.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
+
+# References
+- [1] [Universal Portfolios](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x)
 """
 function up(
   adj_close::Matrix{Float64};

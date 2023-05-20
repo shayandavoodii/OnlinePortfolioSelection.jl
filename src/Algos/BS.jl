@@ -13,9 +13,6 @@ Run the Best So Far algorithm on the given data.
 # Returns
 - `::OPSAlgorithm(n_assets, b, alg)`: An instance of `OPSAlgorithm`.
 
-# References
-- [KERNEL-BASED SEMI-LOG-OPTIMAL EMPIRICAL PORTFOLIO SELECTION STRATEGIES](https://doi.org/10.1142/S0219024907004251)
-
 # Example
 ```julia
 julia> using OnlinePortfolioSelection
@@ -35,6 +32,9 @@ julia> model.b
 julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
+
+# References
+- [1] [KERNEL-BASED SEMI-LOG-OPTIMAL EMPIRICAL PORTFOLIO SELECTION STRATEGIES](https://doi.org/10.1142/S0219024907004251)
 """
 function bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:Float64}
   n_assets, n_periods = size(adj_close)

@@ -28,9 +28,6 @@ Run the DRICORNK algorithm.
 # Returns
 - `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
 
-# Reference
-- [1] [DRICORN-K: A Dynamic RIsk CORrelation-driven Non-parametric Algorithm for Online Portfolio Selection](https://www.doi.org/10.1007/978-3-030-66151-9_12)
-
 # Example
 ```julia
 julia> using OnlinePortfolioSelection
@@ -42,6 +39,9 @@ julia> m_dricornk = dricornk(stocks_adj, market_adj, 5, 2, 4, 3);
 julia> sum(m_dricornk.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
+
+# Reference
+- [1] [DRICORN-K: A Dynamic RIsk CORrelation-driven Non-parametric Algorithm for Online Portfolio Selection](https://www.doi.org/10.1007/978-3-030-66151-9_12)
 """
 function dricornk(
   adj_close::Matrix{T},

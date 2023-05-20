@@ -20,9 +20,6 @@ Run RPRT algorithm.
 # Returns
 - `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
 
-# Reference
-- [1] [Reweighted Price Relative Tracking System for Automatic Portfolio Optimization](https://ieeexplore.ieee.org/document/8411138/)
-
 # Examples
 ```julia
 julia> using OnlinePortfolioSelection
@@ -41,6 +38,9 @@ julia> m_rprt.b
 julia> sum(m_rprt.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
+
+# Reference
+- [1] [Reweighted Price Relative Tracking System for Automatic Portfolio Optimization](https://ieeexplore.ieee.org/document/8411138/)
 """
 function rprt(
   adj_close::Matrix{T};

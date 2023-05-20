@@ -104,9 +104,9 @@ end
 Calculate the Annualized Sharpe Ratio of investment.
 
 # Arguments
-- APY::T: the APY of investment.
-- Rf::T: the risk-free rate of return.
-- sigma_prtf::T: the standard deviation of the portfolio ``\\sigma_p``.
+- `APY::T`: the APY of investment.
+- `Rf::T`: the risk-free rate of return.
+- `sigma_prtf::T`: the standard deviation of the portfolio ``sigma_p``.
 
 # Returns
 - `::Float64`: the Annualized Sharpe Ratio of investment.

@@ -89,5 +89,10 @@ function anticor(adj_close::Matrix{T}, window::Int) where {T<:Real}
     b[:, 2*window+period] = b[:, 2*window+period-1].+sum(transferᵢⱼ, dims=2).-vec(sum(transferᵢⱼ, dims=1))
   end
 
+  if any(x->isless(x, 0.), b)
+    b .= abs.(b)
+    normalizer!(b)
+  end
+
   return OPSAlgorithm(nassets, b, "Anticor")
 end

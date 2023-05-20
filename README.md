@@ -40,6 +40,7 @@
 <!-- TABLE OF CONTENTS -->
 <ol>
   <li><a href="#about">About</a></li>
+  <li><a href="#disclaimer">Disclaimer</a></li>
   <li><a href="#quick-start">Quick Start</a></li>
   <ul>
     <li><a href="#installation">Installation</a></li>
@@ -75,6 +76,16 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 
 </div>
 
+<p align="right">🆙<a href="#top">Table of cotents</a></p>
+
+<!-- Disclaimer -->
+## Disclaimer
+
+<div align="justify">
+
+This package is developed for **research purposes** and **is not intended to be used for investment purposes**. The author(s) is(are) not responsible for any loss of money or any other financial damages caused by using this package.
+
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 ---

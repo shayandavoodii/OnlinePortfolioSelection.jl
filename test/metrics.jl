@@ -55,3 +55,10 @@ adj_close_market = rand(40);
     @test isa(met, OPSMetrics)
   end
 end
+
+@testset "Individual metrics" begin
+  @testset "sn" begin
+    model = anticor(adj_close[:, end-29:end], 3)
+    @test isa(sn(model.b, rel_pr), Vector{Float64})
+  end
+end

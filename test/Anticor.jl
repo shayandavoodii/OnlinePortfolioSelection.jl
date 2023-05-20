@@ -44,4 +44,12 @@ b_res = [
     test2 = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
     @test OnlinePortfolioSelection.shift(*, 2, test, test2) == [10, 18, 24, 28, 30, 30, 28, 24]
   end
+
+  @testset "Negative weights when using small values as input" begin
+    test = rand(10, 500)
+    m_anticor = anticor(test, 15)
+
+    @test sum(m_anticor.b, dims=1) .|> isapprox(1., atol=1e-8) |> all
+    @test size(m_anticor.b) == size(test)
+  end
 end

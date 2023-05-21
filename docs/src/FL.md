@@ -2,6 +2,7 @@
 follow the loser has been introduced by Borodin and [Vincent (2004)](https://proceedings.neurips.cc/paper/2003/hash/8c9f32e03aeb2e3000825c8c875c4edd-Abstract.html) in which, the investment weight is transferred from a stock provided a better performance in the past to a stock with unfavorable performance, since the approach considers that a stock with an undesirable performance in the past is able to provide a desirable return in the future. In this package, the following FL strategy is implemented so far:
 1. Reweighted Price Relative Tracking System for Automatic Portfolio Optimization
 2. Anti-Correlation (Anticor)
+3. Online Moving Average Reversion (OLMAR)
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
 RPRT is a FL strategy proposed by [Lai et al. (2018)](https://doi.org/10.1109/TSMC.2018.2852651). In the price prediction stage, it automatically assigns separate weights to the price relative predictions according to each asset’s performance, and these weights will also be automatically updated. In the portfolio optimizing stage, they proposed a novel tracking system with a generalized increasing factor to maximize the future wealth of next period. Through their study, an efficient algorithm is designed to solve the portfolio optimization objective, which is applicable to large-scale and time-limited situations. According to their extensive experiments on six benchmark datasets from real financial markets with diverse assets and different time spans, RPRT outperforms other state-of-the-art systems in cumulative wealth, mean excess return, annual percentage yield, and some typical risk metrics. Moreover, it can withstand considerable transaction costs and runs fast. It indicates that RPRT is an effective and efficient online portfolio selection system.
@@ -150,6 +151,82 @@ Annualized Standard Deviation: 0.1618626725690273
 
 julia> results.MDD
 0.11070937679745295
+```
+
+It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+
+## Online Moving Average Reversion (OLMAR)
+The OLMAR algorithm stands for On-Line Moving Average Reversion. It is a new approach for on-line portfolio selection that represents multi-period mean reversion as “Moving Average Reversion” (MAR), which explicitly predicts next price relatives using moving averages. To the best of our knowledge, OLMAR is the first algorithm that exploits moving average in the setting of on-line portfolio selection [[1](https://www.sciencedirect.com/science/article/pii/S0004370215000168)]. Though simple in nature, OLMAR has a reasonable updating strategy and has been empirically validated via a set of extensive experiments on real markets.
+
+See [`olmar`](@ref).
+
+### Run OLMAR
+
+Let's run the algorithm on the real market data. In this case, the data is collected as noted in the [Fetch Data](@ref) section.
+
+Let's run the algorithm on the given data (named as `prices`):
+
+```julia
+juila> using OnlinePortfolioSelection
+
+julia> size(prices)
+(17, 5)
+
+# OnlinePortfolioSelection suppose that the data is in the form of a matrix
+# where each row is the price vector of the assets at a specific time period.
+julia> prices = prices |> permutedims;
+
+julia> window_size = 3;
+julia> eps = 2;
+
+# Let's run the algorithm for the last 15 days of the data.
+julia> m_olmar = olmar(prices[:, end-14:end], eps, window_size);
+
+# Get the weights of the assets for each day
+juila> m_olmar.b
+5×15 Matrix{Float64}:
+ 0.2  0.2  0.0  0.0  0.0  0.0  …  0.0  0.0  0.0  0.0
+ 0.2  0.2  0.0  0.0  1.0  0.0     1.0  0.0  0.0  0.147231   
+ 0.2  0.2  0.0  0.0  0.0  1.0     0.0  0.0  0.0  0.0        
+ 0.2  0.2  1.0  1.0  0.0  0.0     0.0  1.0  1.0  0.0        
+ 0.2  0.2  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.852769
+```
+
+One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
+
+```julia
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia> sn(m_olmar.b, rel_price)
+16-element Vector{Float64}:
+ 1.0
+ 1.0026929997309684
+ 0.9931968903246916
+ 0.9844182209638911
+ 0.979271976499212
+ ⋮
+ 0.9390854420408513
+ 0.9192499651820158
+ 0.89507547776031
+ 0.886526969495664
+```
+
+The result indicates that if we had invested in the given period, we would have lost ~11.3% of our wealth. Note that [`sn`](@ref) automatically takes the last 15 relative prices in this case.
+
+Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
+
+```julia
+julia> results = OPSMetrics(m_olmar.b, rel_price)
+        
+            Cumulative Return: 0.886526969495664
+                          APY: -0.8678020275925177
+Annualized Standard Deviation: 0.20186187705069908
+      Annualized Sharpe Ratio: -4.398066839384139
+             Maximum Drawdown: 0.11585403534927716
+                 Calmar Ratio: -7.490477349159786
+
+julia> results.MDD
+0.11585403534927716
 ```
 
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.

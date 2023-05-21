@@ -73,6 +73,7 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 | 7 | [RPRT](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))      | Follow the Loser  | ✔       |    |
 | 8 | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
 | 9 | [Anticor](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Anti-Correlation-(Anticor))  | Follow the Loser  | ✔       |    |
+| 10 | [OLMAR](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Online-Moving-Average-Reversion-(OLMAR))  | Follow the Loser  | ✔       |    |
 
 </div>
 

@@ -4,8 +4,6 @@ using Ipopt
 using Test
 using Statistics
 
-# push!(LOAD_PATH,"../src/")
-
 @testset "CORN.jl" begin
   @info "Run unit tests in CORN.jl"
   include("CORN.jl")
@@ -49,4 +47,9 @@ end
 @testset "Anticor.jl" begin
   @info "Run unit tests in Anticor.jl"
   include("Anticor.jl")
+end
+
+@testset "OLMAR.jl" begin
+  @info "Run unit tests in OLMAR.jl"
+  include("OLMAR.jl")
 end

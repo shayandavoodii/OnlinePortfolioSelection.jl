@@ -3,10 +3,10 @@ function simplex_proj(b::Vector{Float64})
   cond     = false
   sorted_b = sort(b, rev=true)
   tmpsum   = 0.
-  for i ∈ 1:n_assets-1
-    tmpsum += sorted_b[i]
-    tmax    = (tmpsum - 1.)/i
-    if tmax≥sorted_b[i+1]
+  for idx_assetᵢ ∈ 1:n_assets-1
+    tmpsum += sorted_b[idx_assetᵢ]
+    tmax    = (tmpsum - 1.)/idx_assetᵢ
+    if tmax≥sorted_b[idx_assetᵢ+1]
       cond = true
       break
     end
@@ -288,28 +288,23 @@ Calculate the rolling correlation between `m1` and `m2` with a window of size `w
 - `rcor::Array{Float64, 3}`: rolling correlation matrix
 """
 function rcorrelation(m1::AbstractMatrix, m2::AbstractMatrix, window::Int)
-  s_m1, s_m2 = size(m1), size(m2)
-  # s_m2[1]-window+1 ≥ 1 || DimensionMismatch("considering the given `window` \
-  #   ($(window)), m1 and m2 must have at least $(1-(s_m2[1]-window+1)) more rows"
-  # ) |> throw
-
-
+  s_m1, s_m2        = size(m1), size(m2)
   nperiods, nassets = s_m1
   m₁, m₂            = rolling.(mean, [m1, m2], window)
   m₁², m₂²          = rolling.(mean, [m1.^2, m2.^2], window)
-  # m₁, m₁²           = shift.([m₁, m₁²], window)
   rcor              = Array{Float64, 3}(undef, nassets, nassets, nperiods-(2*window)+1)
+  idx               = s_m1[1]-s_m2[1]+1
 
-  for i ∈ 1:nassets
-    for j ∈ 1:nassets
-      xx            = m₁²[:, i] .- m₁[:, i].^2
-      yy            = m₂²[:, j] .- m₂[:, j].^2
-      xy            = m1[s_m1[1]-s_m2[1]+1:end, i] .* m2[:, j]
-      numerator_    = rolling(mean, xy, window) .- m₁[s_m1[1]-s_m2[1]+1:end, i].*m₂[:, j]
-      denominator_  = sqrt.(xx[s_m1[1]-s_m2[1]+1:end].*yy)
-      rcor[i, j, :] = numerator_ ./ denominator_
+  for idx_assetᵢ ∈ 1:nassets
+    for idx_assetⱼ ∈ 1:nassets
+      xx            = m₁²[:, idx_assetᵢ] .- m₁[:, idx_assetᵢ].^2
+      yy            = m₂²[:, idx_assetⱼ] .- m₂[:, idx_assetⱼ].^2
+      xy            = m1[idx:end, idx_assetᵢ] .* m2[:, idx_assetⱼ]
+      numerator_    = rolling(mean, xy, window) .- m₁[idx:end, idx_assetᵢ].*m₂[:, idx_assetⱼ]
+      denominator_  = sqrt.(xx[idx:end].*yy)
+      rcor[idx_assetᵢ, idx_assetⱼ, :] = numerator_ ./ denominator_
     end
   end
 
-  return rcor, m₁[s_m1[1]-s_m2[1]+1:end, :]
+  return rcor, m₁[idx:end, :]
 end

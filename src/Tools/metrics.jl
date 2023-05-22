@@ -28,6 +28,8 @@ Calculate the cumulative return of investment during a period of time.
 # Arguments
 - `weights::Matrix{T}`: the weights of the portfolio.
 - `rel_pr::Matrix{T}`: the relative price of the stocks.
+
+## Keyword Arguments
 - `init_inv::T=1`: the initial investment.
 
 !!! warning "Beware!"
@@ -71,6 +73,8 @@ Calculate the Annualized Standard Deviation (σₚ) of portfolio.
 
 # Arguments
 - `cum_ret::Vector{Float64}`: the cumulative return of investment during the investment period.
+
+## Keyword Arguments
 - `dpy`: the number of days in a year.
 
 # Returns
@@ -169,6 +173,8 @@ Calculate the metrics of an OPS algorithm.
 # Arguments
 - `weights::Matrix{T}`: the weights of the portfolio.
 - `rel_pr::Matrix{T}`: the relative price of the stocks.
+
+## Keyword Arguments
 - `init_inv::T=1`: the initial investment.
 - `Rf::T=0.02`: the risk-free rate of return.
 - `dpy::S=252`: the number of days in a year.

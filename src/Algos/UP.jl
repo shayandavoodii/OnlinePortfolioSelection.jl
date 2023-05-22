@@ -2,9 +2,6 @@
     up(
       adj_close::Matrix{Float64};
       eval_points::Int=10^4,
-      leverage=1.,
-      frequency::Int=1,
-      min_history::Int=0
     )
 
 Universal Portfolio (UP) algorithm.
@@ -14,8 +11,9 @@ using the given historical prices and parameters.
 
 # Arguments
 - `adj_close::Matrix{Float64}`: Historical adjusted close prices.
+
+## Keyword Arguments
 - `eval_points::Int=10^4`: Number of evaluation points.
-- `leverage=1.`: Leverage value.
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -59,8 +57,6 @@ function up(
   W             = mc_simplex(n_assets-1, eval_points)
   m             = size(W, 1)
   S             = reshape(ones(m), m, 1)
-  # leverage_     = max(leverage, 1/n_periods)
-  # stretch       = (leverage_-1/n_periods)/(1-1/n_periods)
 
   # Update weights
   for t ∈ 1:n_periods

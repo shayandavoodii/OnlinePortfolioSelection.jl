@@ -5,6 +5,8 @@ Run the Best So Far algorithm on the given data.
 
 # Arguments
 - `adj_close::Matrix{T}`: A matrix of adjusted closing prices of assets.
+
+## Keyword Arguments
 - `last_n::Int`: The number of periods to look back for the performance of each asset. If `last_n` is 0, then the performance is calculated from the first period to the previous period.
 
 !!! warning "Beware!"

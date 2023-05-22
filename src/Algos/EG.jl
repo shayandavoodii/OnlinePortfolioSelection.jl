@@ -9,6 +9,8 @@ an EG object.
 
 # Arguments
 - `adj_close::Matrix{Float64}`: Historical adjusted close prices.
+
+## Keyword Arguments
 - `eta=0.05`: Learning rate.
 
 !!! warning "Beware!"

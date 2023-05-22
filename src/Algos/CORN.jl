@@ -13,6 +13,8 @@ Run CORN-U algorithm.
 - `adj_close::Matrix{T}`: Adjusted close prices of assets.
 - `horizon::M`: The number of periods to invest.
 - `w::M`: maximum length of time window to be examined.
+
+## Keyword Arguments
 - `rho::T=0.2`: The correlation coefficient threshold.
 - `init_budg=1`: The initial budget for investment.
 
@@ -92,6 +94,8 @@ Run CORN-K algorithm.
 - `k::T`: The number of top experts to be selected.
 - `w::T`: maximum length of time window to be examined.
 - `p::T`: maximum number of correlation coefficient thresholds.
+
+## Keyword Arguments
 - `init_budg=1`: The initial budget for investment.
 
 !!! warning "Beware!"

@@ -19,6 +19,8 @@ Run the DRICORNK algorithm.
 - `k::M`: The number of experts.
 - `w::M`: maximum length of time window to be examined.
 - `p::M`: maximum number of correlation coefficient thresholds.
+
+## Keyword Arguments
 - `lambda::T=1e-3`: The regularization parameter.
 - `init_budg=1`: The initial budget for investment.
 

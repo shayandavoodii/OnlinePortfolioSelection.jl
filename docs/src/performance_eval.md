@@ -7,9 +7,9 @@ This package provides a set metrics to evaluate the performance of the algorithm
     This metric calculates the cumulative return of the algorithm during the investment period. The cumulative return is defined as:  
 
     ```math
-    \begin{aligned}
+    \begin{align}
     {S_n} = {S_0}\prod\limits_{t = 1}^T {\left\langle {{b_t},{x_t}} \right\rangle }
-    \end{aligned}
+    \end{align}
     ```
 
     where $S_0$ is the initial capital, $b_t$ is the portfolio vector at time $t$ and $x_t$ is the relative price vector at time $t$. This metric can be calculated by using the [`sn`](@ref) function.
@@ -19,10 +19,9 @@ This package provides a set metrics to evaluate the performance of the algorithm
     This metric calculates the annualized return of the algorithm during the investment period. The annualized return is defined as:
 
     ```math
-    \begin{aligned}
+    \begin{align}
     {APY} = \left( {{S_n}} \right)^{\frac{1}{y}} - 1
-    \end{aligned}
-    $
+    \end{align}
     ```
 
     where $y$ is the number of years in the investment period. This metric can be calculated by using the [`apy`](@ref) function.
@@ -36,9 +35,9 @@ This package provides a set metrics to evaluate the performance of the algorithm
     The Sharpe ratio is a measure of risk-adjusted return. It is defined as:
 
     ```math
-    \begin{aligned}
+    \begin{align}
     SR = {{APY - {R_f}} \over {{\sigma _p}}}
-    \end{aligned}
+    \end{align}
     ```
 
     where $R_f$ is the risk-free rate which is considered to be equal to the treasury bill rate at the time of investment. This metric can be calculated by using the [`ann_sharpe`](@ref) function.
@@ -48,17 +47,17 @@ This package provides a set metrics to evaluate the performance of the algorithm
     The maximum drawdown is the maximum loss from a peak to a trough of a portfolio, before a new peak is attained. Calculation of MDD is based on the capital break value. Capital break can be considered as one of the most important criteria to evaluate the capital market which is equal to the upper bound of decline from the peak of portfolio cumulative function. Capital break is defined as:
 
     ```math
-    \begin{aligned}
+    \begin{align}
     DD\left( T \right) = \sup \left[ {0,{{\sup }_{i \in \left( {0,t} \right)}}{S_i} - {S_t}} \right]
-    \end{aligned}
+    \end{align}
     ```
 
     where $S_t$ is the portfolio cumulative function at time $t$. The maximum capital break can be used for measuring the risk that can be defined as:
 
     ```math
-    \begin{aligned}
+    \begin{align}
     MDD\left( n \right) = {\sup _{t \in \left( {0,n} \right)}}\left[ {DD\left( t \right)} \right]
-    \end{aligned}
+    \end{align}
     ```
 
     This metric can be calculated by using the [`mdd`](@ref) function.
@@ -68,9 +67,9 @@ This package provides a set metrics to evaluate the performance of the algorithm
     The Calmar ratio is a measurement of risk-adjusted return based on maximum drawdown. It is defined as:  
 
     ```math
-    \begin{aligned}
+    \begin{align}
     CR = {{APY} \over {MDD}}
-    \end{aligned}
+    \end{align}
     ```
 
     This metric can be calculated by using the [`calmar`](@ref) function.  

@@ -10,6 +10,8 @@ Run RPRT algorithm.
 
 # Arguments
 - `adj_close::Matrix{T}`: Adjusted close prices of assets.
+
+## Keyword Arguments
 - `w::Int64=5`: maximum length of time window to be examined.
 - `theta::T=0.8`: The threshold for the relative price.
 - `epsilon=50`: The threshold for the condition of the portfolio.
@@ -76,7 +78,7 @@ function rprt(
     clamp!(w_, -1e-10, 1e10)
     b[:, t] = simplex_proj(w_)
   end
-  isapprox.(sum(b, dims=1), 1., atol=1e-7) |> all || normalizer!(b)
+  sum(b, dims=1) .|> isapprox(1., atol=1e-7) |> all || normalizer!(b)
 
   return OPSAlgorithm(n_assets, b, "RPRT")
 end

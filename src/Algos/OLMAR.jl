@@ -1,10 +1,10 @@
 """
-    olmar(adj_close::Matrix{<:Real}, ϵ::Int, ω::Int)::OPSAlgortihm
+    olmar(adj_close::Matrix{Float64}, ϵ::Int, ω::Int)::OPSAlgortihm
 
 Run the Online Moving Average Reversion algorithm.
 
 # Arguments
-- `adj_close::Matrix{<:Real}`: matrix of adjusted closing prices.
+- `adj_close::Matrix{Float64}`: matrix of adjusted closing prices.
 - `ϵ::Int`: Reversion threshold.
 - `ω::Int`: Window size.
 
@@ -37,7 +37,7 @@ true
 # References
 - [1] [On-Line Portfolio Selection with Moving Average Reversion](https://doi.org/10.48550/arXiv.1206.4626)
 """
-function olmar(adj_close::Matrix{<:Real}, ϵ::Int, ω::Int)::OPSAlgorithm
+function olmar(adj_close::Matrix{Float64}, ϵ::Int, ω::Int)::OPSAlgorithm
   ϵ>1 || ArgumentError("ϵ must be > 1") |> throw
   ω≥3 || ArgumentError("ω must be ≥ 3") |> throw
   nassets, nperiods = size(adj_close)
@@ -62,7 +62,7 @@ function olmar(adj_close::Matrix{<:Real}, ϵ::Int, ω::Int)::OPSAlgorithm
 end
 
 function pred_relpr(relpr::Matrix{Float64}, ω::Int)::Vector{Float64}
-  size(relpr, 2) < ω && return relpr[:, end]
   n = size(relpr, 2)
+  n < ω && return relpr[:, end]
   return 1/ω .* sum(relpr[:, idx]./relpr[:, end] for idx=n:-1:n-ω+1)
 end

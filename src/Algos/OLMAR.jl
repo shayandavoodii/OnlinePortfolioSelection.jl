@@ -45,7 +45,7 @@ function olmar(adj_close::Matrix{Float64}, ϵ::Int, ω::Int)::OPSAlgorithm
   rel_pr            = adj_close[:, 2:end]./adj_close[:, 1:end-1]
   rel_pr            = hcat(fill(1.0, nassets, 1), rel_pr)
 
-  for day_idx ∈ 2:nperiods
+  @inbounds for day_idx ∈ 2:nperiods
     rel_pr_       = rel_pr[:, 1:day_idx-1]
     x̃ₜ₊₁          = pred_relpr(rel_pr_, ω)
     x̄ₜ₊₁          = mean(rel_pr_, dims=2)

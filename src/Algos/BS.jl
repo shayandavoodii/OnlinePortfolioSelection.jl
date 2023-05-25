@@ -47,7 +47,7 @@ function bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:Float64}
   b = zeros(T, n_assets, n_periods)
   # For the first period, assign 1/n_assets to each asset
   b[:, 1] .= one(T)/n_assets
-  for t ∈ 2:n_periods
+  @inbounds for t ∈ 2:n_periods
 
     # Calculate the performance of each asset
     if t==2

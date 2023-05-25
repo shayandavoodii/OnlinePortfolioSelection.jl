@@ -60,7 +60,7 @@ function rprt(
   # Initialize the weights
   b = fill(1/n_assets, n_assets, n_periods)
 
-  for t ∈ 2:n_periods
+  @inbounds for t ∈ 2:n_periods
     last_relative_price = relative_prices[:, t-1]
     prediction = predict_relative_price(relative_prices[:, max(t-w-1, 0)+1:t-1])
     # predicted d

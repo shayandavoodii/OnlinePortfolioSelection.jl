@@ -16,5 +16,8 @@ rel_pr = [
 
   @testset "with unvalid c" begin
     @test_throws DomainError bk(rel_pr, 2, 2, 1.1)
+    @test_throws DomainError bk(rel_pr, 2, 2, -0.1)
+    @test_throws DomainError bk(rel_pr, 0, 1, 0.2)
+    @test_throws DomainError bk(rel_pr, 1, 0, 0.2)
   end
 end

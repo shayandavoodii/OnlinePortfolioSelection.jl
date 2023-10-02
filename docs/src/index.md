@@ -7,7 +7,7 @@ end
 # Introduction
 
 Online Portfolio Selection (OPS) strategies are trading algorithms that sequentially allocate capital among a group of assets to maximize the final returns of the investment. It is a fundamental problem in computational finance that has been extensively studied across several research communities, including finance, statistics, artificial intelligence, machine learning, and data mining. From an online machine learning perspective, it is formulated as a sequential decision problem and there are a variety of state-of-the-art approaches that have been developed to solve it. These approaches are grouped into several major categories, including benchmarks, “Follow-the-Winner” approaches, “Follow-the-Loser” approaches, “Pattern-Matching” based approaches, and "Meta-Learning" Algorithms [[1](https://arxiv.org/abs/1212.2129)].
-This package provides an efficient implementation of OPS algorithms. The algorithms are implemented in Julia in a fully type-stable manner. All the algorithms return an object of type `OPSAlgorithm` which can be used to query the portfolio weights, number of assets, and the name of the algorithm. Ten algorithms are implemented so far and more will be added in the future. The available algorithms are:
+This package provides an efficient implementation of OPS algorithms. The algorithms are implemented in Julia in a fully type-stable manner. All the algorithms return an object of type `OPSAlgorithm` which can be used to query the portfolio weights, number of assets, and the name of the algorithm. Elelven algorithms are implemented so far and more will be added in the future. The available algorithms are:
 
 1. Constant Rebalanced Portfolio (CRP)
 2. Exponential Gradient (EG)
@@ -20,6 +20,7 @@ This package provides an efficient implementation of OPS algorithms. The algorit
 7. Reweighted Price Relative Tracking (RPRT)
 8. Anti-Correlation (Anticor)
 9. Online Moving Average Reversion (OLMAR)
+10. Bᴷ
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

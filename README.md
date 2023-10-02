@@ -68,7 +68,7 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 | 2     | [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)         | Pattern-Matching   | 8     | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#BS)                                                                               | Benchmark (Market) |
 | 3     | [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching   | 9     | [Anticor](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Anti-Correlation-(Anticor))                                                         | Follow the Loser   |
 | 4     | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#CRP)                                           | Benchmark (Market) | 10    | [OLMAR](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Online-Moving-Average-Reversion-(OLMAR))                                              | Follow the Loser   |
-| 5     | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Universal-Portfolio)                                   | Follow the Winner  | 11    | [Bᴷ](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Bᴷ)                                                                                      | Pattern-Matching   |
+| 5     | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Universal-Portfolio)                                   | Follow the Winner  | 11    | [Bᴷ](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Bᴷ)                                                                                      | Pattern-Matching   |
 | 6     | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Exponential-Gradient)                                  | Follow the Winner  |       |                                                                                                                                                                    |                    |
 
 
@@ -190,7 +190,7 @@ Further information about the implemented strategies and the API can be found in
 - [x] ~~Implement DRICORN~~
 - [x] ~~Implement BS~~
 - [x] ~~Implement Anticor~~
-- [ ] Implement $B^k$
+- [x] ~~Implement $B^k$~~
 - [ ] Implement $B^{NN}$
 - etc.
 

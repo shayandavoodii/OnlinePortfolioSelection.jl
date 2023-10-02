@@ -62,18 +62,15 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 </div>
 <div align="center">
 
-| Row № | Algorithm | Strategy          | Stable | Dev |
-|:---:| --------- | ----------------- |:------:|:---:|
-| 1 | [CORN-U](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
-| 2 | [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)    | Pattern-Matching  | ✔      |     |
-| 3 | [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching  | ✔      |     |
-| 4 | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#CRP)       | Benchmark (Market) | ✔      |     |
-| 5 | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Universal-Portfolio)        | Follow the Winner | ✔      |     |
-| 6 | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Exponential-Gradient)        | Follow the Winner | ✔      |     |
-| 7 | [RPRT](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))      | Follow the Loser  | ✔       |    |
-| 8 | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#BS)        | Benchmark (Market) | ✔     |     |
-| 9 | [Anticor](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Anti-Correlation-(Anticor))  | Follow the Loser  | ✔       |    |
-| 10 | [OLMAR](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Online-Moving-Average-Reversion-(OLMAR))  | Follow the Loser  | ✔       |    |
+| Row № | Algorithm                                                                                                                        | Strategy           | Row № | Algorithm                                                                                                                                                          | Strategy           |
+|:-----:|:-------------------------------------------------------------------------------------------------------------------------------- |:------------------ |:-----:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------ |:------------------ |
+| 1     | [CORN-U](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)         | Pattern-Matching   | 7     | [RPRT](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT)) | Follow the Loser   |
+| 2     | [CORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Correlation-driven-Nonparametric-Learning)         | Pattern-Matching   | 8     | [BS](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#BS)                                                                               | Benchmark (Market) |
+| 3     | [DRICORN-K](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Dynamic-RIsk-CORrelation-driven-Non-parametric) | Pattern-Matching   | 9     | [Anticor](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Anti-Correlation-(Anticor))                                                         | Follow the Loser   |
+| 4     | [CRP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/benchmark/#CRP)                                           | Benchmark (Market) | 10    | [OLMAR](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Online-Moving-Average-Reversion-(OLMAR))                                              | Follow the Loser   |
+| 5     | [UP](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Universal-Portfolio)                                   | Follow the Winner  | 11    | [Bᴷ](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FL/#Bᴷ)                                                                                      | Pattern-Matching   |
+| 6     | [EG](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/FW/#Exponential-Gradient)                                  | Follow the Winner  |       |                                                                                                                                                                    |                    |
+
 
 </div>
 

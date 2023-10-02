@@ -1,7 +1,7 @@
 """
     bk(rel_price::Matrix{T}, K::S, L::S, c) where {T<:Float64, S<:Int}
 
-Run the Best-Known-Constant Rebalanced Portfolio (BKCRP) algorithm.
+Run Bᴷ algorithm.
 
 # Arguments
 - `rel_price::Matrix{T}`: Relative prices of assets.

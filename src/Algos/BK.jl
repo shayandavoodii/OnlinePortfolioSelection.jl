@@ -1,16 +1,16 @@
 """
-    bk(data::Matrix{T}, K::S, L::S, c) where {T<:Float64, S<:Int}
+    bk(rel_price::Matrix{T}, K::S, L::S, c) where {T<:Float64, S<:Int}
 
 Run the Best-Known-Constant Rebalanced Portfolio (BKCRP) algorithm.
 
 # Arguments
-- `data::Matrix{T}`: Relative prices of assets.
+- `rel_price::Matrix{T}`: Relative prices of assets.
 - `K::S`: Number of experts.
 - `L::S`: Number of time windows.
 - `c::T`: The similarity threshold.
 
 !!! warning "Beware!"
-    `data` should be a matrix of size `n_assets` × `n_periods`.
+    `rel_price` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
 - `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
@@ -33,9 +33,11 @@ true
 # Reference
 - [1] [NONPARAMETRIC KERNEL-BASED SEQUENTIAL INVESTMENT STRATEGIES](https://doi.org/10.1111/j.1467-9965.2006.00274.x)
 """
-function bk(data::Matrix{T}, K::S, L::S, c) where {T<:Float64, S<:Int}
-  -1≤c≤1 || DomainError("c must be between -1 and 1 (-1 ≤ c ≤ 1)") |> throw
-  nstocks, ndays= size(data)
+function bk(rel_price::Matrix{T}, K::S, L::S, c) where {T<:Float64, S<:Int}
+  0<c≤1 || DomainError("c must be graeter than 0 and less than or equal to 1 (0 < c ≤ 1)") |> throw
+  K>0 || DomainError("K must be a positive value (K > 0)") |> throw
+  L>0 || DomainError("L must be a positive value (L > 0)") |> throw
+  nstocks, ndays= size(rel_price)
   daily_ret = ones(ndays)
   day_weight = ones(nstocks)/nstocks
   day_weight_o = zeros(nstocks)
@@ -45,16 +47,16 @@ function bk(data::Matrix{T}, K::S, L::S, c) where {T<:Float64, S<:Int}
 
   for t = 1:ndays
     if t>1
-      day_weight, exp_w = kernel(data[:, 1:t-1], K, L, c, exp_ret, exp_w)
+      day_weight, exp_w = kernel(rel_price[:, 1:t-1], K, L, c, exp_ret, exp_w)
     end
     day_weight = day_weight ./ sum(day_weight)
     daily_portfolio[:, t] = day_weight
-    daily_ret[t, 1] = sum(data[:, t].*day_weight)
-    day_weight_o = day_weight .* data[:, t]./daily_ret[t]
-    exp_ret[L+1, 1] = exp_ret[L+1, 1]*sum(data[:, t].*exp_w[:, K*L+1])
+    daily_ret[t, 1] = sum(rel_price[:, t].*day_weight)
+    day_weight_o = day_weight .* rel_price[:, t]./daily_ret[t]
+    exp_ret[L+1, 1] = exp_ret[L+1, 1]*sum(rel_price[:, t].*exp_w[:, K*L+1])
     for l=1:L
       for k=1:K
-        exp_ret[l, k] = exp_ret[l, k]*sum(data[:, t].*exp_w[:, (k-1)*L+l])
+        exp_ret[l, k] = exp_ret[l, k]*sum(rel_price[:, t].*exp_w[:, (k-1)*L+l])
       end
     end
   end
@@ -149,7 +151,7 @@ function expert(data, k, l, c)
   end
 
   first_m_days = @views historical_data[:, 1:m]
-  
+
   model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
   @variable(model, 0 <= weight[i=1:nstocks] <= 1)
   @constraint(model, sum(weight) == 1)

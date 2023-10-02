@@ -1,7 +1,5 @@
-src/t.py
-src/t copy.py
 src/test/
-test.jl
+test**.***
 *Manifest.toml
-*t*.jl
 .vscode/
+t**.***

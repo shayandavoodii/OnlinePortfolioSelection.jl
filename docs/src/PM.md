@@ -5,6 +5,7 @@ Pattern-matching algorithms are one of most popular algorithms in the context of
 1.1. CORN-U  
 1.2. CORN-K
 2. Dynamic RIsk CORrelation-driven Non-parametric
+3. Bᴷ
 
 ## Correlation-driven Nonparametric Learning
 Correlation-driven Nonparametric Learning (CORN) is a pattern-matching algorithm proposed by [Borodin et al. (2010)](https://doi.org/10.1145/1961189.1961193). CORN utilizes the correlation as the similarity measure between time windows. Additionally, CORN defines several experts to construct portfolios. For each trading day, CORN combines the portfolios of the experts to construct the final portfolio. This is where CORN-K and CORN-U differ. CORN-K uses K best experts (based on their performance on historical data) to construct the final portfolio. On the other hand, CORN-U uses all the experts and uniformly combines their portfolios to construct the final portfolio.
@@ -122,3 +123,45 @@ julia> sn(model.b, rel_price)
 ```
 
 The result indicates that the algorithm has lost ~2.6% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+
+## Bᴷ
+Bᴷ which is introduced as a class of kernel-based investment strategies, is a pattern-matching algorithm proposed by [Györfi et al. (2006)](https://doi.org/10.1111/j.1467-9965.2006.00274.x). Bᴷ, in spirit, is similar to the histogram-based strategies. The main difference is that the elementary strategies used by the strategy replace the rigid discretization of the past few market vectors by a more flexible “moving-window” rule. This implementation comes with the uniform kernel function. See [`bk`](@ref).
+
+### Run Bᴷ
+The most important parameter of Bᴷ is `k` (number of best experts to be used for portfolio construction). Let's run Bᴷ on the same data as CORN-U, CORN-K, etc.:
+
+```julia
+julia> using OnlinePortfolioSelection
+
+julia> horizon, k, n_splits, similarity_thresh = 5, 5, 10, 0.2;
+
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+# run the algorithm on the last 5 days
+julia> model = bk(rel_price[:, end-horizon+1:end], k, n_splits, similarity_thresh);
+
+julia> model.b
+5×5 Matrix{Float64}:
+ 0.2  0.2  0.196078  0.156876  0.153047
+ 0.2  0.2  0.196078  0.156876  0.250758
+ 0.2  0.2  0.215685  0.156876  0.172675
+ 0.2  0.2  0.196078  0.156876  0.153047
+ 0.2  0.2  0.196079  0.372496  0.270474
+```
+
+Using [`sn`](@ref) function, one can compute the cumulative wealth during the investment period:
+
+```julia
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia> sn(model.b, rel_price)
+6-element Vector{Float64}:
+ 1.0
+ 0.987982263196868
+ 0.9854808683947185
+ 0.9870411234122491
+ 0.9763511652573162
+ 0.9698166561732083
+```
+
+The result indicates that the algorithm has lost ~3% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.

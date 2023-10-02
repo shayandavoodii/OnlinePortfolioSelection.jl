@@ -50,7 +50,7 @@ function eg(adj_close::Matrix{Float64}; eta=0.05)
   b = fill(1/n_assets, n_assets, n_periods)
 
   # Calculate weights
-  for t ∈ 2:n_periods
+  @inbounds for t ∈ 2:n_periods
     last_b   = b[:, t-1]
     last_rel = relative_prices[:, t-1]
     w        = last_b .* exp.(

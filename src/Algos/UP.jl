@@ -59,7 +59,7 @@ function up(
   S             = reshape(ones(m), m, 1)
 
   # Update weights
-  for t ∈ 1:n_periods
+  @inbounds for t ∈ 1:n_periods
     last_rel = relative_prices[:, t]
     n        = length(last_rel)
     S        = S.*(W*reshape(last_rel, n, 1))

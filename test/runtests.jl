@@ -53,3 +53,8 @@ end
   @info "Run unit tests in OLMAR.jl"
   include("OLMAR.jl")
 end
+
+@testset "BK.jl" begin
+  @info "Run unit tests in BK.jl"
+  include("BK.jl")
+end

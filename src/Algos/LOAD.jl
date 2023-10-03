@@ -1,3 +1,16 @@
+"""
+    sₜ(Sₜ₋₁::T, bₜ::AbstractVector{T}, xₜ::AbstractVector{T}) where T<:Float64
+
+Calculate cumulative wealth for each period.
+
+# Arguments
+- `Sₜ₋₁::T`: Cumulative wealth of the previous period.
+- `bₜ::AbstractVector{T}`: Weights of assets in the current period.
+- `xₜ::AbstractVector{T}`: Relative prices of assets in the current period.
+
+# Returns
+- `Sₜ::T`: Cumulative wealth of the current period.
+"""
 function sₜ(Sₜ₋₁::T, bₜ::AbstractVector{T}, xₜ::AbstractVector{T}) where T<:Float64
   return Sₜ₋₁ * sum(bₜ.*xₜ)
 end
@@ -36,13 +49,14 @@ Predict the price of each asset at time t+1.
 - `aᵢ::Vector{T}`: Gradient of the regression.
 - `adj_price::Matrix{T}`: Adjusted close price data.
 - `α::T`: Decay factor.
+
+# Returns
+- `p̂ₜ₊₁::Vector{T}`: Predicted price of each asset at time t+1.
 """
 function predict(η::T, aᵢ::AbstractVector{T}, adj_price::AbstractMatrix{T}, α::T) where T<:Float64
   n_assets, n_days = size(adj_price)
   p̂ₜ₊₁ = zeros(T, n_assets)
   for asset ∈ 1:n_assets
-    # @show aᵢ[asset]
-    # throw(2)
     if aᵢ[asset] > η
       p̂ₜ₊₁[asset] = maximum(adj_price[asset, :])
     else
@@ -57,21 +71,59 @@ function predict(η::T, aᵢ::AbstractVector{T}, adj_price::AbstractMatrix{T}, �
   return p̂ₜ₊₁
 end
 
+"""
+    next_pr_rel(adj_close::T, pred_price::T) where T<:AbstractVector
+
+Calculate the relative price of each asset at time t+1.
+
+# Arguments
+- `adj_close::T`: Adjusted close price of each asset at time t.
+- `pred_price::T`: Predicted price of each asset at time t+1.
+
+# Returns
+- `pr_rel::T`: Relative price of each asset at time t+1.
+"""
 function next_pr_rel(adj_close::T, pred_price::T) where T<:AbstractVector
   return pred_price ./ adj_close
 end
 
-function optimization(b::T, pr_rel::T) where T<:AbstractVector
-  γ = γfunc(b, pr_rel)
+"""
+    optimization(b::T, pr_rel::T) where T<:AbstractVector
+
+Calculate the weights of each asset at time t+1.
+
+# Arguments
+- `b::T`: Weights of each asset at time t.
+- `pr_rel::T`: Relative price of each asset at time t+1.
+
+# Returns
+- `b̂::T`: Weights of each asset at time t+1.
+"""
+function optimization(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:Float64}
+  γ = γfunc(b, pr_rel, ϵ)
   return b .+ (pr_rel .- mean(pr_rel))*γ
 end
 
-function γfunc(b, pr_rel)
+function γfunc(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:Float64}
   bᵀx̂ₜ = sum(b .* pr_rel)
   euclidean_norm = norm(pr_rel .- mean(pr_rel))
-  return max(0, (eps() - bᵀx̂ₜ) / euclidean_norm)
+  return max(0, (ϵ - bᵀx̂ₜ) / euclidean_norm)
 end
 
+"""
+    portfolio_projection(b̂::T, pred_rel::T) where T<:AbstractVector
+
+Calculate the weights of each asset at time t+1 by solving a quadratic optimization problem.
+Since the output of `optimization` may not satisfy the simplex constraint, we project the \
+output onto the simplex (this is officially included in the LOAD algorithm).
+
+# Arguments
+- `b̂::T`: Weights of each asset at time t+1.
+- `pred_rel::T`: Relative price of each asset at time t+1.
+
+# Returns
+- `b::T`: Weights of each asset at time t+1.
+"""
 function portfolio_projection(b̂::T, pred_rel::T) where T<:AbstractVector
   # Find the b that has the minimum distance to b̂ and return it.
   n_assets = length(b̂)
@@ -89,17 +141,71 @@ end
 
 Run LOAD algorithm.
 
+# Arguments
+- `adj_close::AbstractMatrix{T}`: Adjusted close price data.
+- `α::T`: Decay factor. (0 < α < 1)
+- `ω::S`: Window size. (ω > 0)
+- `horizon::S`: Investment horizon. (n_periods > horizon > 0)
+- `η::T`: Threshold value. (η > 0)
+- `ϵ::T=1.5`: Threshold value. It's not recommended to change this value unless you're \
+getting uniform weights for all assets. In that case, you can try to change the value to \
+tune the model.
+
+!!! warning "Beware!"
+    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
+
+# Returns
+- `OPSAlgorithm`: An object of type `OPSAlgorithm` containing the weights of each asset for \
+each period.
+- `Sₜ::Vector{Float64}`: Cumulative wealth for each period.
+
+# Example
+```julia
+# Get data
+julia> using YFinance
+julia> startdt, enddt = "2022-04-01", "2023-04-27";
+julia> querry = [
+          get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers
+       ];
+julia> prices = reduce(hcat, querry);
+julia> prices = permutedims(prices);
+
+julia> using OnlinePortfolioSelection
+
+julia> model, s = load(prices, 0.5, 30, 5, 0.1);
+
+julia> model.b
+5×5 Matrix{Float64}:
+ 0.2  2.85298e-8  0.0        0.0       0.0
+ 0.2  0.455053    0.637299   0.694061  0.653211
+ 0.2  0.215388    0.0581291  0.0       0.0
+ 0.2  0.329559    0.304572   0.305939  0.346789
+ 0.2  6.06128e-9  0.0        0.0       0.0
+
+julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
+true
+
+julia> s
+6-element Vector{Float64}:
+ 1.0
+ 0.9879822754225864
+ 0.9853561439014098
+ 0.9836737048568326
+ 0.971437501096619
+ 0.9660091217094392
+```
+
 # References
 - [A local adaptive learning system for online portfolio selection](https://doi.org/10.1016/j.knosys.2019.104958)
 """
-function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T) where {T<:Float64, S<:Int}
+function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T; ϵ::T=1.5) where {T<:Float64, S<:Int}
   n_assets, n_days = size(adj_close)
   n_days > 1 || DomainError("The number of days must be greater than 1.") |> throw
   n_assets > 1 || DomainError("The number of assets must be greater than 1.") |> throw
   horizon > 0 || DomainError("The horizon must be greater than 0.") |> throw
   ω > 0 || DomainError("The window size must be greater than 0.") |> throw
   α > 0 || DomainError("The decay factor must be greater than 0.") |> throw
-  η > 0 || DomainError("The threshold value must be greater than 0.") |> throw
+  1 > η > 0 || DomainError("The threshold value must be greater than 0 and less than 1.") |> throw
   horizon < n_days || DomainError("The horizon must be less than number of columns of \
   `adj_close` matrix. Either provide more data or decrease the value of `horizon`.") |> throw
   train_adj_close = @views adj_close[:, 1:end-horizon]
@@ -113,29 +219,17 @@ function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T) whe
   for t ∈ 1:horizon
     bₜ = b[:, t]
     train = adj_close[:, end-horizon+t-ω:end-horizon+t-1]
-    Sₜ[t+1] = sₜ(Sₜ[t], bₜ, rel_pr[:, end-horizon+t-1])
-    @assert size(train, 2) == ω
+    Sₜ[t+1] = sₜ(Sₜ[t], bₜ, rel_pr[:, end-horizon+t])
     aᵢ = fᵢ(train)
-    @assert length(aᵢ) == n_assets
     p̂ₜ₊₁ = predict(η, aᵢ, train, α)
-    @assert length(p̂ₜ₊₁) == n_assets
     pr_rel = next_pr_rel(adj_close[:, end-horizon+t-1], p̂ₜ₊₁)
-    @assert length(pr_rel) == n_assets
-    b̂ₜ₊₁ = optimization(bₜ, pr_rel)
-    @assert sum(b̂ₜ₊₁) ≈ 1
+    b̂ₜ₊₁ = optimization(bₜ, pr_rel, ϵ)
     if t == horizon
       break
     end
     b[:, t+1] = portfolio_projection(b̂ₜ₊₁, pr_rel)
-    @assert sum(b[:, t+1]) ≈ 1
   end
-  return OPSAlgorithm(n_assets, b, "LOAD")
+  b = max.(b, 0)
+  normalizer!(b)
+  return OPSAlgorithm(n_assets, b, "LOAD"), Sₜ
 end
-
-startdt, enddt = "2020-04-01", "2023-04-27";
-querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
-prices = reduce(hcat, querry);
-prices = permutedims(prices)
-r = load(rand(7, 13), 0.1, 2, 8, 0.02)
-r.b
-using LinearAlgebra

@@ -16,7 +16,7 @@ function sₜ(Sₜ₋₁::T, bₜ::AbstractVector{T}, xₜ::AbstractVector{T}) w
 end
 
 """
-    fᵢ(adj_price::Matrix{T}) where T<:Float64
+    fᵢ(adj_price::AbstractMatrix{T}) where T<:Float64
 
 Fit regression on the adjusted close price data of stocks and return the gradient of the \
 regression.
@@ -40,7 +40,7 @@ function fᵢ(adj_price::AbstractMatrix{T}) where T<:Float64
 end
 
 """
-    predict(η::T, aᵢ::Vector{T}, adj_price::Matrix{T}, α::T) where T<:Float64
+    predict(η::T, aᵢ::AbstractVector{T}, adj_price::AbstractMatrix{T}, α::T) where T<:Float64
 
 Predict the price of each asset at time t+1.
 
@@ -88,13 +88,14 @@ function next_pr_rel(adj_close::T, pred_price::T) where T<:AbstractVector
 end
 
 """
-    optimization(b::T, pr_rel::T) where T<:AbstractVector
+    optimization(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:Float64}
 
 Calculate the weights of each asset at time t+1.
 
 # Arguments
 - `b::T`: Weights of each asset at time t.
 - `pr_rel::T`: Relative price of each asset at time t+1.
+- `ϵ::S`: Expected return threshold value.
 
 # Returns
 - `b̂::T`: Weights of each asset at time t+1.
@@ -111,7 +112,7 @@ function γfunc(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:Float64}
 end
 
 """
-    portfolio_projection(b̂::T, pred_rel::T) where T<:AbstractVector
+    portfolio_projection(b̂::T, pred_rel::T, ϵ::S) where {T<:AbstractVector, S<:Real}
 
 Calculate the weights of each asset at time t+1 by solving a quadratic optimization problem.
 Since the output of `optimization` may not satisfy the simplex constraint, we project the \
@@ -120,17 +121,18 @@ output onto the simplex (this is officially included in the LOAD algorithm).
 # Arguments
 - `b̂::T`: Weights of each asset at time t+1.
 - `pred_rel::T`: Relative price of each asset at time t+1.
+- `ϵ::Real`: Expected return threshold value.
 
 # Returns
 - `b::T`: Weights of each asset at time t+1.
 """
-function portfolio_projection(b̂::T, pred_rel::T) where T<:AbstractVector
+function portfolio_projection(b̂::T, pred_rel::T, ϵ::S) where {T<:AbstractVector, S<:Real}
   # Find the b that has the minimum distance to b̂ and return it.
   n_assets = length(b̂)
   model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
   @variable(model, 0. <= b[i=1:n_assets] <= 1.)
   @constraint(model, sum(b) == 1.)
-  @constraint(model, sum(b .* pred_rel) ≥ eps())
+  @constraint(model, sum(b .* pred_rel) ≥ ϵ)
   @NLobjective(model, Min, sum((b[i] - b̂[i])^2 for i=1:n_assets))
   optimize!(model)
   return value.(b)
@@ -147,9 +149,7 @@ Run LOAD algorithm.
 - `ω::S`: Window size. (ω > 0)
 - `horizon::S`: Investment horizon. (n_periods > horizon > 0)
 - `η::T`: Threshold value. (η > 0)
-- `ϵ::T=1.5`: Threshold value. It's not recommended to change this value unless you're \
-getting uniform weights for all assets. In that case, you can try to change the value to \
-tune the model.
+- `ϵ::T=1.5`: Expected return threshold value.
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -227,9 +227,9 @@ function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T; ϵ:
     if t == horizon
       break
     end
-    b[:, t+1] = portfolio_projection(b̂ₜ₊₁, pr_rel)
+    b[:, t+1] = portfolio_projection(b̂ₜ₊₁, pr_rel, ϵ)
+    b[:, t+1] = max.(b[:, t+1], 0)
+    normalizer!(b, t+1)
   end
-  b = max.(b, 0)
-  normalizer!(b)
   return OPSAlgorithm(n_assets, b, "LOAD"), Sₜ
 end

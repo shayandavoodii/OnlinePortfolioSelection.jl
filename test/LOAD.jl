@@ -14,6 +14,13 @@ adj_close = [
     @test m_load.n_assets == size(adj_close, 1) == size(m_load.b, 1)
   end
 
+  @testset "with high η" begin
+    m_load, s = load(adj_close, 5., 3, 3, 0.5)
+
+    @test sum(m_load.b, dims=1) .|> isapprox(1.0) |> all
+
+    @test m_load.n_assets == size(adj_close, 1) == size(m_load.b, 1)
+  end
   @testset "with invalid arguments" begin
     @test_throws DomainError load(adj_close, -0.1, 3, 3, 0.8)
     @test_throws DomainError load(adj_close, 0.1, 0, 3, 0.8)

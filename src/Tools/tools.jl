@@ -75,6 +75,10 @@ function normalizer!(mat::Matrix{T}) where T<:Float64
   end
 end
 
+function normalizer!(mat::AbstractMatrix{T}, idx_col::S) where {T<:Float64, S<:Int}
+  normalizer!(@views mat[:, idx_col])
+end
+
 """
     normalizer!(vec::AbstractVector)::Vector{Float64}
 

@@ -15,7 +15,7 @@ adj_close = [
   end
 
   @testset "with high η" begin
-    m_load, s = load(adj_close, 5., 3, 3, 0.5)
+    m_load, s = load(adj_close, 0.1, 3, 3, 5.)
 
     @test sum(m_load.b, dims=1) .|> isapprox(1.0) |> all
 
@@ -28,6 +28,5 @@ adj_close = [
     @test_throws DomainError load(adj_close, 0.1, 3, 3, 0.)
     @test_throws DomainError load(adj_close, 0.1, 8, 3, 0.8)
     @test_throws DomainError load(adj_close, 0.1, 3, 8, 0.8)
-    @test_throws DomainError load(adj_close, 0.1, 3, 3, 1.1)
   end
 end

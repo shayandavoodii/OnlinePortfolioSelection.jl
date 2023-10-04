@@ -205,7 +205,7 @@ function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T; ϵ:
   horizon > 0 || DomainError("The horizon must be greater than 0.") |> throw
   ω > 0 || DomainError("The window size must be greater than 0.") |> throw
   α > 0 || DomainError("The decay factor must be greater than 0.") |> throw
-  1 > η > 0 || DomainError("The threshold value must be greater than 0 and less than 1.") |> throw
+  η > 0 || DomainError("The threshold value must be greater than 0") |> throw
   horizon < n_days || DomainError("The horizon must be less than number of columns of \
   `adj_close` matrix. Either provide more data or decrease the value of `horizon`.") |> throw
   train_adj_close = @views adj_close[:, 1:end-horizon]

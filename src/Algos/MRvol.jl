@@ -284,36 +284,40 @@ run the algorithm.
 
 # Example
 ```julia
-using OnlinePortfolioSelection, YFinance
+julia> using OnlinePortfolioSelection, YFinance
 
-tickers = ["AAPL", "MSFT", "GOOG"];
+julia> tickers = ["AAPL", "MSFT", "GOOG"];
 
-startdt, enddt = "2019-01-01", "2020-01-01";
+julia> startdt, enddt = "2019-01-01", "2020-01-01";
 
-querry_open_price = [get_prices(ticker, startdt=startdt, enddt=enddt)["open"] for ticker in tickers];
+julia> querry_open_price = [get_prices(ticker, startdt=startdt, enddt=enddt)["open"] for ticker in tickers];
 
-open_pr = reduce(hcat, querry_open_price) |> permutedims;
+julia> open_pr = reduce(hcat, querry_open_price) |> permutedims;
 
-querry_close_pr = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
+julia> querry_close_pr = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
 
-close_pr = reduce(hcat, querry_close_pr) |> permutedims;
+julia> close_pr = reduce(hcat, querry_close_pr) |> permutedims;
 
-querry_vol = [get_prices(ticker, startdt=startdt, enddt=enddt)["vol"] for ticker in tickers];
+julia> querry_vol = [get_prices(ticker, startdt=startdt, enddt=enddt)["vol"] for ticker in tickers];
 
-vol = reduce(hcat, querry_vol) |> permutedims;
+julia> vol = reduce(hcat, querry_vol) |> permutedims;
 
-rel_pr = (close_pr ./ open_pr)[:, 2:end];
+julia> rel_pr = (close_pr ./ open_pr)[:, 2:end];
 
-rel_vol = vol[:, 2:end] ./ vol[:, 1:end-1];
+julia> rel_vol = vol[:, 2:end] ./ vol[:, 1:end-1];
 
-size(rel_pr) == size(rel_vol)
-# true
+julia> size(rel_pr) == size(rel_vol)
+true
 
-horizon = 100; Wₘᵢₙ = 3; Wₘₐₓ = 10; λ = 0.05; η = 0.01;
+julia> horizon = 100; Wₘᵢₙ = 4; Wₘₐₓ = 10; λ = 0.05; η = 0.01;
 
-r = mrvol(rel_pr, rel_vol, horizon, Wₘᵢₙ, Wₘₐₓ, λ, η);
+julia> r = mrvol(rel_pr, rel_vol, horizon, Wₘᵢₙ, Wₘₐₓ, λ, η);
 
-r.b
+julia> r.b
+3×100 Matrix{Float64}:
+ 0.333333  0.0204062  0.0444759  …  0.38213   0.467793
+ 0.333333  0.359864   0.194139      0.213264  0.281519
+ 0.333333  0.61973    0.761385      0.404606  0.250689
 ```
 
 # References

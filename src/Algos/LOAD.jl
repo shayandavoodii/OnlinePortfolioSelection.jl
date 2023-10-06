@@ -139,7 +139,7 @@ function portfolio_projection(b̂::T, pred_rel::T, ϵ::S) where {T<:AbstractVect
 end
 
 """
-    load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T) where {T<:Float64, S<:Int}
+    load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T, ϵ::T=1.5) where {T<:Float64, S<:Int}
 
 Run LOAD algorithm.
 

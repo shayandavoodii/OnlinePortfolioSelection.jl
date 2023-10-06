@@ -16,6 +16,7 @@ include("Algos/BS.jl")
 include("Algos/BK.jl")
 include("Algos/LOAD.jl")
 include("Algos/Anticor.jl")
+include("Algos/MRvol.jl")
 include("Algos/OLMAR.jl")
 include("Types/Algorithms.jl")
 include("Tools/metrics.jl")
@@ -23,7 +24,7 @@ include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
-export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load
+export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol
 export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm, opsmethods
 
@@ -78,6 +79,7 @@ function opsmethods()
   println("     olmar: On-Line Moving Average Reversion - Call `olmar`")
   println("     Bᵏ: Best-Known-Constant Rebalanced Portfolio - Call `bk`")
   println("     LOAD: Local adaptive learning system - Call `load`")
+  println("    MRvol: Mean Reversion with Volume - Call `mrvol`")
 end
 # COV_EXCL_STOP
 

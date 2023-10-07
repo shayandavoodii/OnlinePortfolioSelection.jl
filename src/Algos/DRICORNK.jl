@@ -184,9 +184,7 @@ function dricorn_expert(
   model = Model(Ipopt.Optimizer)
   set_silent(model)
 
-  @variables(model, begin
-    0<=b[i=1:n_assets]<=1
-  end)
+  @variable(model, 0<=b[i=1:n_assets]<=1)
   @constraint(model, sum(b) == 1)
   @expression(model, h, (b' * relative_prices_[:, idx_days] .+ lambda*c.*(b'*β)))
   @NLobjective(model, Max, prod(h[i] for i=eachindex(h)))

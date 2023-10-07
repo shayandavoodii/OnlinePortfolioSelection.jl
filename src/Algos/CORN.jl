@@ -217,9 +217,7 @@ function corn_expert(
   model    = Model(Ipopt.Optimizer)
   set_silent(model)
 
-  @variables(model, begin
-    0<=b[i=1:n_assets]<=1
-  end)
+  @variable(model, 0<=b[i=1:n_assets]<=1)
   @constraint(model, sum(b[i] for i = 1:n_assets) == 1)
   h = [sum(b.*relative_prices_[:, idx]) for idx∈idx_days]
   @NLobjective(model, Max, *(h...))

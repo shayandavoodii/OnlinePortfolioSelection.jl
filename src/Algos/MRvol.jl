@@ -160,13 +160,13 @@ end
 
 function findassets(rel_pr, rel_vol)
   _, n_days = size(rel_pr)
-  idx = zeros(Int, n_days)
+  idx       = zeros(Int, n_days)
   for day ∈ 1:n_days
     below1 = rel_pr[:, day].<1
     if sum(below1)==0
       continue
     else
-      max_ = maximum(rel_vol[below1, day])
+      max_     = maximum(rel_vol[below1, day])
       idx[day] = findfirst(rel_vol[:, day].==max_)
     end
   end
@@ -193,9 +193,9 @@ function ∇fₜfunc(rel_pr, Bₜ, b̃ₜ₋₁, theta_t, λ)
   Bₜ = permutedims(Bₜ)
   Bᵀ = transpose(Bₜ)
   xₜ = rel_pr[:, end]
-  numerator_ = xₜ'*Bᵀ
+  numerator_   = xₜ'*Bᵀ
   denominator_ = theta_t'*Bₜ*(xₜ')'
-  second_term = λ*theta_t'-b̃ₜ₋₁'*Bᵀ
+  second_term  = λ*theta_t'-b̃ₜ₋₁'*Bᵀ
   return -numerator_/denominator_ + second_term
 end
 
@@ -231,7 +231,7 @@ current day.
 - `Vector`: Vector of weights that investor assigns to each expert strategy for the next day.
 """
 function θₜ₊₁func(Lₜ, η, θₜ)
-  Zₜ = θₜ.*exp.(-η*vec(Lₜ)) |> sum
+  Zₜ   = θₜ.*exp.(-η*vec(Lₜ)) |> sum
   θₜ₊₁ = (θₜ.*exp.(-η*vec(Lₜ)))/Zₜ
   return θₜ₊₁
 end
@@ -255,7 +255,7 @@ end
 sub(tupe) = tupe[1] - tupe[2]
 
 """
-mrvol(
+    mrvol(
       rel_pr::AbstractMatrix{T},
       rel_vol::AbstractMatrix{T},
       horizon::S,
@@ -278,6 +278,9 @@ run the algorithm.
 - `Wₘₐₓ::S`: Maximum window size.
 - `λ::T`: Trade-off parameter in the loss function.
 - `η::T`: Learning rate.
+
+!!! warning "Beware!"
+    `rel_pr` and `rel_vol` should be matrixes of size `n_assets` × `n_periods`.
 
 # Returns
 - `OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
@@ -321,7 +324,7 @@ julia> r.b
 ```
 
 # References
-- [1] [Online portfolio selection of integrating expert strategies based on mean reversion and trading volume](https://doi.org/10.1016/j.eswa.2023.121472)
+- [1] [Online portfolio selection of integrating expert strategies based on mean reversion and trading volume.](https://doi.org/10.1016/j.eswa.2023.121472)
 """
 function mrvol(
   rel_pr::AbstractMatrix{T},
@@ -349,14 +352,14 @@ function mrvol(
   θ = ones(k)/k
   idx_today = n_days-horizon+1
   for t = idx_today+1:n_days
-    g = sub(extrema(rel_pr[:, t-Wₘₐₓ:t-1]))
-    b̃ₜ = b̃func(b[:, t-idx_today], rel_pr[:, t-1])
-    Bₜ₊₁ = expertspool(rel_pr[:, t-Wₘₐₓ:t-1], rel_vol[:, t-Wₘₐₓ:t-1], Wₘᵢₙ, Wₘₐₓ)
-    ∇fₜ = ∇fₜfunc(rel_pr[:, t-Wₘₐₓ:t-1], Bₜ₊₁, b̃ₜ, θ, λ)
-    Lₜ = Lₜfunc(∇fₜ, 1, g)
-    θₜ₊₁ = θₜ₊₁func(Lₜ, η, θ)
+    g     = sub(extrema(rel_pr[:, t-Wₘₐₓ:t-1]))
+    b̃ₜ    = b̃func(b[:, t-idx_today], rel_pr[:, t-1])
+    Bₜ₊₁  = expertspool(rel_pr[:, t-Wₘₐₓ:t-1], rel_vol[:, t-Wₘₐₓ:t-1], Wₘᵢₙ, Wₘₐₓ)
+    ∇fₜ   = ∇fₜfunc(rel_pr[:, t-Wₘₐₓ:t-1], Bₜ₊₁, b̃ₜ, θ, λ)
+    Lₜ    = Lₜfunc(∇fₜ, 1, g)
+    θₜ₊₁  = θₜ₊₁func(Lₜ, η, θ)
     b[:, t-idx_today+1] = weights(Bₜ₊₁, θₜ₊₁)
-    θ = θₜ₊₁
+    θ     = θₜ₊₁
   end
 
   return OPSAlgorithm(n_assets, b, "MRvol")

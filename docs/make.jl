@@ -23,7 +23,8 @@ makedocs(;
           "Combined Strategies" => "Combined.md",
         ],
         "Performance Evaluation" => "performance_eval.md",
-        "Functions" => "funcs.md"
+        "Functions" => "funcs.md",
+        "Use In Python" => "python.md",
     ],
 )
 

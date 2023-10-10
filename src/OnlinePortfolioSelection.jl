@@ -7,6 +7,7 @@ using Ipopt
 using PrecompileTools
 
 include("Algos/CRP.jl")
+include("Algos/CW-OGD.jl")
 include("Algos/EG.jl")
 include("Algos/RPRT.jl")
 include("Algos/UP.jl")
@@ -24,7 +25,7 @@ include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
-export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol
+export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm, opsmethods
 
@@ -80,6 +81,7 @@ function opsmethods()
   println("     Bᵏ: Best-Known-Constant Rebalanced Portfolio - Call `bk`")
   println("     LOAD: Local adaptive learning system - Call `load`")
   println("    MRvol: Mean Reversion with Volume - Call `mrvol`")
+  println("    CW-OGD: Combination Weights based on Online Gradient Decent - Call `cwogd`")
 end
 # COV_EXCL_STOP
 

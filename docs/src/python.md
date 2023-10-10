@@ -80,7 +80,6 @@ Run MRvol algorithm.
 
 # Example
 
-```julia
 julia> using OnlinePortfolioSelection, YFinance
 
 julia> tickers = ["AAPL", "MSFT", "GOOG"];
@@ -115,7 +114,7 @@ julia> r.b
  0.333333  0.0204062  0.0444759  …  0.38213   0.467793
  0.333333  0.359864   0.194139      0.213264  0.281519
  0.333333  0.61973    0.761385      0.404606  0.250689
-```
+
 
 # References
 

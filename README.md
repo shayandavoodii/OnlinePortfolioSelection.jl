@@ -28,7 +28,7 @@
     <tr>
         <td>DOI</td>
         <td>
-            <a href="https://zenodo.org/badge/latestdoi/604664429"><img src="https://zenodo.org/badge/604664429.svg"/></a>
+            <a href="https://doi.org/10.5281/zenodo.8414411"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.8414411.svg"/></a>
         </td>
     </tr>
 </table>
@@ -45,6 +45,7 @@
   <ul>
     <li><a href="#installation">Installation</a></li>
     <li><a href="#example">Example</a></li>
+    <li><a href="#Run-from-Python">Run from Python</a></li>
   </ul>
   <li><a href="#to-do-list">TODO LIST</a></li>
   <li><a href="#contribution">Contribution</a></li>
@@ -182,7 +183,55 @@ Further information about the implemented strategies and the API can be found in
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 ---
+<!-- Run from Python -->
+### Run from Python
+The package can be used from Python by using the [PyJulia](https://pyjulia.readthedocs.io/en/latest/installation.html) package as follows:
 
+```python
+$ pip install julia
+```
+
+And then run the following commands in Python:
+
+```python
+>>> import julia
+>>> julia.install()
+...
+Precompiling PyCall...
+Precompiling PyCall... DONE
+PyCall is installed and built successfully.
+>>> from julia import Pkg
+>>> Pkg.add("OnlinePortfolioSelection")
+>>> from julia import OnlinePortfolioSelection as OPS
+
+# Generate a random relatvive price matrix. The rows are the assets, and the columns represent the time.
+>>> import numpy as np
+>>> rel_pr = np.random.rand(3, 100)
+>>> rel_vol = np.random.rand(3, 100)
+>>> horizon = 10; Wₘᵢₙ = 4; Wₘₐₓ = 10; λ = 0.05; η = 0.01;
+>>> model = OPS.mrvol(rel_pr, rel_vol, horizon, Wₘᵢₙ, Wₘₐₓ, λ, η)
+>>> model.b
+array([[0.33333333, 0.36104291, 0.3814967 , 0.26303273, 0.16525094,
+        0.23471654, 0.28741473, 0.34746891, 0.41769629, 0.34582386],
+       [0.33333333, 0.35745995, 0.24895616, 0.30306051, 0.36527706,
+        0.2817696 , 0.36959982, 0.43371551, 0.48357232, 0.51374896],
+       [0.33333333, 0.28149714, 0.36954713, 0.43390676, 0.469472  ,
+        0.48351386, 0.34298546, 0.21881558, 0.09873139, 0.14042718]])
+>>> type(model.b)
+<class 'numpy.ndarray'>
+>>> model.b.sum(axis=0)
+array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
+>>> model.alg
+'MRvol'
+>>> model.n_assets
+3
+```
+
+As you can see, the package can be used from Python easily. For more information, check the [documentation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/python).
+
+<p align="right">🆙<a href="#top">Table of cotents</a></p>
+
+---
 <!-- TODO LIST -->
 ## To-do list
 - [ ] Implement BCRP
@@ -221,15 +270,15 @@ If you use the package in your research, please cite the package using the follo
 </div>
 
 ```bibtex
-@software{shayan_davoodi_2023_7955234,
+@software{shayan_davoodi_2023_8414411,
   author       = {Shayan Davoodi},
-  title        = {shayandavoodii/OnlinePortfolioSelection.jl: v1.5.0},
-  month        = may,
+  title        = {shayandavoodii/OnlinePortfolioSelection.jl: v1.8.0},
+  month        = oct,
   year         = 2023,
   publisher    = {Zenodo},
-  version      = {v1.5.0},
-  doi          = {10.5281/zenodo.7955234},
-  url          = {https://doi.org/10.5281/zenodo.7955234}
+  version      = {v1.8.0},
+  doi          = {10.5281/zenodo.8414411},
+  url          = {https://doi.org/10.5281/zenodo.7905042}
 }
 ```
 

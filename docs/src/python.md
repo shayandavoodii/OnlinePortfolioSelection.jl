@@ -34,7 +34,7 @@ array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 'MRvol'
 >>> model.n_assets
 3
-    ```
+```
 
 As shown above, the `mrvol` function returns a `PyCall.jlwrap` object. The portfolio weights can be accessed by `model.b` which are automatically converted to a `numpy.ndarray` object. The other attributes of the `model` object can be accessed in the same way. In order to check the attributes of the `model` object, you can check the returned object by the [mrvol](@ref) function. Let's continue and calculate the performance of the algorithm according to some of the prominent metrics:
 

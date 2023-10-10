@@ -6,37 +6,37 @@ Generally, Julia packages can be used in a Python environtment easily using pack
 2. Run Python
 3. Enter the following commands in Python (Here, I run the [MRvol](@ref) algorithm as an example):
 
-    ```python
-    >>> from julia import Pkg
-    >>> Pkg.add("OnlinePortfolioSelection")
-    >>> from julia import OnlinePortfolioSelection as OPS
+```python
+>>> from julia import Pkg
+>>> Pkg.add("OnlinePortfolioSelection")
+>>> from julia import OnlinePortfolioSelection as OPS
 
-    # Generate a random relatvive price matrix. The rows are the assets, and the columns represent the time.
-    >>> import numpy as np
-    >>> rel_pr = np.random.rand(3, 100)
-    >>> rel_vol = np.random.rand(3, 100)
-    >>> horizon, Wmin, Wmax, lambdaa, eta = (10, 4, 10, 0.05, 0.01)
-    >>> model = OPS.mrvol(rel_pr, rel_vol, horizon, Wmin, Wmax, lambdaa, eta)
-    >>> type(model)
-    <class 'PyCall.jlwrap'>
-    >>> model.b
-    array([[0.33333333, 0.36104291, 0.3814967 , 0.26303273, 0.16525094,
-            0.23471654, 0.28741473, 0.34746891, 0.41769629, 0.34582386],
-          [0.33333333, 0.35745995, 0.24895616, 0.30306051, 0.36527706,
-            0.2817696 , 0.36959982, 0.43371551, 0.48357232, 0.51374896],
-          [0.33333333, 0.28149714, 0.36954713, 0.43390676, 0.469472  ,
-            0.48351386, 0.34298546, 0.21881558, 0.09873139, 0.14042718]])
-    >>> type(model.b)
-    <class 'numpy.ndarray'>
-    >>> model.b.sum(axis=0)
-    array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
-    >>> model.alg
-    'MRvol'
-    >>> model.n_assets
-    3
+# Generate a random relatvive price matrix. The rows are the assets, and the columns represent the time.
+>>> import numpy as np
+>>> rel_pr = np.random.rand(3, 100)
+>>> rel_vol = np.random.rand(3, 100)
+>>> horizon, Wmin, Wmax, lambdaa, eta = (10, 4, 10, 0.05, 0.01)
+>>> model = OPS.mrvol(rel_pr, rel_vol, horizon, Wmin, Wmax, lambdaa, eta)
+>>> type(model)
+<class 'PyCall.jlwrap'>
+>>> model.b
+array([[0.33333333, 0.36104291, 0.3814967 , 0.26303273, 0.16525094,
+        0.23471654, 0.28741473, 0.34746891, 0.41769629, 0.34582386],
+      [0.33333333, 0.35745995, 0.24895616, 0.30306051, 0.36527706,
+        0.2817696 , 0.36959982, 0.43371551, 0.48357232, 0.51374896],
+      [0.33333333, 0.28149714, 0.36954713, 0.43390676, 0.469472  ,
+        0.48351386, 0.34298546, 0.21881558, 0.09873139, 0.14042718]])
+>>> type(model.b)
+<class 'numpy.ndarray'>
+>>> model.b.sum(axis=0)
+array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
+>>> model.alg
+'MRvol'
+>>> model.n_assets
+3
     ```
 
-As shown above, the `mrvol` function returns a `PyCall.jlwrap` object. The portfolio weights can be accessed by `model.b` which are automatically converted to a `numpy.ndarray` object. The other attributes of the `model` object can be accessed in the same way. In order to check the attributes of the `model` object, you can check the returned object by the [MRvol](@ref) function. Let's continue and calculate the performance of the algorithm according to some of the prominent metrics:
+As shown above, the `mrvol` function returns a `PyCall.jlwrap` object. The portfolio weights can be accessed by `model.b` which are automatically converted to a `numpy.ndarray` object. The other attributes of the `model` object can be accessed in the same way. In order to check the attributes of the `model` object, you can check the returned object by the [mrvol](@ref) function. Let's continue and calculate the performance of the algorithm according to some of the prominent metrics:
 
 ```python
 >>> metrics = OPS.OPSMetrics(model.b, rel_pr)

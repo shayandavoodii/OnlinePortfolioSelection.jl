@@ -1,13 +1,11 @@
 """
-    uniform(rel_price::AbstractMatrix)
+    uniform(n_assets::Int, horizon::Int)
 
 Construct uniform portfolios.
 
 # Arguments
-- `rel_price::AbstractMatrix`: relative price matrix.
-
-!!! warning "Beware!"
-    `rel_price` should be a matrix of size `n_assets` × `n_periods`.
+- `n_assets::Int`: The number of assets.
+- `horizon::Int`: The number of investment periods.
 
 # Returns
 - `::OPSAlgorithm`: An object of [`OPSAlgorithm`](@ref) type.
@@ -16,16 +14,15 @@ Construct uniform portfolios.
 ```julia
 julia> using OnlinePortfolioSelection
 
-julia> rel_price = [1.1 1.05 1.2; 1.02 0.88 1.06; 0.99 1.3 0.9];
-
-julia> model = uniform(rel_price);
+julia> model = uniform(3, 10)
 
 julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
 """
-function uniform(rel_price::AbstractMatrix)
-  n_assets, n_days = size(rel_price)
-  b = ones(n_assets, n_days) / n_assets
+function uniform(n_assets::Int, horizon::Int)
+  horizon>0 || ArgumentError("horizon must be positive") |> throw
+  n_assets>0 || ArgumentError("n_assets must be positive") |> throw
+  b = ones(n_assets, horizon) / n_assets
   return OPSAlgorithm(n_assets, b, "1/N")
 end

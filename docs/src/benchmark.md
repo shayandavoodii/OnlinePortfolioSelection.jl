@@ -117,7 +117,7 @@ Note that this package provides functions to analyze the performance of the algo
 
 ## 1/N
 
-This model invests equally in all assets. Let's run the algorithm on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
+This model invests equally in all assets. Let's run the algorithm:
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -130,7 +130,7 @@ julia> size(prices)
 julia> prices = prices |> permutedims;
 
 # Let's run the algorithm on the last 10 days of the data.
-julia> m_uni = uniform(prices[:, end-9:end]);
+julia> m_uni = uniform(5, 10);
 
 juila> m_uni.b
 5×10 Matrix{Float64}:

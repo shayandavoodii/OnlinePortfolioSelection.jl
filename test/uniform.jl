@@ -1,25 +1,24 @@
-rel_pr = rand(0.8:0.01:1.2, 15, 50)
-rel_pr2 = rand(0.8:0.01:1.2, 1, 1)
-rel_pr3 = rand(0.8:0.01:1.2, 1, 5)
-rel_pr4 = rand(0.8:0.01:1.2, 15, 1)
-
-
 @testset "uniform.jl" begin
-  @testset "uniform" begin
-    model = uniform(rel_pr)
+  @testset "With valid arguments" begin
+    model = uniform(3, 5)
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
-    @test size(model.b) == size(rel_pr)
+    @test size(model.b) == (3, 5)
 
-    model = uniform(rel_pr2)
+    model = uniform(5, 1)
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
-    @test size(model.b) == size(rel_pr2)
+    @test size(model.b) == (5, 1)
 
-    model = uniform(rel_pr3)
+    model = uniform(1, 5)
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
-    @test size(model.b) == size(rel_pr3)
+    @test size(model.b) == (1, 5)
 
-    model = uniform(rel_pr4)
+    model = uniform(1, 1)
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
-    @test size(model.b) == size(rel_pr4)
+    @test size(model.b) == (1, 1)
+  end
+
+  @testset "With invalid arguments" begin
+    @test_throws ArgumentError uniform(0, 3)
+    @test_throws ArgumentError uniform(2, 0)
   end
 end

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Use In Python · OnlinePortfolioSelection.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link rel="canonical" href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/python/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../"><img src="../assets/logo.png" alt="OnlinePortfolioSelection.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../">OnlinePortfolioSelection.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../fetchdata/">Fetch Financial Data</a></li><li class="is-active"><a class="tocitem" href>Use In Python</a></li><li><span class="tocitem">OPS Strategies</span><ul><li><a class="tocitem" href="../benchmark/">Benchmark</a></li><li><a class="tocitem" href="../FL/">Follow the Loser</a></li><li><a class="tocitem" href="../FW/">Follow the Winner</a></li><li><a class="tocitem" href="../PM/">Pattern-Matching</a></li><li><a class="tocitem" href="../ML/">Meta-Learning</a></li><li><a class="tocitem" href="../Combined/">Combined Strategies</a></li></ul></li><li><a class="tocitem" href="../performance_eval/">Performance Evaluation</a></li><li><a class="tocitem" href="../funcs/">Functions</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Use In Python</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Use In Python</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/docs/src/python.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Use-OnlinePortfolioSelection.jl-in-Python"><a class="docs-heading-anchor" href="#Use-OnlinePortfolioSelection.jl-in-Python">Use <code>OnlinePortfolioSelection.jl</code> in Python</a><a id="Use-OnlinePortfolioSelection.jl-in-Python-1"></a><a class="docs-heading-anchor-permalink" href="#Use-OnlinePortfolioSelection.jl-in-Python" title="Permalink"></a></h1><p>Generally, Julia packages can be used in a Python environtment easily using packages than can wrap Julia packages into Python packages. For example, <a href="https://pyjulia.readthedocs.io/en/latest/index.html">PyJulia</a> is one of the most popular wrapper packages in this area. There is a comprehensive installation guide in the <a href="https://pyjulia.readthedocs.io/en/latest/installation.html">PyJulia documentation</a>. Please follow the instructions there to install PyJulia and Julia. Importing Julia packages into Python is discussed before (i.e., see [<a href="https://stackoverflow.com/q/73070845/11747148">1</a>, <a href="https://blog.esciencecenter.nl/how-to-call-julia-code-from-python-8589a56a98f2">2</a>]). In this section, I&#39;ll show how to use <code>OnlinePortfolioSelection.jl</code> in Python. If you had issues with importing the package, please check <a href="https://stackoverflow.com/questions/77264168/importerror-pkg-name-not-found-in-importing-a-julia-package-in-python-using-p">this</a> discussion.</p><ol><li>Install PyJulia: <code>pip install julia</code>. Make sure the Julia path is registered in the system environment variable <code>PATH</code> (i.e., <code>julia</code> can be called in the command line). The Julia path is usually <code>\.julia\juliaup\julia-&lt;VERSION&gt;\bin</code> or <code>C:\Users\your-user-name\AppData\Local\Programs\Julia\Julia-&lt;VERSION&gt;\bin</code>.</li><li>Run Python</li><li>Enter the following commands in Python (Here, I run the <a href="../Combined/#MRvol">MRvol</a> algorithm as an example):</li></ol><pre><code class="language-python hljs">&gt;&gt;&gt; from julia import Pkg
+&gt;&gt;&gt; Pkg.add(&quot;OnlinePortfolioSelection&quot;)
+&gt;&gt;&gt; from julia import OnlinePortfolioSelection as OPS
+
+# Generate a random relatvive price matrix. The rows are the assets, and the columns represent the time.
+&gt;&gt;&gt; import numpy as np
+&gt;&gt;&gt; rel_pr = np.random.rand(3, 100)
+&gt;&gt;&gt; rel_vol = np.random.rand(3, 100)
+&gt;&gt;&gt; horizon, Wmin, Wmax, lambdaa, eta = (10, 4, 10, 0.05, 0.01)
+&gt;&gt;&gt; model = OPS.mrvol(rel_pr, rel_vol, horizon, Wmin, Wmax, lambdaa, eta)
+&gt;&gt;&gt; type(model)
+&lt;class &#39;PyCall.jlwrap&#39;&gt;
+&gt;&gt;&gt; model.b
+array([[0.33333333, 0.36104291, 0.3814967 , 0.26303273, 0.16525094,
+        0.23471654, 0.28741473, 0.34746891, 0.41769629, 0.34582386],
+      [0.33333333, 0.35745995, 0.24895616, 0.30306051, 0.36527706,
+        0.2817696 , 0.36959982, 0.43371551, 0.48357232, 0.51374896],
+      [0.33333333, 0.28149714, 0.36954713, 0.43390676, 0.469472  ,
+        0.48351386, 0.34298546, 0.21881558, 0.09873139, 0.14042718]])
+&gt;&gt;&gt; type(model.b)
+&lt;class &#39;numpy.ndarray&#39;&gt;
+&gt;&gt;&gt; model.b.sum(axis=0)
+array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
+&gt;&gt;&gt; model.alg
+&#39;MRvol&#39;
+&gt;&gt;&gt; model.n_assets
+3</code></pre><p>As shown above, the <code>mrvol</code> function returns a <code>PyCall.jlwrap</code> object. The portfolio weights can be accessed by <code>model.b</code> which are automatically converted to a <code>numpy.ndarray</code> object. The other attributes of the <code>model</code> object can be accessed in the same way. In order to check the attributes of the <code>model</code> object, you can check the returned object by the <a href="../funcs/#OnlinePortfolioSelection.mrvol-Union{Tuple{S}, Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, S, S, S, T, T}} where {T&lt;:AbstractFloat, S&lt;:Integer}"><code>mrvol</code></a> function. Let&#39;s continue and calculate the performance of the algorithm according to some of the prominent metrics:</p><pre><code class="language-python hljs">&gt;&gt;&gt; metrics = OPS.OPSMetrics(model.b, rel_pr)
+&gt;&gt;&gt; metrics
+
+&lt;PyCall.jlwrap             Cumulative Return: 0.0003879435247256176
+                          APY: -1.0
+Annualized Standard Deviation: 2.7595804965778328
+      Annualized Sharpe Ratio: -0.36962139762362656
+             Maximum Drawdown: 0.9996120564752744
+                 Calmar Ratio: -1.0003880940833123
+
+&gt;&gt;&gt; metrics.Sn
+array([1.00000000e+00, 5.75525607e-01, 1.45701657e-01, 7.12853019e-02,
+       4.30702987e-02, 2.03865521e-02, 1.53802433e-02, 7.10270166e-03,
+       1.97878448e-03, 8.65966074e-04, 3.87943525e-04])</code></pre><p>As shown above, the <code>OPSMetrics</code> function returns a <code>PyCall.jlwrap</code> object. The cumulative wealth of portfolios can be accessed by <code>metrics.Sn</code> which are automatically converted to a <code>numpy.ndarray</code> object. The other attributes of the <code>metrics</code> object can be accessed in the same way. In order to check the attributes of the <code>metrics</code> object, you can check the returned object by the <a href="../funcs/#OnlinePortfolioSelection.OPSMetrics"><code>OPSMetrics</code></a> function. It&#39;s worth mentioning that you can get the documentation of each function through Python. For example, you can get the documentation of the <a href="../funcs/#OnlinePortfolioSelection.mrvol-Union{Tuple{S}, Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, S, S, S, T, T}} where {T&lt;:AbstractFloat, S&lt;:Integer}"><code>mrvol</code></a> function using the following commands:</p><pre><code class="language-python hljs">&gt;&gt;&gt; from julia import Main as jl
+&gt;&gt;&gt; jl.Docs.doc(OPS.mrvol)
+&lt;PyCall.jlwrap mrvol(       rel*pr::AbstractMatrix{T},       rel*vol::AbstractMatrix{T},       horizon::S,       Wₘᵢₙ::S,       Wₘₐₓ::S,       λ::T,       η::T     ) where {T&lt;:AbstractFloat, S&lt;:Integer}
+
+Run MRvol algorithm.
+
+# Arguments
+
+  * `rel_pr::AbstractMatrix{T}`: Relative price matrix where it represents proportion of the closing price to the opening price of each asset in each day.
+  * `rel_vol::AbstractMatrix{T}`: Relative volume matrix where 𝘷ᵢⱼ represents the tᵗʰ trading volume of asset 𝑖 divided by the (t - 1)ᵗʰ trading volume of asset 𝑖.
+  * `horizon::S`: Investment horizon. The last `horizon` days of the data will be used to run the algorithm.
+  * `Wₘᵢₙ::S`: Minimum window size.
+  * `Wₘₐₓ::S`: Maximum window size.
+  * `λ::T`: Trade-off parameter in the loss function.
+  * `η::T`: Learning rate.
+
+# Returns
+
+  * `OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
+
+# Example
+
+...</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../fetchdata/">« Fetch Financial Data</a><a class="docs-footer-nextpage" href="../benchmark/">Benchmark »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Tuesday 17 October 2023 11:57">Tuesday 17 October 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

@@ -3,6 +3,7 @@ Some strategies in the context of online portfolio selection are considered as b
 
 1. Constant Rebalanced Portfolio (CRP)
 2. Best Stock (BS)
+3. Uniform Portfolio (1/N)
 
 ## CRP
 Let's run the algorithm on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
@@ -111,5 +112,55 @@ julia> sn(m_bs.b, rel_price)
 ```
 
 The result indicates that if we had invested in the given period, we would have gained ~2.6% of our capital. Note that [`sn`](@ref) automatically takes the last 10 relative prices in this case.
+
+Note that this package provides functions to analyze the performance of the algorithm. See the [Performance evaluation](@ref) section for more details.
+
+## 1/N
+
+This model invests equally in all assets. Let's run the algorithm:
+
+```julia
+juila> using OnlinePortfolioSelection
+
+julia> size(prices)
+(17, 5)
+
+# OnlinePortfolioSelection suppose that the data is in the form of a matrix
+# where each row is the price vector of the assets at a specific time period.
+julia> prices = prices |> permutedims;
+
+# Let's run the algorithm on the last 10 days of the data.
+julia> m_uni = uniform(5, 10);
+
+juila> m_uni.b
+5×10 Matrix{Float64}:
+ 0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2
+ 0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2
+ 0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2
+ 0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2
+ 0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2  0.2
+```
+
+After running the algorithm, one can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
+
+```julia
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia> sn(m_uni.b, rel_price)
+11-element Vector{Float64}:
+ 1.0
+ 1.006793403065235
+ 1.0044027643134168
+ 1.0040238271404696
+ 1.0051064998568846
+ 0.9884495565932121
+ 0.9765706200501145
+ 0.9740981677925922
+ 0.9757223268076264
+ 0.9660623342882886
+ 0.960423009921307
+```
+
+The result indicates that if we had invested in the given period, we would have lost ~3.9% of our capital. Note that [`sn`](@ref) automatically takes the last 10 relative prices in this case.
 
 Note that this package provides functions to analyze the performance of the algorithm. See the [Performance evaluation](@ref) section for more details.

@@ -73,3 +73,8 @@ end
   @info "Run unit tests in CW-OGD.jl"
   include("CW-OGD.jl")
 end
+
+@testset "uniform.jl" begin
+  @info "Run unit tests in uniform.jl"
+  include("uniform.jl")
+end

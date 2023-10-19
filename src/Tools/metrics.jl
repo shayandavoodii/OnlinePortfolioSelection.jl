@@ -239,6 +239,7 @@ Calculate the metrics of an OPS algorithm.
 - `init_inv::T=1`: the initial investment.
 - `Rf::T=0.02`: the risk-free rate of return.
 - `dpy::S=252`: the number of days in a year.
+- `v::T=0.`: the transaction cost rate.
 
 !!! warning
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
@@ -256,14 +257,14 @@ function OPSMetrics(
   init_inv::T=1.,
   Rf::T=0.02,
   dpy::S=252,
-  𝘷::T=0.
+  v::T=0.
 ) where {T<:AbstractFloat, S<:Int}
 
   n_periods = size(rel_pr, 2)
   rel_pr, n_periods = alignperiods(weights, rel_pr)
 
   all_sn     = sn(weights, rel_pr, init_inv=init_inv)
-  MER        = mer(weights, rel_pr, 𝘷)
+  MER        = mer(weights, rel_pr, v)
   σₚ         = ann_std(all_sn, dpy=dpy)
   APY        = apy(all_sn[end], n_periods, dpy=dpy)
   ann_Sharpe = ann_sharpe(APY, Rf, σₚ)

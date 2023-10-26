@@ -69,8 +69,8 @@ julia> sum(mat, dims=1) .|> isapprox(1.0) |> all
 true
 ```
 """
-function normalizer!(mat::Matrix{T}) where T<:Float64
-  @inbounds @simd for idx_col ∈ axes(mat, 2)
+function normalizer!(mat::AbstractMatrix{T}) where T<:Float64
+  @inbounds for idx_col ∈ axes(mat, 2)
     @views normalizer!(mat[:, idx_col])
   end
 end

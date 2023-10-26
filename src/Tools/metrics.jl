@@ -165,8 +165,9 @@ calmar(APY::T, MDD::T) where T<:Float64 = APY/MDD;
       rel_pr::Matrix{T};
       init_inv::T=1.,
       Rf::T=0.02
-      dpy::S=252
-    ) where {T<:Float64, S<:Int}
+      dpy::S=252,
+      v::T=0.
+    ) where {T<:AbstractFloat, S<:Int}
 
 Calculate the metrics of an OPS algorithm.
 

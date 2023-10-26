@@ -5,6 +5,9 @@ using LinearAlgebra
 using JuMP
 using Ipopt
 using PrecompileTools
+using Clustering
+using Distances
+using DataStructures
 
 include("Algos/CRP.jl")
 include("Algos/EG.jl")
@@ -16,14 +19,17 @@ include("Algos/BS.jl")
 include("Algos/Anticor.jl")
 include("Algos/OLMAR.jl")
 include("Types/Algorithms.jl")
+include("Types/Clustering.jl")
+include("Algos/CLUSLOG.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
-export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar
-export OPSMetrics, sn, apy, ann_std, ann_sharpe, mdd, calmar
-export OPSAlgorithm, opsmethods
+export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
+export uniform, cluslog
+export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
+export OPSAlgorithm, KmeansModel, KmedoidsModel, opsmethods
 
 if VERSION≥v"1.9.0-rc3"
   @setup_workload begin
@@ -34,6 +40,7 @@ if VERSION≥v"1.9.0-rc3"
       cornu(adj_close, 1, 2)
       cornk(adj_close, 1, 2, 2, 2)
       dricornk(adj_close, market_adjclose, 1, 2, 2, 2)
+      kmeans(adj_close, 2)
     end
   end
 end
@@ -74,6 +81,12 @@ function opsmethods()
   println("      rprt: Reweighted Price Relative Tracking - Call `rprt`")
   println("   anticor: Anticor - Call `anticor`")
   println("     olmar: On-Line Moving Average Reversion - Call `olmar`")
+  println("     Bᵏ: Best-Known-Constant Rebalanced Portfolio - Call `bk`")
+  println("     LOAD: Local adaptive learning system - Call `load`")
+  println("    MRvol: Mean Reversion with Volume - Call `mrvol`")
+  println("    CW-OGD: Combination Weights based on Online Gradient Decent - Call `cwogd`")
+  println("   uniform: Uniform Portfolio - Call `uniform`")
+  println("   cluslog: Clustering and logarithmic expected return - Call `cluslog`")
 end
 # COV_EXCL_STOP
 

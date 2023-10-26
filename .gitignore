@@ -3,5 +3,4 @@ src/t copy.py
 src/test/
 test.jl
 *Manifest.toml
-*t*.jl
 .vscode/

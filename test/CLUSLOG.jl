@@ -39,6 +39,10 @@ lb, ub = 0., 1.
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
     @test size(model.b) == (nassets, horizon)
 
+    @testset "Individual functions" begin
+      OnlinePortfolioSelection.bAdjusted(model.b, rand(nassets, horizon))
+    end
+
   end
 
   @testset "With invalid args" begin

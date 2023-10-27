@@ -316,3 +316,13 @@ end
 function bAdjusted(wₜ, relprₜ)
   return (wₜ .* relprₜ)/sum(wₜ .* relprₜ)
 end
+
+function progressbar(io, ntimes::S, current::S) where S<:Int
+  val = current/ntimes
+  val_rounded = round(S, val*10)
+  bars = "████" ^ val_rounded
+  remainder = "    " ^ (10 - val_rounded)
+  joined = bars*remainder
+  percentage = round(val*100, digits=2)
+  printstyled(io, "┣$(joined)┫ $percentage% |$current/$ntimes \r")
+end

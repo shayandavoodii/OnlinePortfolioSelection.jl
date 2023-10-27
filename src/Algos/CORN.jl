@@ -4,7 +4,8 @@
       horizon::M,
       w::M;
       rho::T=0.2,
-      init_budg=1
+      init_budg=1,
+      progress::Bool=false
     ) where {T<:Float64, M<:Int}
 
 Run CORN-U algorithm.
@@ -17,6 +18,7 @@ Run CORN-U algorithm.
 ## Keyword Arguments
 - `rho::T=0.2`: The correlation coefficient threshold.
 - `init_budg=1`: The initial budget for investment.
+- `progress::Bool=false`: Whether to show the progress bar.
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -47,7 +49,8 @@ function cornu(
   horizon::M,
   w::M;
   rho::T=0.2,
-  init_budg=1
+  init_budg=1,
+  progress::Bool=false
 ) where {T<:Float64, M<:Int}
 
   0≤rho<1 || ArgumentError("The value of `rho` should be in the range of [0, 1).") |> throw
@@ -69,7 +72,7 @@ function cornu(
       bₜ[:, ω]    = b
       Sₜ_[ω, t+2] = S(Sₜ_[ω, t+1], b, relative_prices[:, end-horizon+t+1])
     end
-
+    progress && progressbar(stdout, horizon, t+1)
     weights[:, t+1] = final_weights(q, Sₜ_[:, t+2], bₜ)
   end
 
@@ -83,7 +86,8 @@ end
       k::T,
       w::T,
       p::T;
-      init_budg=1
+      init_budg=1,
+      progress::Bool=false
     ) where T<:Int
 
 Run CORN-K algorithm.
@@ -97,6 +101,7 @@ Run CORN-K algorithm.
 
 ## Keyword Arguments
 - `init_budg=1`: The initial budget for investment.
+- `progress::Bool=false`: Whether to show the progress bar.
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -128,7 +133,8 @@ function cornk(
   k::T,
   w::T,
   p::T;
-  init_budg=1
+  init_budg=1,
+  progress::Bool=false
 ) where T<:Int
 
   p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
@@ -161,6 +167,7 @@ function cornk(
 
     idx_top_k       = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
     weights[:, t+1] = final_weights(q, Sₜ_[idx_top_k, t+2], bₜ[:, idx_top_k])
+    progress && progressbar(stdout, horizon, t+1)
   end
 
   return OPSAlgorithm(n_assets, weights, "CORN-K")

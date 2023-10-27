@@ -98,7 +98,7 @@ function OnlinePortfolioSelection.cluslog(
   nclusters::Int,
   nclustering::Int,
   boundries::NTuple{2, AbstractFloat};
-  log::Bool=true
+  progress::Bool=true
 )
   nassets, nperiods = size(rel_pr)
   nperiods > horizon || DomainError("horizon must be less than the number of \
@@ -145,14 +145,12 @@ function OnlinePortfolioSelection.cluslog(
         b[:, idx_day]                = optimization(cor_similar_tws, rel_pr_day_after_similar_tws, boundries)
       end
     end
-    log && logger(idx_day)
+    progress && OnlinePortfolioSelection.progressbar(stdout, horizon, idx_day)
   end
   return OPSAlgorithm(nassets, b, clus_mod===KmeansModel ? "KMNLOG" : "KMDLOG")
 end
 
-function logger(n::Int)
-  @info "Analysis for trading day $n is done."
-end
+
 
 function cor_between_tws(rel_pr::AbstractMatrix{<:AbstractFloat}, len_tw, ntw)
   nassets = size(rel_pr, 1)

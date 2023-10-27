@@ -8,7 +8,7 @@
       nclusters::Int,
       nclustering::Int,
       boundries::NTuple{2, AbstractFloat};
-      log::Bool=true
+      progress::Bool=true
     )
 
 You need to install and import the following packages before using this function:
@@ -49,7 +49,7 @@ number of clusters.
 weights of assets in the portfolio.
 
 # Keyword Arguments
-- `log::Bool=true`: Whether to log the progress or not.
+- `progress::Bool=true`: Whether to log the progress or not.
 
 !!! warning "Beware!"
     `rel_pr` should be a matrix of size `n_assets` × `n_periods`.

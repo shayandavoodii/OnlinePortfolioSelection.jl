@@ -14,14 +14,17 @@ makedocs(;
     pages=Any[
         "Home" => "index.md",
         "Fetch Financial Data" =>"fetchdata.md",
+        "Use In Python" => "python.md",
         "OPS Strategies" => Any[
           "Benchmark" => "benchmark.md",
           "Follow the Loser" => "FL.md",
           "Follow the Winner" => "FW.md",
           "Pattern-Matching" => "PM.md",
+          "Meta-Learning" => "ML.md",
+          "Combined Strategies" => "Combined.md",
         ],
         "Performance Evaluation" => "performance_eval.md",
-        "Functions" => "funcs.md"
+        "Functions" => "funcs.md",
     ],
 )
 

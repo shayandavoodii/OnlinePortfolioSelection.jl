@@ -70,9 +70,13 @@ true
 ```
 """
 function normalizer!(mat::AbstractMatrix{T}) where T<:Float64
-  @inbounds for idx_col ∈ axes(mat, 2)
+  @inbounds @simd for idx_col ∈ axes(mat, 2)
     @views normalizer!(mat[:, idx_col])
   end
+end
+
+function normalizer!(mat::AbstractMatrix{T}, idx_col::S) where {T<:Float64, S<:Int}
+  normalizer!(@views mat[:, idx_col])
 end
 
 """

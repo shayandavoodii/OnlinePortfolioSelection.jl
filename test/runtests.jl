@@ -54,6 +54,30 @@ end
   include("OLMAR.jl")
 end
 
+@testset "BK.jl" begin
+  @info "Run unit tests in BK.jl"
+  include("BK.jl")
+end
+
+@testset "LOAD.jl" begin
+  @info "Run unit tests in LOAD.jl"
+  include("LOAD.jl")
+end
+
+@testset "MRvol.jl" begin
+  @info "Run unit tests in MRvol.jl"
+  include("MRvol.jl")
+end
+
+@testset "CW-OGD.jl" begin
+  @info "Run unit tests in CW-OGD.jl"
+  include("CW-OGD.jl")
+end
+
+@testset "uniform.jl" begin
+  @info "Run unit tests in uniform.jl"
+  include("uniform.jl")
+
 @testset "CLUSLOG.jl" begin
   @info "Run unit tests in CLUSLOG.jl"
   include("CLUSLOG.jl")

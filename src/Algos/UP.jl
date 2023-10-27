@@ -1,8 +1,5 @@
 """
-    up(
-      adj_close::Matrix{Float64};
-      eval_points::Int=10^4,
-    )
+    up(adj_close::Matrix{Float64}; eval_points::Int=10^4)
 
 Universal Portfolio (UP) algorithm.
 

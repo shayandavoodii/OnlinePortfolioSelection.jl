@@ -17,7 +17,7 @@ The formula for calculating the cumulative return of the portfolio is as follows
 where ``S₀`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
 of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-th period.
 """
-struct OPSAlgorithm{T<:Float64}
+struct OPSAlgorithm{T<:AbstractFloat}
   n_assets::Int
   b::Matrix{T}
   alg::String

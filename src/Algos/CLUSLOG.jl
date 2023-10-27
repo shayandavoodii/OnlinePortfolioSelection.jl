@@ -30,7 +30,7 @@ julia> using OnlinePortfolioSelection, Clustering
       nclusters::Int,
       nclustering::Int,
       boundries::NTuple{2, AbstractFloat};
-      log::Bool=true
+      progress::Bool=true
     )
 
 Run KMNLOG, KMDLOG, etc., algorithms on the given data.
@@ -43,7 +43,7 @@ represents the price of an asset at a given time.
 - `clus_mod::Type{<:ClusteringModel}`: Clustering model to be used. Currently, only \
 `KmeansModel` and `KmedoidsModel` are supported.
 - `nclusters::Int`: The maximum number of clusters to be examined.
-- `nclustering::Int`: The number of times clustering algorithm is run for optimal
+- `nclustering::Int`: The number of times clustering algorithm is run for optimal \
 number of clusters.
 - `boundries::NTuple{2, AbstractFloat}`: The lower and upper boundries for the \
 weights of assets in the portfolio.

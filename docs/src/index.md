@@ -25,7 +25,7 @@ This package provides an efficient implementation of OPS algorithms. The algorit
 12. MRvol
 13. Combination Weights based on Online Gradient Descent (CW-OGD)
 14. Uniform Portfolio (1/N)
-15. ClUSLOG (contains the KMNLOG and KMDLOG variants)
+15. CLUSLOG (contains the KMNLOG and KMDLOG variants)
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

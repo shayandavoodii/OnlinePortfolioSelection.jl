@@ -312,3 +312,7 @@ function rcorrelation(m1::AbstractMatrix, m2::AbstractMatrix, window::Int)
 
   return rcor, m₁[idx:end, :]
 end
+
+function bAdjusted(wₜ, relprₜ)
+  return (wₜ .* relprₜ)/sum(wₜ .* relprₜ)
+end

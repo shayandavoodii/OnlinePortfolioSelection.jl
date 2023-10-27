@@ -131,7 +131,7 @@ function OnlinePortfolioSelection.cluslog(
         if idx_day==1
           b[:, idx_day] = ones(nassets)/nassets
         else
-          b[:, idx_day] = bAdjusted(b[:, idx_day-1], rel_pr_[:, end])
+          b[:, idx_day] = OnlinePortfolioSelection.bAdjusted(b[:, idx_day-1], rel_pr_[:, end])
         end
       else
         day_after_similar_tws        = idx_sim_tws.+tw
@@ -216,10 +216,6 @@ function clustering(model::Type{<:ClusteringModel}, cor_tw, nclusters, nclusteri
   thresh      = round(Int, 0.8*nclustering)
   idx_sim_TWs = filter(x -> counter_[x] ≥ thresh, keys(counter_))
   return idx_sim_TWs |> OrderedSet |> sort |> collect
-end
-
-function bAdjusted(wₜ, relprₜ)
-  return (wₜ .* relprₜ)/sum(wₜ .* relprₜ)
 end
 
 function optimization(corrs::AbstractVector, relpr::AbstractMatrix, boundries::NTuple{2, AbstractFloat})

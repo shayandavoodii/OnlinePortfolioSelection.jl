@@ -22,13 +22,8 @@ MER is used to measure the average excess returns of an OPS method that outperfo
 MER = {1 \over n}\sum\nolimits_{t = 1}^n {{R_t} - } {1 \over n}\sum\nolimits_{t = 1}^n {R_t^*}
 ```
 
-where $R$ and ${R_t^*}$ are the daily returns of a portfolio and the market strategy at the 𝑡th trading day, respectively. For a given OPS method, considering the transaction costs, ${{R_t}}$ is calculated by ${R_t} = \left( {\mathbf{x}_t\mathbf{b}_t} \right) \times \left( {1 - {\nu  \over 2} \times \sum\nolimits_{i = 1}^d {\left| {{b_{t,i}} - {{\tilde b}_{t,i}}} \right|} } \right) - 1$. The market strategy allocates the capital equally to all the assets at the beginning and remains unchanged. ${R_t^*}$ is defined as: 
-
-```math
-R_t^* = \mathbf{x}_t \cdot \mathbf{b}^* - 1$ and ${\mathbf{b}^*} = {\left( {{1 \over d},{1 \over d}, \ldots ,{1 \over d}} \right)^ \top }
-```
-
-where $d$ is the number of assets, and $n$ is the number of trading days. This metric can be calculated by using the [`mer`](@ref) function. (see [[1](https://doi.org/10.1016/j.patcog.2023.109872)] for more details.)
+where $R$ and ${R_t^*}$ are the daily returns of a portfolio and the market strategy at the 𝑡th trading day, respectively. For a given OPS method, considering the transaction costs, ${{R_t}}$ is calculated by ${R_t} = \left( {\mathbf{x}_t\mathbf{b}_t} \right) \times \left( {1 - {\nu  \over 2} \times \sum\nolimits_{i = 1}^d {\left| {{b_{t,i}} - {{\tilde b}_{t,i}}} \right|} } \right) - 1$. The market strategy allocates the capital equally to all the assets at the beginning and remains unchanged. ${R_t^*}$ is defined as:
+$R_t^* = \mathbf{x}_t \cdot \mathbf{b}^* - 1$ and ${\mathbf{b}^*} = {\left( {{1 \over d},{1 \over d}, \ldots ,{1 \over d}} \right)^ \top }$, where $d$ is the number of assets, and $n$ is the number of trading days. This metric can be calculated by using the [`mer`](@ref) function. (see [[1](https://doi.org/10.1016/j.patcog.2023.109872)] for more details.)
 
 
 3. Annualized Return (APY)

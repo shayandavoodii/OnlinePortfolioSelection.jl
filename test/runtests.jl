@@ -77,6 +77,7 @@ end
 @testset "uniform.jl" begin
   @info "Run unit tests in uniform.jl"
   include("uniform.jl")
+end
 
 @testset "CLUSLOG.jl" begin
   @info "Run unit tests in CLUSLOG.jl"

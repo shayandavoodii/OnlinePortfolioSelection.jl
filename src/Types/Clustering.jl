@@ -1,4 +1,8 @@
 abstract type ClusteringModel end
 
-struct KmeansModel<:ClusteringModel end
-struct KmedoidsModel<:ClusteringModel end
+@kwdef struct KmeansModel<:ClusteringModel
+  alg::String="KMNLOG"
+end
+@kwdef struct KmedoidsModel<:ClusteringModel
+  alg::String="KMDLOG"
+end

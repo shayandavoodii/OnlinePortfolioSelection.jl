@@ -98,7 +98,7 @@ function OnlinePortfolioSelection.cluslog(
   nclusters::Int,
   nclustering::Int,
   boundries::NTuple{2, AbstractFloat};
-  log::Bool=true
+  progress::Bool=true
 )
   nassets, nperiods = size(rel_pr)
   nperiods > horizon || DomainError("horizon must be less than the number of \

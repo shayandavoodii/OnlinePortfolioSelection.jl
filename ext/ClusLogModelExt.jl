@@ -150,9 +150,7 @@ function OnlinePortfolioSelection.cluslog(
   return OPSAlgorithm(nassets, b, clus_mod===KmeansModel ? "KMNLOG" : "KMDLOG")
 end
 
-function logger(n::Int)
-  @info "Analysis for trading day $n is done."
-end
+
 
 function cor_between_tws(rel_pr::AbstractMatrix{<:AbstractFloat}, len_tw, ntw)
   nassets = size(rel_pr, 1)

@@ -5,7 +5,6 @@ using LinearAlgebra
 using JuMP
 using Ipopt
 using PrecompileTools
-using Clustering
 using Distances
 using DataStructures
 
@@ -29,7 +28,7 @@ include("Tools/cornfam.jl")
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export uniform, cluslog
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
-export OPSAlgorithm, KmeansModel, KmedoidsModel, opsmethods
+export OPSAlgorithm, KmeansModel, KmedoidsModel, ClusteringModel, opsmethods
 
 if VERSION≥v"1.9.0-rc3"
   @setup_workload begin
@@ -40,7 +39,6 @@ if VERSION≥v"1.9.0-rc3"
       cornu(adj_close, 1, 2)
       cornk(adj_close, 1, 2, 2, 2)
       dricornk(adj_close, market_adjclose, 1, 2, 2, 2)
-      kmeans(adj_close, 2)
     end
   end
 end

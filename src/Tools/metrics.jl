@@ -82,15 +82,15 @@ end
     mer(
       weights::AbstractMatrix{T},
       rel_pr::AbstractMatrix{T},
-      𝘷::AbstractFloat=0.
+      𝘷::T=0.
     ) where T<:AbstractFloat
 
 Calculate the investments's Mean excess return (MER).
 
 # Arguments
-- `weights::T`: the weights of the portfolio.
-- `rel_pr::T`: the relative price of the stocks.
-- `𝘷::AbstractFloat=0.`: the transaction cost rate.
+- `weights::AbstractMatrix{T}`: the weights of the portfolio.
+- `rel_pr::AbstractMatrix{T}`: the relative price of the stocks.
+- `𝘷::T=0.`: the transaction cost rate.
 
 !!! warning
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
@@ -104,7 +104,7 @@ Calculate the investments's Mean excess return (MER).
 function mer(
   weights::AbstractMatrix{T},
   rel_pr::AbstractMatrix{T},
-  𝘷::AbstractFloat=0.
+  𝘷::T=0.
 ) where T<:AbstractFloat
   n_assets, n_periods = size(rel_pr)
   conditionset1(weights, rel_pr)
@@ -128,12 +128,12 @@ function mer(
 end
 
 """
-    ann_std(cum_ret::Vector{AbstractFloat}; dpy)
+    ann_std(cum_ret::AbstractVector{AbstractFloat}; dpy)
 
 Calculate the Annualized Standard Deviation (σₚ) of portfolio.
 
 # Arguments
-- `cum_ret::Vector{AbstractFloat}`: the cumulative return of investment during the investment period.
+- `cum_ret::AbstractVector{AbstractFloat}`: the cumulative return of investment during the investment period.
 
 ## Keyword Arguments
 - `dpy`: the number of days in a year.
@@ -141,7 +141,7 @@ Calculate the Annualized Standard Deviation (σₚ) of portfolio.
 # Returns
 - `::AbstractFloat`: the Annualized Standard Deviation (σₚ) of portfolio.
 """
-function ann_std(cum_ret::Vector{<:AbstractFloat}; dpy)
+function ann_std(cum_ret::AbstractVector{<:AbstractFloat}; dpy)
   return (cum_ret |> diff |> std) * sqrt(dpy)
 end
 
@@ -179,17 +179,17 @@ Calculate the Annualized Sharpe Ratio of investment.
 ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:AbstractFloat = (APY - Rf)/sigma_prtf;
 
 """
-    mdd(Sn::Vector{T}) where T<:AbstractFloat
+    mdd(Sn::AbstractVector{T}) where T<:AbstractFloat
 
 Calculate the Maximum Drawdown (MDD) of investment.
 
 # Arguments
-- `Sn::Vector{T}`: the cumulative return of investment during the investment period.
+- `Sn::AbstractVector{T}`: the cumulative return of investment during the investment period.
 
 # Returns
 - `::AbstractFloat`: the MDD of investment.
 """
-function mdd(Sn::Vector{T}) where T<:AbstractFloat
+function mdd(Sn::AbstractVector{T}) where T<:AbstractFloat
   n_periods = length(Sn)
   max_sn    = zeros(T, n_periods)
   max_sn[1] = Sn[1]

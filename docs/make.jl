@@ -1,5 +1,4 @@
 using OnlinePortfolioSelection
-using Clustering
 using Documenter
 
 DocMeta.setdocmeta!(OnlinePortfolioSelection, :DocTestSetup, :(using OnlinePortfolioSelection); recursive=true)

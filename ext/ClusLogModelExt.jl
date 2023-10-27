@@ -16,7 +16,8 @@ using DataStructures
       clus_mod::Type{<:ClusteringModel},
       nclusters::Int,
       nclustering::Int,
-      boundries::NTuple{2, AbstractFloat}
+      boundries::NTuple{2, AbstractFloat};
+      log::Bool=true
     )
 
 Run KMNLOG, KMDLOG, etc., algorithms on the given data.
@@ -33,6 +34,9 @@ Run KMNLOG, KMDLOG, etc., algorithms on the given data.
   number of clusters.
 - `boundries::NTuple{2, AbstractFloat}`: The lower and upper boundries for the
   weights of assets in the portfolio.
+
+# Keyword Arguments
+- `log::Bool=true`: Whether to log the progress or not.
 
 !!! warning "Beware!"
     `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
@@ -93,7 +97,8 @@ function OnlinePortfolioSelection.cluslog(
   clus_mod::Type{<:ClusteringModel},
   nclusters::Int,
   nclustering::Int,
-  boundries::NTuple{2, AbstractFloat}
+  boundries::NTuple{2, AbstractFloat};
+  log::Bool=true
 )
   nassets, nperiods = size(rel_pr)
   nperiods > horizon || DomainError("horizon must be less than the number of \
@@ -140,7 +145,7 @@ function OnlinePortfolioSelection.cluslog(
         b[:, idx_day]                = optimization(cor_similar_tws, rel_pr_day_after_similar_tws, boundries)
       end
     end
-    logger(idx_day)
+    log && logger(idx_day)
   end
   return OPSAlgorithm(nassets, b, clus_mod===KmeansModel ? "KMNLOG" : "KMDLOG")
 end

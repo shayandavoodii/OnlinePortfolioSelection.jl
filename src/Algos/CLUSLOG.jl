@@ -36,16 +36,16 @@ julia> using OnlinePortfolioSelection, Clustering
 Run KMNLOG, KMDLOG, etc., algorithms on the given data.
 
 # Arguments
-- `rel_pr::AbstractMatrix{<:AbstractFloat}`: Relative prices of assets. Each column
+- `rel_pr::AbstractMatrix{<:AbstractFloat}`: Relative prices of assets. Each column \
 represents the price of an asset at a given time.
 - `horizon::Int`: Number of trading days.
 - `TW::Int`: Maximum time window length to be examined.
-- `clus_mod::Type{<:ClusteringModel}`: Clustering model to be used. Currently, only
+- `clus_mod::Type{<:ClusteringModel}`: Clustering model to be used. Currently, only \
 `KmeansModel` and `KmedoidsModel` are supported.
 - `nclusters::Int`: The maximum number of clusters to be examined.
 - `nclustering::Int`: The number of times clustering algorithm is run for optimal
 number of clusters.
-- `boundries::NTuple{2, AbstractFloat}`: The lower and upper boundries for the
+- `boundries::NTuple{2, AbstractFloat}`: The lower and upper boundries for the \
 weights of assets in the portfolio.
 
 # Keyword Arguments

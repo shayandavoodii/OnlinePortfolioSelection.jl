@@ -173,7 +173,7 @@ ClusLog contains some variant of models proposed by [Khedmati & Azin (2020)](htt
 
 ### Run ClusLog
 
-In order to use this function, you have to install the [`Clustering.jl`]() package and import it on your own. The reason behind this design is that I do not intend to add extra dependencies to this package for the sake of just an algorithm. The `Clustering.jl` package can be installed by running the following command in the Julia REPL:
+In order to use this function, you have to install the [`Clustering.jl`](https://github.com/JuliaStats/Clustering.jl) package and import it on your own. The reason behind this design is that I do not intend to add extra dependencies to this package for the sake of just an algorithm. The `Clustering.jl` package can be installed by running the following command in the Julia REPL:
 
 ```julia
 julia> using Pkg

@@ -7,7 +7,8 @@
       w::M,
       p::M;
       lambda::T=1e-3,
-      init_budg=1
+      init_budg=1,
+      progress::Bool=false
     ) where {T<:Float64, M<:Int}
 
 Run the DRICORNK algorithm.
@@ -23,6 +24,7 @@ Run the DRICORNK algorithm.
 ## Keyword Arguments
 - `lambda::T=1e-3`: The regularization parameter.
 - `init_budg=1`: The initial budget for investment.
+- `progress::Bool=false`: Whether to show the progress bar.
 
 !!! warning "Beware!"
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
@@ -53,7 +55,8 @@ function dricornk(
   w::M,
   p::M;
   lambda::T=1e-3,
-  init_budg=1
+  init_budg=1,
+  progress::Bool=false
 ) where {T<:Float64, M<:Int}
 
   p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
@@ -107,6 +110,7 @@ function dricornk(
 
     idx_top_k       = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
     weights[:, t+1] = final_weights(q, Sₜ_[idx_top_k, t+2], bₜ[:, idx_top_k])
+    progress && progressbar(stdout, horizon, t+1)
   end
 
   return OPSAlgorithm(n_assets, weights, "DRICORN-K")

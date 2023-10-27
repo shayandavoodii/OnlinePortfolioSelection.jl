@@ -145,7 +145,7 @@ function OnlinePortfolioSelection.cluslog(
         b[:, idx_day]                = optimization(cor_similar_tws, rel_pr_day_after_similar_tws, boundries)
       end
     end
-    log && logger(idx_day)
+    progress && OnlinePortfolioSelection.progressbar(stdout, horizon, idx_day)
   end
   return OPSAlgorithm(nassets, b, clus_mod===KmeansModel ? "KMNLOG" : "KMDLOG")
 end

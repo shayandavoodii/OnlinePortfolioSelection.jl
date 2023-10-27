@@ -1,3 +1,4 @@
 [deps]
+Clustering = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 OnlinePortfolioSelection = "038f9fe3-14bd-47ca-b081-2e00e8c46dfa"

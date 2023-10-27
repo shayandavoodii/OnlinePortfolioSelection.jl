@@ -226,6 +226,8 @@ calmar(APY::T, MDD::T) where T<:AbstractFloat = APY/MDD;
       rel_pr::AbstractMatrix{T};
       init_inv::T=1.,
       Rf::T=0.02
+      dpy::S=252,
+      v::T=0.
       dpy::S=252
     ) where {T<:AbstractFloat, S<:Int}
 

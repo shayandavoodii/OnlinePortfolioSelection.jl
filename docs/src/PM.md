@@ -6,6 +6,7 @@ Pattern-matching algorithms are one of most popular algorithms in the context of
 1.2. CORN-K
 2. Dynamic RIsk CORrelation-driven Non-parametric
 3. Bᴷ
+4. ClusLog
 
 ## Correlation-driven Nonparametric Learning
 Correlation-driven Nonparametric Learning (CORN) is a pattern-matching algorithm proposed by [Borodin et al. (2010)](https://doi.org/10.1145/1961189.1961193). CORN utilizes the correlation as the similarity measure between time windows. Additionally, CORN defines several experts to construct portfolios. For each trading day, CORN combines the portfolios of the experts to construct the final portfolio. This is where CORN-K and CORN-U differ. CORN-K uses K best experts (based on their performance on historical data) to construct the final portfolio. On the other hand, CORN-U uses all the experts and uniformly combines their portfolios to construct the final portfolio.
@@ -165,3 +166,58 @@ julia> sn(model.b, rel_price)
 ```
 
 The result indicates that the algorithm has lost ~3% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+
+## ClusLog
+
+ClusLog contains some variant of models proposed by [Khedmati & Azin (2020)](https://doi.org/10.1016/j.eswa.2020.113546), namely, KMNLOG and KMDLOG. The main idea behind these algorithms is to cluster the historical time windows based on their inter-correlation. Then, the algorithm uses a day after the found time windows as the potential day to occur with the same pattern for tomorrow. In order to perform the portfolio selection, the algorithm uses the semi-log optimal approach in order to maximize the expected return of the portfolio. See [`cluslog`](@ref).
+
+### Run ClusLog
+
+In order to use this function, you have to install the [`Clustering.jl`]() package and import it on your own. The reason behind this design is that I do not intend to add extra dependencies to this package for the sake of just an algorithm. The `Clustering.jl` package can be installed by running the following command in the Julia REPL:
+
+```julia
+julia> using Pkg
+
+julia> pkg"add Clustering@0.15.2"
+
+# Or
+
+julia> pkg.add(name="Clustering", version="0.15.2")
+```
+
+After intalling the package, you can use the [`cluslog`](@ref) function after importing the `Clustering.jl` package. Let's run ClusLog on the same data as CORN-U, CORN-K, etc.:
+
+```julia
+julia> using OnlinePortfolioSelection, Clustering
+
+julia> horizon, max_window_size, clustering_model, max_n_clusters, max_n_clustering, optm_boundries = 2, 3, KmeansModel, 3, 7, (0.0, 1.0);
+
+julia> prices = prices |> permutedims;
+
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+# run the algorithm on the last 2 days
+julia> model = cluslog(rel_price, horizon, max_window_size, clustering_model, max_n_clusters, max_n_clustering, optm_boundries);
+[ Info: Analysis for trading day 1 is done.
+[ Info: Analysis for trading day 2 is done.
+
+julia> model.b
+5×2 Matrix{Float64}:
+ 0.963883    0.00479629
+ 0.00337321  0.973796
+ 0.00657932  0.00360691
+ 0.00183594  0.00164263
+ 0.0243289   0.0161582
+```
+
+Using [`sn`](@ref) function, one can compute the cumulative wealth during the investment period:
+
+```julia
+julia> sn(model.b, rel_price)
+3-element Vector{Float64}:
+ 1.0
+ 0.9932798769652941
+ 0.9817775041346212
+```
+
+The result indicates that the algorithm has lost ~1.8% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.

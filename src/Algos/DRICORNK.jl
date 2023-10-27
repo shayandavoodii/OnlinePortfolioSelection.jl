@@ -72,12 +72,12 @@ function dricornk(
   # Market's return
   market_ret = log.(adj_close_market[2:end] ./ adj_close_market[1:end-1])
   # Stocks' return
-  asset_ret = log.(relative_prices)
-  n_assets  = size(relative_prices, 1)
-  P         = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ=0:p)
-  q         = 1/k
-  weights   = zeros(T, n_assets, horizon)
-  Sₜ_       = zeros(T, n_experts, horizon+1)
+  asset_ret  = log.(relative_prices)
+  n_assets   = size(relative_prices, 1)
+  P          = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ=0:p)
+  q          = 1/k
+  weights    = zeros(T, n_assets, horizon)
+  Sₜ_        = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
   for t ∈ 0:horizon-1
     bₜ = Matrix{T}(undef, n_assets, n_experts)

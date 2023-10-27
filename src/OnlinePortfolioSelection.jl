@@ -5,6 +5,8 @@ using LinearAlgebra
 using JuMP
 using Ipopt
 using PrecompileTools
+using Distances
+using DataStructures
 
 include("Algos/CRP.jl")
 include("Algos/CW-OGD.jl")
@@ -21,15 +23,17 @@ include("Algos/MRvol.jl")
 include("Algos/OLMAR.jl")
 include("Algos/uniform.jl")
 include("Types/Algorithms.jl")
+include("Types/Clustering.jl")
+include("Algos/CLUSLOG.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform
+export uniform, cluslog
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
-export OPSAlgorithm, opsmethods
+export OPSAlgorithm, KmeansModel, KmedoidsModel, ClusteringModel, opsmethods
 
 if VERSION≥v"1.9.0-rc3"
   @setup_workload begin
@@ -85,6 +89,7 @@ function opsmethods()
   println("    MRvol: Mean Reversion with Volume - Call `mrvol`")
   println("    CW-OGD: Combination Weights based on Online Gradient Decent - Call `cwogd`")
   println("   uniform: Uniform Portfolio - Call `uniform`")
+  println("   cluslog: Clustering and logarithmic expected return - Call `cluslog`")
 end
 # COV_EXCL_STOP
 

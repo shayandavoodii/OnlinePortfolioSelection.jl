@@ -22,7 +22,16 @@ julia> Pkg.add(name="Clustering", version="0.15.2")
 julia> using OnlinePortfolioSelection, Clustering
 ```
 
-====
+    cluslog(
+      rel_pr::AbstractMatrix{<:AbstractFloat},
+      horizon::Int,
+      TW::Int,
+      clus_mod::Type{<:ClusteringModel},
+      nclusters::Int,
+      nclustering::Int,
+      boundries::NTuple{2, AbstractFloat};
+      log::Bool=true
+    )
 
 Run KMNLOG, KMDLOG, etc., algorithms on the given data.
 
@@ -43,7 +52,7 @@ weights of assets in the portfolio.
 - `log::Bool=true`: Whether to log the progress or not.
 
 !!! warning "Beware!"
-`rel_pr` should be a matrix of size `n_assets` × `n_periods`.
+    `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
 - `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
@@ -51,14 +60,15 @@ weights of assets in the portfolio.
 # Example
 Two clustering model is available as of now: KmeansModel, and KmedoidsModel. The first \
 example utilizes `KmeansModel`:
+
 ```julia
-julia> using OnlinePortfolioSelection
+julia> using OnlinePortfolioSelection, Clustering
 
 julia> adj_close = [
-     1.5464 1.5852 1.6532 1.7245 1.5251 1.4185 1.2156 1.3231 1.3585 1.4563 1.4456
-     1.2411 1.2854 1.3456 1.4123 1.5212 1.5015 1.4913 1.5212 1.5015 1.4913 1.5015
-     1.3212 1.3315 1.3213 1.3153 1.3031 1.2913 1.2950 1.2953 1.3315 1.3213 1.3315
-   ]
+         1.5464 1.5852 1.6532 1.7245 1.5251 1.4185 1.2156 1.3231 1.3585 1.4563 1.4456
+         1.2411 1.2854 1.3456 1.4123 1.5212 1.5015 1.4913 1.5212 1.5015 1.4913 1.5015
+         1.3212 1.3315 1.3213 1.3153 1.3031 1.2913 1.2950 1.2953 1.3315 1.3213 1.3315
+       ]
 
 julia> rel_pr = adj_close[:, 2:end]./adj_close[:, 1:end-1]
 
@@ -79,6 +89,8 @@ true
 The same approach works for `KmedoidsModel` as well:
 
 ```julia
+julia> using OnlinePortfolioSelection, Clustering
+
 julia> model = cluslog(rel_pr, horizon, TW, KmedoidsModel, nclusters_, nclustering, (lb, ub));
 
 julia> model.b

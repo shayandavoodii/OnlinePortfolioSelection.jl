@@ -36,7 +36,6 @@ julia> eps = 0.01
 julia> result = pmar(rel_pr, eps, model)
 
 julia> result.b
-julia> result.b
 5×251 Matrix{Float64}:
  0.2  0.224672  0.22704   0.230855  0.229743  …  0.0966823  0.0966057  0.0900667
  0.2  0.196884  0.197561  0.199825  0.203945     0.172787   0.171734   0.171626

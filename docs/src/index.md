@@ -15,17 +15,7 @@ This package provides an efficient implementation of OPS algorithms. The algorit
 4. Correlation-driven Nonparametric Learning
   - 4.1 CORN-U
   - 4.2 CORN-K
-5. Dynamic RIsk CORrelation-driven Non-parametric (DRICORN-K)
-6. Best Stock (BS)
-7. Reweighted Price Relative Tracking (RPRT)
-8. Anti-Correlation (Anticor)
-9. Online Moving Average Reversion (OLMAR)
-10. Bᴷ
-11. LOcal ADaptive learning system (LOAD)
-12. MRvol
-13. Combination Weights based on Online Gradient Descent (CW-OGD)
-14. Uniform Portfolio (1/N)
-15. CLUSLOG (contains the KMNLOG and KMDLOG variants)
+- Passive Aggressive Mean Reversion (PAMR)
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

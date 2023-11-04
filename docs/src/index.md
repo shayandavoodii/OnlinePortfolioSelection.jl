@@ -6,15 +6,26 @@ end
 
 # Introduction
 
-Online Portfolio Selection (OPS) strategies are trading algorithms that sequentially allocate capital among a group of assets to maximize the final returns of the investment. It is a fundamental problem in computational finance that has been extensively studied across several research communities, including finance, statistics, artificial intelligence, machine learning, and data mining. From an online machine learning perspective, it is formulated as a sequential decision problem and there are a variety of state-of-the-art approaches that have been developed to solve it. These approaches are grouped into several major categories, including benchmarks, “Follow-the-Winner” approaches, “Follow-the-Loser” approaches, “Pattern-Matching” based approaches, and "Meta-Learning" Algorithms [[1](https://arxiv.org/abs/1212.2129)].
-This package provides an efficient implementation of OPS algorithms. The algorithms are implemented in Julia in a fully type-stable manner. All the algorithms return an object of type `OPSAlgorithm` which can be used to query the portfolio weights, number of assets, and the name of the algorithm. Sixteen algorithms are implemented so far and more will be added in the future. The available algorithms are:
+Online Portfolio Selection (OPS) strategies represent trading algorithms that sequentially allocate capital among a pool of assets with the aim of maximizing investment returns. This forms a fundamental issue in computational finance, extensively explored across various research domains, including finance, statistics, artificial intelligence, machine learning, and data mining. Framed within an online machine learning context, OPS is defined as a sequential decision problem, providing a range of advanced approaches to tackle this challenge. These approaches categorize into benchmarks, “Follow-the-Winner” and “Follow-the-Loser” strategies, “Pattern-Matching” based methodologies, and "Meta-Learning" Algorithms [[1](https://arxiv.org/abs/1212.2129)].
+This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, seventeen algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
 
-1. Constant Rebalanced Portfolio (CRP)
-2. Exponential Gradient (EG)
-3. Universal Portfolio (UP)
-4. Correlation-driven Nonparametric Learning
+- Constant Rebalanced Portfolio (CRP)
+-. Exponential Gradient (EG)
+- Universal Portfolio (UP)
+- Correlation-driven Nonparametric Learning
   - 4.1 CORN-U
   - 4.2 CORN-K
+- Dynamic RIsk CORrelation-driven Non-parametric (DRICORN-K)
+- Best Stock (BS)
+- Reweighted Price Relative Tracking (RPRT)
+- Anti-Correlation (Anticor)
+- Online Moving Average Reversion (OLMAR)
+- Bᴷ
+- LOcal ADaptive learning system (LOAD)
+- MRvol
+- Combination Weights based on Online Gradient Descent (CW-OGD)
+- Uniform Portfolio (1/N)
+- CLUSLOG (contains the KMNLOG and KMDLOG variants)
 - Passive Aggressive Mean Reversion (PAMR)
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
@@ -41,6 +52,10 @@ juila> using Pkg; pkg"add OnlinePortfolioSelection"
 
 The dev version can be installed usint the following command:
 ```julia
+julia> using Pkg; pkg"dev OnlinePortfolioSelection"
+
+# or
+
 pkg> add https://github.com/shayandavoodii/OnlinePortfolioSelection.jl.git
 ```
 
@@ -52,7 +67,7 @@ The package can be imported by running the following command in the Julia REPL:
 julia> using OnlinePortfolioSelection
 ```
 
-One can perform several strategies on a given dataset and analyse and compare the results. The following code snippet shows how to perform the strategies on a given dataset and compare the results:
+Multiple strategies can be applied to a given dataset for analysis and comparison of results. The following code snippet demonstrates how to execute these strategies on a provided dataset and compare their outcomes:
 
 ```julia
 juila> using CSV, DataFrames
@@ -68,7 +83,7 @@ julia> size(pr)
 (24, 1276)
 ```
 
-The dataset contains the adjusted close prices of 24 stocks in the S&P 500 within 1276 trading days. Now, suppose we want to perform the strategies on the last 50 days of the dataset with default arguments:
+The dataset encompasses adjusted close prices of 24 stocks in the S&P 500 across 1276 trading days. Suppose we aim to apply the strategies to the most recent 50 days of the dataset using default arguments:
 
 ```julia
 julia> m_corn_u = cornu(pr, 50, 3);
@@ -78,7 +93,7 @@ julia> m_corn_k = cornk(pr, 50, 3, 2, 2);
 juila> m_drcorn_k = dricornk(pr, market_pr, 50, 5, 5, 5);
 ```
 
-Now, let's plot the trend of daily cumulative budgets of each algorithm. For this, we have to calculate it using the achieved portfolio weights and relative prices in the same time period:
+Next, let's visualize the daily cumulative budgets' trends for each algorithm. To do this, we'll need to compute them by utilizing the attained portfolio weights and relative prices within the same time period.
 
 ```julia
 # calculate the relative prices
@@ -102,7 +117,7 @@ julia> plot(
 <img src="assets/cumulative_budgets.png" width="100%">
 ```
 
-The plot shows that the cumulative return of CORN-K outperforms the other algorithms almost all the time. Note that the initial investment for all of the algorithms is set to 1 (this can be modified by setting the keyword argument `init_budg` for each algorithm). Now, let's investigate the performance of the algorithms in terms of some of prominent performance metrics:
+The plot illustrates that the cumulative return of CORN-K consistently outperforms the other algorithms. It's important to note that the initial investment for all algorithms is standardized to 1, although this can be adjusted by setting the keyword argument `init_budg` for each algorithm. Now, let's delve into the performance analysis of the algorithms using prominent [performance metrics](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/):
 
 ```julia
 julia> all_metrics = OPSMetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr));
@@ -132,4 +147,4 @@ julia> comp_algs = DataFrame(
    3 │ DRICORN-K  -0.248393   -1.20933   0.221934  -2.54505  0.0975985
 ```
 
-The `comp_algs` shows that CORN-K outperforms the other algorithms in terms of annualizeed percentage yield (APY), annualized Sharpe ratio, Calmar ratio, and maximum drawdown (MDD). However, the annualized standard deviation of CORN-K is higher than the other algorithms in this dataset. Note that these metrics can be calculated individually by calling the corresponding [`sn`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See the [Performance evaluation](@ref) for more details.
+The comparison analysis, via `comp_algs`, highlights that CORN-K outperforms the other algorithms in terms of annualized percentage yield (APY), annualized Sharpe ratio, Calmar ratio, and maximum drawdown (MDD). However, it's essential to note that the annualized standard deviation of CORN-K surpasses that of the other algorithms within this dataset. These individual metrics can be computed separately by using corresponding functions such as [`sn`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). For further insights and details, please refer to the [Performance evaluation](@ref).

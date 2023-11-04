@@ -47,7 +47,16 @@ end
 """
     sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv::T=1.) where T<:AbstractFloat
 
-Calculate the cumulative return of investment during a period of time.
+Calculate the cumulative return of the portfolio during a period of time.
+
+The formula for calculating the cumulative return of the portfolio is as follows:
+
+```math
+{S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
+```
+
+where ``S_0`` is the initial budget, ``n`` is the investment horizon, ``b_t`` is the vector \
+of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-th period.
 
 # Arguments
 - `weights::AbstractMatrix{T}`: the weights of the portfolio.

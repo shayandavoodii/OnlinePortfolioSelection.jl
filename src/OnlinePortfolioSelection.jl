@@ -8,6 +8,9 @@ using PrecompileTools
 using Distances
 using DataStructures
 
+include("Types/Algorithms.jl")
+include("Types/Clustering.jl")
+include("Types/PMAR.jl")
 include("Algos/CRP.jl")
 include("Algos/CW-OGD.jl")
 include("Algos/EG.jl")
@@ -22,8 +25,7 @@ include("Algos/Anticor.jl")
 include("Algos/MRvol.jl")
 include("Algos/OLMAR.jl")
 include("Algos/uniform.jl")
-include("Types/Algorithms.jl")
-include("Types/Clustering.jl")
+include("Algos/PMAR.jl")
 include("Algos/CLUSLOG.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
@@ -31,9 +33,9 @@ include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog
+export uniform, cluslog, pmar
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
-export OPSAlgorithm, KmeansModel, KmedoidsModel, ClusteringModel, opsmethods
+export PMAR, PMAR1, PMAR2
 
 if VERSION≥v"1.9.0-rc3"
   @setup_workload begin
@@ -84,12 +86,13 @@ function opsmethods()
   println("      rprt: Reweighted Price Relative Tracking - Call `rprt`")
   println("   anticor: Anticor - Call `anticor`")
   println("     olmar: On-Line Moving Average Reversion - Call `olmar`")
-  println("     Bᵏ: Best-Known-Constant Rebalanced Portfolio - Call `bk`")
-  println("     LOAD: Local adaptive learning system - Call `load`")
-  println("    MRvol: Mean Reversion with Volume - Call `mrvol`")
+  println("        Bᵏ: Best-Known-Constant Rebalanced Portfolio - Call `bk`")
+  println("      LOAD: Local adaptive learning system - Call `load`")
+  println("     MRvol: Mean Reversion with Volume - Call `mrvol`")
   println("    CW-OGD: Combination Weights based on Online Gradient Decent - Call `cwogd`")
   println("   uniform: Uniform Portfolio - Call `uniform`")
   println("   cluslog: Clustering and logarithmic expected return - Call `cluslog`")
+  println("      pmar: Passive Aggressive Mean Reversion - Call `pmar`")
 end
 # COV_EXCL_STOP
 

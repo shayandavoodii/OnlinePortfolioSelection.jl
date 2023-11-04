@@ -89,10 +89,11 @@ function pmar(rel_pr::AbstractMatrix, ϵ::AbstractFloat, model::PMARModel)
   b = ones(n_assets, n_obs)/n_assets
   for t in 1:n_obs-1
     rel_prₜ  = @view rel_pr[:,t]
+    bₜ       = @view b[:,t]
     x̄ₜ       = rel_prₜ./length(rel_prₜ)
-    ℓᵗ       = ℓᵗfunc(b[:,t], rel_prₜ, ϵ)
+    ℓᵗ       = ℓᵗfunc(bₜ, rel_prₜ, ϵ)
     τₜ       = τₜfunc(model, rel_prₜ, x̄ₜ, ℓᵗ)
-    bₜ₊₁     = updateptf(b[:,t], rel_prₜ, x̄ₜ, τₜ)
+    bₜ₊₁     = updateptf(bₜ, rel_prₜ, x̄ₜ, τₜ)
     b[:,t+1] = normptf(bₜ₊₁)
   end
   return OPSAlgorithm(n_assets, b, pmaralgname(model))

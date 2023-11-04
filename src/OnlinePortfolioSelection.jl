@@ -35,8 +35,8 @@ include("Tools/cornfam.jl")
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export uniform, cluslog, pmar
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
-export OPSAlgorithm, KmeansModel, KmedoidsModel, ClusteringModel, opsmethods
-export PMAR, PMAR1, PMAR2
+export OPSAlgorithm, KMNModel, KMDModel, ClusteringModel, PMAR, PMAR1, PMAR2
+export opsmethods
 
 if VERSION≥v"1.9.0-rc3"
   @setup_workload begin

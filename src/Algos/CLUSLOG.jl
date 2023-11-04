@@ -41,7 +41,7 @@ represents the price of an asset at a given time.
 - `horizon::Int`: Number of trading days.
 - `TW::Int`: Maximum time window length to be examined.
 - `clus_mod::Type{<:ClusteringModel}`: Clustering model to be used. Currently, only \
-`KmeansModel` and `KmedoidsModel` are supported.
+`KMNModel` and `KMDModel` are supported.
 - `nclusters::Int`: The maximum number of clusters to be examined.
 - `nclustering::Int`: The number of times clustering algorithm is run for optimal \
 number of clusters.
@@ -58,8 +58,8 @@ weights of assets in the portfolio.
 - `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
 # Example
-Two clustering model is available as of now: KmeansModel, and KmedoidsModel. The first \
-example utilizes `KmeansModel`:
+Two clustering model is available as of now: KMNModel, and KMDModel. The first \
+example utilizes `KMNModel`:
 
 ```julia
 julia> using OnlinePortfolioSelection, Clustering
@@ -74,7 +74,7 @@ julia> rel_pr = adj_close[:, 2:end]./adj_close[:, 1:end-1]
 
 julia> horizon = 3; TW = 3; nclusters_ = 3; nclustering = 10; lb, ub = 0.0, 1.;
 
-julia> model = cluslog(rel_pr, horizon, TW, KmeansModel, nclusters_, nclustering, (lb, ub));
+julia> model = cluslog(rel_pr, horizon, TW, KMNModel, nclusters_, nclustering, (lb, ub));
 
 julia> model.b
 3×3 Matrix{Float64}:
@@ -86,12 +86,12 @@ julia> sum(model.b , dims=1) .|> isapprox(1.) |> all
 true
 ```
 
-The same approach works for `KmedoidsModel` as well:
+The same approach works for `KMDModel` as well:
 
 ```julia
 julia> using OnlinePortfolioSelection, Clustering
 
-julia> model = cluslog(rel_pr, horizon, TW, KmedoidsModel, nclusters_, nclustering, (lb, ub));
+julia> model = cluslog(rel_pr, horizon, TW, KMDModel, nclusters_, nclustering, (lb, ub));
 
 julia> model.b
 3×3 Matrix{Float64}:

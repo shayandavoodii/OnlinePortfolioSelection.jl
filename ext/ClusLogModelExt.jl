@@ -112,12 +112,12 @@ function identityfinder(model, idxLastTW)
   return idx_tws_in_latest_tw_cluster
 end
 
-function clustering(::Type{KmeansModel}, cor_tw, nclusters)
+function clustering(::Type{KMNModel}, cor_tw, nclusters)
   fitted = kmeans(cor_tw, nclusters)
   return fitted
 end
 
-function clustering(::Type{KmedoidsModel}, cor_tw, nclusters)
+function clustering(::Type{KMDModel}, cor_tw, nclusters)
   dists  = pairwise(Euclidean(), cor_tw)
   fitted = kmedoids(dists, nclusters)
   return fitted

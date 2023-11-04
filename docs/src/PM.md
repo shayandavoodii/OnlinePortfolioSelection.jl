@@ -190,7 +190,7 @@ After intalling the package, you can use the [`cluslog`](@ref) function after im
 ```julia
 julia> using OnlinePortfolioSelection, Clustering
 
-julia> horizon, max_window_size, clustering_model, max_n_clusters, max_n_clustering, optm_boundries = 2, 3, KmeansModel, 3, 7, (0.0, 1.0);
+julia> horizon, max_window_size, clustering_model, max_n_clusters, max_n_clustering, optm_boundries = 2, 3, KMNModel, 3, 7, (0.0, 1.0);
 
 julia> prices = prices |> permutedims;
 

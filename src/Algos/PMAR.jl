@@ -80,7 +80,7 @@ julia> result.b
 ```
 
 # References
-> [PAMR: Passive aggressive mean reversion strategy for portfolio selection](doi.org/10.1007/s10994-012-5281-z)
+> [PMAR: Passive aggressive mean reversion strategy for portfolio selection](doi.org/10.1007/s10994-012-5281-z)
 """
 function pmar(rel_pr::AbstractMatrix, ϵ::AbstractFloat, model::PMARModel)
   ϵ > 0 || ArgumentError("ϵ must be positive.") |> throw

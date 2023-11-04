@@ -234,7 +234,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Passive Aggressive Mean Reversion (PAMR)
 
-The Passive Mean Reversion (PMAR) algorithm ([Li et al., 2012](doi.org/10.1007/s10994-012-5281-z)) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PMAR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t\$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PMAR is expressed as:
+The Passive Mean Reversion (PMAR) algorithm ([Li et al., 2012](doi.org/10.1007/s10994-012-5281-z)) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PMAR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PMAR is expressed as:
 
 ```math
 \tau_t = \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2}}

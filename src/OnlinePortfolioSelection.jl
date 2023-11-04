@@ -35,6 +35,7 @@ include("Tools/cornfam.jl")
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export uniform, cluslog, pmar
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
+export OPSAlgorithm, ClusteringModel, opsmethods
 export PMAR, PMAR1, PMAR2
 
 if VERSION≥v"1.9.0-rc3"

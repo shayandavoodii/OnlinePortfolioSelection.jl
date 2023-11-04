@@ -9,6 +9,9 @@ Run the PMAR algorithm on the matrix of relative prices `rel_pr`.
 - `C::AbstractFloat`: Aggressiveness parameter.
 - `model::PMARModel`: PMAR model to use. All three variants, namely, `PMAR()`, `PMAR1()`, and `PMAR2()` are supported.
 
+!!! warning "Beware!"
+    `rel_price` should be a matrix of size `n_assets` × `n_periods`.
+
 # Output
 - `::OPSAlgorithm`: An object of type [`OPSAlgorithm`](@ref).
 

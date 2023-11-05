@@ -132,16 +132,76 @@ uniformm = uniform(nassets, horizon);
 cornkm = cornk(prices, horizon, 5, 5, 10, progress=true);
 ┣████████████████████████████████████████┫ 100.0% |30/30 
 
-models = (loadm, uniformm, cornkm);
+names = ["LOAD", "UNIFORM", "CORNK"];
 
-all_metrics = OPSMetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr));
+metrics = (:Sn, :MER, :APY, :Ann_Std, :Ann_Sharpe, :MDD, :Calmar);
+
+all_metrics_vals = OPSMetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr));
 
 # Draw a bar plot to depict the values of each metric for each algorithm
-bar(
-
+groupedbar(
+  vcat([repeat([String(metric)], length(names)) for metric in metrics]...),
+  [getfield(result, metric) |> last for metric in metrics for result in all_metrics_vals],
+  group=repeat(names, length(metrics)),
 )
 ```
 
 ```@raw html
-<img src="assets/cumulative_budgets.png" width="100%">
+<img src="assets/performance_eval.png" width="100%">
 ```
+
+The plot illustrates the value of each metric for each algorithm. 
+
+# Individual functions
+
+The metrics can be calculated individually as well. For instance, in the next code block, I compute each metric individually for the `CORNK` algorithm.
+
+```julia
+# Compute the cumulative return
+julia> sn_ = sn(cornkm.b, rel_pr)
+31-element Vector{Float64}:
+ 1.0
+ 1.0056658141861143
+ 1.0456910599891474
+ ⋮
+ 1.0812597940398256
+ 1.0561895221684217
+ 1.0661252685319844
+
+# Compute the mean excess return
+julia> mer(cornkm.b, rel_pr)
+0.0331885901993342
+
+# Compute the annualized return
+julia> apy_ = apy(last(sn_), size(cornkm.b, 2))
+0.7123367957886144
+
+# Compute the annualized standard deviation
+julia> ann_std_ = ann_std(sn_, dpy=252)
+0.312367085936459
+
+# Compute the annualized sharpe ratio
+julia> rf = 0.02
+julia> ann_sharpe(apy_, rf, ann_std_)
+2.216420445556956
+
+# Compute the maximum drawdown
+julia> mdd_ = mdd(sn_)
+0.06460283126873347
+
+# Compute the calmar ratio
+julia> calmar(apy_, mdd_)
+11.026402121997583
+
+julia> last(all_metrics_vals)
+
+            Cumulative Return: 1.0661252685319844
+        Mean Excessive Return: 0.0331885901993342
+  Annualized Percentage Yield: 0.7123367957886144
+Annualized Standard Deviation: 0.312367085936459
+      Annualized Sharpe Ratio: 2.216420445556956
+             Maximum Drawdown: 0.06460283126873347
+                 Calmar Ratio: 11.026402121997583
+```
+
+As shown, the results are consistent with the results obtained using the [`OPSMetrics`](@ref) function.

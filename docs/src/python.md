@@ -41,7 +41,7 @@ array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 3
 ```
 
-As demonstrated, the `mrvol` function returns a `PyCall.jlwrap` object. Access the portfolio weights through `model.b`, automatically converted into a `numpy.ndarray`. Similarly, other attributes of the `model` object can be accessed. To inspect the attributes of the `model` object further, refer to the documentation for the returned object via the [`mrvol`](@ref) function. Now, proceed to calculate the algorithm's performance based on notable metrics:
+As demonstrated, the [`mrvol`](@ref) function returns a `PyCall.jlwrap` object. Access the portfolio weights through `model.b`, automatically converted into a `numpy.ndarray`. Similarly, other attributes of the `model` object can be accessed. To inspect the attributes of the `model` object further, refer to the documentation for the returned object via the [`mrvol`](@ref) function. Now, proceed to calculate the algorithm's performance based on notable metrics:
 
 ```python
 >>> metrics = OPS.OPSMetrics(model.b, rel_pr)
@@ -60,7 +60,7 @@ array([1.00000000e+00, 5.75525607e-01, 1.45701657e-01, 7.12853019e-02,
        1.97878448e-03, 8.65966074e-04, 3.87943525e-04])
 ```
 
-As observed, the `OPSMetrics` function returns a `PyCall.jlwrap` object. The cumulative wealth of portfolios is accessable through `metrics.Sn`, automatically converted into a `numpy.ndarray`. Other attributes of the `metrics` object can be accessed similarly. To further explore the attributes of the `metrics` object, review the documentation for the returned object using the [`OPSMetrics`](@ref) function. Additionally, documentation for each function can be accessed through Python. For instance, you can retrieve the documentation for the [`mrvol`](@ref) function by executing the following commands:
+As observed, the [`OPSMetrics`](@ref) function returns a `PyCall.jlwrap` object. The cumulative wealth of portfolios is accessable through `metrics.Sn`, automatically converted into a `numpy.ndarray`. Other attributes of the `metrics` object can be accessed similarly. To further explore the attributes of the `metrics` object, review the documentation for the returned object using the [`OPSMetrics`](@ref) function. Additionally, documentation for each function can be accessed through Python. For instance, you can retrieve the documentation for the [`mrvol`](@ref) function by executing the following commands:
 
 ```python
 >>> from julia import Main as jl

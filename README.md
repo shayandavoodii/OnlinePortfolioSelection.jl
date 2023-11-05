@@ -132,7 +132,7 @@ julia> using OnlinePortfolioSelection
 julia> opsmethods()
 ```
 <div align="justify">
-In summary, the names of all implemented algorithms are represented in lowercase letters. Each strategy returns an object of type [`OPSAlgorithm`](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/funcs/#OnlinePortfolioSelection.OPSAlgorithm), encapsulating the following fields:
+In summary, the names of all implemented algorithms are represented in lowercase letters. Each strategy returns an object of type <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/funcs/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>, encapsulating the following fields:
 </div>
 
 ```julia

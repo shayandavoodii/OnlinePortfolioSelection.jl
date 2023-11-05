@@ -146,14 +146,14 @@ groupedbar(
 ```
 
 ```@raw html
-<img src="assets/performance_eval.png" width="100%">
+<img src="../assets/performance_eval.png" width="100%">
 ```
 
 The plot illustrates the value of each metric for each algorithm. 
 
 ### Individual functions
 
-The metrics can be calculated individually as well. For instance, in the next code block, I compute each metric individually for the `CORNK` algorithm.
+The metrics can be calculated individually as well. For instance, in the next code block, I compute each metric individually for the 'CORNK' algorithm.
 
 ```julia
 # Compute the cumulative return

@@ -1,5 +1,5 @@
 # Benchmark Strategies
-Some strategies in the context of online portfolio selection are considered as benchmark strategies. The simplest benchmark strategy is the Buy and Hold (BH) strategy which is called as the *market strategy*. The BAH model invests equally in m assets at the beginning and remains unchanged during the next periods, thus the weights of assets change passively with their price variations. A special BAH model, the Best-Stock (BS), invests all the capital into the best asset over the periods which is an optimal BAH in hindsight. Overall, the Benchmark portfolio selection models are quite simple because they do not adopt complex or sophisticated techniques via statistics and machine learning to explore the patterns within the data. Thus they are often taken as the baselines for performance comparison with new designed models. Another benchmark strategy is the Constant Rebalanced Portfolio (CRP) which assigns a fixed weight to each asset throughout a given period. The following strategies are implemented in this package so far:
+In the domain of online portfolio selection, certain strategies are considered benchmark strategies. One of the simplest is the Buy and Hold (BH) strategy, often referred to as the *market strategy*. BH involves an equal investment in m assets at the beginning, maintaining these allocations throughout the subsequent periods, leading to passive weight adjustments based on the assets' price variations. An optimized version, the Best-Stock (BS) strategy, allocates all capital to the best-performing asset over the periods. These benchmark portfolio selection models are straightforward, lacking the use of sophisticated statistical or machine learning techniques to uncover data patterns. Consequently, they serve as baselines for evaluating the performance of newly developed models. Another benchmark strategy, the Constant Rebalanced Portfolio (CRP), maintains a fixed weight for each asset over a specified period. The currently implemented strategies in this package include:
 
 1. Constant Rebalanced Portfolio (CRP)
 2. Best Stock (BS)
@@ -45,8 +45,7 @@ julia> sn(m_crp.b, rel_price)
  0.9716459683279461
 ```
 
-The result indicates that if we had invested in the given period, we would have lost ~2.8% of our capital. Note that [`sn`](@ref) automatically takes the last 5 relative prices in this case.
-Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
+The outcome demonstrates that if we had invested during the specified period, we would have incurred a loss of approximately 2.8% of our capital. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this instance. Let's further analyze the algorithm's performance based on some significant metrics:
 
 ```julia
 julia> results = OPSMetrics(m_crp.b, rel_price)
@@ -67,7 +66,7 @@ julia> results.MDD
 
 ## BS
 
-This model is a subset of the BAH strategy in which the best stock is acquired retroactively. In this package, users can choose the number of days to look back (through `last_n` keyword argument) and find the best stock. If the `last_n` is not provided or is set to `0`, the algorithm will consider the whole data until the day at each period to find the best stock. Otherwise, the algorithm will consider the last `last_n` days performance of each stock and chooses the best one. Let's run the algorithm on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
+The model is a variant of the BAH strategy that retroactively acquires the best stock. Within this package, users can select the number of days to retrospectively examine (using the `last_n` keyword argument) and identify the best stock. If `last_n` is either not provided or set to `0`, the algorithm will consider the entire dataset up to the present day for each period to identify the best stock. Conversely, if `last_n` is specified, the algorithm will only consider the performance of each stock within the last `last_n` days and then select the best-performing one. To implement the algorithm on real market data, let's assume the data is collected as detailed in the [Fetch Data](@ref) section.
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -111,9 +110,9 @@ julia> sn(m_bs.b, rel_price)
  1.0255278032954953
 ```
 
-The result indicates that if we had invested in the given period, we would have gained ~2.6% of our capital. Note that [`sn`](@ref) automatically takes the last 10 relative prices in this case.
+The outcome suggests that if we had invested during the specified period, we would have gained approximately 2.6% of our capital. Notably, [`sn`](@ref) automatically considers the last 10 relative prices in this scenario.
 
-Note that this package provides functions to analyze the performance of the algorithm. See the [Performance evaluation](@ref) section for more details.
+It's important to highlight that this package offers functions designed to assess the algorithm's performance. For additional insights, refer to the [Performance evaluation](@ref) section.
 
 ## 1/N
 
@@ -161,6 +160,6 @@ julia> sn(m_uni.b, rel_price)
  0.960423009921307
 ```
 
-The result indicates that if we had invested in the given period, we would have lost ~3.9% of our capital. Note that [`sn`](@ref) automatically takes the last 10 relative prices in this case.
+The result reveals that if investment had been made during the specified period, a loss of approximately 3.9% of the capital would have been incurred. It's noteworthy that [`sn`](@ref) automatically accounts for the last 10 relative prices in this context.
 
-Note that this package provides functions to analyze the performance of the algorithm. See the [Performance evaluation](@ref) section for more details.
+Additionally, this package offers functions for assessing the algorithm's performance. For further details, refer to the [Performance evaluation](@ref) section.

@@ -91,7 +91,7 @@ This metric can be computed using the [`calmar`](@ref) function. Additionally, i
 
 Below is a simple example that illustrates how to utilize the metrics. Initially, I utilize the [`OPSMetrics`](@ref) function to compute all the metrics collectively. Subsequently, I present the procedure to compute each metric individually.
 
-# [`OPSMetrics`](@ref) function
+### [`OPSMetrics`](@ref) function
 
 The OPSMetrics function facilitates the computation of all metrics simultaneously. It requires the following positional arguments:
 
@@ -151,7 +151,7 @@ groupedbar(
 
 The plot illustrates the value of each metric for each algorithm. 
 
-# Individual functions
+### Individual functions
 
 The metrics can be calculated individually as well. For instance, in the next code block, I compute each metric individually for the `CORNK` algorithm.
 

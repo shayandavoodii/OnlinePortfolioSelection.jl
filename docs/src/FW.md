@@ -80,7 +80,7 @@ See [`eg`](@ref).
 
 ### Run EG
 
-Let's run the algorithm on the real market data. The data is collected as noted in the ["Fetch-Data"](@ref) section.
+Let's run the algorithm on the real market data. The data is collected as noted in the "[Fetch-Data](@ref)" section.
 
 ```julia
 juila> using OnlinePortfolioSelection

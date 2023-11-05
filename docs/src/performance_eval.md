@@ -86,3 +86,62 @@ CR = {{APY} \over {MDD}}
 ```
 
 This metric can be computed using the [`calmar`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`OPSMetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
+
+## Examples
+
+Here, we provide a simple example to demonstrate the usage of the metrics. First, I use the `OPSMetrics` function to compute the metrics all at once. Then, I show how to compute each metric individually.
+
+# [`OPSMetrics`](@ref) function
+
+Once can compute all the metrics using the [`OPSMetrics`](@ref) function at once. The function takes the following positional arguments:
+
+- `weights`: A matrix of size $m \times t$ where $m$ is the number of assets and $t$ is the number of trading days. This matrix contains the portfolio weights at each trading day using the employed OPS algorithm.
+- `rel_pr`: A matrix of size $m \times t$ where $m$ is the number of assets and $t$ is the number of trading days. This matrix contains the relative prices of the assets at each trading day. Note that most of the studies in the literature assume that the relative prices are calculated as $\frac{p_{t,i}}{p_{t-1,i}}$ where $p_{t,i}$ is the price of asset $i$ at time $t$. On the other hand, few studies assume that the relative prices are calculated as $\frac{c_{t,i}}{o_{t,i}}$ where $c_{t,i}$ and $o_{t,i}$ are the closing and opening prices of asset $i$ at time $t$, respectively. It is up to user to decide which relative prices to use, and pass the corresponding matrix to the function.
+
+Furthermore, the function takes the following keyword arguments:
+
+- `init_inv=1.`: The initial investment, which is set to `1.0` by default.
+- `RF=0.02`: The risk-free rate, which is set to `0.02` by default.
+- `dpy=252`: The number of days in a year, which is set to `252` days by default.
+- `v=0.`: The transaction cost rate, which is set to `0.0` by default.
+
+The function returns an object of type [`OPSMetrics`](@ref) containing all the metrics as fields. Now, let's choose few algorithms and assess their performance using the aforementioned function.
+
+```julia
+using OnlinePortfolioSelection, YFinance, Plots
+
+# Fetch data
+tickers = ["AAPL", "MSFT", "AMZN", "META", "GOOG"]
+
+startdt, enddt = "2023-04-01", "2023-08-27";
+
+querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
+
+prices = stack(querry) |> permutedims;
+
+rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+nassets, ndays = size(rel_pr);
+
+# Run algorithms for 30 days
+horizon = 30;
+
+# Run models on the given data
+loadm = load(prices, 0.5, 8, horizon, 0.1)[1];
+uniformm = uniform(nassets, horizon);
+cornkm = cornk(prices, horizon, 5, 5, 10, progress=true);
+┣████████████████████████████████████████┫ 100.0% |30/30 
+
+models = (loadm, uniformm, cornkm);
+
+all_metrics = OPSMetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr));
+
+# Draw a bar plot to depict the values of each metric for each algorithm
+bar(
+
+)
+```
+
+```@raw html
+<img src="assets/cumulative_budgets.png" width="100%">
+```

@@ -4,13 +4,18 @@ Generally, Julia packages can be used in a Python environment with ease by emplo
 
 1. Begin by installing PyJulia via `pip install julia`. Ensure that the Julia path is added to the system environment variable `PATH`, enabling the usage of `julia` from the command line. Typically, the Julia path is found in `\.julia\juliaup\julia-<VERSION>\bin` or `C:\Users\your-user-name\AppData\Local\Programs\Julia\Julia-<VERSION>\bin`.
 2. Launch Python.
-3. Execute the subsequent commands in Python. In this instance, I'm demonstrating the execution of the [MRvol](@ref) algorithm.
+3. Execute the subsequent commands in Python.
 
 ```python
 >>> from julia import Pkg
 >>> Pkg.add("OnlinePortfolioSelection")
 >>> from julia import OnlinePortfolioSelection as OPS
+```
 
+# Run [MRvol](@ref) Algorithm 
+In this instance, I'm demonstrating the execution of the [MRvol](@ref) algorithm.
+
+```python
 # Generate a random relatvive price matrix. The rows are the assets, and the columns represent the time.
 >>> import numpy as np
 >>> rel_pr = np.random.rand(3, 100)
@@ -81,4 +86,32 @@ Run MRvol algorithm.
 # Example
 
 ...
+```
+
+# Run [ClusLog](@ref) Algorithm
+
+Another example can be using [`cluslog`](@ref) function to perform 'KMNLOG' or 'KMDLOG' model (see [ClusLog](@ref), [`KMNModel`](@ref), and [`KMDModel`](@ref) for more details):
+
+```python
+# before running the following code, please read the
+# instruction to install Julia package in Python that is
+# described in the beginning of this page.
+>>> from julia import Main as jl
+>>> from julia import OnlinePortfolioSelection as OPS
+# In order to use `cluslog` algorithm, you need to install `Clustering` package in Julia.
+>>> from julia import Pkg
+>>> Pkg.add(name="Clustering", version="0.15.2")
+>>> from julia import Clustering
+
+>>> import numpy as np
+>>> rel_pr = np.random.rand(3, 150)
+>>> horizon, max_tw_len, clustering_model = 50, 10, OPS.KMNModel
+>>> max_n_clus, max_n_clustering, asset_bounderies = 10, 10, (0., 1.)
+>>> model = OPS.cluslog(rel_pr, horizon, max_tw_len, clustering_model, max_n_clus, max_n_clustering, asset_bounderies)
+█████████████████████████████████████┫ 100.0% |50/50
+# The weights of the portfolios are stored in `model.b`.
+>>> model.b.sum(axis=0)
+array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 ```

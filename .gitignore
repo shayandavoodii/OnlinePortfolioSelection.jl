@@ -1,4 +1,6 @@
 src/test/
 test**.***
+Manifest.toml
 *Manifest.toml
 .vscode/
+delete.cov.jl

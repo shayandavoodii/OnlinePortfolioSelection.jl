@@ -20,6 +20,8 @@ ClusLogModelExt = "Clustering"
 
 [compat]
 Clustering      = "=0.15.2"
+LinearAlgebra   = "1"
+Statistics      = "1" 
 DataStructures  = "0.18"
 Distances       = "0.10"
 Ipopt           = "1.2"

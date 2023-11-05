@@ -7,6 +7,7 @@ makedocs(;
     modules=[OnlinePortfolioSelection],
     authors="Shayan Davoodi <sh0davoodi@gmail.com>",
     sitename="OnlinePortfolioSelection.jl",
+    checkdocs=:exports,
     format=Documenter.HTML(;
         canonical="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl",
         prettyurls = get(ENV, "CI", nothing) == "true"

@@ -3,7 +3,7 @@ abstract type ClusteringModel end
 """
     KMNModel(alg::String="KMNLOG")<:ClusteringModel
 
-`KMNModel` is a concrete type used to represent the KMNLOG Model.
+`KMNModel` is a concrete type used to represent the KMNLOG Model. Also, see [`KMDModel`](@ref).
 
 # Fields
 - `alg::String="KMNLOG"`: The algorithm's name to be used.
@@ -18,7 +18,7 @@ end
 """
     KMDModel(alg::String="KMDLOG")<:ClusteringModel
 
-`KMDModel` is a concrete type used to represent the KMDLOG Model.
+`KMDModel` is a concrete type used to represent the KMDLOG Model. Also, see [`KMNModel`](@ref).
 
 # Fields
 - `alg::String="KMDLOG"`: The algorithm's name to be used.

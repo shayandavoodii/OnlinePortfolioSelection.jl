@@ -1,12 +1,12 @@
 # Meta-Learning Strategies (ML)
 
-ML strategie are used to combine the experts opinitions to achieve a final portfolio. The opinion of each expert is a vector of weights that sum to one. Orthonormaly, the performance of each expert gets quantified, and affects the final portfolio. Each expert, can be a portfolio optimization model, or just a vector of weights as an input. The following ML strategies are implemented so far in the package:
+Meta-learning strategies are employed to combine opinions from experts to formulate a final portfolio. Each expert's opinion is represented as a vector of weights summing to one. Subsequently, the performance of each expert is quantified, influencing the final portfolio. Each expert can either be a portfolio optimization model or simply a vector of weights as an input. The following meta-learning strategies are currently implemented in the package:
 
 1. Combination Weights based on Online Gradient Descent (CW-OGD) 
 
 ## Combination Weights based on Online Gradient Descent (CW-OGD)
 
-[Zhang et al. (2021)](https://doi.org/10.1016/j.knosys.2021.107533) proposed a new online portfolio selection strategy based on a weighted learning technique and an online gradient descent algorithm. Their strategy achieves improved robustness by integrating different expert strategies and overcomes the difficult problem of complex computational time. First, an expert pool including many basic expert strategies, in which they choose the strategy that invests in a single stock as the basic expert strategy, is established. Second, they exploit the loss function to evaluate the performance of each basic expert strategies and use the OGD algorithm to update the weight vector for the experts based on their losses.
+[Zhang et al. (2021)](https://doi.org/10.1016/j.knosys.2021.107533) introduced a novel online portfolio selection algorithm leveraging a weighted learning technique and an online gradient descent algorithm. Their strategy demonstrates enhanced robustness by integrating various expert strategies and successfully addresses the challenge of complex computational time. To begin, the authors establish an expert pool encompassing numerous basic expert strategies, among which the strategy investing in a single stock is chosen as the fundamental expert strategy. Subsequently, they employ a loss function to assess the performance of each basic expert strategy and utilize the OGD algorithm to adjust the weight vector for the experts based on their losses.
 
 ### Run CW-OGD
 

@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This package offers a range of metrics to assess the performance of algorithms. These metrics are well-established in the literature and serve as benchmarks to compare different algorithm performances. Currently, the supported metrics are:
+This package provides a variety of metrics for evaluating algorithm performance. These metrics are widely recognized in the literature and serve as benchmarks for comparing the performances of different algorithms. Currently, the supported metrics include:
 
 - Cumulative Return (CR, Also known as $S_n$)
 
@@ -89,16 +89,15 @@ This metric can be computed using the [`calmar`](@ref) function. Additionally, i
 
 ## Examples
 
-Here, we provide a simple example to demonstrate the usage of the metrics. First, I use the `OPSMetrics` function to compute the metrics all at once. Then, I show how to compute each metric individually.
+Below is a simple example that illustrates how to utilize the metrics. Initially, I utilize the [`OPSMetrics`](@ref) function to compute all the metrics collectively. Subsequently, I present the procedure to compute each metric individually.
 
 # [`OPSMetrics`](@ref) function
 
-Once can compute all the metrics using the [`OPSMetrics`](@ref) function at once. The function takes the following positional arguments:
+The OPSMetrics function facilitates the computation of all metrics simultaneously. It requires the following positional arguments:
 
-- `weights`: A matrix of size $m \times t$ where $m$ is the number of assets and $t$ is the number of trading days. This matrix contains the portfolio weights at each trading day using the employed OPS algorithm.
-- `rel_pr`: A matrix of size $m \times t$ where $m$ is the number of assets and $t$ is the number of trading days. This matrix contains the relative prices of the assets at each trading day. Note that most of the studies in the literature assume that the relative prices are calculated as $\frac{p_{t,i}}{p_{t-1,i}}$ where $p_{t,i}$ is the price of asset $i$ at time $t$. On the other hand, few studies assume that the relative prices are calculated as $\frac{c_{t,i}}{o_{t,i}}$ where $c_{t,i}$ and $o_{t,i}$ are the closing and opening prices of asset $i$ at time $t$, respectively. It is up to user to decide which relative prices to use, and pass the corresponding matrix to the function.
-
-Furthermore, the function takes the following keyword arguments:
+`weights`: A matrix sized $m \times t$, representing the portfolio weights on each trading day utilizing the chosen OPS algorithm.
+`rel_pr`: A matrix sized $m \times t$, which includes the relative prices of assets on each trading day. Typically, these prices are computed as $\frac{p_{t,i}}{p_{t-1,i}}$ in most studies, where $p_{t,i}$ denotes the price of asset $i$ at time $t$. Alternatively, in some studies, relative prices are calculated as $\frac{c_{t,i}}{o_{t,i}}$, where $c_{t,i}$ and $o_{t,i}$ are the closing and opening prices of asset $i$ at time $t$. The user can decide which relative prices to employ and input the corresponding matrix into the function.
+Additionally, the function accepts the following keyword arguments:
 
 - `init_inv=1.`: The initial investment, which is set to `1.0` by default.
 - `RF=0.02`: The risk-free rate, which is set to `0.02` by default.

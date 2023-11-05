@@ -47,7 +47,9 @@ end
 """
     sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv::T=1.) where T<:AbstractFloat
 
-Calculate the cumulative return of the portfolio during a period of time.
+Calculate the cumulative return of the portfolio during a period of time. Also, \
+see [`mer`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), \
+[`calmar`](@ref), and [`OPSMetrics`](@ref).
 
 The formula for calculating the cumulative return of the portfolio is as follows:
 
@@ -69,7 +71,8 @@ of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-t
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
 
 !!! note
-    If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last `size(weights, 2)` columns of `rel_pr` will be used.
+    If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last \
+    `size(weights, 2)` columns of `rel_pr` will be used.
 
 # Returns
 - `all_sn::Vector{T}`: the cumulative return of investment during the investment period.
@@ -94,7 +97,8 @@ end
       𝘷::T=0.
     ) where T<:AbstractFloat
 
-Calculate the investments's Mean excess return (MER).
+Calculate the investments's Mean excess return (MER). Also, see [`sn`](@ref), [`ann_std`](@ref), \
+[`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`OPSMetrics`](@ref).
 
 # Arguments
 - `weights::AbstractMatrix{T}`: the weights of the portfolio.
@@ -105,7 +109,8 @@ Calculate the investments's Mean excess return (MER).
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
 
 !!! note
-    If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last `size(weights, 2)` columns of `rel_pr` will be used.
+    If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last \
+    `size(weights, 2)` columns of `rel_pr` will be used.
 
 # Returns
 - `MER::AbstractFloat`: the investments's Mean excess return (MER).
@@ -139,10 +144,13 @@ end
 """
     ann_std(cum_ret::AbstractVector{AbstractFloat}; dpy)
 
-Calculate the Annualized Standard Deviation (σₚ) of portfolio.
+Calculate the Annualized Standard Deviation (σₚ) of portfolio. Also, see [`sn`](@ref), \
+[`mer`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and \
+[`OPSMetrics`](@ref).
 
 # Arguments
-- `cum_ret::AbstractVector{AbstractFloat}`: the cumulative return of investment during the investment period.
+- `cum_ret::AbstractVector{AbstractFloat}`: the cumulative return of investment during the \
+investment period.
 
 ## Keyword Arguments
 - `dpy`: the number of days in a year.
@@ -157,7 +165,8 @@ end
 """
     apy(Sn::AbstractFloat, n_periods::S; dpy::S=252) where S<:Int
 
-Calculate the Annual Percentage Yield (APY) of investment.
+Calculate the Annual Percentage Yield (APY) of investment. Also, see [`sn`](@ref), [`mer`](@ref), \
+[`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`OPSMetrics`](@ref).
 
 # Arguments
 - `Sn::AbstractFloat`: the cumulative return of investment.
@@ -175,7 +184,8 @@ end
 """
     ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:AbstractFloat
 
-Calculate the Annualized Sharpe Ratio of investment.
+Calculate the Annualized Sharpe Ratio of investment. Also, see [`sn`](@ref), [`mer`](@ref), \
+[`ann_std`](@ref), [`apy`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`OPSMetrics`](@ref).
 
 # Arguments
 - `APY::T`: the APY of investment.
@@ -190,7 +200,8 @@ ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:AbstractFloat = (APY - Rf)/sig
 """
     mdd(Sn::AbstractVector{T}) where T<:AbstractFloat
 
-Calculate the Maximum Drawdown (MDD) of investment.
+Calculate the Maximum Drawdown (MDD) of investment. Also, see [`sn`](@ref), [`mer`](@ref), \
+[`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`calmar`](@ref), and [`OPSMetrics`](@ref).
 
 # Arguments
 - `Sn::AbstractVector{T}`: the cumulative return of investment during the investment period.
@@ -218,7 +229,8 @@ end
 """
     calmar(APY::T, MDD::T) where T<:AbstractFloat
 
-Calculate the Calmar Ratio of investment.
+Calculate the Calmar Ratio of investment. Also, see [`sn`](@ref), [`mer`](@ref), [`ann_std`](@ref), \
+[`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`OPSMetrics`](@ref).
 
 # Arguments
 - `APY::T`: the APY of investment.
@@ -240,7 +252,8 @@ calmar(APY::T, MDD::T) where T<:AbstractFloat = APY/MDD;
       dpy::S=252
     ) where {T<:AbstractFloat, S<:Int}
 
-Calculate the metrics of an OPS algorithm.
+Calculate the metrics of an OPS algorithm. Also, see [`sn`](@ref), [`mer`](@ref), \
+[`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref).
 
 # Arguments
 - `weights::AbstractMatrix{T}`: the weights of the portfolio.
@@ -260,7 +273,7 @@ Calculate the metrics of an OPS algorithm.
     columns of `rel_pr` will be used.
 
 # Returns
-- `::OPSMetrics`: the metrics of the OPS algorithm.
+- `::OPSMetrics`: An [`OPSMetrics`](@ref) object.
 """
 function OPSMetrics(
   weights::AbstractMatrix{T},

@@ -42,7 +42,7 @@ true
 ```
 
 # Reference
-- [1] [Reweighted Price Relative Tracking System for Automatic Portfolio Optimization](https://ieeexplore.ieee.org/document/8411138/)
+> [Reweighted Price Relative Tracking System for Automatic Portfolio Optimization](https://ieeexplore.ieee.org/document/8411138/)
 """
 function rprt(
   adj_close::Matrix{T};

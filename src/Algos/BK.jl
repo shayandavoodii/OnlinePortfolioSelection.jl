@@ -31,7 +31,7 @@ true
 ```
 
 # Reference
-- [1] [NONPARAMETRIC KERNEL-BASED SEQUENTIAL INVESTMENT STRATEGIES](https://doi.org/10.1111/j.1467-9965.2006.00274.x)
+> [NONPARAMETRIC KERNEL-BASED SEQUENTIAL INVESTMENT STRATEGIES](https://doi.org/10.1111/j.1467-9965.2006.00274.x)
 """
 function bk(rel_price::Matrix{T}, K::S, L::S, c) where {T<:Float64, S<:Int}
   0<c≤1 || DomainError("c must be graeter than 0 and less than or equal to 1 (0 < c ≤ 1)") |> throw

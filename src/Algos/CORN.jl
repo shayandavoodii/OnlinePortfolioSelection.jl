@@ -41,8 +41,10 @@ julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
 
+See [`cornk`](@ref), and [`dricornk`](@ref).
+
 # Reference
-- [1] [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
+> [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
 """
 function cornu(
   adj_close::Matrix{T},
@@ -109,9 +111,6 @@ Run CORN-K algorithm.
 # Returns
 - `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
 
-# Reference
-- [1] [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
-
 # Examples
 ```julia
 julia> using OnlinePortfolioSelection
@@ -126,6 +125,11 @@ julia> model.alg
 julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
+
+See [`cornu`](@ref), and [`dricornk`](@ref).
+
+# Reference
+> [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
 """
 function cornk(
   adj_close::Matrix{Float64},

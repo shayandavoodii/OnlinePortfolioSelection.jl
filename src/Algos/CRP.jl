@@ -32,7 +32,7 @@ true
 ```
 
 # References
-- [1] [Universal Portfolios](https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9965.1991.tb00002.x)
+> [Universal Portfolios](https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9965.1991.tb00002.x)
 """
 function crp(adj_close::Matrix{T}) where T<:Float64
   n_assets, n_periods = size(adj_close)

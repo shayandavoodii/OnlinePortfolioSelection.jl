@@ -41,7 +41,7 @@ represents the price of an asset at a given time.
 - `horizon::Int`: Number of trading days.
 - `TW::Int`: Maximum time window length to be examined.
 - `clus_mod::Type{<:ClusteringModel}`: Clustering model to be used. Currently, only \
-`KMNModel` and `KMDModel` are supported.
+[`KMNModel`](@ref) and [`KMDModel`](@ref) are supported.
 - `nclusters::Int`: The maximum number of clusters to be examined.
 - `nclustering::Int`: The number of times clustering algorithm is run for optimal \
 number of clusters.
@@ -58,8 +58,8 @@ weights of assets in the portfolio.
 - `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
 # Example
-Two clustering model is available as of now: KMNModel, and KMDModel. The first \
-example utilizes `KMNModel`:
+Two clustering model is available as of now: [`KMNModel`](@ref), and [`KMDModel`](@ref). \
+The first example utilizes [`KMNModel`](@ref):
 
 ```julia
 julia> using OnlinePortfolioSelection, Clustering
@@ -86,7 +86,7 @@ julia> sum(model.b , dims=1) .|> isapprox(1.) |> all
 true
 ```
 
-The same approach works for `KMDModel` as well:
+The same approach works for [`KMDModel`](@ref) as well:
 
 ```julia
 julia> using OnlinePortfolioSelection, Clustering
@@ -102,6 +102,8 @@ julia> model.b
 julia> sum(model.b , dims=1) .|> isapprox(1.) |> all
 true
 ```
+
+See also [`KMNModel`](@ref), and [`KMDModel`](@ref).
 
 # Reference
 > [An online portfolio selection algorithm using clustering approaches and considering transaction costs](https://doi.org/10.1016/j.eswa.2020.113546)

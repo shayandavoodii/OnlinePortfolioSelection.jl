@@ -44,8 +44,10 @@ julia> sum(m_dricornk.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
 
+See [`cornk`](@ref), and [`cornu`](@ref).
+
 # Reference
-- [1] [DRICORN-K: A Dynamic RIsk CORrelation-driven Non-parametric Algorithm for Online Portfolio Selection](https://www.doi.org/10.1007/978-3-030-66151-9_12)
+> [DRICORN-K: A Dynamic RIsk CORrelation-driven Non-parametric Algorithm for Online Portfolio Selection](https://www.doi.org/10.1007/978-3-030-66151-9_12)
 """
 function dricornk(
   adj_close::Matrix{T},

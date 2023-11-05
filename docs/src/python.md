@@ -1,16 +1,21 @@
 # Use `OnlinePortfolioSelection.jl` in Python
 
-Generally, Julia packages can be used in a Python environtment easily using packages than can wrap Julia packages into Python packages. For example, [PyJulia](https://pyjulia.readthedocs.io/en/latest/index.html) is one of the most popular wrapper packages in this area. There is a comprehensive installation guide in the [PyJulia documentation](https://pyjulia.readthedocs.io/en/latest/installation.html). Please follow the instructions there to install PyJulia and Julia. Importing Julia packages into Python is discussed before (i.e., see [[1](https://stackoverflow.com/q/73070845/11747148), [2](https://blog.esciencecenter.nl/how-to-call-julia-code-from-python-8589a56a98f2)]). In this section, I'll show how to use `OnlinePortfolioSelection.jl` in Python. If you had issues with importing the package, please check [this](https://stackoverflow.com/questions/77264168/importerror-pkg-name-not-found-in-importing-a-julia-package-in-python-using-p) discussion.
+Generally, Julia packages can be used in a Python environment with ease by employing wrapper packages that facilitate the translation of Julia functionalities into Python. A notable package in this domain is [PyJulia](https://pyjulia.readthedocs.io/en/latest/index.html). Comprehensive installation guidelines can be found in the [PyJulia documentation](https://pyjulia.readthedocs.io/en/latest/installation.html). To leverage Julia packages in Python, previously discussed methods have covered importing Julia code into Python ([1](https://stackoverflow.com/q/73070845/11747148), [2](https://blog.esciencecenter.nl/how-to-call-julia-code-from-python-8589a56a98f2)). In this section, I'll demonstrate how to utilize `OnlinePortfolioSelection.jl` in Python. For resolution of potential issues during package importation, please refer to [this](https://stackoverflow.com/questions/77264168/importerror-pkg-name-not-found-in-importing-a-julia-package-in-python-using-p) discussion.
 
-1. Install PyJulia: `pip install julia`. Make sure the Julia path is registered in the system environment variable `PATH` (i.e., `julia` can be called in the command line). The Julia path is usually `\.julia\juliaup\julia-<VERSION>\bin` or `C:\Users\your-user-name\AppData\Local\Programs\Julia\Julia-<VERSION>\bin`.
-2. Run Python
-3. Enter the following commands in Python (Here, I run the [MRvol](@ref) algorithm as an example):
+1. Begin by installing PyJulia via `pip install julia`. Ensure that the Julia path is added to the system environment variable `PATH`, enabling the usage of `julia` from the command line. Typically, the Julia path is found in `\.julia\juliaup\julia-<VERSION>\bin` or `C:\Users\your-user-name\AppData\Local\Programs\Julia\Julia-<VERSION>\bin`.
+2. Launch Python.
+3. Execute the subsequent commands in Python.
 
 ```python
 >>> from julia import Pkg
 >>> Pkg.add("OnlinePortfolioSelection")
 >>> from julia import OnlinePortfolioSelection as OPS
+```
 
+# Run [MRvol](@ref) Algorithm 
+In this instance, I'm demonstrating the execution of the [MRvol](@ref) algorithm.
+
+```python
 # Generate a random relatvive price matrix. The rows are the assets, and the columns represent the time.
 >>> import numpy as np
 >>> rel_pr = np.random.rand(3, 100)
@@ -36,7 +41,7 @@ array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 3
 ```
 
-As shown above, the `mrvol` function returns a `PyCall.jlwrap` object. The portfolio weights can be accessed by `model.b` which are automatically converted to a `numpy.ndarray` object. The other attributes of the `model` object can be accessed in the same way. In order to check the attributes of the `model` object, you can check the returned object by the [`mrvol`](@ref) function. Let's continue and calculate the performance of the algorithm according to some of the prominent metrics:
+As demonstrated, the `mrvol` function returns a `PyCall.jlwrap` object. Access the portfolio weights through `model.b`, automatically converted into a `numpy.ndarray`. Similarly, other attributes of the `model` object can be accessed. To inspect the attributes of the `model` object further, refer to the documentation for the returned object via the [`mrvol`](@ref) function. Now, proceed to calculate the algorithm's performance based on notable metrics:
 
 ```python
 >>> metrics = OPS.OPSMetrics(model.b, rel_pr)
@@ -55,7 +60,7 @@ array([1.00000000e+00, 5.75525607e-01, 1.45701657e-01, 7.12853019e-02,
        1.97878448e-03, 8.65966074e-04, 3.87943525e-04])
 ```
 
-As shown above, the `OPSMetrics` function returns a `PyCall.jlwrap` object. The cumulative wealth of portfolios can be accessed by `metrics.Sn` which are automatically converted to a `numpy.ndarray` object. The other attributes of the `metrics` object can be accessed in the same way. In order to check the attributes of the `metrics` object, you can check the returned object by the [`OPSMetrics`](@ref) function. It's worth mentioning that you can get the documentation of each function through Python. For example, you can get the documentation of the [`mrvol`](@ref) function using the following commands:
+As observed, the `OPSMetrics` function returns a `PyCall.jlwrap` object. The cumulative wealth of portfolios is accessable through `metrics.Sn`, automatically converted into a `numpy.ndarray`. Other attributes of the `metrics` object can be accessed similarly. To further explore the attributes of the `metrics` object, review the documentation for the returned object using the [`OPSMetrics`](@ref) function. Additionally, documentation for each function can be accessed through Python. For instance, you can retrieve the documentation for the [`mrvol`](@ref) function by executing the following commands:
 
 ```python
 >>> from julia import Main as jl
@@ -81,4 +86,32 @@ Run MRvol algorithm.
 # Example
 
 ...
+```
+
+# Run [ClusLog](@ref) Algorithm
+
+Another example can be using [`cluslog`](@ref) function to perform 'KMNLOG' or 'KMDLOG' model (see [ClusLog](@ref), [`KMNModel`](@ref), and [`KMDModel`](@ref) for more details):
+
+```python
+# before running the following code, please read the
+# instruction to install Julia package in Python that is
+# described in the beginning of this page.
+>>> from julia import Main as jl
+>>> from julia import OnlinePortfolioSelection as OPS
+# In order to use `cluslog` algorithm, you need to install `Clustering` package in Julia.
+>>> from julia import Pkg
+>>> Pkg.add(name="Clustering", version="0.15.2")
+>>> from julia import Clustering
+
+>>> import numpy as np
+>>> rel_pr = np.random.rand(3, 150)
+>>> horizon, max_tw_len, clustering_model = 50, 10, OPS.KMNModel
+>>> max_n_clus, max_n_clustering, asset_bounderies = 10, 10, (0., 1.)
+>>> model = OPS.cluslog(rel_pr, horizon, max_tw_len, clustering_model, max_n_clus, max_n_clustering, asset_bounderies)
+█████████████████████████████████████┫ 100.0% |50/50
+# The weights of the portfolios are stored in `model.b`.
+>>> model.b.sum(axis=0)
+array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.,
+       1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 ```

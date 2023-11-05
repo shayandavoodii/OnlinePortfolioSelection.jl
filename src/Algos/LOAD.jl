@@ -196,7 +196,7 @@ julia> s
 ```
 
 # References
-- [A local adaptive learning system for online portfolio selection](https://doi.org/10.1016/j.knosys.2019.104958)
+> [A local adaptive learning system for online portfolio selection](https://doi.org/10.1016/j.knosys.2019.104958)
 """
 function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T; ϵ::T=1.5) where {T<:Float64, S<:Int}
   n_assets, n_days = size(adj_close)

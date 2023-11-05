@@ -324,7 +324,7 @@ julia> r.b
 ```
 
 # References
-- [1] [Online portfolio selection of integrating expert strategies based on mean reversion and trading volume.](https://doi.org/10.1016/j.eswa.2023.121472)
+> [Online portfolio selection of integrating expert strategies based on mean reversion and trading volume.](https://doi.org/10.1016/j.eswa.2023.121472)
 """
 function mrvol(
   rel_pr::AbstractMatrix{T},

@@ -35,6 +35,7 @@
 
 </div>
 
+---
 <div id="top"></div>
 
 <!-- TABLE OF CONTENTS -->
@@ -59,7 +60,7 @@
 ## About
 
 <div align="justify">
-This package provides some of the proposed Online Portfolio Selection (OPS) algorithms in the literature. The methods are implemented in a fully type-stable manner in Julia and can be used for research purposes. The package is still under development, and more methods will be added. Hopefully, novel methods will be added to the repo after completing the major benchmark methods. Currently, the package provides the following algorithms:
+This package presents a selection of proposed Online Portfolio Selection (OPS) algorithms found in the literature. The algorithms are implemented in Julia, ensuring complete type stability and suitability for research applications. It's an actively evolving package, with ongoing development work to introduce additional published methods. The aim is to introduce novel methods following the implementation of fundamental benchmark approaches. Presently, the package includes the following algorithms:
 </div>
 <div align="center">
 
@@ -83,7 +84,7 @@ This package provides some of the proposed Online Portfolio Selection (OPS) algo
 
 <div align="justify">
 
-This package is developed for **research purposes** and **is not intended to be used for investment purposes**. The author(s) is(are) not responsible for any loss of money or any other financial damages caused by using this package.
+This package is designed exclusively for **research purposes** and **explicitly not for investment use**. The author(s) hold no responsibility for any financial losses or damages incurred from using this package for investment or financial purposes.
 
 </div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
@@ -97,8 +98,7 @@ This package is developed for **research purposes** and **is not intended to be 
 
 <div align="justify">
 
-The latest stable version of the package can be installed by running the following command in the Julia REPL after pressing `]`:
-
+The most recent stable version of the package can be installed by entering the following command in the Julia REPL after typing <code>]</code>:
 </div>
 
 ```julia
@@ -110,18 +110,21 @@ or
 ```julia
 julia> using Pkg; Pkg.add("OnlinePortfolioSelection")
 ```
-
-Also, the dev version of the package can be installed by running the following command in the Julia REPL after pressing `]`:
+<div align="justify">
+Additionally, the development version of the package can be installed by executing the following command in the Julia REPL after entering <code>]</code>:
+</div>
 
 ```julia
-pkg> add https://github.com/shayandavoodii/OnlinePortfolioSelection.jl.git
+pkg> dev OnlinePortfolioSelection
 ```
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 <!-- Example -->
 ### Example
-All the available strategies can be found by running the following command after importing the package:
+<div align="justify">
+The full list of available strategies can be obtained by executing the following command after importing the package:
+</div>
 
 ```julia
 julia> using OnlinePortfolioSelection
@@ -129,20 +132,30 @@ julia> using OnlinePortfolioSelection
 julia> opsmethods()
 ```
 
-In summary, all the implemented algorithms' names appear with lowercase letters. All of the strategies, return an object of type `OPSAlgorithm` in which the following fields are incorporated:
+<div align="justify">
+In summary, all the implemented algorithms' names appear with lowercase letters. All of the strategies return an object of type <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/funcs/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>, which encompasses the following fields:
+</div>
 
 ```julia
 julia> fieldnames(OPSAlgorithm)
 (:n_assets, :b, :alg)
 ```
 
-where `n_assets` conveys the number of assets, `b` contains the corresponding weights of each asset in each investment period, and `alg` repersents the name of the algorithm which resulted the output. In order to get more information about a specific strategy, you can type `?` in the REPL and then call the name of the strategy. For example, to get more information about the `CORN-K` strategy, you can run the following command:
+<div align="justify">
+
+- `n_assets`: conveying the number of assets.
+- `b`: containing the corresponding weights of each asset in each investment period.
+- `alg`: representing the name of the algorithm that resulted in the output.
+
+To obtain more information about a specific strategy, you can type <code>?</code> in the REPL and then call the name of the strategy. For example, to access more details about the 'CORN-K' strategy, run the following command:
+</div>
 
 ```julia
 help?> cornk
 ```
-
-Finally, to run the `CORN-K` strategy, you can run the following commands
+<div align="justify">
+Finally, to execute the 'CORN-K' strategy, use the following commands:
+</div>
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -178,15 +191,17 @@ julia> m_cornk.b
  0.0232303   0.349871        0.0131345   0.163805
  0.0492489   0.180437        0.0204634   0.174965
 ```
-
-Further information about the implemented strategies and the API can be found in the [documentation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/).
-
+<div align="justify">
+For further details regarding the implemented strategies and the API, please refer to the <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/">documentation</a>.
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 ---
 <!-- Run from Python -->
 ### Run from Python
-The package can be used from Python by using the [PyJulia](https://pyjulia.readthedocs.io/en/latest/installation.html) package as follows:
+<div align="justify">
+The package can be used from Python by using the <a href="https://pyjulia.readthedocs.io/en/latest/installation.html">PyJulia</a> package as follows:
+</div>
 
 ```python
 $ pip install julia
@@ -227,9 +242,9 @@ array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 >>> model.n_assets
 3
 ```
-
-As you can see, the package can be used from Python easily. For more information, check the [documentation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/python).
-
+<div align="justify">
+As you can see, the package can be used from Python easily. For more information, check the <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/python">documentation</a>.
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 ---
@@ -258,7 +273,7 @@ Contributions are warmly welcome. Please feel free to open an issue and discuss 
 <!-- Motivation -->
 ## Motivation
 <div align="justify">
-Since my M.Sc. thesis is in the field of OPS, I thought it would be a worthwhile idea to implement some of the benchmark methods to use them to perform benchmarking experiments to compare the performance of my proposed method with the existing methods in the literature. Afterward, I thought it would be a good idea to bundle the repo as an open-source package, and share it with the community so that other researchers can use the methods for their research purposes and put time into developing novel strategies rather than implementing the existing ones. Furthermore, because of my personal interest in the OPS field, I will continue to develop the package and add more algorithms to it. I hope this package will be useful for the community and will be used by other researchers in the field.
+I aimed to implement benchmark methods for Online Portfolio Selection (OPS) as part of my M.Sc. thesis to conduct comprehensive benchmarking experiments. The goal was to compare the performance of these benchmark methods with my proposed method from my thesis. I decided to transform this into an open-source package so that other researchers could leverage these established methods for their own research, sparing them the effort of reimplementing existing strategies. My intention is to continue developing and expanding this package to include more algorithms as I find it an exciting area of study. Ultimately, I hope this contribution proves beneficial to the research community.
 </div>
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
@@ -291,13 +306,14 @@ Other citation styles can be found <a href="https://doi.org/10.5281/zenodo.79050
 
 <!-- License -->
 ## License
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/LICENSE) file for details.
-
+<div align="justify">
+This project is licensed under the MIT License - see the <a href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/LICENSE">LICENSE</a> file for details.
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 <!-- Contact -->
 ## Contact
-If you have any questions or suggestions, please feel free to contact me via email: sh0davoodi@gmail.com  
-Or feel free to open an issue in the repo.
-
+<div align="justify">
+If you have any inquiries or suggestions, please don't hesitate to contact me via email at sh0davoodi@gmail.com. Alternatively, feel free to open an issue in the repository.
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>

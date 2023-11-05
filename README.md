@@ -242,7 +242,7 @@ array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 3
 ```
 <div align="justify">
-As you can see, the package can be used from Python easily. For more information, check the [documentation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/python).
+As you can see, the package can be used from Python easily. For more information, check the <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/python">documentation</a>.
 </div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 

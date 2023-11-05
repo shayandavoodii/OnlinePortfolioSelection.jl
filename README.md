@@ -99,7 +99,6 @@ This package is designed exclusively for **research purposes** and **explicitly 
 <div align="justify">
 
 The most recent stable version of the package can be installed by entering the following command in the Julia REPL after typing `]`:
-
 </div>
 
 ```julia
@@ -111,8 +110,9 @@ or
 ```julia
 julia> using Pkg; Pkg.add("OnlinePortfolioSelection")
 ```
-
+<div align="justify">
 Additionally, the development version of the package can be installed by executing the following command in the Julia REPL after entering `]`:
+</div>
 
 ```julia
 pkg> dev OnlinePortfolioSelection
@@ -122,22 +122,24 @@ pkg> dev OnlinePortfolioSelection
 
 <!-- Example -->
 ### Example
-
+<div align="justify">
 The full list of available strategies can be obtained by executing the following command after importing the package:
+</div>
 
 ```julia
 julia> using OnlinePortfolioSelection
 
 julia> opsmethods()
 ```
-
+<div align="justify">
 In summary, the names of all implemented algorithms are represented in lowercase letters. Each strategy returns an object of type [`OPSAlgorithm`](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/funcs/#OnlinePortfolioSelection.OPSAlgorithm), encapsulating the following fields:
+</div>
 
 ```julia
 julia> fieldnames(OPSAlgorithm)
 (:n_assets, :b, :alg)
 ```
-
+<div align="justify">
 In summary, all the implemented algorithms' names appear with lowercase letters. All of the strategies return an object of type `OPSAlgorithm`, which encompasses the following fields:
 
 - `n_assets`: conveying the number of assets.
@@ -145,13 +147,14 @@ In summary, all the implemented algorithms' names appear with lowercase letters.
 - `alg`: representing the name of the algorithm that resulted in the output.
 
 To obtain more information about a specific strategy, you can type `?` in the REPL and then call the name of the strategy. For example, to access more details about the 'CORN-K' strategy, run the following command:
-
+</div>
 
 ```julia
 help?> cornk
 ```
-
+<div align="justify">
 Finally, to execute the 'CORN-K' strategy, use the following commands:
+</div>
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -187,15 +190,17 @@ julia> m_cornk.b
  0.0232303   0.349871        0.0131345   0.163805
  0.0492489   0.180437        0.0204634   0.174965
 ```
-
+<div align="justify">
 For further details regarding the implemented strategies and the API, please refer to the [documentation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/).
-
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 ---
 <!-- Run from Python -->
 ### Run from Python
+<div align="justify">
 The package can be used from Python by using the [PyJulia](https://pyjulia.readthedocs.io/en/latest/installation.html) package as follows:
+</div>
 
 ```python
 $ pip install julia
@@ -236,9 +241,9 @@ array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 >>> model.n_assets
 3
 ```
-
+<div align="justify">
 As you can see, the package can be used from Python easily. For more information, check the [documentation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/python).
-
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 ---
@@ -300,12 +305,14 @@ Other citation styles can be found <a href="https://doi.org/10.5281/zenodo.79050
 
 <!-- License -->
 ## License
+<div align="justify">
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/LICENSE) file for details.
-
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 <!-- Contact -->
 ## Contact
+<div align="justify">
 If you have any inquiries or suggestions, please don't hesitate to contact me via email at sh0davoodi@gmail.com. Alternatively, feel free to open an issue in the repository.
-
+</div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>

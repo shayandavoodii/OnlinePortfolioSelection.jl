@@ -98,7 +98,7 @@ This package is designed exclusively for **research purposes** and **explicitly 
 
 <div align="justify">
 
-The most recent stable version of the package can be installed by entering the following command in the Julia REPL after typing `]`:
+The most recent stable version of the package can be installed by entering the following command in the Julia REPL after typing <code>]</code>:
 </div>
 
 ```julia
@@ -111,7 +111,7 @@ or
 julia> using Pkg; Pkg.add("OnlinePortfolioSelection")
 ```
 <div align="justify">
-Additionally, the development version of the package can be installed by executing the following command in the Julia REPL after entering `]`:
+Additionally, the development version of the package can be installed by executing the following command in the Julia REPL after entering <code>]</code>:
 </div>
 
 ```julia
@@ -131,22 +131,23 @@ julia> using OnlinePortfolioSelection
 
 julia> opsmethods()
 ```
+
 <div align="justify">
-In summary, the names of all implemented algorithms are represented in lowercase letters. Each strategy returns an object of type <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/funcs/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>, encapsulating the following fields:
+In summary, all the implemented algorithms' names appear with lowercase letters. All of the strategies return an object of type <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/funcs/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>, which encompasses the following fields:
 </div>
 
 ```julia
 julia> fieldnames(OPSAlgorithm)
 (:n_assets, :b, :alg)
 ```
+
 <div align="justify">
-In summary, all the implemented algorithms' names appear with lowercase letters. All of the strategies return an object of type `OPSAlgorithm`, which encompasses the following fields:
 
 - `n_assets`: conveying the number of assets.
 - `b`: containing the corresponding weights of each asset in each investment period.
 - `alg`: representing the name of the algorithm that resulted in the output.
 
-To obtain more information about a specific strategy, you can type `?` in the REPL and then call the name of the strategy. For example, to access more details about the 'CORN-K' strategy, run the following command:
+To obtain more information about a specific strategy, you can type <code>?</code> in the REPL and then call the name of the strategy. For example, to access more details about the 'CORN-K' strategy, run the following command:
 </div>
 
 ```julia

@@ -10,7 +10,7 @@ Online Portfolio Selection (OPS) strategies represent trading algorithms that se
 This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, seventeen algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
 
 - Constant Rebalanced Portfolio (CRP)
--. Exponential Gradient (EG)
+- Exponential Gradient (EG)
 - Universal Portfolio (UP)
 - Correlation-driven Nonparametric Learning
   - 4.1 CORN-U

@@ -10,7 +10,7 @@ using DataStructures
 
 include("Types/Algorithms.jl")
 include("Types/Clustering.jl")
-include("Types/PMAR.jl")
+include("Types/PAMR.jl")
 include("Algos/CRP.jl")
 include("Algos/CW-OGD.jl")
 include("Algos/EG.jl")
@@ -25,7 +25,7 @@ include("Algos/Anticor.jl")
 include("Algos/MRvol.jl")
 include("Algos/OLMAR.jl")
 include("Algos/uniform.jl")
-include("Algos/PMAR.jl")
+include("Algos/PAMR.jl")
 include("Algos/CLUSLOG.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
@@ -33,9 +33,9 @@ include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog, pmar
+export uniform, cluslog, pamr
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
-export OPSAlgorithm, KMNModel, KMDModel, ClusteringModel, PMAR, PMAR1, PMAR2
+export OPSAlgorithm, KMNModel, KMDModel, ClusteringModel, PAMR, PAMR1, PAMR2
 export opsmethods
 
 @setup_workload begin
@@ -75,23 +75,23 @@ function opsmethods()
   println("\n", " "^5, " ===== OnlinePortfolioSelection.jl =====")
   println(" "^5, " "^7, "Currently available methods")
   println(" "^6, " ", "="^37, "\n")
-  println("        up: Universal Portfolio - Call `up`")
-  println("        eg: Exponential Gradient - Call `eg`")
-  println("     cornu: CORN-U - Call `cornu`")
-  println("     cornk: CORN-K - Call `cornk`")
-  println("  dricornk: DRICORN-K - Call `dricornk`")
-  println("       crp: Constant Rebalanced Portfolio - Call `crp`")
-  println("        bs: Best Stock - Call `bs`")
-  println("      rprt: Reweighted Price Relative Tracking - Call `rprt`")
-  println("   anticor: Anticor - Call `anticor`")
-  println("     olmar: On-Line Moving Average Reversion - Call `olmar`")
+  println("        UP: Universal Portfolio - Call `up`")
+  println("        EG: Exponential Gradient - Call `eg`")
+  println("     CORNU: CORN-U - Call `cornu`")
+  println("     CORNK: CORN-K - Call `cornk`")
+  println("  DRICORNK: DRICORN-K - Call `dricornk`")
+  println("       CRP: Constant Rebalanced Portfolio - Call `crp`")
+  println("        BS: Best Stock - Call `bs`")
+  println("      RPRT: Reweighted Price Relative Tracking - Call `rprt`")
+  println("   ANTICOR: Anticor - Call `anticor`")
+  println("     OLMAR: On-Line Moving Average Reversion - Call `olmar`")
   println("        Bᵏ: Best-Known-Constant Rebalanced Portfolio - Call `bk`")
   println("      LOAD: Local adaptive learning system - Call `load`")
   println("     MRvol: Mean Reversion with Volume - Call `mrvol`")
   println("    CW-OGD: Combination Weights based on Online Gradient Decent - Call `cwogd`")
   println("   uniform: Uniform Portfolio - Call `uniform`")
-  println("   cluslog: Clustering and logarithmic expected return - Call `cluslog`")
-  println("      pmar: Passive Aggressive Mean Reversion - Call `pmar`")
+  println("   ClusLog: Clustering and logarithmic expected return - Call `cluslog`")
+  println("      PAMR: Passive Aggressive Mean Reversion - Call `pamr`")
 end
 # COV_EXCL_STOP
 

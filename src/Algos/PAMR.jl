@@ -1,13 +1,13 @@
 """
-    pmar(rel_pr::AbstractMatrix, ϵ::AbstractFloat, C::AbstractFloat, model::PMARModel)
+    pamr(rel_pr::AbstractMatrix, ϵ::AbstractFloat, C::AbstractFloat, model::PAMRModel)
 
-Run the PMAR algorithm on the matrix of relative prices `rel_pr`.
+Run the PAMR algorithm on the matrix of relative prices `rel_pr`.
 
 # Arguments
 - `rel_pr::AbstractMatrix`: matrix of relative prices.
 - `ϵ::AbstractFloat`: Sensitivity parameter.
 - `C::AbstractFloat`: Aggressiveness parameter.
-- `model::PMARModel`: PMAR model to use. All three variants, namely, `PMAR()`, `PMAR1()`, and `PMAR2()` are supported.
+- `model::PAMRModel`: PAMR model to use. All three variants, namely, `PAMR()`, `PAMR1()`, and `PAMR2()` are supported.
 
 !!! warning "Beware!"
     `rel_price` should be a matrix of size `n_assets` × `n_periods`.
@@ -29,11 +29,11 @@ julia> prices = stack(querry) |> permutedims
 
 julia> rel_pr =  prices[:, 2:end]./prices[:, 1:end-1]
 
-julia> model = PMAR()
+julia> model = PAMR()
 
 julia> eps = 0.01
 
-julia> result = pmar(rel_pr, eps, model)
+julia> result = pamr(rel_pr, eps, model)
 
 julia> result.b
 5×251 Matrix{Float64}:
@@ -47,14 +47,14 @@ julia> sum(result.b, dims=1) .|> isapprox(1.) |> all
 true
 ```
 
-In the same way, you can use `PMAR1()` and `PMAR2()`:
+In the same way, you can use `PAMR1()` and `PAMR2()`:
 
 ```julia
-julia> model = PMAR1(C=0.02)
+julia> model = PAMR1(C=0.02)
 
 julia> eps = 0.01
 
-julia> result = pmar(rel_pr, eps, model)
+julia> result = pamr(rel_pr, eps, model)
 
 julia> result.b
 5×251 Matrix{Float64}:
@@ -64,11 +64,11 @@ julia> result.b
  0.2  0.199763  0.199778  0.199868     0.199246  0.199351  0.199319  0.19946
  0.2  0.199754  0.199662  0.199799     0.201997  0.20211   0.202202  0.202246
 
-julia> model = PMAR2(C=1.)
+julia> model = PAMR2(C=1.)
 
 julia> eps = 0.01
 
-julia> result = pmar(rel_pr, eps, model)
+julia> result = pamr(rel_pr, eps, model)
 
 julia> result.b
 5×251 Matrix{Float64}:
@@ -80,9 +80,9 @@ julia> result.b
 ```
 
 # References
-> [PMAR: Passive aggressive mean reversion strategy for portfolio selection](https://www.doi.org/10.1007/s10994-012-5281-z)
+> [PAMR: Passive aggressive mean reversion strategy for portfolio selection](https://www.doi.org/10.1007/s10994-012-5281-z)
 """
-function pmar(rel_pr::AbstractMatrix, ϵ::AbstractFloat, model::PMARModel)
+function pamr(rel_pr::AbstractMatrix, ϵ::AbstractFloat, model::PAMRModel)
   ϵ > 0 || ArgumentError("ϵ must be positive.") |> throw
   n_assets, n_obs = size(rel_pr)
   b = ones(n_assets, n_obs)/n_assets
@@ -95,24 +95,24 @@ function pmar(rel_pr::AbstractMatrix, ϵ::AbstractFloat, model::PMARModel)
     bₜ₊₁     = updateptf(bₜ, rel_prₜ, x̄ₜ, τₜ)
     b[:,t+1] = normptf(bₜ₊₁)
   end
-  return OPSAlgorithm(n_assets, b, pmaralgname(model))
+  return OPSAlgorithm(n_assets, b, pamralgname(model))
 end
 
 function ℓᵗfunc(𝐛ₜ::AbstractVector, rel_prₜ::AbstractVector, ϵ::AbstractFloat)
   return max(0., sum(𝐛ₜ .* rel_prₜ) - ϵ)
 end
 
-function τₜfunc(::PMAR, rel_prₜ::AbstractVector, x̄ₜ::AbstractVector, ℓᵗ::AbstractFloat)
+function τₜfunc(::PAMR, rel_prₜ::AbstractVector, x̄ₜ::AbstractVector, ℓᵗ::AbstractFloat)
   return ℓᵗ/norm(rel_prₜ-x̄ₜ)
 end
 
-function τₜfunc(m::PMAR1, rel_prₜ::AbstractVector, x̄ₜ::AbstractVector, ℓᵗ::AbstractFloat)
-  m.C > 0 || ArgumentError("C must be positive. Example: PMAR1(C=1.)") |> throw
+function τₜfunc(m::PAMR1, rel_prₜ::AbstractVector, x̄ₜ::AbstractVector, ℓᵗ::AbstractFloat)
+  m.C > 0 || ArgumentError("C must be positive. Example: PAMR1(C=1.)") |> throw
   return min(m.C, ℓᵗ/norm(rel_prₜ-x̄ₜ))
 end
 
-function τₜfunc(m::PMAR2, rel_prₜ::AbstractVector, x̄ₜ::AbstractVector, ℓᵗ::AbstractFloat)
-  m.C > 0 || ArgumentError("C must be positive. Example: PMAR2(C=1.)") |> throw
+function τₜfunc(m::PAMR2, rel_prₜ::AbstractVector, x̄ₜ::AbstractVector, ℓᵗ::AbstractFloat)
+  m.C > 0 || ArgumentError("C must be positive. Example: PAMR2(C=1.)") |> throw
   return ℓᵗ/(norm(rel_prₜ-x̄ₜ)+(1/(2m.C)))
 end
 
@@ -130,6 +130,6 @@ function normptf(bₜ₊₁::AbstractVector)
   return value.(b)
 end
 
-pmaralgname(::PMAR) = "PMAR"
-pmaralgname(::PMAR1) = "PMAR1"
-pmaralgname(::PMAR2) = "PMAR2"
+pamralgname(::PAMR) = "PAMR"
+pamralgname(::PAMR1) = "PAMR1"
+pamralgname(::PAMR2) = "PAMR2"

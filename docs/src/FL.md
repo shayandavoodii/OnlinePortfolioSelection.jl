@@ -233,25 +233,25 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Passive Aggressive Mean Reversion (PAMR)
 
-The Passive Mean Reversion (PMAR) algorithm ([Li et al., 2012](https://www.doi.org/10.1007/s10994-012-5281-z)) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PMAR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PMAR is expressed as:
+The Passive Aggressive Mean Reversion (PAMR) algorithm ([Li et al., 2012](https://www.doi.org/10.1007/s10994-012-5281-z)) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PAMR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PAMR is expressed as:
 
 ```math
 \tau_t = \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2}}
 ```
 
-PMAR-1 and PMAR-2 are variants that modify the calculation of the step size for greater adaptability. PMAR-1 restricts the step size to a maximum value $(C)$, preventing excessively large updates and is expressed as:
+PAMR-1 and PAMR-2 are variants that modify the calculation of the step size for greater adaptability. PAMR-1 restricts the step size to a maximum value $(C)$, preventing excessively large updates and is expressed as:
 
 ```math
 \tau_t = \min \left\{ C, \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2}} \right\}
 ```
 
-On the other hand, PMAR-2 incorporates a more nuanced approach by adding a term related to a constant $(C)$ in the denominator, providing more controlled updates and minimizing extreme adjustments:
+On the other hand, PAMR-2 incorporates a more nuanced approach by adding a term related to a constant $(C)$ in the denominator, providing more controlled updates and minimizing extreme adjustments:
 
 ```math
 \tau_t = \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2 + \frac{1}{{2C}}}}
 ```
 
-These variants aim to enhance the adaptability and stability of the PMAR algorithm, with PMAR-1 capping the maximum update size and PMAR-2 providing controlled updates to ensure smoother parameter adjustments in response to observed errors. **It is worth noting that all three variants of the PMAR algorithm are provided in this package.** See [`pmar`](@ref).
+These variants aim to enhance the adaptability and stability of the PAMR algorithm, with PAMR-1 capping the maximum update size and PAMR-2 providing controlled updates to ensure smoother parameter adjustments in response to observed errors. **It is worth noting that all three variants of the PAMR algorithm are provided in this package.** See [`PAMR`](@ref).
 
 ### Run PAMR
 
@@ -270,11 +270,11 @@ julia> prices = stack(querry) |> permutedims
 
 julia> rel_pr =  prices[:, 2:end]./prices[:, 1:end-1]
 
-julia> model = PMAR()
+julia> model = PAMR()
 
 julia> eps = 0.01
 
-julia> result = pmar(rel_pr, eps, model)
+julia> result = PAMR(rel_pr, eps, model)
 
 julia> result.b
 5×251 Matrix{Float64}:
@@ -323,12 +323,12 @@ julia> results.MDD
 0.1390668593306162
 ```
 
-Note that other variants of the algorithm can be used by changing the `model` parameter. For instance, let's use the PMAR-1 algorithm (see [`PMAR1`](@ref), and [`pmar`](@ref)):
+Note that other variants of the algorithm can be used by changing the `model` parameter. For instance, let's use the PAMR-1 algorithm (see [`PAMR1`](@ref), and [`PAMR`](@ref)):
 
 ```julia
-julia> model = PMAR1(0.01);
+julia> model = PAMR1(0.01);
 
-julia> result = pmar(rel_pr, eps, model);
+julia> result = PAMR(rel_pr, eps, model);
 
 julia> results = OPSMetrics(result.b, rel_pr)
 
@@ -341,6 +341,6 @@ Annualized Standard Deviation: 0.2365856617445457
                  Calmar Ratio: 3.4997729172537
 ```
 
-In this case, the algorithm has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PMAR algorithm. The same procedure can be applied to the PMAR-2 algorithm (see [`PMAR2`](@ref)).
+In this case, the algorithm has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see [`PAMR2`](@ref)).
 
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.

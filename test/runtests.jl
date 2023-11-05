@@ -84,7 +84,7 @@ end
   include("CLUSLOG.jl")
 end
 
-@testset "PMAR.jl" begin
-  @info "Run unit tests in PMAR.jl"
-  include("PMAR.jl")
+@testset "PAMR.jl" begin
+  @info "Run unit tests in PAMR.jl"
+  include("PAMR.jl")
 end

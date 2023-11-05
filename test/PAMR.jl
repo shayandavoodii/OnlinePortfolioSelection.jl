@@ -8,48 +8,48 @@ rel_pr = [
 
 ϵ = 0.01
 
-@testset "PMAR.jl" begin
+@testset "PAMR.jl" begin
   @testset "With default arguments" begin
-    model = PMAR()
-    result = pmar(rel_pr, ϵ, model)
+    model = PAMR()
+    result = pamr(rel_pr, ϵ, model)
     @test sum(result.b, dims=1) .|> isapprox(1.) |> all
-    @test result.alg == "PMAR"
+    @test result.alg == "PAMR"
     @test size(result.b) == size(rel_pr)
 
-    model = PMAR1()
-    result = pmar(rel_pr, ϵ, model)
+    model = PAMR1()
+    result = pamr(rel_pr, ϵ, model)
     @test sum(result.b, dims=1) .|> isapprox(1.) |> all
-    @test result.alg == "PMAR1"
+    @test result.alg == "PAMR1"
     @test size(result.b) == size(rel_pr)
 
-    model = PMAR2()
-    result = pmar(rel_pr, ϵ, model)
+    model = PAMR2()
+    result = pamr(rel_pr, ϵ, model)
     @test sum(result.b, dims=1) .|> isapprox(1.) |> all
-    @test result.alg == "PMAR2"
+    @test result.alg == "PAMR2"
     @test size(result.b) == size(rel_pr)
   end
 
   @testset "With custom valid arguments" begin
-    model = PMAR1(C=0.02)
-    result = pmar(rel_pr, ϵ, model)
+    model = PAMR1(C=0.02)
+    result = pamr(rel_pr, ϵ, model)
     @test sum(result.b, dims=1) .|> isapprox(1.) |> all
-    @test result.alg == "PMAR1"
+    @test result.alg == "PAMR1"
     @test size(result.b) == size(rel_pr)
 
-    model = PMAR2(C=1.)
-    result = pmar(rel_pr, ϵ, model)
+    model = PAMR2(C=1.)
+    result = pamr(rel_pr, ϵ, model)
     @test sum(result.b, dims=1) .|> isapprox(1.) |> all
-    @test result.alg == "PMAR2"
+    @test result.alg == "PAMR2"
   end
 
   @testset "With invalid arguments" begin
-    model = PMAR1(C=-0.02)
-    @test_throws ArgumentError pmar(rel_pr, ϵ, model)
+    model = PAMR1(C=-0.02)
+    @test_throws ArgumentError pamr(rel_pr, ϵ, model)
 
-    model = PMAR2(C=-1.)
-    @test_throws ArgumentError pmar(rel_pr, ϵ, model)
+    model = PAMR2(C=-1.)
+    @test_throws ArgumentError pamr(rel_pr, ϵ, model)
 
-    model = PMAR()
-    @test_throws ArgumentError pmar(rel_pr, -0.01, model)
+    model = PAMR()
+    @test_throws ArgumentError pamr(rel_pr, -0.01, model)
   end
 end

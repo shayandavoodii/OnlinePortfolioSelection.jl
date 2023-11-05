@@ -1,47 +1,47 @@
-abstract type PMARModel end
+abstract type PAMRModel end
 
 """
-    PMAR() <: PMARModel
+    PAMR() <: PAMRModel
 
-Create a PMAR object. Also, see [`PMAR1`](@ref), and [`PMAR2`](@ref).
+Create a PAMR object. Also, see [`PAMR1`](@ref), and [`PAMR2`](@ref).
 
 # Example
 ```julia
-model = PMAR()
+model = PAMR()
 ```
 """
-struct PMAR<:PMARModel end
+struct PAMR<:PAMRModel end
 
 """
-    PMAR1(C::AbstractFloat=1.) <: PMARModel
+    PAMR1(C::AbstractFloat=1.) <: PAMRModel
 
-Create a PMAR1 object. Also, see [`PMAR`](@ref), and [`PMAR2`](@ref).
+Create a PAMR1 object. Also, see [`PAMR`](@ref), and [`PAMR2`](@ref).
 
 # Keyword Arguments
 - `C::AbstractFloat=1.`: Aggressiveness parameter.
 
 # Example
 ```julia
-model = PMAR1(C=0.02)
+model = PAMR1(C=0.02)
 ```
 """
-@kwdef struct PMAR1{T<:AbstractFloat}<:PMARModel
+@kwdef struct PAMR1{T<:AbstractFloat}<:PAMRModel
   C::T=1.
 end
 
 """
-    PMAR2(C::AbstractFloat=1.) <: PMARModel
+    PAMR2(C::AbstractFloat=1.) <: PAMRModel
 
-Create a PMAR2 object. Also, see [`PMAR`](@ref), and [`PMAR1`](@ref).
+Create a PAMR2 object. Also, see [`PAMR`](@ref), and [`PAMR1`](@ref).
 
 # Keyword Arguments
 - `C::AbstractFloat=1.`: Aggressiveness parameter.
 
 # Example
 ```julia
-model = PMAR2(C=0.02)
+model = PAMR2(C=0.02)
 ```
 """
-@kwdef struct PMAR2{T<:AbstractFloat}<:PMARModel
+@kwdef struct PAMR2{T<:AbstractFloat}<:PAMRModel
   C::T=1.
 end

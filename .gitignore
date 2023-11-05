@@ -1,6 +1,6 @@
 src/test/
 test**.***
 Manifest.toml
-*Manifest.toml
 .vscode/
+*.ai
 delete.cov.jl

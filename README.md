@@ -191,7 +191,7 @@ julia> m_cornk.b
  0.0492489   0.180437        0.0204634   0.174965
 ```
 <div align="justify">
-For further details regarding the implemented strategies and the API, please refer to the [documentation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/).
+For further details regarding the implemented strategies and the API, please refer to the <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/">documentation</a>.
 </div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
@@ -199,7 +199,7 @@ For further details regarding the implemented strategies and the API, please ref
 <!-- Run from Python -->
 ### Run from Python
 <div align="justify">
-The package can be used from Python by using the [PyJulia](https://pyjulia.readthedocs.io/en/latest/installation.html) package as follows:
+The package can be used from Python by using the <a href="https://pyjulia.readthedocs.io/en/latest/installation.html">PyJulia</a> package as follows:
 </div>
 
 ```python
@@ -306,7 +306,7 @@ Other citation styles can be found <a href="https://doi.org/10.5281/zenodo.79050
 <!-- License -->
 ## License
 <div align="justify">
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the <a href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/LICENSE">LICENSE</a> file for details.
 </div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 

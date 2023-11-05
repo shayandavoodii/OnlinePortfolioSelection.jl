@@ -1,20 +1,22 @@
 # Follow the Loser (FL)
-follow the loser has been introduced by Borodin and [Vincent (2004)](https://proceedings.neurips.cc/paper/2003/hash/8c9f32e03aeb2e3000825c8c875c4edd-Abstract.html) in which, the investment weight is transferred from a stock provided a better performance in the past to a stock with unfavorable performance, since the approach considers that a stock with an undesirable performance in the past is able to provide a desirable return in the future. In this package, the following FL strategy is implemented so far:
+
+The "Follow the Loser" (FL) strategy, introduced by Borodin and [Vincent (2004)](https://proceedings.neurips.cc/paper/2003/hash/8c9f32e03aeb2e3000825c8c875c4edd-Abstract.html), involves reallocating investment weight from a stock with a superior past performance to a stock with unfavorable performance. This approach is grounded in the belief that a stock exhibiting undesirable past performance may offer a favorable return in the future. Presently, this package includes the following FL strategies:
+
 1. Reweighted Price Relative Tracking System for Automatic Portfolio Optimization
 2. Anti-Correlation (Anticor)
 3. Online Moving Average Reversion (OLMAR)
 4. Passive Aggressive Mean Reversion (PAMR)
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
-RPRT is a FL strategy proposed by [Lai et al. (2018)](https://doi.org/10.1109/TSMC.2018.2852651). In the price prediction stage, it automatically assigns separate weights to the price relative predictions according to each asset’s performance, and these weights will also be automatically updated. In the portfolio optimizing stage, they proposed a novel tracking system with a generalized increasing factor to maximize the future wealth of next period. Through their study, an efficient algorithm is designed to solve the portfolio optimization objective, which is applicable to large-scale and time-limited situations. According to their extensive experiments on six benchmark datasets from real financial markets with diverse assets and different time spans, RPRT outperforms other state-of-the-art systems in cumulative wealth, mean excess return, annual percentage yield, and some typical risk metrics. Moreover, it can withstand considerable transaction costs and runs fast. It indicates that RPRT is an effective and efficient online portfolio selection system.
+
+RPRT, a "Follow the Loser" (FL) strategy introduced by [Lai et al. (2018)](https://doi.org/10.1109/TSMC.2018.2852651), automatically allocates distinct weights to price relative predictions based on each asset's performance during the price prediction phase. These weights are continually adjusted. In the portfolio optimization phase, the authors introduced a novel tracking system with a flexible increasing factor to maximize future wealth in the next period. Their study resulted in the design of an efficient algorithm to address portfolio optimization objectives, suitable for large-scale and time-limited scenarios. Through extensive experiments involving six benchmark datasets from real financial markets, encompassing varied assets and time spans, RPRT demonstrated superior performance compared to other state-of-the-art systems. It showcased better cumulative wealth, mean excess return, annual percentage yield, and typical risk metrics. Additionally, RPRT exhibited resilience to substantial transaction costs and delivered swift performance, highlighting its effectiveness and efficiency as an online portfolio selection system.
 
 See [`rprt`](@ref).
 
 ### Run RPRT
+
 **Note:** This package is meant to be used by researchers **NOT FOR MARKET PRACTITIONERS**.
 Let's run the algorithm on the real market data. In this case, the data is collected as noted in the [Fetch Data](@ref) section.
-
-Let's run the algorithm on the given data (named as `prices`):
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -58,8 +60,7 @@ julia> sn(m_rprt.b, rel_price)
  0.9448257537201438
 ```
 
-The result indicates that if we had invested in the given period, we would have lost ~6.3% of our wealth. Note that [`sn`](@ref) automatically takes the last 5 relative prices in this case.
-Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
+The outcome reveals an approximate loss of ~6.3% if an investment were made during the provided period. It's important to note that in this scenario, [`sn`](@ref) automatically considers the last 5 relative prices. Next, let's examine the algorithm's performance based on several significant metrics.
 
 ```julia
 julia> results = OPSMetrics(m_rprt.b, rel_price)
@@ -81,15 +82,15 @@ julia> results.MDD
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Anti-Correlation (Anticor)
-Anticor is a FL strategy proposed by [Borodin and El-Yaniv (2004)](https://www.doi.org/10.1613/jair.1336). The idea of Anticor is to exploit the mean-reversion property of asset prices. Based on two consecutive market windows of size w wealth is transferred from asset i to asset j if the growth rate of asset i is greater than the growth rate of asset j in the most recent window. Additionally, the correlation between asset i in the second last window and asset j in the last window must to be positive. The amount of wealth transferred from asset i to j depends on the strength of correlation between the assets and the strength of "self-anti-correlations" between each asset i. [[1](https://rdrr.io/github/ngloe/olpsR/man/alg_Anticor.html)]
+
+Anticor is an FL strategy introduced by [Borodin and El-Yaniv (2004)](https://www.doi.org/10.1613/jair.1336). The strategy aims to capitalize on the mean-reversion attribute of asset prices. It transfers wealth from asset $i$ to asset $j$ within two consecutive market windows of size $w$ if the growth rate of asset $i$ exceeds that of asset $j$ in the most recent window. It is also contingent on a positive correlation between asset $i$ in the second last window and asset $j$ in the last window. The extent of wealth transferred from asset $i$ to $j$ depends on the correlation strength between the assets and the degree of "self-anti-correlations" for each asset $i$. [[1](https://rdrr.io/github/ngloe/olpsR/man/alg_Anticor.html)]
 
 See [`anticor`](@ref).
 
 ### Run Anticor
+
 **Note:** This package is meant to be used by researchers **NOT FOR MARKET PRACTITIONERS**.
 Let's run the algorithm on the real market data. In this case, the data is collected as noted in the [Fetch Data](@ref) section.
-
-Let's run the algorithm on the given data (named as `prices`):
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -136,9 +137,9 @@ julia> sn(m_anticor.b, rel_price)
  0.8969343557511426
 ```
 
-The result indicates that if we had invested in the given period, we would have lost ~10.3% of our wealth. Note that [`sn`](@ref) automatically takes the last 15 relative prices in this case.
+The outcome suggests that if we had invested in the given period, our wealth would have decreased by approximately 10.3%. Note that in this instance, [`sn`](@ref) automatically considers the last 15 relative prices.
 
-Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
+Let's now assess the algorithm's performance based on several key metrics.
 
 ```julia
 julia> results = OPSMetrics(m_anticor.b, rel_price)
@@ -157,15 +158,14 @@ julia> results.MDD
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Online Moving Average Reversion (OLMAR)
-The OLMAR algorithm stands for On-Line Moving Average Reversion. It is a new approach for on-line portfolio selection that represents multi-period mean reversion as “Moving Average Reversion” (MAR), which explicitly predicts next price relatives using moving averages. To the best of our knowledge, OLMAR is the first algorithm that exploits moving average in the setting of on-line portfolio selection [[1](https://www.sciencedirect.com/science/article/pii/S0004370215000168)]. Though simple in nature, OLMAR has a reasonable updating strategy and has been empirically validated via a set of extensive experiments on real markets.
+
+The OLMAR algorithm, short for On-Line Moving Average Reversion, introduces a novel approach to online portfolio selection. It incorporates multi-period mean reversion by utilizing “Moving Average Reversion” (MAR), which predicts next price relatives through moving averages. As far as the available literature indicates, OLMAR is the initial algorithm to employ moving averages within the framework of online portfolio selection [[1](https://www.sciencedirect.com/science/article/pii/S0004370215000168)]. While relatively straightforward, OLMAR includes a reasonable updating strategy and has been empirically validated through extensive real-market experiments.
 
 See [`olmar`](@ref).
 
 ### Run OLMAR
 
 Let's run the algorithm on the real market data. In this case, the data is collected as noted in the [Fetch Data](@ref) section.
-
-Let's run the algorithm on the given data (named as `prices`):
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -212,9 +212,8 @@ julia> sn(m_olmar.b, rel_price)
  0.886526969495664
 ```
 
-The result indicates that if we had invested in the given period, we would have lost ~11.3% of our wealth. Note that [`sn`](@ref) automatically takes the last 15 relative prices in this case.
-
-Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
+The outcome highlights a potential loss of approximately 11.3% in our wealth had an investment been made during the specified period. It's essential to note that [`sn`](@ref) automatically considers the last 15 relative prices in this particular case.
+Next, let's proceed to evaluate the algorithm's performance based on several key metrics.
 
 ```julia
 julia> results = OPSMetrics(m_olmar.b, rel_price)

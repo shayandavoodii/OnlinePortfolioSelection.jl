@@ -48,7 +48,7 @@ true
 ```
 
 # References
-- [1] [Can We Learn to Beat the Best Stock](https://www.doi.org/10.1613/jair.1336)
+> [Can We Learn to Beat the Best Stock](https://www.doi.org/10.1613/jair.1336)
 """
 function anticor(adj_close::Matrix{T}, window::Int) where {T<:Real}
   window < 1 && ArgumentError("window must be equal or greater than 1") |> throw

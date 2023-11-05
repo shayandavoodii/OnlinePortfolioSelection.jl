@@ -35,7 +35,7 @@ true
 ```
 
 # References
-- [1] [On-Line Portfolio Selection with Moving Average Reversion](https://doi.org/10.48550/arXiv.1206.4626)
+> [On-Line Portfolio Selection with Moving Average Reversion](https://doi.org/10.48550/arXiv.1206.4626)
 """
 function olmar(adj_close::Matrix{Float64}, ϵ::Int, ω::Int)::OPSAlgorithm
   ϵ>1 || ArgumentError("ϵ must be > 1") |> throw

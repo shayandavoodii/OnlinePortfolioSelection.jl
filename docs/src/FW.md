@@ -1,18 +1,20 @@
 # Follow the Winner (FW)
-Follow the Winner (FW) strategies believe that the best performing asset in the past will continue to perform well in the future. The following FW strategies are implemented in this package so far:
+
+The Follow the Winner (FW) strategies operate on the principle that assets that have shown superior performance in the past are likely to continue excelling in the future. In this package, the following FW strategies have been implemented:
+
 1. Universal Portfolio (UP)
 2. Exponential Gradient (EG)
 
 ## Universal Portfolio
-Universal Portfolio (UP) is a FW strategy proposed by [Cover (1991)](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x). The Universal Portfolio algorithm is a portfolio selection algorithm from the field of machine learning and information theory. UP aims to maximize the cumulative reurn of the portfolio during the investment horizon. The algorithm is based on the performance of the stock market on each day and the proportion of wealth invested in each stock. 
+
+Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [Cover (1991)](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x). This algorithm is designed to optimize the cumulative return of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
 
 See [`up`](@ref).
 
 ### Run UP
+
 **Note:** This package is meant to be used by researchers **NOT FOR MARKET PRACTITIONERS**.
 Let's run the algorithm on the real market data. The data is collected as noted in the [Fetch Data](@ref) section.
-
-Let's run the algorithm on the given data (named as `prices`):
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -51,8 +53,8 @@ julia> sn(m_up.b, rel_price)
  0.9718529924971879
 ```
 
-The result indicates that if we had invested in the given period, we would have lost ~2.8% of our wealth. Note that [`sn`](@ref) automatically takes the last 5 relative prices in this case.
-Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
+The outcome shows that if we had invested during that period, we would have incurred a loss of approximately 2.8% in wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this context.
+Let's now examine the algorithm's performance using various significant metrics.
 
 ```julia
 julia> results = OPSMetrics(m_up.b, rel_price)
@@ -74,7 +76,8 @@ julia> results.MDD
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Exponential Gradient
-Exponential Gradient (EG) is a FW strategy proposed by [Helmbold et al. (1998)](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058). Authors claim that EG can achieve almost the same wealth as the best constantrebalanced portfolio (BCRP) determined in hindsight from the actual market outcomes. the algorithm is very simple to implement and requires only constant storage and computing time per stock in each trading period.
+
+Exponential Gradient (EG) is a FW strategy introduced by [Helmbold et al. (1998)](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058). The authors assert that EG can nearly attain the same wealth as the best constant rebalanced portfolio (BCRP), discerned retrospectively from the actual market outcomes. This algorithm is notably straightforward to implement.
 
 See [`eg`](@ref).
 
@@ -119,8 +122,7 @@ julia> sn(m_eg.b, rel_price)
  0.9716549466747438
 ```
 
-The result indicates that if we had invested in the given period, we would have lost ~2.8% of our wealth. Note that [`sn`](@ref) automatically takes the last 5 relative prices in this case.
-Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
+The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 2.8% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Let's proceed to investigate the algorithm's performance using key metrics.
 
 ```julia
 julia> results = OPSMetrics(m_eg.b, rel_price)

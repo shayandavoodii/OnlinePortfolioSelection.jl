@@ -26,4 +26,4 @@ julia> first(df, 3)
    3 │  102.29    51.82   132.14    32.83   116.99 
 ```
 
-The given data in each example throughout this documentation has been collected using the above code. 
+The provided data in several examples within this documentation has been obtained using the code mentioned above.

@@ -114,6 +114,7 @@ julia> using Pkg; Pkg.add("OnlinePortfolioSelection")
 Additionally, the development version of the package can be installed by executing the following command in the Julia REPL after entering <code>]</code>:
 </div>
 
+
 ```julia
 pkg> dev OnlinePortfolioSelection
 ```
@@ -126,6 +127,7 @@ pkg> dev OnlinePortfolioSelection
 The full list of available strategies can be obtained by executing the following command after importing the package:
 </div>
 
+
 ```julia
 julia> using OnlinePortfolioSelection
 
@@ -135,6 +137,7 @@ julia> opsmethods()
 <div align="justify">
 In summary, all the implemented algorithms' names appear with lowercase letters. All of the strategies return an object of type <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/funcs/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>, which encompasses the following fields:
 </div>
+
 
 ```julia
 julia> fieldnames(OPSAlgorithm)
@@ -156,6 +159,7 @@ help?> cornk
 <div align="justify">
 Finally, to execute the 'CORN-K' strategy, use the following commands:
 </div>
+
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -199,9 +203,11 @@ For further details regarding the implemented strategies and the API, please ref
 ---
 <!-- Run from Python -->
 ### Run from Python
+
 <div align="justify">
 The package can be used from Python by using the <a href="https://pyjulia.readthedocs.io/en/latest/installation.html">PyJulia</a> package as follows:
 </div>
+
 
 ```python
 $ pip install julia
@@ -314,6 +320,6 @@ This project is licensed under the MIT License - see the <a href="https://github
 <!-- Contact -->
 ## Contact
 <div align="justify">
-If you have any inquiries or suggestions, please don't hesitate to contact me via email at sh0davoodi@gmail.com. Alternatively, feel free to open an issue in the repository.
+If you have any inquiries or suggestions, please don't hesitate to contact me via email at <a href="sh0davoodi@gmail.com">sh0davoodi@gmail.com</a>. Alternatively, feel free to open an issue in the repository.
 </div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>

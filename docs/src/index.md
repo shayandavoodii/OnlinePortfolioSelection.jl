@@ -13,8 +13,8 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 - Exponential Gradient (EG)
 - Universal Portfolio (UP)
 - Correlation-driven Nonparametric Learning
-  - 4.1 CORN-U
-  - 4.2 CORN-K
+  - CORN-U
+  - CORN-K
 - Dynamic RIsk CORrelation-driven Non-parametric (DRICORN-K)
 - Best Stock (BS)
 - Reweighted Price Relative Tracking (RPRT)
@@ -25,8 +25,13 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 - MRvol
 - Combination Weights based on Online Gradient Descent (CW-OGD)
 - Uniform Portfolio (1/N)
-- CLUSLOG (contains the KMNLOG and KMDLOG variants)
+- CLUSLOG
+  - KMNLOG
+  - KMDLOG
 - Passive Aggressive Mean Reversion (PAMR)
+  - PAMR
+  - PAMR1
+  - PAMR2
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

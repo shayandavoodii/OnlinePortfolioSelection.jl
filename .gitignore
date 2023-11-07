@@ -5,3 +5,4 @@ Manifest.toml
 delete.cov.jl
 RBN.png
 /docs/build/
+rundoc.jl

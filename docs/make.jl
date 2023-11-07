@@ -1,6 +1,7 @@
 using OnlinePortfolioSelection
 using Documenter
 using DocumenterCitations
+using Pkg
 
 DocMeta.setdocmeta!(OnlinePortfolioSelection, :DocTestSetup, :(using OnlinePortfolioSelection); recursive=true)
 bib = CitationBibliography(joinpath(@__DIR__, "src", "refs.bib"))

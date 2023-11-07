@@ -26,13 +26,14 @@ include("Algos/OLMAR.jl")
 include("Algos/uniform.jl")
 include("Algos/PAMR.jl")
 include("Algos/CLUSLOG.jl")
+include("Algos/PPT.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog, pamr
+export uniform, cluslog, pamr, ppt
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm, KMNLOG, KMDLOG, ClusLogVariant, PAMR, PAMR1, PAMR2
 export opsmethods
@@ -91,6 +92,7 @@ function opsmethods()
   println("   uniform: Uniform Portfolio - Call `uniform`")
   println("   ClusLog: Clustering and logarithmic expected return - Call `cluslog`")
   println("      PAMR: Passive Aggressive Mean Reversion - Call `pamr`")
+  println("       PPT: Peak Price Tracking - Call `ppt`")
 end
 # COV_EXCL_STOP
 

@@ -88,3 +88,8 @@ end
   @info "Run unit tests in PAMR.jl"
   include("PAMR.jl")
 end
+
+@testset "PPT.jl" begin
+  @info "Run unit tests in PPT.jl"
+  include("PPT.jl")
+end

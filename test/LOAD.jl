@@ -7,7 +7,7 @@ adj_close = [
 
 @testset "LOAD.jl" begin
   @testset "with valid arguments" begin
-    m_load, s = load(adj_close, 0.1, 3, 3, 0.5)
+    m_load = load(adj_close, 0.1, 3, 3, 0.5)
 
     @test sum(m_load.b, dims=1) .|> isapprox(1.0) |> all
 
@@ -15,7 +15,7 @@ adj_close = [
   end
 
   @testset "with high η" begin
-    m_load, s = load(adj_close, 0.1, 3, 3, 5.)
+    m_load = load(adj_close, 0.1, 3, 3, 5.)
 
     @test sum(m_load.b, dims=1) .|> isapprox(1.0) |> all
 

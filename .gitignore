@@ -4,3 +4,4 @@ Manifest.toml
 *.ai
 delete.cov.jl
 RBN.png
+/docs/build/

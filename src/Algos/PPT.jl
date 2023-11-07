@@ -7,7 +7,7 @@
       b̂ₜ::AbstractVector=ones(size(prices, 1))/size(prices, 1)
     )
 
-Run the Price Peak Tracking algorithm.
+Run the Price Peak Tracking (PPT) algorithm.
 
 # Arguments
 - `prices::AbstractMatrix`: Matrix of prices.

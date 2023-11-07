@@ -13,7 +13,7 @@ Pattern-matching algorithms stand among the most popular strategies in the domai
 
 ## Correlation-driven Nonparametric Learning
 
-Correlation-driven Nonparametric Learning (CORN) is a pattern-matching algorithm introduced by [borodin2003can](@citet). CORN employs correlation as the measure of similarity between different time windows. Within CORN, multiple experts are defined to generate portfolios. Each trading day involves a combination of expert portfolios to create the final portfolio. The distinction between CORN-K and CORN-U lies in their portfolio construction methods. CORN-K selects the K best experts, determined by their historical performance, to create the final portfolio. Conversely, CORN-U amalgamates all experts uniformly to construct the final portfolio. For further details, refer to [`cornu`](@ref) and [`cornk`](@ref).
+Correlation-driven Nonparametric Learning (CORN) is a pattern-matching algorithm introduced by [10.1145/1961189.1961193](@citet). CORN employs correlation as the measure of similarity between different time windows. Within CORN, multiple experts are defined to generate portfolios. Each trading day involves a combination of expert portfolios to create the final portfolio. The distinction between CORN-K and CORN-U lies in their portfolio construction methods. CORN-K selects the K best experts, determined by their historical performance, to create the final portfolio. Conversely, CORN-U amalgamates all experts uniformly to construct the final portfolio. For further details, refer to [`cornu`](@ref) and [`cornk`](@ref).
 
 ### Run CORN-U
 
@@ -229,3 +229,10 @@ julia> sn(model.b, rel_price)
 ```
 
 The result indicates that the algorithm has lost ~1.8% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+
+## References
+
+```@bibliography
+Pages = [@__FILE__]
+Canonical = false
+```

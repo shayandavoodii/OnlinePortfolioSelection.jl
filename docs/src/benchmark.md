@@ -6,7 +6,7 @@ In the domain of online portfolio selection, certain strategies are considered b
 3. Uniform Portfolio (1/N)
 
 ## CRP
-Let's run the algorithm [COVER](@cite) on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
+Let's run the algorithm [COVER451321](@cite) on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -163,3 +163,10 @@ julia> sn(m_uni.b, rel_price)
 The result reveals that if investment had been made during the specified period, a loss of approximately 3.9% of the capital would have been incurred. It's noteworthy that [`sn`](@ref) automatically accounts for the last 10 relative prices in this context.
 
 Additionally, this package offers functions for assessing the algorithm's performance. For further details, refer to the [Performance evaluation](@ref) section.
+
+## References
+
+```@bibliography
+Pages = [@__FILE__]
+Canonical = false
+```

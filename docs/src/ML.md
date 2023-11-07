@@ -70,5 +70,9 @@ juila> metrics.Sn
 The result indicates that if we had invested in the given period, we would have gained ~3.2% profit.
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
 
+## References
+
 ```@bibliography
+Pages = [@__FILE__]
+Canonical = false
 ```

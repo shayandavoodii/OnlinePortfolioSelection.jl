@@ -8,7 +8,7 @@ The Follow the Winner (FW) strategies operate on the principle that assets that 
 
 ## Universal Portfolio
 
-Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [COVER](@citet). This algorithm is designed to optimize the cumulative return of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
+Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [COVER451321](@citet). This algorithm is designed to optimize the cumulative return of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
 
 See [`up`](@ref).
 
@@ -204,5 +204,9 @@ julia> results.MER
 
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
 
+## References
+
 ```@bibliography
+Pages = [@__FILE__]
+Canonical = false
 ```

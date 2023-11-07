@@ -155,5 +155,9 @@ julia> comp_algs = DataFrame(
 
 The comparison analysis, via `comp_algs`, highlights that CORN-K outperforms the other algorithms in terms of annualized percentage yield (APY), annualized Sharpe ratio, Calmar ratio, and maximum drawdown (MDD). However, it's essential to note that the annualized standard deviation of CORN-K surpasses that of the other algorithms within this dataset. These individual metrics can be computed separately by using corresponding functions such as [`sn`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). For further insights and details, please refer to the [Performance evaluation](@ref).
 
+## References
+
 ```@bibliography
+Pages = [@__FILE__]
+Canonical = false
 ```

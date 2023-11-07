@@ -1,6 +1,6 @@
 # Follow the Loser (FL)
 
-The "Follow the Loser" (FL) strategy, introduced by Borodin and [Vincent (2004)](https://proceedings.neurips.cc/paper/2003/hash/8c9f32e03aeb2e3000825c8c875c4edd-Abstract.html), involves reallocating investment weight from a stock with a superior past performance to a stock with unfavorable performance. This approach is grounded in the belief that a stock exhibiting undesirable past performance may offer a favorable return in the future. Presently, this package includes the following FL strategies:
+The "Follow the Loser" (FL) strategy, introduced by [borodin2003can](@citet), involves reallocating investment weight from a stock with a superior past performance to a stock with unfavorable performance. This approach is grounded in the belief that a stock exhibiting undesirable past performance may offer a favorable return in the future. Presently, this package includes the following FL strategies:
 
 1. Reweighted Price Relative Tracking System for Automatic Portfolio Optimization
 2. Anti-Correlation (Anticor)
@@ -345,5 +345,9 @@ In this case, the algorithm has a better performance in terms of the cumulative 
 
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
 
+## References
+
 ```@bibliography
+Pages = [@__FILE__]
+Canonical = false
 ```

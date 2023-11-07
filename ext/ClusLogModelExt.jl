@@ -12,7 +12,7 @@ function OnlinePortfolioSelection.cluslog(
   rel_pr::AbstractMatrix{<:AbstractFloat},
   horizon::Int,
   TW::Int,
-  clus_mod::Type{<:ClusteringModel},
+  model::Type{<:ClusLogVariant},
   nclusters::Int,
   nclustering::Int,
   boundries::NTuple{2, AbstractFloat};
@@ -47,8 +47,8 @@ function OnlinePortfolioSelection.cluslog(
     for tw ∈ 2:TW
       ntw           = size(rel_pr_, 2) - tw + 1
       cor_tw        = cor_between_tws(rel_pr_, tw, ntw)
-      optimal_nclus = nclusopt(clus_mod, cor_tw, nclusters)
-      idx_sim_tws   = clustering(clus_mod, cor_tw, optimal_nclus, nclustering)
+      optimal_nclus = nclusopt(model, cor_tw, nclusters)
+      idx_sim_tws   = clustering(model, cor_tw, optimal_nclus, nclustering)
       isempty(idx_sim_tws) || pop!(idx_sim_tws)
       if isempty(idx_sim_tws)
         if idx_day==1
@@ -65,7 +65,7 @@ function OnlinePortfolioSelection.cluslog(
     end
     progress && OnlinePortfolioSelection.progressbar(stdout, horizon, idx_day)
   end
-  return OPSAlgorithm(nassets, b, clus_mod().alg)
+  return OPSAlgorithm(nassets, b, cluslogalgname(model))
 end
 
 function cor_between_tws(rel_pr::AbstractMatrix{<:AbstractFloat}, len_tw, ntw)
@@ -88,7 +88,7 @@ function cor_between_tws(rel_pr::AbstractMatrix{<:AbstractFloat}, len_tw, ntw)
   return Symmetric(cor_tw) |> Matrix
 end
 
-function nclusopt(model::Type{<:ClusteringModel}, cor_tw, nclusters)
+function nclusopt(model::Type{<:ClusLogVariant}, cor_tw, nclusters)
   sils      = zeros(Float64, nclusters)
   for nclus ∈ 2:nclusters
     fitted  = clustering(model, cor_tw, nclus)
@@ -112,18 +112,18 @@ function identityfinder(model, idxLastTW)
   return idx_tws_in_latest_tw_cluster
 end
 
-function clustering(::Type{KMNModel}, cor_tw, nclusters)
+function clustering(::Type{KMNLOG}, cor_tw, nclusters)
   fitted = kmeans(cor_tw, nclusters)
   return fitted
 end
 
-function clustering(::Type{KMDModel}, cor_tw, nclusters)
+function clustering(::Type{KMDLOG}, cor_tw, nclusters)
   dists  = pairwise(Euclidean(), cor_tw)
   fitted = kmedoids(dists, nclusters)
   return fitted
 end
 
-function clustering(model::Type{<:ClusteringModel}, cor_tw, nclusters, nclustering)
+function clustering(model::Type{<:ClusLogVariant}, cor_tw, nclusters, nclustering)
   twoccurance = Vector{Int}(undef, 0)
   ntw         = size(cor_tw, 1)
   for clus_time ∈ 1:nclustering
@@ -161,4 +161,6 @@ function optimization(corrs::AbstractVector, relpr::AbstractMatrix, boundries::N
   return value.(w)
 end
 
+cluslogalgname(::Type{KMNLOG}) = "KMNLOG"
+cluslogalgname(::Type{KMDLOG}) = "KMDLOG"
 end #module

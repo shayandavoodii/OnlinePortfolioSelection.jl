@@ -3,8 +3,8 @@
 Pattern-matching algorithms stand among the most popular strategies in the domain of online portfolio selection. These algorithms primarily aim to discern patterns within historical price data and employ them for predicting future prices. They align with the perspective of technical analysts who anticipate the repetition of historical patterns in future market behavior. The current package incorporates the following pattern-matching algorithms:
 
 1. Correlation-driven Nonparametric Learning
-  1.1. CORN-U  
-  1.2. CORN-K
+  - CORN-U  
+  - CORN-K
 2. Dynamic RIsk CORrelation-driven Non-parametric
 3. Bᴷ
 4. ClusLog

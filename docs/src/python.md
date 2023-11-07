@@ -90,7 +90,7 @@ Run MRvol algorithm.
 
 # Run [ClusLog](@ref) Algorithm
 
-Another example can be using [`cluslog`](@ref) function to perform 'KMNLOG' or 'KMDLOG' model (see [ClusLog](@ref), [`KMNModel`](@ref), and [`KMDModel`](@ref) for more details):
+Another example can be using [`cluslog`](@ref) function to perform 'KMNLOG' or 'KMDLOG' model (see [ClusLog](@ref), [`KMNLOG`](@ref), and [`KMDLOG`](@ref) for more details):
 
 ```python
 # before running the following code, please read the
@@ -105,7 +105,7 @@ Another example can be using [`cluslog`](@ref) function to perform 'KMNLOG' or '
 
 >>> import numpy as np
 >>> rel_pr = np.random.rand(3, 150)
->>> horizon, max_tw_len, clustering_model = 50, 10, OPS.KMNModel
+>>> horizon, max_tw_len, clustering_model = 50, 10, OPS.KMNLOG
 >>> max_n_clus, max_n_clustering, asset_bounderies = 10, 10, (0., 1.)
 >>> model = OPS.cluslog(rel_pr, horizon, max_tw_len, clustering_model, max_n_clus, max_n_clustering, asset_bounderies)
 █████████████████████████████████████┫ 100.0% |50/50

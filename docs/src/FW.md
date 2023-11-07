@@ -8,7 +8,7 @@ The Follow the Winner (FW) strategies operate on the principle that assets that 
 
 ## Universal Portfolio
 
-Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [Cover (1991)](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x). This algorithm is designed to optimize the cumulative return of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
+Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [COVER](@citet). This algorithm is designed to optimize the cumulative return of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
 
 See [`up`](@ref).
 
@@ -78,7 +78,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Exponential Gradient
 
-Exponential Gradient (EG) is a FW strategy introduced by [Helmbold et al. (1998)](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058). The authors assert that EG can nearly attain the same wealth as the best constant rebalanced portfolio (BCRP), discerned retrospectively from the actual market outcomes. This algorithm is notably straightforward to implement.
+Exponential Gradient (EG) is a FW strategy introduced by [https://doi.org/10.1111/1467-9965.00058](@citet). The authors assert that EG can nearly attain the same wealth as the best constant rebalanced portfolio (BCRP), discerned retrospectively from the actual market outcomes. This algorithm is notably straightforward to implement.
 
 See [`eg`](@ref).
 
@@ -146,7 +146,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Price Peak Tracking (PPT)
 
-The Price Peak Tracking (PPT) algorithm ([Lai et al., 2017](https://doi.org/10.1109/TNNLS.2017.2705658)) is a novel linear learning system for online portfolio selection, based on the idea of tracking control. The algorithm uses a transform function that aggressively tracks the increasing power of different assets, and allocates more investment to the better performing ones. The PPT objective can be solved by a fast backpropagation algorithm, which is suitable for large-scale and time-limited applications, such as high-frequency trading. The algorithm has been shown to outperform other state-of-the-art systems in computational time, cumulative wealth, and risk-adjusted metrics (See [`ppt`](@ref)).
+The Price Peak Tracking (PPT) algorithm ([7942104](@citet)) is a novel linear learning system for online portfolio selection, based on the idea of tracking control. The algorithm uses a transform function that aggressively tracks the increasing power of different assets, and allocates more investment to the better performing ones. The PPT objective can be solved by a fast backpropagation algorithm, which is suitable for large-scale and time-limited applications, such as high-frequency trading. The algorithm has been shown to outperform other state-of-the-art systems in computational time, cumulative wealth, and risk-adjusted metrics (See [`ppt`](@ref)).
 
 Let's run the algorithm on the real market data.
 
@@ -203,3 +203,6 @@ julia> results.MER
 ```
 
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+
+```@bibliography
+```

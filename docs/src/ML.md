@@ -6,7 +6,7 @@ Meta-learning strategies are employed to combine opinions from experts to formul
 
 ## Combination Weights based on Online Gradient Descent (CW-OGD)
 
-[Zhang et al. (2021)](https://doi.org/10.1016/j.knosys.2021.107533) introduced a novel online portfolio selection algorithm leveraging a weighted learning technique and an online gradient descent algorithm. Their strategy demonstrates enhanced robustness by integrating various expert strategies and successfully addresses the challenge of complex computational time. To begin, the authors establish an expert pool encompassing numerous basic expert strategies, among which the strategy investing in a single stock is chosen as the fundamental expert strategy. Subsequently, they employ a loss function to assess the performance of each basic expert strategy and utilize the OGD algorithm to adjust the weight vector for the experts based on their losses.
+[ZHANG2021107533](@citet) introduced a novel online portfolio selection algorithm leveraging a weighted learning technique and an online gradient descent algorithm. Their strategy demonstrates enhanced robustness by integrating various expert strategies and successfully addresses the challenge of complex computational time. To begin, the authors establish an expert pool encompassing numerous basic expert strategies, among which the strategy investing in a single stock is chosen as the fundamental expert strategy. Subsequently, they employ a loss function to assess the performance of each basic expert strategy and utilize the OGD algorithm to adjust the weight vector for the experts based on their losses.
 
 ### Run CW-OGD
 
@@ -70,4 +70,5 @@ juila> metrics.Sn
 The result indicates that if we had invested in the given period, we would have gained ~3.2% profit.
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
 
-            
+```@bibliography
+```

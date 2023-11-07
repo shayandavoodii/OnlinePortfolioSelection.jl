@@ -13,7 +13,8 @@ makedocs(;
     plugins=[bib],
     format=Documenter.HTML(;
         canonical="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl",
-        prettyurls = get(ENV, "CI", nothing) == "true"
+        prettyurls = get(ENV, "CI", nothing) == "true",
+        assets=String["assets/citations.css"],
     ),
     pages=Any[
         "Home" => "index.md",

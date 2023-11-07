@@ -13,7 +13,7 @@ Pattern-matching algorithms stand among the most popular strategies in the domai
 
 ## Correlation-driven Nonparametric Learning
 
-Correlation-driven Nonparametric Learning (CORN) is a pattern-matching algorithm introduced by [Borodin et al. (2010)](https://doi.org/10.1145/1961189.1961193). CORN employs correlation as the measure of similarity between different time windows. Within CORN, multiple experts are defined to generate portfolios. Each trading day involves a combination of expert portfolios to create the final portfolio. The distinction between CORN-K and CORN-U lies in their portfolio construction methods. CORN-K selects the K best experts, determined by their historical performance, to create the final portfolio. Conversely, CORN-U amalgamates all experts uniformly to construct the final portfolio. For further details, refer to [`cornu`](@ref) and [`cornk`](@ref).
+Correlation-driven Nonparametric Learning (CORN) is a pattern-matching algorithm introduced by [borodin2003can](@citet). CORN employs correlation as the measure of similarity between different time windows. Within CORN, multiple experts are defined to generate portfolios. Each trading day involves a combination of expert portfolios to create the final portfolio. The distinction between CORN-K and CORN-U lies in their portfolio construction methods. CORN-K selects the K best experts, determined by their historical performance, to create the final portfolio. Conversely, CORN-U amalgamates all experts uniformly to construct the final portfolio. For further details, refer to [`cornu`](@ref) and [`cornk`](@ref).
 
 ### Run CORN-U
 
@@ -94,7 +94,7 @@ Expectedly, CORN-K performed better than CORN-U on the same dataset. The result 
 
 ## Dynamic RIsk CORrelation-driven Non-parametric
 
-[Dynamic Risk CORrelation-driven Non-parametric (DRICORN)](https://www.doi.org/10.1007/978-3-030-66151-9_12) employs a similar principle to CORN-K. However, DRICORN incorporates the beta of the portfolio as a risk measure in the portfolio optimization. Additionally, it considers the recent market trend to capitalize on positive risks while minimizing exposure to negative risks. For further details, refer to [`dricornk`](@ref).
+[Dynamic Risk CORrelation-driven Non-parametric (DRICORN)](@cite 10.1007/978-3-030-66151-9_12) employs a similar principle to CORN-K. However, DRICORN incorporates the beta of the portfolio as a risk measure in the portfolio optimization. Additionally, it considers the recent market trend to capitalize on positive risks while minimizing exposure to negative risks. For further details, refer to [`dricornk`](@ref).
 
 ### Run DRICORN-K
 
@@ -133,7 +133,7 @@ The result indicates that the algorithm has lost ~2.6% of the initial wealth dur
 
 ## Bᴷ
 
-Bᴷ, presented as a type of kernel-based investment strategy, is a pattern-matching algorithm introduced by Györfi et al. (2006). In essence, Bᴷ shares similarities with histogram-based strategies, albeit utilizing more flexible elementary strategies that replace rigid past market vector discretization with a "moving-window" rule. This implementation incorporates the uniform kernel function. Check [`bk`](@ref) for more information.
+Bᴷ, presented as a type of kernel-based investment strategy, is a pattern-matching algorithm introduced by [https://doi.org/10.1111/j.1467-9965.2006.00274.x](@citet). In essence, Bᴷ shares similarities with histogram-based strategies, albeit utilizing more flexible elementary strategies that replace rigid past market vector discretization with a "moving-window" rule. This implementation incorporates the uniform kernel function. Check [`bk`](@ref) for more information.
 
 ### Run Bᴷ
 
@@ -177,7 +177,7 @@ The result indicates that the algorithm has lost ~3% of the initial wealth durin
 
 ## ClusLog
 
-ClusLog contains some variant of models proposed by [Khedmati & Azin (2020)](https://doi.org/10.1016/j.eswa.2020.113546), namely, KMNLOG and KMDLOG. The main idea behind these algorithms is to cluster the historical time windows based on their inter-correlation. Then, the algorithm uses a day after the found time windows as the potential day to occur with the same pattern for tomorrow. In order to perform the portfolio selection, the algorithm uses the semi-log optimal approach in order to maximize the expected return of the portfolio. See [`cluslog`](@ref).
+ClusLog contains some variant of models proposed by [KHEDMATI2020113546](@citet), namely, KMNLOG and KMDLOG. The main idea behind these algorithms is to cluster the historical time windows based on their inter-correlation. Then, the algorithm uses a day after the found time windows as the potential day to occur with the same pattern for tomorrow. In order to perform the portfolio selection, the algorithm uses the semi-log optimal approach in order to maximize the expected return of the portfolio. See [`cluslog`](@ref).
 
 ### Run ClusLog
 

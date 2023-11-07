@@ -21,7 +21,7 @@ abstract = {The purpose of this paper is to introduce sequential investment stra
 year = {2006}
 }
 
-@article{doi:10.1142/S0219024907004251,
+@article{KBSSMOP,
 author = {GY\"{O}RFI, L\'{A}SZL\'{O} and URB\'{A}N, ANDR\'{A}S and VAJDA, ISTV\'{A}N},
 title = {KERNEL-BASED SEMI-LOG-OPTIMAL EMPIRICAL PORTFOLIO SELECTION STRATEGIES},
 journal = {International Journal of Theoretical and Applied Finance},
@@ -67,21 +67,6 @@ month = {may},
 articleno = {21},
 numpages = {29},
 keywords = {nonparametric learning, Correlation coefficient, online portfolio selection}
-}
-
-@article{https://doi.org/10.1111/j.1467-9965.1991.tb00002.x,
-author = {Cover, Thomas M.},
-title = {Universal Portfolios},
-journal = {Mathematical Finance},
-volume = {1},
-number = {1},
-pages = {1-29},
-keywords = {portfolio selection, robust trading strategies, performance weighting, rebalancing},
-doi = {https://doi.org/10.1111/j.1467-9965.1991.tb00002.x},
-url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9965.1991.tb00002.x},
-eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-9965.1991.tb00002.x},
-abstract = {We exhibit an algorithm for portfolio selection that asymptotically outperforms the best stock in the market. Let xi= (xi, xi2,…, xim)t denote the performance of the stock market on day i, where xii is the factor by which the jth stock increases on day i. Let bi= (bi1 bi2, bim)t, b;ij≫ 0, bij= 1, denote the proportion bij of wealth invested in the j th stock on day i. Then Sn= IIin= bitxi is the factor by which wealth is increased in n trading days. Consider as a goal the wealth Sn*= maxb IIin=1 btxi that can be achieved by the best constant rebalanced portfolio chosen after the stock outcomes are revealed. It can be shown that Sn * exceeds the best stock, the Dow Jones average, and the value line index at time n. In fact, Sn* usually exceeds these quantities by an exponential factor. Let x1, x2, be an arbitrary sequence of market vectors. It will be shown that the nonanticipating sequence of portfolios db yields wealth such that , for every bounded sequence x1, x2…, and, under mild conditions, achieve where J, is an (m - 1) x (m - I) sensitivity matrix. Thus this portfolio strategy has the same exponential rate of growth as the apparently unachievable S*n.},
-year = {1991}
 }
 
 @article{ZHANG2021107533,
@@ -165,6 +150,20 @@ archivePrefix={arXiv},
 primaryClass={cs.CE}
 }
 
+@article{LI2015104,
+title = {Moving average reversion strategy for on-line portfolio selection},
+journal = {Artificial Intelligence},
+volume = {222},
+pages = {104-123},
+year = {2015},
+issn = {0004-3702},
+doi = {https://doi.org/10.1016/j.artint.2015.01.006},
+url = {https://www.sciencedirect.com/science/article/pii/S0004370215000168},
+author = {Bin Li and Steven C.H. Hoi and Doyen Sahoo and Zhi-Yong Liu},
+keywords = {Portfolio selection, On-line learning, Mean reversion, Moving average reversion},
+abstract = {On-line portfolio selection, a fundamental problem in computational finance, has attracted increasing interest from artificial intelligence and machine learning communities in recent years. Empirical evidence shows that stock's high and low prices are temporary and stock prices are likely to follow the mean reversion phenomenon. While existing mean reversion strategies are shown to achieve good empirical performance on many real datasets, they often make the single-period mean reversion assumption, which is not always satisfied, leading to poor performance in certain real datasets. To overcome this limitation, this article proposes a multiple-period mean reversion, or so-called “Moving Average Reversion” (MAR), and a new on-line portfolio selection strategy named “On-Line Moving Average Reversion” (OLMAR), which exploits MAR via efficient and scalable online machine learning techniques. From our empirical results on real markets, we found that OLMAR can overcome the drawbacks of existing mean reversion algorithms and achieve significantly better results, especially on the datasets where existing mean reversion algorithms failed. In addition to its superior empirical performance, OLMAR also runs extremely fast, further supporting its practical applicability to a wide range of applications. Finally, we have made all the datasets and source codes of this work publicly available at our project website: http://OLPS.stevenhoi.org/.}
+}
+
 @ARTICLE{Li2012-ks,
 title= "{PAMR}: Passive aggressive mean reversion strategy for portfolio selection",
 author= "Li, Bin and Zhao, Peilin and Hoi, Steven C H and Gopalkrishnan, Vivekanand",
@@ -199,7 +198,7 @@ pages={4349-4361},
 doi={10.1109/TSMC.2018.2852651}
 }
 
-@article{https://doi.org/10.1111/j.1467-9965.1991.tb00002.x,
+@article{COVER,
 author = {Cover, Thomas M.},
 title = {Universal Portfolios},
 journal = {Mathematical Finance},
@@ -212,4 +211,13 @@ url = {https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-9965.1991.tb00002.
 eprint = {https://onlinelibrary.wiley.com/doi/pdf/10.1111/j.1467-9965.1991.tb00002.x},
 abstract = {We exhibit an algorithm for portfolio selection that asymptotically outperforms the best stock in the market. Let xi= (xi, xi2,…, xim)t denote the performance of the stock market on day i, where xii is the factor by which the jth stock increases on day i. Let bi= (bi1 bi2, bim)t, b;ij≫ 0, bij= 1, denote the proportion bij of wealth invested in the j th stock on day i. Then Sn= IIin= bitxi is the factor by which wealth is increased in n trading days. Consider as a goal the wealth Sn*= maxb IIin=1 btxi that can be achieved by the best constant rebalanced portfolio chosen after the stock outcomes are revealed. It can be shown that Sn * exceeds the best stock, the Dow Jones average, and the value line index at time n. In fact, Sn* usually exceeds these quantities by an exponential factor. Let x1, x2, be an arbitrary sequence of market vectors. It will be shown that the nonanticipating sequence of portfolios db yields wealth such that , for every bounded sequence x1, x2…, and, under mild conditions, achieve where J, is an (m - 1) x (m - I) sensitivity matrix. Thus this portfolio strategy has the same exponential rate of growth as the apparently unachievable S*n.},
 year = {1991}
+}
+
+@misc{li2013online,
+      title={Online Portfolio Selection: A Survey}, 
+      author={Bin Li and Steven C. H. Hoi},
+      year={2013},
+      eprint={1212.2129},
+      archivePrefix={arXiv},
+      primaryClass={q-fin.CP}
 }

@@ -6,7 +6,7 @@ In the domain of online portfolio selection, certain strategies are considered b
 3. Uniform Portfolio (1/N)
 
 ## CRP
-Let's run the algorithm on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
+Let's run the algorithm [COVER](@cite) on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
 
 ```julia
 juila> using OnlinePortfolioSelection
@@ -66,7 +66,7 @@ julia> results.MDD
 
 ## BS
 
-The model is a variant of the BAH strategy that retroactively acquires the best stock. Within this package, users can select the number of days to retrospectively examine (using the `last_n` keyword argument) and identify the best stock. If `last_n` is either not provided or set to `0`, the algorithm will consider the entire dataset up to the present day for each period to identify the best stock. Conversely, if `last_n` is specified, the algorithm will only consider the performance of each stock within the last `last_n` days and then select the best-performing one. To implement the algorithm on real market data, let's assume the data is collected as detailed in the [Fetch Data](@ref) section.
+The model [KBSSMOP](@cite) is a variant of the BAH strategy that retroactively acquires the best stock. Within this package, users can select the number of days to retrospectively examine (using the `last_n` keyword argument) and identify the best stock. If `last_n` is either not provided or set to `0`, the algorithm will consider the entire dataset up to the present day for each period to identify the best stock. Conversely, if `last_n` is specified, the algorithm will only consider the performance of each stock within the last `last_n` days and then select the best-performing one. To implement the algorithm on real market data, let's assume the data is collected as detailed in the [Fetch Data](@ref) section.
 
 ```julia
 juila> using OnlinePortfolioSelection

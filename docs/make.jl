@@ -1,13 +1,16 @@
 using OnlinePortfolioSelection
 using Documenter
+using DocumenterCitations
 
 DocMeta.setdocmeta!(OnlinePortfolioSelection, :DocTestSetup, :(using OnlinePortfolioSelection); recursive=true)
+bib = CitationBibliography(joinpath(@__DIR__, "src", "refs.bib"))
 
 makedocs(;
     modules=[OnlinePortfolioSelection],
     authors="Shayan Davoodi <sh0davoodi@gmail.com>",
     sitename="OnlinePortfolioSelection.jl",
     checkdocs=:exports,
+    plugins=[bib],
     format=Documenter.HTML(;
         canonical="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl",
         prettyurls = get(ENV, "CI", nothing) == "true"

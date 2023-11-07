@@ -1,6 +1,6 @@
 # Follow the Loser (FL)
 
-The "Follow the Loser" (FL) strategy, introduced by Borodin and [Vincent (2004)](https://proceedings.neurips.cc/paper/2003/hash/8c9f32e03aeb2e3000825c8c875c4edd-Abstract.html), involves reallocating investment weight from a stock with a superior past performance to a stock with unfavorable performance. This approach is grounded in the belief that a stock exhibiting undesirable past performance may offer a favorable return in the future. Presently, this package includes the following FL strategies:
+The "Follow the Loser" (FL) strategy, introduced by [borodin2003can](@citet), involves reallocating investment weight from a stock with a superior past performance to a stock with unfavorable performance. This approach is grounded in the belief that a stock exhibiting undesirable past performance may offer a favorable return in the future. Presently, this package includes the following FL strategies:
 
 1. Reweighted Price Relative Tracking System for Automatic Portfolio Optimization
 2. Anti-Correlation (Anticor)
@@ -9,7 +9,7 @@ The "Follow the Loser" (FL) strategy, introduced by Borodin and [Vincent (2004)]
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
 
-RPRT, a "Follow the Loser" (FL) strategy introduced by [Lai et al. (2018)](https://doi.org/10.1109/TSMC.2018.2852651), automatically allocates distinct weights to price relative predictions based on each asset's performance during the price prediction phase. These weights are continually adjusted. In the portfolio optimization phase, the authors introduced a novel tracking system with a flexible increasing factor to maximize future wealth in the next period. Their study resulted in the design of an efficient algorithm to address portfolio optimization objectives, suitable for large-scale and time-limited scenarios. Through extensive experiments involving six benchmark datasets from real financial markets, encompassing varied assets and time spans, RPRT demonstrated superior performance compared to other state-of-the-art systems. It showcased better cumulative wealth, mean excess return, annual percentage yield, and typical risk metrics. Additionally, RPRT exhibited resilience to substantial transaction costs and delivered swift performance, highlighting its effectiveness and efficiency as an online portfolio selection system.
+RPRT, a "Follow the Loser" (FL) strategy introduced by [8411138](@citet), automatically allocates distinct weights to price relative predictions based on each asset's performance during the price prediction phase. These weights are continually adjusted. In the portfolio optimization phase, the authors introduced a novel tracking system with a flexible increasing factor to maximize future wealth in the next period. Their study resulted in the design of an efficient algorithm to address portfolio optimization objectives, suitable for large-scale and time-limited scenarios. Through extensive experiments involving six benchmark datasets from real financial markets, encompassing varied assets and time spans, RPRT demonstrated superior performance compared to other state-of-the-art systems. It showcased better cumulative wealth, mean excess return, annual percentage yield, and typical risk metrics. Additionally, RPRT exhibited resilience to substantial transaction costs and delivered swift performance, highlighting its effectiveness and efficiency as an online portfolio selection system.
 
 See [`rprt`](@ref).
 
@@ -83,7 +83,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Anti-Correlation (Anticor)
 
-Anticor is an FL strategy introduced by [Borodin and El-Yaniv (2004)](https://www.doi.org/10.1613/jair.1336). The strategy aims to capitalize on the mean-reversion attribute of asset prices. It transfers wealth from asset $i$ to asset $j$ within two consecutive market windows of size $w$ if the growth rate of asset $i$ exceeds that of asset $j$ in the most recent window. It is also contingent on a positive correlation between asset $i$ in the second last window and asset $j$ in the last window. The extent of wealth transferred from asset $i$ to $j$ depends on the correlation strength between the assets and the degree of "self-anti-correlations" for each asset $i$. [[1](https://rdrr.io/github/ngloe/olpsR/man/alg_Anticor.html)]
+Anticor is an FL strategy introduced by [borodin2003can](@citet). The strategy aims to capitalize on the mean-reversion attribute of asset prices. It transfers wealth from asset $i$ to asset $j$ within two consecutive market windows of size $w$ if the growth rate of asset $i$ exceeds that of asset $j$ in the most recent window. It is also contingent on a positive correlation between asset $i$ in the second last window and asset $j$ in the last window. The extent of wealth transferred from asset $i$ to $j$ depends on the correlation strength between the assets and the degree of "self-anti-correlations" for each asset $i$. [[1](https://rdrr.io/github/ngloe/olpsR/man/alg_Anticor.html)]
 
 See [`anticor`](@ref).
 
@@ -159,7 +159,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Online Moving Average Reversion (OLMAR)
 
-The OLMAR algorithm, short for On-Line Moving Average Reversion, introduces a novel approach to online portfolio selection. It incorporates multi-period mean reversion by utilizing “Moving Average Reversion” (MAR), which predicts next price relatives through moving averages. As far as the available literature indicates, OLMAR is the initial algorithm to employ moving averages within the framework of online portfolio selection [[1](https://www.sciencedirect.com/science/article/pii/S0004370215000168)]. While relatively straightforward, OLMAR includes a reasonable updating strategy and has been empirically validated through extensive real-market experiments.
+The OLMAR algorithm, short for On-Line Moving Average Reversion ([li2012online](@citet)), introduces a novel approach to online portfolio selection. It incorporates multi-period mean reversion by utilizing “Moving Average Reversion” (MAR), which predicts next price relatives through moving averages. As far as the available literature indicates, OLMAR is the initial algorithm to employ moving averages within the framework of online portfolio selection [LI2015104](@cite). While relatively straightforward, OLMAR includes a reasonable updating strategy and has been empirically validated through extensive real-market experiments.
 
 See [`olmar`](@ref).
 
@@ -233,7 +233,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Passive Aggressive Mean Reversion (PAMR)
 
-The Passive Aggressive Mean Reversion (PAMR) algorithm ([Li et al., 2012](https://www.doi.org/10.1007/s10994-012-5281-z)) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PAMR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PAMR is expressed as:
+The Passive Aggressive Mean Reversion (PAMR) algorithm ([Li2012-ks](@citet)) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PAMR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PAMR is expressed as:
 
 ```math
 \tau_t = \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2}}
@@ -344,3 +344,10 @@ Annualized Standard Deviation: 0.2365856617445457
 In this case, the algorithm has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see [`PAMR2`](@ref)).
 
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+
+## References
+
+```@bibliography
+Pages = [@__FILE__]
+Canonical = false
+```

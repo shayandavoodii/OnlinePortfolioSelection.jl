@@ -5,7 +5,6 @@ using LinearAlgebra
 using JuMP
 using Ipopt
 using PrecompileTools
-using Distances
 using DataStructures
 
 include("Types/Algorithms.jl")

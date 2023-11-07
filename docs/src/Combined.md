@@ -27,7 +27,7 @@ julia> prices = prices |> permutedims;
 
 julia> d_fac, window, horizon, eta = 0.5, 10, 5, 0.1;
 
-julia> model, St = load(prices, d_fac, window, horizon, eta);
+julia> model = load(prices, d_fac, window, horizon, eta);
 
 # Get the portfolio weights
 julia> model.b
@@ -35,16 +35,6 @@ julia> model.b
  0.333333  2.65043e-10  1.65697e-8  0.669392  0.329286
  0.333333  1.0          1.0         0.330608  0.670714
  0.333333  0.0          0.0         0.0       0.0 
-
-# Get the cumulative wealth of the portfolio over the trading period
-julia> St
-6-element Vector{Float64}:
- 1.0
- 0.9937811173943497
- 0.9925654837139548
- 0.9787063658040356
- 0.9652327928615669
- 1.012107319760618
 ```
 
 The result indicates that if we had invested in the given period, we would have gained ~1.2% profit. Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:

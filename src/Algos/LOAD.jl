@@ -213,13 +213,11 @@ function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T; ϵ:
   number of training period. Either provide more data or decrease the value of `ω` or \
   decrease the `horizon` value") |> throw
 
-  Sₜ = ones(T, horizon+1)
   rel_pr = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   b = ones(T, n_assets, horizon)/n_assets
   for t ∈ 1:horizon
     bₜ = b[:, t]
     train = adj_close[:, end-horizon+t-ω:end-horizon+t-1]
-    Sₜ[t+1] = sₜ(Sₜ[t], bₜ, rel_pr[:, end-horizon+t])
     aᵢ = fᵢ(train)
     p̂ₜ₊₁ = predict(η, aᵢ, train, α)
     pr_rel = next_pr_rel(adj_close[:, end-horizon+t-1], p̂ₜ₊₁)
@@ -231,5 +229,5 @@ function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T; ϵ:
     b[:, t+1] = max.(b[:, t+1], 0)
     normalizer!(b, t+1)
   end
-  return OPSAlgorithm(n_assets, b, "LOAD"), Sₜ
+  return OPSAlgorithm(n_assets, b, "LOAD")
 end

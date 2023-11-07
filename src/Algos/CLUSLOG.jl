@@ -4,7 +4,7 @@
       rel_pr::AbstractMatrix{<:AbstractFloat},
       horizon::Int,
       TW::Int,
-      clus_mod::Type{<:ClusteringModel},
+      clus_mod::Type{<:ClusLogVariant},
       nclusters::Int,
       nclustering::Int,
       boundries::NTuple{2, AbstractFloat};
@@ -26,7 +26,7 @@ julia> using OnlinePortfolioSelection, Clustering
       rel_pr::AbstractMatrix{<:AbstractFloat},
       horizon::Int,
       TW::Int,
-      clus_mod::Type{<:ClusteringModel},
+      clus_mod::Type{<:ClusLogVariant},
       nclusters::Int,
       nclustering::Int,
       boundries::NTuple{2, AbstractFloat};
@@ -40,8 +40,8 @@ Run KMNLOG, KMDLOG, etc., algorithms on the given data.
 represents the price of an asset at a given time.
 - `horizon::Int`: Number of trading days.
 - `TW::Int`: Maximum time window length to be examined.
-- `clus_mod::Type{<:ClusteringModel}`: Clustering model to be used. Currently, only \
-[`KMNModel`](@ref) and [`KMDModel`](@ref) are supported.
+- `clus_mod::Type{<:ClusLogVariant}`: Clustering model to be used. Currently, only \
+[`KMNLOG`](@ref) and [`KMDLOG`](@ref) are supported.
 - `nclusters::Int`: The maximum number of clusters to be examined.
 - `nclustering::Int`: The number of times clustering algorithm is run for optimal \
 number of clusters.
@@ -58,8 +58,8 @@ weights of assets in the portfolio.
 - `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
 # Example
-Two clustering model is available as of now: [`KMNModel`](@ref), and [`KMDModel`](@ref). \
-The first example utilizes [`KMNModel`](@ref):
+Two clustering model is available as of now: [`KMNLOG`](@ref), and [`KMDLOG`](@ref). \
+The first example utilizes [`KMNLOG`](@ref):
 
 ```julia
 julia> using OnlinePortfolioSelection, Clustering
@@ -74,7 +74,7 @@ julia> rel_pr = adj_close[:, 2:end]./adj_close[:, 1:end-1]
 
 julia> horizon = 3; TW = 3; nclusters_ = 3; nclustering = 10; lb, ub = 0.0, 1.;
 
-julia> model = cluslog(rel_pr, horizon, TW, KMNModel, nclusters_, nclustering, (lb, ub));
+julia> model = cluslog(rel_pr, horizon, TW, KMNLOG, nclusters_, nclustering, (lb, ub));
 
 julia> model.b
 3×3 Matrix{Float64}:
@@ -86,12 +86,12 @@ julia> sum(model.b , dims=1) .|> isapprox(1.) |> all
 true
 ```
 
-The same approach works for [`KMDModel`](@ref) as well:
+The same approach works for [`KMDLOG`](@ref) as well:
 
 ```julia
 julia> using OnlinePortfolioSelection, Clustering
 
-julia> model = cluslog(rel_pr, horizon, TW, KMDModel, nclusters_, nclustering, (lb, ub));
+julia> model = cluslog(rel_pr, horizon, TW, KMDLOG, nclusters_, nclustering, (lb, ub));
 
 julia> model.b
 3×3 Matrix{Float64}:
@@ -103,7 +103,7 @@ julia> sum(model.b , dims=1) .|> isapprox(1.) |> all
 true
 ```
 
-See also [`KMNModel`](@ref), and [`KMDModel`](@ref).
+See also [`KMNLOG`](@ref), and [`KMDLOG`](@ref).
 
 # Reference
 > [An online portfolio selection algorithm using clustering approaches and considering transaction costs](https://doi.org/10.1016/j.eswa.2020.113546)

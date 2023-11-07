@@ -1,31 +1,15 @@
-abstract type ClusteringModel end
+abstract type ClusLogVariant end
 
 """
-    KMNModel(alg::String="KMNLOG")<:ClusteringModel
+    KMNLOG(alg::String="KMNLOG")<:ClusLogVariant
 
-`KMNModel` is a concrete type used to represent the KMNLOG Model. Also, see [`KMDModel`](@ref).
-
-# Fields
-- `alg::String="KMNLOG"`: The algorithm's name to be used.
-
-!!! warning
-    Do not try to change the value of `alg` field.
+`KMNLOG` is a concrete type used to represent the KMNLOG Model. Also, see [`KMDLOG`](@ref).
 """
-@kwdef struct KMNModel<:ClusteringModel
-  alg::String="KMNLOG"
-end
+struct KMNLOG<:ClusLogVariant end
 
 """
-    KMDModel(alg::String="KMDLOG")<:ClusteringModel
+    KMDLOG(alg::String="KMDLOG")<:ClusLogVariant
 
-`KMDModel` is a concrete type used to represent the KMDLOG Model. Also, see [`KMNModel`](@ref).
-
-# Fields
-- `alg::String="KMDLOG"`: The algorithm's name to be used.
-
-!!! warning
-    Do not try to change the value of `alg` field.
+`KMDLOG` is a concrete type used to represent the KMDLOG Model. Also, see [`KMNLOG`](@ref).
 """
-@kwdef struct KMDModel<:ClusteringModel
-  alg::String="KMDLOG"
-end
+struct KMDLOG<:ClusLogVariant end

@@ -1,21 +1,4 @@
 """
-    sₜ(Sₜ₋₁::T, bₜ::AbstractVector{T}, xₜ::AbstractVector{T}) where T<:Float64
-
-Calculate cumulative wealth for each period.
-
-# Arguments
-- `Sₜ₋₁::T`: Cumulative wealth of the previous period.
-- `bₜ::AbstractVector{T}`: Weights of assets in the current period.
-- `xₜ::AbstractVector{T}`: Relative prices of assets in the current period.
-
-# Returns
-- `Sₜ::T`: Cumulative wealth of the current period.
-"""
-function sₜ(Sₜ₋₁::T, bₜ::AbstractVector{T}, xₜ::AbstractVector{T}) where T<:Float64
-  return Sₜ₋₁ * sum(bₜ.*xₜ)
-end
-
-"""
     fᵢ(adj_price::AbstractMatrix{T}) where T<:Float64
 
 Fit regression on the adjusted close price data of stocks and return the gradient of the \

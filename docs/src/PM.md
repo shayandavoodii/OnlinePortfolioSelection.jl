@@ -3,8 +3,8 @@
 Pattern-matching algorithms stand among the most popular strategies in the domain of online portfolio selection. These algorithms primarily aim to discern patterns within historical price data and employ them for predicting future prices. They align with the perspective of technical analysts who anticipate the repetition of historical patterns in future market behavior. The current package incorporates the following pattern-matching algorithms:
 
 1. Correlation-driven Nonparametric Learning
-1.1. CORN-U  
-1.2. CORN-K
+  1.1. CORN-U  
+  1.2. CORN-K
 2. Dynamic RIsk CORrelation-driven Non-parametric
 3. Bᴷ
 4. ClusLog
@@ -88,7 +88,7 @@ julia> sn(model.b, rel_price)
  1.0017637293758395
 ```
 
-As mentioned earlier, CORN-K performed better than CORN-U on the same dataset. The result indicates that the algorithm has gained ~0.18% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+Expectedly, CORN-K performed better than CORN-U on the same dataset. The result indicates that the algorithm has gained ~0.18% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
 ## Dynamic RIsk CORrelation-driven Non-parametric
 

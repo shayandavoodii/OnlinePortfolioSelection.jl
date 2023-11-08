@@ -123,6 +123,7 @@ pkg> dev OnlinePortfolioSelection
 
 <!-- Example -->
 ### Example
+
 <div align="justify">
 The full list of available strategies can be obtained by executing the following command after importing the package:
 </div>
@@ -255,6 +256,7 @@ As you can see, the package can be used from Python easily. For more information
 ---
 <!-- TODO LIST -->
 ## To-do list
+
 - [ ] Implement BCRP
 - [x] ~~Implement CORN~~
 - [x] ~~Implement DRICORN~~
@@ -277,6 +279,7 @@ Contributions are warmly welcome. Please feel free to open an issue and discuss 
 
 <!-- Motivation -->
 ## Motivation
+
 <div align="justify">
 I aimed to implement benchmark methods for Online Portfolio Selection (OPS) as part of my M.Sc. thesis to conduct comprehensive benchmarking experiments. The goal was to compare the performance of these benchmark methods with my proposed method from my thesis. I decided to transform this into an open-source package so that other researchers could leverage these established methods for their own research, sparing them the effort of reimplementing existing strategies. My intention is to continue developing and expanding this package to include more algorithms as I find it an exciting area of study. Ultimately, I hope this contribution proves beneficial to the research community.
 </div>
@@ -311,6 +314,7 @@ Other citation styles can be found <a href="https://doi.org/10.5281/zenodo.79050
 
 <!-- License -->
 ## License
+
 <div align="justify">
 This project is licensed under the MIT License - see the <a href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/LICENSE">LICENSE</a> file for details.
 </div>
@@ -318,6 +322,7 @@ This project is licensed under the MIT License - see the <a href="https://github
 
 <!-- Contact -->
 ## Contact
+
 <div align="justify">
 If you have any inquiries or suggestions, please don't hesitate to contact me via email at <a href="sh0davoodi@gmail.com">sh0davoodi@gmail.com</a>. Alternatively, feel free to open an issue in the repository.
 </div>

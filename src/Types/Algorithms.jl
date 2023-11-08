@@ -1,5 +1,5 @@
 """
-    OPSAlgorithm{T<:Float64}
+    OPSAlgorithm{T<:AbstractFloat}
 
 A `OPSAlgorithm` object that contains the result of running the algorithm.
 

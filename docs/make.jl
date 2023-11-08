@@ -36,6 +36,7 @@ makedocs(;
         ],
         "Performance Evaluation" => "performance_eval.md",
         "Functions" => "funcs.md",
+        "Types" => "types.md",
         "References" => "refs.md",
     ],
 )

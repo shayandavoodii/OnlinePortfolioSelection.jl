@@ -70,7 +70,8 @@ end
 
 function cor_between_tws(rel_pr::AbstractMatrix{<:AbstractFloat}, len_tw, ntw)
   nassets = size(rel_pr, 1)
-  cor_tw  = ones(Float64, ntw, ntw)
+  eltype_ = eltype(rel_pr)
+  cor_tw  = ones(eltype_, ntw, ntw)
 
   for idx₁ ∈ 1:ntw-1
     coef = idx₁-1

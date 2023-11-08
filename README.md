@@ -200,7 +200,6 @@ For further details regarding the implemented strategies and the API, please ref
 </div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
----
 <!-- Run from Python -->
 ### Run from Python
 

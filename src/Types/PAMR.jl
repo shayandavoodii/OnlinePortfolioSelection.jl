@@ -1,7 +1,7 @@
 abstract type PAMRModel end
 
 """
-    PAMR() <: PAMRModel
+    PAMR<: PAMRModel
 
 Create a PAMR object. Also, see [`PAMR1`](@ref), and [`PAMR2`](@ref).
 
@@ -13,7 +13,7 @@ model = PAMR()
 struct PAMR<:PAMRModel end
 
 """
-    PAMR1(C::AbstractFloat=1.) <: PAMRModel
+    PAMR1{T<:AbstractFloat}<: PAMRModel
 
 Create a PAMR1 object. Also, see [`PAMR`](@ref), and [`PAMR2`](@ref).
 
@@ -30,7 +30,7 @@ model = PAMR1(C=0.02)
 end
 
 """
-    PAMR2(C::AbstractFloat=1.) <: PAMRModel
+    PAMR2{T<:AbstractFloat}<: PAMRModel
 
 Create a PAMR2 object. Also, see [`PAMR`](@ref), and [`PAMR1`](@ref).
 

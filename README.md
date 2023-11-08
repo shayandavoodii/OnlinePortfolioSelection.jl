@@ -292,15 +292,15 @@ If you use the package in your research, please cite the package using the follo
 </div>
 
 ```bibtex
-@software{shayan_davoodi_2023_8414411,
+@software{shayan_davoodi_2023_10079806,
   author       = {Shayan Davoodi},
-  title        = {shayandavoodii/OnlinePortfolioSelection.jl: v1.8.0},
-  month        = oct,
+  title        = {shayandavoodii/OnlinePortfolioSelection.jl: v2.2.0},
+  month        = nov,
   year         = 2023,
   publisher    = {Zenodo},
-  version      = {v1.8.0},
-  doi          = {10.5281/zenodo.8414411},
-  url          = {https://doi.org/10.5281/zenodo.7905042}
+  version      = {v2.2.0},
+  doi          = {10.5281/zenodo.10079806},
+  url          = {https://doi.org/10.5281/zenodo.10079806}
 }
 ```
 

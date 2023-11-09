@@ -12,7 +12,7 @@ function OnlinePortfolioSelection.cluslog(
   rel_pr::AbstractMatrix{<:AbstractFloat},
   horizon::Int,
   TW::Int,
-  model::Type{<:ClusLogVariant},
+  model::Type{<:OnlinePortfolioSelection.ClusLogVariant},
   nclusters::Int,
   nclustering::Int,
   boundries::NTuple{2, AbstractFloat};
@@ -89,7 +89,7 @@ function cor_between_tws(rel_pr::AbstractMatrix{<:AbstractFloat}, len_tw, ntw)
   return Symmetric(cor_tw) |> Matrix
 end
 
-function nclusopt(model::Type{<:ClusLogVariant}, cor_tw, nclusters)
+function nclusopt(model::Type{<:OnlinePortfolioSelection.ClusLogVariant}, cor_tw, nclusters)
   sils      = zeros(Float64, nclusters)
   for nclus ∈ 2:nclusters
     fitted  = clustering(model, cor_tw, nclus)
@@ -124,7 +124,7 @@ function clustering(::Type{KMDLOG}, cor_tw, nclusters)
   return fitted
 end
 
-function clustering(model::Type{<:ClusLogVariant}, cor_tw, nclusters, nclustering)
+function clustering(model::Type{<:OnlinePortfolioSelection.ClusLogVariant}, cor_tw, nclusters, nclustering)
   twoccurance = Vector{Int}(undef, 0)
   ntw         = size(cor_tw, 1)
   for clus_time ∈ 1:nclustering

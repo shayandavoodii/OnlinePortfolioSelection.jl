@@ -37,7 +37,7 @@ include("Tools/cornfam.jl")
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export uniform, cluslog, pamr, ppt, cwmr
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
-export OPSAlgorithm, KMNLOG, KMDLOG, ClusLogVariant, PAMR, PAMR1, PAMR2
+export OPSAlgorithm, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
 export opsmethods
 

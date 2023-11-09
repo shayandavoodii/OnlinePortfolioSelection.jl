@@ -10,17 +10,6 @@
       progress::Bool=true
     )
 
-    cluslog(
-      rel_pr::AbstractMatrix{<:AbstractFloat},
-      horizon::Int,
-      TW::Int,
-      clus_mod::Type{<:ClusLogVariant},
-      nclusters::Int,
-      nclustering::Int,
-      boundries::NTuple{2, AbstractFloat};
-      progress::Bool=true
-    )
-
 Run KMNLOG, KMDLOG, etc., algorithms on the given data.
 
 !!! note "Important note"

@@ -160,7 +160,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Online Moving Average Reversion (OLMAR)
 
-The OLMAR algorithm, short for On-Line Moving Average Reversion ([li2012online](@citet)), introduces a novel approach to online portfolio selection. It incorporates multi-period mean reversion by utilizing “Moving Average Reversion” (MAR), which predicts next price relatives through moving averages. As far as the available literature indicates, OLMAR is the initial algorithm to employ moving averages within the framework of online portfolio selection [LI2015104](@cite). While relatively straightforward, OLMAR includes a reasonable updating strategy and has been empirically validated through extensive real-market experiments.
+The OLMAR algorithm, short for On-Line Moving Average Reversion [li2012online](@cite), introduces a novel approach to online portfolio selection. It incorporates multi-period mean reversion by utilizing “Moving Average Reversion” (MAR), which predicts next price relatives through moving averages. As far as the available literature indicates, OLMAR is the initial algorithm to employ moving averages within the framework of online portfolio selection [LI2015104](@cite). While relatively straightforward, OLMAR includes a reasonable updating strategy and has been empirically validated through extensive real-market experiments.
 
 See [`olmar`](@ref).
 

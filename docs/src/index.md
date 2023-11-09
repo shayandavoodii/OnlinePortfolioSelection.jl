@@ -7,33 +7,24 @@ end
 # Introduction
 
 Online Portfolio Selection (OPS) strategies represent trading algorithms that sequentially allocate capital among a pool of assets with the aim of maximizing investment returns. This forms a fundamental issue in computational finance, extensively explored across various research domains, including finance, statistics, artificial intelligence, machine learning, and data mining. Framed within an online machine learning context, OPS is defined as a sequential decision problem, providing a range of advanced approaches to tackle this challenge. These approaches categorize into benchmarks, “Follow-the-Winner” and “Follow-the-Loser” strategies, “Pattern-Matching” based methodologies, and "Meta-Learning" Algorithms [li2013online](@cite).
-This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, nineteen algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
+This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, eighteen algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
 
-- Constant Rebalanced Portfolio (CRP)
-- Exponential Gradient (EG)
-- Universal Portfolio (UP)
-- Correlation-driven Nonparametric Learning
-  - CORN-U
-  - CORN-K
-- Dynamic RIsk CORrelation-driven Non-parametric (DRICORN-K)
-- Best Stock (BS)
-- Reweighted Price Relative Tracking (RPRT)
-- Anti-Correlation (Anticor)
-- Online Moving Average Reversion (OLMAR)
-- Bᴷ
-- LOcal ADaptive learning system (LOAD)
-- MRvol
-- Combination Weights based on Online Gradient Descent (CW-OGD)
-- Uniform Portfolio (1/N)
-- CLUSLOG
-  - KMNLOG
-  - KMDLOG
-- Passive Aggressive Mean Reversion (PAMR)
-  - PAMR
-  - PAMR1
-  - PAMR2
-- Price Peak Tracking (PPT)
-- Confidence Weighted Mean Reversion (CWMR)
+!!! note
+    In the following table, the abbreviations **PM**, **ML**, **FL**, and **FW** stand for **Pattern-Matching**, **Meta-Learning**, **Follow the Loser**, and **Follow the Winner**, respectively.
+
+| Row № |                                                   Algorithm                                         | Strategy | Year | Row № |                                       Algorithm                                 | Strategy | Year |
+|:-----:|:---------------------------------------------------------------------------------------------------:|:--------:|:----:|:-----:|:-------------------------------------------------------------------------------:|:--------:|:----:|
+| 1     | [CORN](@ref Correlation-driven-Nonparametric-Learning)                                              | PM       | 2011 | 11    | [Bᴷ](@ref)                                                                      | PM       | 2006 |
+| 2     | [DRICORN-K](@ref Dynamic-RIsk-CORrelation-driven-Non-parametric)                                    | PM       | 2020 | 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                              | Combined | 2019 |
+| 3     | [CRP](@ref)                                                                                         | Market   | 1991 | 13    | [MRvol](@ref)                                                                   | Combined | 2023 |
+| 4     | [UP](@ref Universal-Portfolio)                                                                      | Market   | 1991 | 14    | [CW-OGD](@ref Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))    | ML       | 2021 |
+| 5     | [EG](@ref Exponential-Gradient)                                                                     | FW       | 1998 | 15    | [ClusLog](@ref)                                                                 | PM       | 2020 |
+| 6     | [BS](@ref)                                                                                          | Market   | 2007 | 16    | [PAMR](@ref Passive-Aggressive-Mean-Reversion-(PAMR))                           | FL       | 2012 |
+| 7     | [RPRT](@ref Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))  | FL       | 2020 | 17    | [PPT](@ref Price-Peak-Tracking-(PPT))                                           | FW       | 2018 |
+| 8     | [Anticor](@ref Anti-Correlation-(Anticor))                                                          | FL       | 2003 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                          | FL       | 2013 |
+| 9     | [1/N](@ref)                                                                                         | Market   | -    | 19    |                                                                                 |          |      |
+| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 20    |                                                                                 |          |      |
+
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

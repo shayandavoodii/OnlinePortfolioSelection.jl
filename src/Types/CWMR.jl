@@ -1,5 +1,8 @@
 abstract type CWMRVariant end
+abstract type PtfDisVariant end
 
-struct CWMRS<:CWMRVariant end
 struct CWMRD<:CWMRVariant end
-struct CWMRMix<:CWMRVariant end
+struct CWMRS<:CWMRVariant end
+
+struct Var<:PtfDisVariant end
+struct Stdev<:PtfDisVariant end

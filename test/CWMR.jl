@@ -95,6 +95,11 @@ rel_pr = [
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
     @test size(model.b) == size(rel_pr)
     @test model.alg == "CWMR-Stdev-s-Mix"
+
+    model = cwmr(rel_pr, [0.2, 0.4], [0.1], CWMRD, Var, adt_ptf=[eg1, eg2])
+    @test sum(model.b, dims=1) .|> isapprox(1.) |> all
+    @test size(model.b) == size(rel_pr)
+    @test model.alg == "CWMR-Var-Mix"
   end
 
   @testset "With invalid arguments" begin
@@ -104,7 +109,6 @@ rel_pr = [
     @test_throws ArgumentError cwmr(rel_pr, [0.2, -0.4], [0.1, 0.8], CWMRD, Var, adt_ptf=[eg1, eg2])
     @test_throws ArgumentError cwmr(rel_pr, [0.2, 0.4], [-0.1, 0.8], CWMRD, Var, adt_ptf=[eg1, eg2])
     @test_throws ArgumentError cwmr(rel_pr, [0.2, 0.4], [0.1, -0.8], CWMRD, Var, adt_ptf=[eg1, eg2])
-    @test_throws ArgumentError cwmr(rel_pr, [0.2, 0.4], [0.1], CWMRD, Var, adt_ptf=[eg1, eg2])
     t = [0.2 0.4 0.1 0.8 0.2; 0.4 0.1 0.8 0.2 0.4; 0.1 0.8 0.2 0.4 0.1]
     @test_throws ArgumentError cwmr(rel_pr, [0.2, 0.4], [0.1, 0.8], CWMRD, Var, adt_ptf=[t])
     t = [0.2 0.4 0.1 0.8 0.2; 0.4 0.1 0.8 0.1 0.4; 0.4 0.5 0.1 0.1 0.4]

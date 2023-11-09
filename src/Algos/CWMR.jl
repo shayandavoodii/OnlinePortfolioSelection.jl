@@ -40,7 +40,7 @@ Through this method, we can run the following variants of the CWMR algorithm: `C
 ## Arguments
 - `rel_pr::AbstractMatrix`: Relative prices of the assets.
 - `ϕ::AbstractFloat`: Learning rate.
-- `ϵ::AbstractFloat`: Expert's weight.
+- `ϵ::AbstractFloat`: Expert's weight. It should be ∈ [0, 1].
 - `variant::Type{<:CWMRVariant}`: Variant of the algorithm. It can be `CWMRD` or `CWMRS`.
 - `ptfdis::Type{<:PtfDisVariant}`: Portfolio distribution. It can be `Var` or `Stdev`.
 
@@ -87,7 +87,7 @@ Through this method, we can run the following variants of the CWMR algorithm: \
 ## Arguments
 - `rel_pr::AbstractMatrix`: Relative prices of the assets.
 - `ϕ::AbstractVector`: A vector of learning rates.
-- `ϵ::AbstractVector`: A vector of expert's weights.
+- `ϵ::AbstractVector`: A vector of expert's weights. Each element should be ∈ [0, 1].
 - `variant::Type{<:CWMRVariant}`: Variant of the algorithm. It can be `CWMRD` or `CWMRS`.
 - `ptfdis::Type{<:PtfDisVariant}`: Portfolio distribution. It can be `Var` or `Stdev`.
 

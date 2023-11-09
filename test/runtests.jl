@@ -93,3 +93,8 @@ end
   @info "Run unit tests in PPT.jl"
   include("PPT.jl")
 end
+
+@testset "CWMR.jl" begin
+  @info "Run unit tests in CWMR.jl"
+  include("CWMR.jl")
+end

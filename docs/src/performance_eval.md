@@ -203,7 +203,7 @@ Annualized Standard Deviation: 0.312367085936459
                  Calmar Ratio: 11.026402121997583
 ```
 
-As shown, the results are consistent with the results obtained using the [`OPSMetrics`](@ref) function.
+As shown, the results are consistent with the results obtained using the [`OPSMetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) for more information).
 
 ## References
 

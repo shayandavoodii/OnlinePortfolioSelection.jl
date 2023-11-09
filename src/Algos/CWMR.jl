@@ -1,9 +1,32 @@
 
 """
-    cwmr(rel_pr::AbstractMatrix, ϕ::AbstractFloat, ϵ::AbstractFloat, variant::Type{<:CWMRVariant}, ptfdis::Type{<:PtfDisVariant})
-    cwmr(rel_pr::AbstractMatrix, ϕ::AbstractVector, ϵ::AbstractVector, variant::Type{<:CWMRVariant}, ptfdis::Type{<:PtfDisVariant}; adt_ptf::Union{Nothing, AbstractVector{<:AbstractMatrix}}=nothing)
+    cwmr(
+      rel_pr::AbstractMatrix,
+      ϕ::AbstractFloat,
+      ϵ::AbstractFloat,
+      variant::Type{<:CWMRVariant},
+      ptfdis::Type{<:PtfDisVariant}
+    )
+
+    cwmr(
+      rel_pr::AbstractMatrix,
+      ϕ::AbstractVector,
+      ϵ::AbstractVector,
+      variant::Type{<:CWMRVariant},
+      ptfdis::Type{<:PtfDisVariant};
+      adt_ptf::Union{Nothing, AbstractVector{<:AbstractMatrix}}=nothing
+    )
 
 Run the Confidence Weighted Mean Reversion (CWMR) algorithm.
+
+!!! note "Important note"
+    In order to use this function, you have to install the \
+    [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) package first, and \
+    then import it along with the OnlinePortfolioSelection.jl package:
+    ```julia
+    julia> using Pkg; Pkg.add("Distributions")
+    julia> using Distributions, OnlinePortfolioSelection
+    ```
 
 # Methods
 - `cwmr(rel_pr::AbstractMatrix, ϕ::AbstractFloat, ϵ::AbstractFloat, variant::Type{<:CWMRVariant}, ptfdis::Type{<:PtfDisVariant})`

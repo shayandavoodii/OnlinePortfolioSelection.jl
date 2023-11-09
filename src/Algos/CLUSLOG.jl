@@ -1,5 +1,4 @@
 """
-    cluslog()
     cluslog(
       rel_pr::AbstractMatrix{<:AbstractFloat},
       horizon::Int,
@@ -10,17 +9,6 @@
       boundries::NTuple{2, AbstractFloat};
       progress::Bool=true
     )
-
-You need to install and import the following packages before using this function:
-- `Clustering`
-
-```julia
-julia> using Pkg
-
-julia> Pkg.add(name="Clustering", version="0.15.2")
-
-julia> using OnlinePortfolioSelection, Clustering
-```
 
     cluslog(
       rel_pr::AbstractMatrix{<:AbstractFloat},
@@ -34,6 +22,15 @@ julia> using OnlinePortfolioSelection, Clustering
     )
 
 Run KMNLOG, KMDLOG, etc., algorithms on the given data.
+
+!!! note "Important note"
+    In order to use this function, you have to install the \
+    [Clustering.jl](https://github.com/JuliaStats/Clustering.jl) package first, and then \
+    import it along with the OnlinePortfolioSelection.jl package:
+    ```julia
+    julia> using Pkg; Pkg.add(name="Clustering", version="0.15.2")
+    julia> using OnlinePortfolioSelection, Clustering
+    ```
 
 # Arguments
 - `rel_pr::AbstractMatrix{<:AbstractFloat}`: Relative prices of assets. Each column \

@@ -94,7 +94,7 @@ Expectedly, CORN-K performed better than CORN-U on the same dataset. The result 
 
 ## Dynamic RIsk CORrelation-driven Non-parametric
 
-[Dynamic Risk CORrelation-driven Non-parametric (DRICORN)](@cite 10.1007/978-3-030-66151-9_12) employs a similar principle to CORN-K. However, DRICORN incorporates the beta of the portfolio as a risk measure in the portfolio optimization. Additionally, it considers the recent market trend to capitalize on positive risks while minimizing exposure to negative risks. For further details, refer to [`dricornk`](@ref).
+Dynamic Risk CORrelation-driven Non-parametric (DRICORN)[10.1007/978-3-030-66151-9_12](@cite) employs a similar principle to CORN-K. However, DRICORN incorporates the beta of the portfolio as a risk measure in the portfolio optimization. Additionally, it considers the recent market trend to capitalize on positive risks while minimizing exposure to negative risks. For further details, refer to [`dricornk`](@ref).
 
 ### Run DRICORN-K
 

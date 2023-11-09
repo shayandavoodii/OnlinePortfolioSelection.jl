@@ -129,7 +129,7 @@ function OnlinePortfolioSelection.cwmr(
   ptfdis::Type{<:OnlinePortfolioSelection.PtfDisVariant}
 )
   0. ≤ ϵ ≤ 1. || ArgumentError("ϵ must be in [0, 1]") |> throw
-  0. ≤ ϕ ≤ 1. || ArgumentError("ϕ must be in [0, 1]") |> throw
+  0. ≤ ϕ || ArgumentError("ϕ must be non-negative") |> throw
   n_assets, n_days = size(rel_pr)
   μₜ = ones(n_assets)/n_assets
   Σₜ = I(n_assets)*(1/n_assets^2) |> Matrix
@@ -161,10 +161,8 @@ function OnlinePortfolioSelection.cwmr(
   n_assets, n_days = size(rel_pr)
   isnothing(adt_ptf) || all(x->size(x)==(n_assets, n_days), adt_ptf) || ArgumentError("The \
   size of each element of adt_ptf must be ($n_assets, $n_days)") |> throw
-  length(ϕ) == length(ϵ) || ArgumentError("`ϕ` and `ϵ` arguments must have the same length. \
-  Got $(length(ϕ)) and $(length(ϵ))") |> throw
-  all(0. .≤ ϕ .≤ 1.) || ArgumentError("All og the ϕ elements must be in [0, 1]") |> throw
   all(0. .≤ ϵ .≤ 1.) || ArgumentError("All og the ϵ elements must be in [0, 1]") |> throw
+  all(0. .≤ ϕ) || ArgumentError("All of the ϕ elements must be non-negative") |> throw
   if !isnothing(adt_ptf)
     for exp ∈ adt_ptf
       res = sum(exp)==n_days
@@ -179,7 +177,7 @@ function OnlinePortfolioSelection.cwmr(
   if isnothing(adt_ptf)
     adt_ptf = [eg(rel_pr).b]
   end
-  repeatedϕ = repeat(ϕ, inner=length(ϕ))
+  repeatedϕ = repeat(ϕ, inner=length(ϵ))
   repeatedϵ = repeat(ϵ, length(ϕ))
   n_experts = length(repeatedϕ) + length(adt_ptf)
   Q = cwmr.(Ref(rel_pr), repeatedϕ, repeatedϵ, variant, ptfdis)

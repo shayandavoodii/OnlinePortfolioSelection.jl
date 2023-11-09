@@ -7,7 +7,7 @@ end
 # Introduction
 
 Online Portfolio Selection (OPS) strategies represent trading algorithms that sequentially allocate capital among a pool of assets with the aim of maximizing investment returns. This forms a fundamental issue in computational finance, extensively explored across various research domains, including finance, statistics, artificial intelligence, machine learning, and data mining. Framed within an online machine learning context, OPS is defined as a sequential decision problem, providing a range of advanced approaches to tackle this challenge. These approaches categorize into benchmarks, “Follow-the-Winner” and “Follow-the-Loser” strategies, “Pattern-Matching” based methodologies, and "Meta-Learning" Algorithms [li2013online](@cite).
-This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, eighteen algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
+This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, nineteen algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
 
 - Constant Rebalanced Portfolio (CRP)
 - Exponential Gradient (EG)
@@ -33,6 +33,7 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
   - PAMR1
   - PAMR2
 - Price Peak Tracking (PPT)
+- Confidence Weighted Mean Reversion (CWMR)
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

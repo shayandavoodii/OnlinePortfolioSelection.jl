@@ -198,7 +198,7 @@ Create an expert to perform the algorithm according to the given parameters.
 - `n_assets::S`: number of assets.
 
 # Returns
-- `Vector{Float64}`: Weights of assets.
+- `::Vector{Float64}`: Weights of assets.
 """
 function corn_expert(
   relative_prices::Matrix{T},

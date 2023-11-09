@@ -138,7 +138,7 @@ Run LOAD algorithm.
     `adj_close` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `OPSAlgorithm`: An object of type `OPSAlgorithm` containing the weights of each asset for \
+- `::OPSAlgorithm`: An object of type `OPSAlgorithm` containing the weights of each asset for \
 each period.
 - `Sₜ::Vector{Float64}`: Cumulative wealth for each period.
 

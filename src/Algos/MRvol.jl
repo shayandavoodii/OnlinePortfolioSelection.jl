@@ -8,7 +8,7 @@ Calculate vector b̃ₜ₊₁.
 - `𝙭ₜ::Vector`: Vector of relative prices of the current day.
 
 # Returns
-- `Vector`: Vector of weights of the next day.
+- `::Vector`: Vector of weights of the next day.
 """
 function b̃func(𝐛ₜ, 𝙭ₜ)
   return (𝐛ₜ .* 𝙭ₜ)./(𝐛ₜ'*𝙭ₜ)
@@ -33,7 +33,7 @@ asset 𝑖 divided by the (t - 1)ᵗʰ trading volume of asset 𝑖.
 - `Wₘₐₓ::S`: Maximum window size.
 
 # Returns
-- `Matrix{Float64}`: A matrix of weights for each expert strategy.
+- `::Matrix{Float64}`: A matrix of weights for each expert strategy.
 
 # Example
 ```julia
@@ -187,7 +187,7 @@ the closing price to the opening price of each asset in each day.
 - `λ::T`: Trade-off parameter in the loss function.
 
 # Returns
-- `Vector`: Gradient of the loss function for each expert strategy.
+- `::Vector`: Gradient of the loss function for each expert strategy.
 """
 function ∇fₜfunc(rel_pr, Bₜ, b̃ₜ₋₁, theta_t, λ)
   Bₜ = permutedims(Bₜ)
@@ -210,7 +210,7 @@ Calculate the loss function.
 - `g`: A constant.
 
 # Returns
-- `Vector`: Loss function for each expert strategy.
+- `::Vector`: Loss function for each expert strategy.
 """
 function Lₜfunc(∇fₜ, ζ, g)
   return 0.5((∇fₜ)/(ζ*g) .+ 1)
@@ -228,7 +228,7 @@ Calculate the weights that investor assigns to each expert strategy for the next
 current day.
 
 # Returns
-- `Vector`: Vector of weights that investor assigns to each expert strategy for the next day.
+- `::Vector`: Vector of weights that investor assigns to each expert strategy for the next day.
 """
 function θₜ₊₁func(Lₜ, η, θₜ)
   Zₜ   = θₜ.*exp.(-η*vec(Lₜ)) |> sum
@@ -246,7 +246,7 @@ Calculate the final weights of the portfolio for the next day.
 - `θₜ₊₁::Vector`: Vector of weights that investor assigns to each expert strategy.
 
 # Returns
-- `Vector`: Vector of weights of the portfolio for the next day.
+- `::Vector`: Vector of weights of the portfolio for the next day.
 """
 function weights(Bₜ₊₁, θₜ₊₁)
   return θₜ₊₁'*Bₜ₊₁'
@@ -283,7 +283,7 @@ run the algorithm.
     `rel_pr` and `rel_vol` should be matrixes of size `n_assets` × `n_periods`.
 
 # Returns
-- `OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
+- `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
 # Example
 ```julia

@@ -10,7 +10,7 @@ Find similar time windows based on the correlation coefficient threshold.
 - `ρ::T1`: correlation coefficient threshold.
 
 # Returns
-- `Vector{S}`: Index of similar time windows.
+- `::Vector{S}`: Index of similar time windows.
 """
 function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float64, S<:Int}
   idx_day_after_tw = Vector{S}()

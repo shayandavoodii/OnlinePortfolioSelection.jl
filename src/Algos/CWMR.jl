@@ -48,7 +48,7 @@ Through this method, we can run the following variants of the CWMR algorithm: `C
     `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
 
 ## Returns
-- `OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object that contains the result of running the algorithm.
+- `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object that contains the result of running the algorithm.
 
 ## Example
 
@@ -101,12 +101,11 @@ additional expert's portfolios.
 !!! warning "Beware!"
     `adt_ptf` can be `nothing` or a vector of matrices of size `n_assets` × `n_periods`. As \
     noted in the paper, the additional expert's portfolios should be chosen from the set \
-    of universal strategies, such as 'UP', 'EG', 'ONS', etc.
-
-See [`eg`](@ref), and [`up`](@ref) for more details.
+    of universal strategies, such as 'UP', 'EG', 'ONS', etc. See [`eg`](@ref), and \
+    [`up`](@ref) for more details.
 
 ## Returns
-- `OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object that contains the result of running the algorithm.
+- `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object that contains the result of running the algorithm.
 
 ## Example
 Let's run all the variants of the second method, such as `CWMR-Var-Mix`, `CWMR-Stdev-Mix`, \

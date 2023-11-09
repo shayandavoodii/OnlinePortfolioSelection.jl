@@ -185,7 +185,7 @@ function OnlinePortfolioSelection.cwmr(
   Q = cwmr.(Ref(rel_pr), repeatedϕ, repeatedϵ, variant, ptfdis)
   Q = getproperty.(Q, :b)
   Q = [Q; adt_ptf]
-  b = similar(Q[1], n_assets, n_days)
+  b = similar(rel_pr, n_assets, n_days)
   SₜQⱼxⁿ = ones(n_experts)
   for t ∈ 1:n_days
     numer = zeros(n_assets)

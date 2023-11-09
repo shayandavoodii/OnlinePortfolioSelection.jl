@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Follow the Loser · OnlinePortfolioSelection.jl</title><meta name="title" content="Follow the Loser · OnlinePortfolioSelection.jl"/><meta property="og:title" content="Follow the Loser · OnlinePortfolioSelection.jl"/><meta property="twitter:title" content="Follow the Loser · OnlinePortfolioSelection.jl"/><meta name="description" content="Documentation for OnlinePortfolioSelection.jl."/><meta property="og:description" content="Documentation for OnlinePortfolioSelection.jl."/><meta property="twitter:description" content="Documentation for OnlinePortfolioSelection.jl."/><meta property="og:url" content="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/FL/"/><meta property="twitter:url" content="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/FL/"/><link rel="canonical" href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/FL/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/citations.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../"><img src="../assets/logo.png" alt="OnlinePortfolioSelection.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../">OnlinePortfolioSelection.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../fetchdata/">Fetch Financial Data</a></li><li><a class="tocitem" href="../python/">Use In Python</a></li><li><span class="tocitem">OPS Strategies</span><ul><li><a class="tocitem" href="../benchmark/">Benchmark</a></li><li class="is-active"><a class="tocitem" href>Follow the Loser</a><ul class="internal"><li><a class="tocitem" href="#Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT)"><span>Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)</span></a></li><li><a class="tocitem" href="#Anti-Correlation-(Anticor)"><span>Anti-Correlation (Anticor)</span></a></li><li><a class="tocitem" href="#Online-Moving-Average-Reversion-(OLMAR)"><span>Online Moving Average Reversion (OLMAR)</span></a></li><li><a class="tocitem" href="#Passive-Aggressive-Mean-Reversion-(PAMR)"><span>Passive Aggressive Mean Reversion (PAMR)</span></a></li><li><a class="tocitem" href="#Confidence-Weighted-Mean-Reversion-(CWMR)"><span>Confidence Weighted Mean Reversion (CWMR)</span></a></li><li><a class="tocitem" href="#References"><span>References</span></a></li></ul></li><li><a class="tocitem" href="../FW/">Follow the Winner</a></li><li><a class="tocitem" href="../PM/">Pattern-Matching</a></li><li><a class="tocitem" href="../ML/">Meta-Learning</a></li><li><a class="tocitem" href="../Combined/">Combined Strategies</a></li></ul></li><li><a class="tocitem" href="../performance_eval/">Performance Evaluation</a></li><li><a class="tocitem" href="../funcs/">Functions</a></li><li><a class="tocitem" href="../types/">Types</a></li><li><a class="tocitem" href="../refs/">References</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">OPS Strategies</a></li><li class="is-active"><a href>Follow the Loser</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Follow the Loser</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/docs/src/FL.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Follow-the-Loser-(FL)"><a class="docs-heading-anchor" href="#Follow-the-Loser-(FL)">Follow the Loser (FL)</a><a id="Follow-the-Loser-(FL)-1"></a><a class="docs-heading-anchor-permalink" href="#Follow-the-Loser-(FL)" title="Permalink"></a></h1><p>The &quot;Follow the Loser&quot; (FL) strategy, introduced by <a href="../refs/#borodin2003can">Borodin <em>et al.</em> [4]</a>, involves reallocating investment weight from a stock with a superior past performance to a stock with unfavorable performance. This approach is grounded in the belief that a stock exhibiting undesirable past performance may offer a favorable return in the future. Presently, this package includes the following FL strategies:</p><ol><li>Reweighted Price Relative Tracking System for Automatic Portfolio Optimization</li><li>Anti-Correlation (Anticor)</li><li>Online Moving Average Reversion (OLMAR)</li><li>Passive Aggressive Mean Reversion (PAMR)</li><li>Confidence Weighted Mean Reversion (CWMR)</li></ol><h2 id="Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT)"><a class="docs-heading-anchor" href="#Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT)">Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)</a><a id="Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT)-1"></a><a class="docs-heading-anchor-permalink" href="#Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT)" title="Permalink"></a></h2><p>RPRT, a &quot;Follow the Loser&quot; (FL) strategy introduced by <a href="../refs/#8411138">Lai <em>et al.</em> [5]</a>, automatically allocates distinct weights to price relative predictions based on each asset&#39;s performance during the price prediction phase. These weights are continually adjusted. In the portfolio optimization phase, the authors introduced a novel tracking system with a flexible increasing factor to maximize future wealth in the next period. Their study resulted in the design of an efficient algorithm to address portfolio optimization objectives, suitable for large-scale and time-limited scenarios. Through extensive experiments involving six benchmark datasets from real financial markets, encompassing varied assets and time spans, RPRT demonstrated superior performance compared to other state-of-the-art systems. It showcased better cumulative wealth, mean excess return, annual percentage yield, and typical risk metrics. Additionally, RPRT exhibited resilience to substantial transaction costs and delivered swift performance, highlighting its effectiveness and efficiency as an online portfolio selection system.</p><p>See <a href="../funcs/#OnlinePortfolioSelection.rprt-Union{Tuple{Matrix{T}}, Tuple{T}} where T&lt;:Float64"><code>rprt</code></a>.</p><h3 id="Run-RPRT"><a class="docs-heading-anchor" href="#Run-RPRT">Run RPRT</a><a id="Run-RPRT-1"></a><a class="docs-heading-anchor-permalink" href="#Run-RPRT" title="Permalink"></a></h3><p><strong>Note:</strong> This package is meant to be used by researchers <strong>NOT FOR MARKET PRACTITIONERS</strong>. Let&#39;s run the algorithm on the real market data. In this case, the data is collected as noted in the <a href="../fetchdata/#Fetch-Data">Fetch Data</a> section.</p><pre><code class="language-julia hljs">juila&gt; using OnlinePortfolioSelection
+
+julia&gt; size(prices)
+(17, 5)
+
+# OnlinePortfolioSelection suppose that the data is in the form of a matrix
+# where each row is the price vector of the assets at a specific time period.
+julia&gt; prices = prices |&gt; permutedims;
+
+julia&gt; window_length, threshold, epsilon = 2, 0.6, 40;
+
+# Let&#39;s run the algorithm for the last 5 days of the data.
+julia&gt; prices = prices[:, end-4:end];
+
+julia&gt; m_rprt = rprt(prices, w=window_length, theta=threshold, epsilon=epsilon);
+
+# Get the weights of the assets for each day
+juila&gt; m_rprt.b
+5×5 Matrix{Float64}:
+ 0.2  0.2  0.0  0.0  0.0
+ 0.2  0.2  0.0  0.0  0.0
+ 0.2  0.2  0.0  0.0  0.0
+ 0.2  0.2  1.0  1.0  1.0
+ 0.2  0.2  0.0  0.0  0.0</code></pre><p>One can calculate the cumulative wealth during the investment period by using the <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> function:</p><pre><code class="language-julia hljs">julia&gt; rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia&gt; sn(m_rprt.b, rel_price)
+6-element Vector{Float64}:
+ 1.0
+ 0.9879822800308067
+ 0.985480892911241
+ 0.9646654456994471
+ 0.9392966194100733
+ 0.9448257537201438</code></pre><p>The outcome reveals an approximate loss of ~6.3% if an investment were made during the provided period. It&#39;s important to note that in this scenario, <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> automatically considers the last 5 relative prices. Next, let&#39;s examine the algorithm&#39;s performance based on several significant metrics.</p><pre><code class="language-julia hljs">julia&gt; results = OPSMetrics(m_rprt.b, rel_price)
+
+            Cumulative Return: 0.945
+                          APY: -0.943
+Annualized Standard Deviation: 0.202
+      Annualized Sharpe Ratio: -4.760
+             Maximum Drawdown: 0.061
+                 Calmar Ratio: -15.531
+
+julia&gt; results.
+APY         Ann_Sharpe  Ann_Std     Calmar      MDD         Sn
+
+julia&gt; results.MDD
+0.06070338058992675</code></pre><p>It is worht mentioning that each metric can be accessed individually by writing <code>results.</code> and pressing the <code>Tab</code> key. Note that one can individually investigate the performance of the algorithm regarding each metric. See <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="../funcs/#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="../funcs/#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, and <a href="../funcs/#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>. See <a href="../performance_eval/#Performance-evaluation">Performance evaluation</a> section for more information.</p><h2 id="Anti-Correlation-(Anticor)"><a class="docs-heading-anchor" href="#Anti-Correlation-(Anticor)">Anti-Correlation (Anticor)</a><a id="Anti-Correlation-(Anticor)-1"></a><a class="docs-heading-anchor-permalink" href="#Anti-Correlation-(Anticor)" title="Permalink"></a></h2><p>Anticor is an FL strategy introduced by <a href="../refs/#borodin2003can">Borodin <em>et al.</em> [4]</a>. The strategy aims to capitalize on the mean-reversion attribute of asset prices. It transfers wealth from asset <span>$i$</span> to asset <span>$j$</span> within two consecutive market windows of size <span>$w$</span> if the growth rate of asset <span>$i$</span> exceeds that of asset <span>$j$</span> in the most recent window. It is also contingent on a positive correlation between asset <span>$i$</span> in the second last window and asset <span>$j$</span> in the last window. The extent of wealth transferred from asset <span>$i$</span> to <span>$j$</span> depends on the correlation strength between the assets and the degree of &quot;self-anti-correlations&quot; for each asset <span>$i$</span>. [<a href="https://rdrr.io/github/ngloe/olpsR/man/alg_Anticor.html">1</a>]</p><p>See <a href="../funcs/#OnlinePortfolioSelection.anticor-Union{Tuple{T}, Tuple{Matrix{T}, Int64}} where T&lt;:Real"><code>anticor</code></a>.</p><h3 id="Run-Anticor"><a class="docs-heading-anchor" href="#Run-Anticor">Run Anticor</a><a id="Run-Anticor-1"></a><a class="docs-heading-anchor-permalink" href="#Run-Anticor" title="Permalink"></a></h3><p><strong>Note:</strong> This package is meant to be used by researchers <strong>NOT FOR MARKET PRACTITIONERS</strong>. Let&#39;s run the algorithm on the real market data. In this case, the data is collected as noted in the <a href="../fetchdata/#Fetch-Data">Fetch Data</a> section.</p><pre><code class="language-julia hljs">juila&gt; using OnlinePortfolioSelection
+
+julia&gt; size(prices)
+(17, 5)
+
+# OnlinePortfolioSelection suppose that the data is in the form of a matrix
+# where each row is the price vector of the assets at a specific time period.
+julia&gt; prices = prices |&gt; permutedims;
+
+julia&gt; window_size = 2;
+
+# Let&#39;s run the algorithm for the last 15 days of the data.
+julia&gt; m_anticor = anticor(prices[:, end-14:end], window_size);
+
+# Get the weights of the assets for each day
+juila&gt; m_anticor.b
+5×15 Matrix{Float64}:
+ 0.2  0.2  0.2  0.2  0.266667   0.0  …  0.0  0.0  0.0  0.0  0.0  0.0  0.0   
+ 0.2  0.2  0.2  0.2  0.0333333  0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0   
+ 0.2  0.2  0.2  0.2  0.0        0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0   
+ 0.2  0.2  0.2  0.2  0.433333   1.0     1.0  1.0  1.0  1.0  1.0  1.0  1.0
+ 0.2  0.2  0.2  0.2  0.266667   0.0     0.0  0.0  0.0  0.0  0.0  0.0  0.0</code></pre><p>One can calculate the cumulative wealth during the investment period by using the <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> function:</p><pre><code class="language-julia hljs">julia&gt; rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia&gt; sn(m_anticor.b, rel_price)
+16-element Vector{Float64}:
+ 1.0
+ 1.0026929997309684
+ 0.9931968903246916
+ 0.9939468872805755
+ 0.9941204319128776
+ ⋮
+ 0.9528191316023853
+ 0.9355287642277988
+ 0.9157684119500683
+ 0.8916854826115842
+ 0.8969343557511426</code></pre><p>The outcome suggests that if we had invested in the given period, our wealth would have decreased by approximately 10.3%. Note that in this instance, <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> automatically considers the last 15 relative prices.</p><p>Let&#39;s now assess the algorithm&#39;s performance based on several key metrics.</p><pre><code class="language-julia hljs">julia&gt; results = OPSMetrics(m_anticor.b, rel_price)
+
+            Cumulative Return: 0.8969343557511426
+                          APY: -0.8391655504688253
+Annualized Standard Deviation: 0.1618626725690273
+      Annualized Sharpe Ratio: -5.307990636954478
+             Maximum Drawdown: 0.11070937679745295
+                 Calmar Ratio: -7.579895892685864
+
+julia&gt; results.MDD
+0.11070937679745295</code></pre><p>It is worht mentioning that each metric can be accessed individually by writing <code>results.</code> and pressing the <code>Tab</code> key. Note that one can individually investigate the performance of the algorithm regarding each metric. See <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="../funcs/#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="../funcs/#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, and <a href="../funcs/#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>. See <a href="../performance_eval/#Performance-evaluation">Performance evaluation</a> section for more information.</p><h2 id="Online-Moving-Average-Reversion-(OLMAR)"><a class="docs-heading-anchor" href="#Online-Moving-Average-Reversion-(OLMAR)">Online Moving Average Reversion (OLMAR)</a><a id="Online-Moving-Average-Reversion-(OLMAR)-1"></a><a class="docs-heading-anchor-permalink" href="#Online-Moving-Average-Reversion-(OLMAR)" title="Permalink"></a></h2><p>The OLMAR algorithm, short for On-Line Moving Average Reversion [<a href="../refs/#li2012online">6</a>], introduces a novel approach to online portfolio selection. It incorporates multi-period mean reversion by utilizing “Moving Average Reversion” (MAR), which predicts next price relatives through moving averages. As far as the available literature indicates, OLMAR is the initial algorithm to employ moving averages within the framework of online portfolio selection [<a href="../refs/#LI2015104">7</a>]. While relatively straightforward, OLMAR includes a reasonable updating strategy and has been empirically validated through extensive real-market experiments.</p><p>See <a href="../funcs/#OnlinePortfolioSelection.olmar-Tuple{Matrix{Float64}, Int64, Int64}"><code>olmar</code></a>.</p><h3 id="Run-OLMAR"><a class="docs-heading-anchor" href="#Run-OLMAR">Run OLMAR</a><a id="Run-OLMAR-1"></a><a class="docs-heading-anchor-permalink" href="#Run-OLMAR" title="Permalink"></a></h3><p>Let&#39;s run the algorithm on the real market data. In this case, the data is collected as noted in the <a href="../fetchdata/#Fetch-Data">Fetch Data</a> section.</p><pre><code class="language-julia hljs">juila&gt; using OnlinePortfolioSelection
+
+julia&gt; size(prices)
+(17, 5)
+
+# OnlinePortfolioSelection suppose that the data is in the form of a matrix
+# where each row is the price vector of the assets at a specific time period.
+julia&gt; prices = prices |&gt; permutedims;
+
+julia&gt; window_size = 3;
+julia&gt; eps = 2;
+
+# Let&#39;s run the algorithm for the last 15 days of the data.
+julia&gt; m_olmar = olmar(prices[:, end-14:end], eps, window_size);
+
+# Get the weights of the assets for each day
+juila&gt; m_olmar.b
+5×15 Matrix{Float64}:
+ 0.2  0.2  0.0  0.0  0.0  0.0  …  0.0  0.0  0.0  0.0
+ 0.2  0.2  0.0  0.0  1.0  0.0     1.0  0.0  0.0  0.147231   
+ 0.2  0.2  0.0  0.0  0.0  1.0     0.0  0.0  0.0  0.0        
+ 0.2  0.2  1.0  1.0  0.0  0.0     0.0  1.0  1.0  0.0        
+ 0.2  0.2  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.852769</code></pre><p>One can calculate the cumulative wealth during the investment period by using the <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> function:</p><pre><code class="language-julia hljs">julia&gt; rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia&gt; sn(m_olmar.b, rel_price)
+16-element Vector{Float64}:
+ 1.0
+ 1.0026929997309684
+ 0.9931968903246916
+ 0.9844182209638911
+ 0.979271976499212
+ ⋮
+ 0.9390854420408513
+ 0.9192499651820158
+ 0.89507547776031
+ 0.886526969495664</code></pre><p>The outcome highlights a potential loss of approximately 11.3% in our wealth had an investment been made during the specified period. It&#39;s essential to note that <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> automatically considers the last 15 relative prices in this particular case. Next, let&#39;s proceed to evaluate the algorithm&#39;s performance based on several key metrics.</p><pre><code class="language-julia hljs">julia&gt; results = OPSMetrics(m_olmar.b, rel_price)
+        
+            Cumulative Return: 0.886526969495664
+                          APY: -0.8678020275925177
+Annualized Standard Deviation: 0.20186187705069908
+      Annualized Sharpe Ratio: -4.398066839384139
+             Maximum Drawdown: 0.11585403534927716
+                 Calmar Ratio: -7.490477349159786
+
+julia&gt; results.MDD
+0.11585403534927716</code></pre><p>It is worht mentioning that each metric can be accessed individually by writing <code>results.</code> and pressing the <code>Tab</code> key. Note that one can individually investigate the performance of the algorithm regarding each metric. See <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="../funcs/#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="../funcs/#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, and <a href="../funcs/#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>. See <a href="../performance_eval/#Performance-evaluation">Performance evaluation</a> section for more information.</p><h2 id="Passive-Aggressive-Mean-Reversion-(PAMR)"><a class="docs-heading-anchor" href="#Passive-Aggressive-Mean-Reversion-(PAMR)">Passive Aggressive Mean Reversion (PAMR)</a><a id="Passive-Aggressive-Mean-Reversion-(PAMR)-1"></a><a class="docs-heading-anchor-permalink" href="#Passive-Aggressive-Mean-Reversion-(PAMR)" title="Permalink"></a></h2><p>The Passive Aggressive Mean Reversion (PAMR) algorithm (<a href="../refs/#Li2012-ks">Li <em>et al.</em> [8]</a>) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PAMR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm&#39;s core component, the step size <span>$\tau_t$</span>, is determined by the ratio of the observed error <span>$\ell_{\in}^t$</span> to the squared norm of the discrepancy between the current feature vector <span>$\mathbf{x}_t$</span> and the mean feature vector <span>$\bar{x}_t$</span> up to time <span>$t$</span>. The formula for the step size in PAMR is expressed as:</p><p class="math-container">\[\tau_t = \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2}}\]</p><p>PAMR-1 and PAMR-2 are variants that modify the calculation of the step size for greater adaptability. PAMR-1 restricts the step size to a maximum value <span>$(C)$</span>, preventing excessively large updates and is expressed as:</p><p class="math-container">\[\tau_t = \min \left\{ C, \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2}} \right\}\]</p><p>On the other hand, PAMR-2 incorporates a more nuanced approach by adding a term related to a constant <span>$(C)$</span> in the denominator, providing more controlled updates and minimizing extreme adjustments:</p><p class="math-container">\[\tau_t = \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2 + \frac{1}{{2C}}}}\]</p><p>These variants aim to enhance the adaptability and stability of the PAMR algorithm, with PAMR-1 capping the maximum update size and PAMR-2 providing controlled updates to ensure smoother parameter adjustments in response to observed errors. <strong>It is worth noting that all three variants of the PAMR algorithm are provided in this package.</strong> See <a href="../types/#OnlinePortfolioSelection.PAMR"><code>PAMR</code></a>.</p><h3 id="Run-PAMR"><a class="docs-heading-anchor" href="#Run-PAMR">Run PAMR</a><a id="Run-PAMR-1"></a><a class="docs-heading-anchor-permalink" href="#Run-PAMR" title="Permalink"></a></h3><p>Let&#39;s run the algorithm on the real market data:</p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;AMZN&quot;, &quot;META&quot;, &quot;GOOG&quot;]
+
+julia&gt; startdt, enddt = &quot;2019-01-01&quot;, &quot;2020-01-01&quot;
+
+julia&gt; querry = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker in tickers]
+
+julia&gt; prices = stack(querry) |&gt; permutedims
+
+julia&gt; rel_pr =  prices[:, 2:end]./prices[:, 1:end-1]
+
+julia&gt; model = PAMR()
+
+julia&gt; eps = 0.01
+
+julia&gt; result = PAMR(rel_pr, eps, model)
+
+julia&gt; result.b
+5×251 Matrix{Float64}:
+ 0.2  0.224672  0.22704   0.230855  0.229743  …  0.0966823  0.0966057  0.0900667
+ 0.2  0.196884  0.197561  0.199825  0.203945     0.172787   0.171734   0.171626
+ 0.2  0.191777  0.190879  0.178504  0.178478     0.290126   0.289638   0.291135
+ 0.2  0.193456  0.193855  0.196363  0.189322     0.182514   0.181609   0.185527
+ 0.2  0.193211  0.190665  0.194453  0.198513     0.25789    0.260414   0.261645
+
+julia&gt; sum(result.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p>One can calculate the cumulative wealth during the investment period by using the <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> function:</p><pre><code class="language-julia hljs">julia&gt; sn(result.b, rel_pr)
+252-element Vector{Float64}:
+ 1.0
+ 0.9561680212268941
+ 1.0019306281522522
+ ⋮
+ 1.4741536647632398
+ 1.4768989860970627
+
+julia&gt; sn(result.b, rel_pr) |&gt; last
+1.4768989860970627</code></pre><p>The result indicates that if we had invested in the given period, we would have gained ~47.7% of our wealth. Note that <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> automatically takes the last 251 relative prices in this case.</p><p>Now, let&#39;s investiagte the performance of the algorithm according to some of the prominent metrics:</p><pre><code class="language-julia hljs">julia&gt; results = OPSMetrics(result.b, rel_pr)
+
+            Cumulative Return: 1.4768989860970627
+                          MER: -0.4153297366246913
+                          APY: 0.47919522668054726
+Annualized Standard Deviation: 0.2379066078050204
+      Annualized Sharpe Ratio: 1.9301491073206631
+             Maximum Drawdown: 0.1390668593306162
+                 Calmar Ratio: 3.445790240659086
+
+julia&gt; results.MDD
+0.1390668593306162</code></pre><p>Note that other variants of the algorithm can be used by changing the <code>model</code> parameter. For instance, let&#39;s use the PAMR-1 algorithm (see <a href="../types/#OnlinePortfolioSelection.PAMR1"><code>PAMR1</code></a>, and <a href="../types/#OnlinePortfolioSelection.PAMR"><code>PAMR</code></a>):</p><pre><code class="language-julia hljs">julia&gt; model = PAMR1(0.01);
+
+julia&gt; result = PAMR(rel_pr, eps, model);
+
+julia&gt; results = OPSMetrics(result.b, rel_pr)
+
+            Cumulative Return: 1.4875128237671749
+                          MER: -0.41530107834650865
+                          APY: 0.48986807082085115
+Annualized Standard Deviation: 0.2365856617445457
+      Annualized Sharpe Ratio: 1.9860378154623461
+             Maximum Drawdown: 0.1399713874022588
+                 Calmar Ratio: 3.4997729172537</code></pre><p>In this case, the algorithm has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see <a href="../types/#OnlinePortfolioSelection.PAMR2"><code>PAMR2</code></a>).</p><p>It is worht mentioning that each metric can be accessed individually by writing <code>results.</code> and pressing the <code>Tab</code> key. Note that one can individually investigate the performance of the algorithm regarding each metric. See <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="../funcs/#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="../funcs/#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="../funcs/#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, and <a href="../funcs/#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>. See <a href="../performance_eval/#Performance-evaluation">Performance evaluation</a> section for more information.</p><h2 id="Confidence-Weighted-Mean-Reversion-(CWMR)"><a class="docs-heading-anchor" href="#Confidence-Weighted-Mean-Reversion-(CWMR)">Confidence Weighted Mean Reversion (CWMR)</a><a id="Confidence-Weighted-Mean-Reversion-(CWMR)-1"></a><a class="docs-heading-anchor-permalink" href="#Confidence-Weighted-Mean-Reversion-(CWMR)" title="Permalink"></a></h2><p>Confidence Weighted Mean Reversion (CWMR) [<a href="../refs/#10.1145/2435209.2435213">9</a>] combines the mean reversion principle, which assumes that the relative prices of assets tend to return to their historical or intrinsic mean over time, and the confidence weighted learning technique, which models the portfolio vector as a Gaussian distribution and updates it with confidence bounds. CWMR aims to exploit the power of mean reversion for online portfolio selection, and it can adapt to different market conditions and risk preferences. The paper evaluates the performance of CWMR on various real markets and shows that it outperforms the state-of-the-art techniques (see <a href="../funcs/#OnlinePortfolioSelection.cwmr"><code>cwmr</code></a>). <strong>It is worth mentioning that all variants of this algorithm have been provided through this package.</strong></p><p>Let&#39;s run the algorithm on the real market data. In order to use this algorithm, you have to install <a href="https://github.com/JuliaStats/Distributions.jl"><code>Distributions.jl</code></a> package. After a successful installation and importing, you can use this algorithm. The deterministic versions of the algorithm are known by by CWMR-Var and CWMR-Stdev and the stochastic ones by CWMR-Var-s and CWMR-Stdev-s. Furthermore, mixed variants are denoted by CWMR-Var-Mix and CWMR-Stdev-Mix for deterministic ones, and CWMR-Var-Mix-s and CWMR-Stdev-Mix-s for stochastic ones. Let&#39;s run all the variants of the first method, such as &#39;CWMR-Var&#39;, &#39;CWMR-Stdev&#39;, &#39;CWMR-Var-s&#39; and &#39;CWMR-Stdev-s&#39;:</p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance, Distributions
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;AMZN&quot;];
+
+julia&gt; startdt, enddt = &quot;2019-01-01&quot;, &quot;2019-01-10&quot;;
+
+julia&gt; querry = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker=tickers];
+
+julia&gt; prices = stack(querry) |&gt; permutedims;
+
+julia&gt; rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia&gt; variant, ptf_distrib = CWMRS, Var;
+
+julia&gt; model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.344307  1.0         1.0         0.965464   0.0
+ 0.274593  2.76907e-8  0.0         0.0186898  1.0
+ 0.3811    2.73722e-8  2.23057e-9  0.0158464  2.21487e-7
+
+julia&gt; variant, ptf_distrib = CWMRD, Var;
+
+julia&gt; model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.333333  1.0  1.0  1.0          0.0
+ 0.333333  0.0  0.0  3.00489e-10  1.0
+ 0.333333  0.0  0.0  0.0          0.0
+
+julia&gt; variant, ptf_distrib = CWMRS, Stdev;
+
+julia&gt; model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.340764  1.0         1.0         1.0         0.00107058
+ 0.294578  1.086e-8    1.22033e-9  3.26914e-8  0.998929
+ 0.364658  1.39844e-8  0.0         6.78125e-9  6.94453e-8
+
+julia&gt; variant, ptf_distrib = CWMRD, Stdev;
+
+julia&gt; model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.333333  1.0  1.0  1.0          0.0
+ 0.333333  0.0  0.0  3.00475e-10  1.0
+ 0.333333  0.0  0.0  0.0          0.0
+
+julia&gt; variant, ptf_distrib = CWMRS, Var;
+
+julia&gt; model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.329642  0.853456   0.863553   0.819096  0.0671245
+ 0.338512  0.0667117  0.0694979  0.102701  0.842985
+ 0.331846  0.0798325  0.0669491  0.078203  0.0898904
+
+julia&gt; variant, ptf_distrib = CWMRD, Var;
+
+julia&gt; model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+0.333333  0.866506   0.866111   0.864635   0.0671175
+0.333333  0.0667268  0.0669182  0.0676007  0.865363
+0.333333  0.0667675  0.0669704  0.0677642  0.0675194
+
+julia&gt; variant, ptf_distrib = CWMRS, Stdev;
+
+julia&gt; model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.349565  0.832093   0.807798   0.82296    0.0730128
+ 0.289073  0.0859194  0.102561   0.109303   0.859462
+ 0.361362  0.0819874  0.0896411  0.0677375  0.0675254
+
+julia&gt; variant, ptf_distrib = CWMRD, Stdev;
+
+julia&gt; model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.333333  0.866506   0.866111   0.864635   0.0671175
+ 0.333333  0.0667268  0.0669182  0.0676007  0.865363
+ 0.333333  0.0667675  0.0669704  0.0677642  0.0675194
+
+# Now, let&#39;s pass two different &#39;EG&#39; portfolios as additional expert&#39;s portfolios:
+
+julia&gt; variant, ptf_distrib = CWMRS, Var;
+
+julia&gt; eg1 = eg(rel_pr, eta=0.1).b;
+
+julia&gt; eg2 = eg(rel_pr, eta=0.2).b;
+
+julia&gt; model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib, adt_ptf=[eg1, eg2]);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.318927  0.768507  0.721524  0.753618  0.135071
+ 0.338759  0.111292  0.16003   0.133229  0.741106
+ 0.342314  0.120201  0.118446  0.113154  0.123823</code></pre><p>One can calculate the cumulative wealth during the investment period by using the <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> function:</p><pre><code class="language-julia hljs">julia&gt; sn(model.b, rel_pr)
+6-element Vector{Float64}:
+ 1.0
+ 0.9494421425374454
+ 0.9899730968369733
+ 0.9912079696970942
+ 1.010103241988922 
+ 1.0244230620335244</code></pre><p>The result indicates that if we had invested in the given period, we would have gained ~2.4% of our wealth. Note that <a href="../funcs/#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a> automatically takes the last 6 relative prices in this case. Check out the <a href="../performance_eval/#Performance-evaluation">Performance evaluation</a> section for more information.</p><h2 id="References"><a class="docs-heading-anchor" href="#References">References</a><a id="References-1"></a><a class="docs-heading-anchor-permalink" href="#References" title="Permalink"></a></h2><div class="citation noncanonical"><dl><dt>[4]</dt><dd><div>A. Borodin, R. El-Yaniv and V. Gogan. <em>Can we learn to beat the best stock</em>. <a href="https://doi.org/https://doi.org/10.1613/jair.1336">Advances in Neural Information Processing Systems <strong>16</strong></a> (2003).</div></dd><dt>[5]</dt><dd><div>Z.-R. Lai, P.-Y. Yang, L. Fang and X. Wu. <em>Reweighted Price Relative Tracking System for Automatic Portfolio Optimization</em>. <a href="https://doi.org/https://doi.org/10.1109/TSMC.2018.2852651">IEEE Transactions on Systems, Man, and Cybernetics: Systems <strong>50</strong>, 4349–4361</a> (2020).</div></dd><dt>[6]</dt><dd><div>B. Li and S. C. Hoi. <em>On-Line Portfolio Selection with Moving Average Reversion</em> (2012), <a href="https://arxiv.org/abs/1206.4626">arXiv:1206.4626 [cs.CE]</a>.</div></dd><dt>[7]</dt><dd><div>B. Li, S. C. Hoi, D. Sahoo and Z.-Y. Liu. <em>Moving average reversion strategy for on-line portfolio selection</em>. <a href="https://doi.org/https://doi.org/10.1016/j.artint.2015.01.006">Artificial Intelligence <strong>222</strong>, 104–123</a> (2015).</div></dd><dt>[8]</dt><dd><div>B. Li, P. Zhao, S. C. Hoi and V. Gopalkrishnan. <em>PAMR: Passive aggressive mean reversion strategy for portfolio selection</em>. <a href="https://doi.org/https://doi.org/10.1007/s10994-012-5281-z">Machine Learning <strong>87</strong>, 221–258</a> (2012).</div></dd><dt>[9]</dt><dd><div>B. Li, S. C. Hoi, P. Zhao and V. Gopalkrishnan. <em>Confidence Weighted Mean Reversion Strategy for Online Portfolio Selection</em>. <a href="https://doi.org/https://doi.org/10.1145/2435209.2435213">ACM Trans. Knowl. Discov. Data <strong>7</strong></a> (2013).</div></dd></dl></div></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../benchmark/">« Benchmark</a><a class="docs-footer-nextpage" href="../FW/">Follow the Winner »</a><div class="flexbox-break"></div><p class="footer-message"><a href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl">OnlinePortfolioSelection.jl</a> v2.3.1 docs powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.1.2 on <span class="colophon-date" title="Thursday 9 November 2023 18:56">Thursday 9 November 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

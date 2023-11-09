@@ -33,57 +33,27 @@ Let's run all the variants of the first method, such as `CWMR-Var`, `CWMR-Stdev`
 `CWMR-Var-s` and `CWMR-Stdev-s`:
 
 ```julia
-using OnlinePortfolioSelection, YFinance, Distributions
+julia> using OnlinePortfolioSelection, YFinance, Distributions
 
-tickers = ["AAPL", "MSFT", "AMZN"];
+julia> tickers = ["AAPL", "MSFT", "AMZN"];
 
-startdt, enddt = "2019-01-01", "2019-01-10";
+julia> startdt, enddt = "2019-01-01", "2019-01-10";
 
-querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker=tickers];
+julia> querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker=tickers];
 
-prices = stack(querry) |> permutedims;
+julia> prices = stack(querry) |> permutedims;
 
-rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
 
-variant, ptf_distrib = CWMRS, Var;
+julia> variant, ptf_distrib = CWMRS, Var;
 
-model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+julia> model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
 
-model.b
+julia> model.b
 3×5 Matrix{Float64}:
  0.344307  1.0         1.0         0.965464   0.0
  0.274593  2.76907e-8  0.0         0.0186898  1.0
  0.3811    2.73722e-8  2.23057e-9  0.0158464  2.21487e-7
-
-variant, ptf_distrib = CWMRD, Var;
-
-model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
-
-model.b
-3×5 Matrix{Float64}:
- 0.333333  1.0  1.0  1.0          0.0
- 0.333333  0.0  0.0  3.00489e-10  1.0
- 0.333333  0.0  0.0  0.0          0.0
-
-variant, ptf_distrib = CWMRS, Stdev;
-
-model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
-
-model.b
-3×5 Matrix{Float64}:
- 0.340764  1.0         1.0         1.0         0.00107058
- 0.294578  1.086e-8    1.22033e-9  3.26914e-8  0.998929
- 0.364658  1.39844e-8  0.0         6.78125e-9  6.94453e-8
-
-variant, ptf_distrib = CWMRD, Stdev;
-
-model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
-
-model.b
-3×5 Matrix{Float64}:
- 0.333333  1.0  1.0  1.0          0.0
- 0.333333  0.0  0.0  3.00475e-10  1.0
- 0.333333  0.0  0.0  0.0          0.0
 ```
 
 # Method 2
@@ -120,63 +90,36 @@ Let's run all the variants of the second method, such as `CWMR-Var-Mix`, `CWMR-S
 `CWMR-Var-s-Mix` and `CWMR-Stdev-s-Mix`:
 
 ```julia
-variant, ptf_distrib = CWMRS, Var;
+julia> variant, ptf_distrib = CWMRS, Var;
 
-model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+julia> model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
 
-model.b
+julia> model.b
 3×5 Matrix{Float64}:
  0.329642  0.853456   0.863553   0.819096  0.0671245
  0.338512  0.0667117  0.0694979  0.102701  0.842985
  0.331846  0.0798325  0.0669491  0.078203  0.0898904
-
-variant, ptf_distrib = CWMRD, Var;
-
-model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
-
-model.b
-0.333333  0.866506   0.866111   0.864635   0.0671175
-0.333333  0.0667268  0.0669182  0.0676007  0.865363
-0.333333  0.0667675  0.0669704  0.0677642  0.0675194
-
-variant, ptf_distrib = CWMRS, Stdev;
-
-model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
-
-model.b
-3×5 Matrix{Float64}:
- 0.349565  0.832093   0.807798   0.82296    0.0730128
- 0.289073  0.0859194  0.102561   0.109303   0.859462
- 0.361362  0.0819874  0.0896411  0.0677375  0.0675254
-
-variant, ptf_distrib = CWMRD, Stdev;
-
-model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
-
-model.b
-3×5 Matrix{Float64}:
- 0.333333  0.866506   0.866111   0.864635   0.0671175
- 0.333333  0.0667268  0.0669182  0.0676007  0.865363
- 0.333333  0.0667675  0.0669704  0.0677642  0.0675194
 ```
 
 Now, let's pass two different 'EG' portfolios as additional expert's portfolios:
 
 ```julia
-variant, ptf_distrib = CWMRS, Var;
+julia> variant, ptf_distrib = CWMRS, Var;
 
-eg1 = eg(rel_pr, eta=0.1).b;
+julia> eg1 = eg(rel_pr, eta=0.1).b;
 
-eg2 = eg(rel_pr, eta=0.2).b;
+julia> eg2 = eg(rel_pr, eta=0.2).b;
 
-model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib, adt_ptf=[eg1, eg2]);
+julia> model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib, adt_ptf=[eg1, eg2]);
 
-model.b
+julia> model.b
 3×5 Matrix{Float64}:
  0.318927  0.768507  0.721524  0.753618  0.135071
  0.338759  0.111292  0.16003   0.133229  0.741106
  0.342314  0.120201  0.118446  0.113154  0.123823
 ```
+
+See [Confidence Weighted Mean Reversion (CWMR)](@ref) for more informaton and examples.
 
 # References
 > [Confidence Weighted Mean Reversion Strategy for Online Portfolio Selection](http://dx.doi.org/10.1145/2435209.2435213)

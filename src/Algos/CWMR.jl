@@ -6,8 +6,8 @@
 Run the Confidence Weighted Mean Reversion (CWMR) algorithm.
 
 # Methods
-- cwmr(rel_pr::AbstractMatrix, ϕ::AbstractFloat, ϵ::AbstractFloat, variant::Type{<:CWMRVariant}, ptfdis::Type{<:PtfDisVariant})
-- cwmr(rel_pr::AbstractMatrix, ϕ::AbstractVector, ϵ::AbstractVector, variant::Type{<:CWMRVariant}, ptfdis::Type{<:PtfDisVariant}; adt_ptf::Union{Nothing, AbstractVector{<:AbstractMatrix}}=nothing)
+- `cwmr(rel_pr::AbstractMatrix, ϕ::AbstractFloat, ϵ::AbstractFloat, variant::Type{<:CWMRVariant}, ptfdis::Type{<:PtfDisVariant})`
+- `cwmr(rel_pr::AbstractMatrix, ϕ::AbstractVector, ϵ::AbstractVector, variant::Type{<:CWMRVariant}, ptfdis::Type{<:PtfDisVariant}; adt_ptf::Union{Nothing, AbstractVector{<:AbstractMatrix}}=nothing)`
 
 # Method 1
 
@@ -24,7 +24,7 @@ Through this method, we can run the following variants of the CWMR algorithm: `C
 !!! warning "Beware!"
     `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
 
-    ## Returns
+## Returns
 - `OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object that contains the result of running the algorithm.
 
 ## Example
@@ -68,6 +68,9 @@ Through this method, we can run the following variants of the CWMR algorithm: \
 - `variant::Type{<:CWMRVariant}`: Variant of the algorithm. It can be `CWMRD` or `CWMRS`.
 - `ptfdis::Type{<:PtfDisVariant}`: Portfolio distribution. It can be `Var` or `Stdev`.
 
+!!! warning "Beware!"
+    `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
+
 ## Keyword Arguments
 - `adt_ptf::Union{Nothing, AbstractVector{<:AbstractMatrix}}=nothing`: A vector of \
 additional expert's portfolios.
@@ -78,9 +81,6 @@ additional expert's portfolios.
     of universal strategies, such as 'UP', 'EG', 'ONS', etc.
 
 See [`eg`](@ref), and [`up`](@ref) for more details.
-
-!!! warning "Beware!"
-    `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
 
 ## Returns
 - `OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object that contains the result of running the algorithm.

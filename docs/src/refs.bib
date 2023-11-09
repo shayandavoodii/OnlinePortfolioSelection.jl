@@ -235,3 +235,23 @@ author = {Wenzhi Xi and Zhanfeng Li and Xinyuan Song and Hanwen Ning},
 keywords = {Portfolio optimization, Online learning, High-dimensional covariance matrix, Ensemble learning, High-dimensional short-term data},
 abstract = {Online portfolio selection (OPS) has received increasing attention from machine learning and quantitative finance communities. Despite their effectiveness, the pioneering OPS methods have several key limitations. First, price predictions are usually based on predetermined trends, which is inadequate for a fast-changing market patterns. Second, each asset is treated individually, ignoring the pervading relevance among the assets. Third, the risk terms are usually missing or inappropriate in optimizations. This paper proposes a novel OPS method, namely, the online low-dimension ensemble method, to overcome the limitations. Motivated by the stylized facts for the co-movements of assets, the financial market is regarded as a high-dimensional dynamical system (HDS), and a large number of low-dimensional subsystems (LDSs) are randomly generated from the HDS to extract the correlation information among the assets. The assets’ price predictions are first made using these LDSs and then aggregated to formulate the final prediction using ensemble learning techniques. Thanks to the particular merits brought by our predicting scheme, we also develop a novel high-dimensional covariance matrix estimation/prediction method for short-term data, efficiently assessing the instantaneous risk of the projected portfolios. Compared with state-of-the-art methods, our approach obtains more accurate predictions as the correlation information is fully exploited. With the predictive instantaneous risk assessment, a more appropriate optimization problem is proposed, substantially improving the OPS setting and leading to significantly better investment performance. Therefore, this study develops a flexible and promising approach to learning fast-changing market patterns and demonstrates that the high-dimensional feature of the market is a crucial information source for financial modeling with short-term data rather than a barrier in the conventional sense. Extensive experiments on real-world datasets are conducted to illustrate our method further.}
 }
+
+@article{10.1145/2435209.2435213,
+author = {Li, Bin and Hoi, Steven C. H. and Zhao, Peilin and Gopalkrishnan, Vivekanand},
+title = {Confidence Weighted Mean Reversion Strategy for Online Portfolio Selection},
+year = {2013},
+issue_date = {March 2013},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {7},
+number = {1},
+issn = {1556-4681},
+url = {https://doi.org/10.1145/2435209.2435213},
+doi = {10.1145/2435209.2435213},
+abstract = {Online portfolio selection has been attracting increasing attention from the data mining and machine learning communities. All existing online portfolio selection strategies focus on the first order information of a portfolio vector, though the second order information may also be beneficial to a strategy. Moreover, empirical evidence shows that relative stock prices may follow the mean reversion property, which has not been fully exploited by existing strategies. This article proposes a novel online portfolio selection strategy named Confidence Weighted Mean Reversion (CWMR). Inspired by the mean reversion principle in finance and confidence weighted online learning technique in machine learning, CWMR models the portfolio vector as a Gaussian distribution, and sequentially updates the distribution by following the mean reversion trading principle. CWMR’s closed-form updates clearly reflect the mean reversion trading idea. We also present several variants of CWMR algorithms, including a CWMR mixture algorithm that is theoretical universal. Empirically, CWMR strategy is able to effectively exploit the power of mean reversion for online portfolio selection. Extensive experiments on various real markets show that the proposed strategy is superior to the state-of-the-art techniques. The experimental testbed including source codes and data sets is available online.},
+journal = {ACM Trans. Knowl. Discov. Data},
+month = {mar},
+articleno = {4},
+numpages = {38},
+keywords = {Portfolio selection, online learning, confidence weighted learning, mean reversion}
+}

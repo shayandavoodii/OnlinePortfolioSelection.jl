@@ -326,3 +326,17 @@ function progressbar(io, ntimes::S, current::S) where S<:Int
   percentage = round(val*100, digits=2)
   printstyled(io, "┣$(joined)┫ $percentage% |$current/$ntimes \r")
 end
+
+function Δfunc(a::T, b::T, c::T) where T<:AbstractFloat
+  Δ = b^2-4*a*c
+  if iszero(Δ)
+    γ = -b/(2a)
+    return max(0., γ)
+  elseif Δ > 0
+    γₜ₁ = (-b+sqrt(Δ))/(2a)
+    γₜ₂ = (-b-sqrt(Δ))/(2a)
+    return max(0., γₜ₁, γₜ₂)
+  else
+    return 0.
+  end
+end

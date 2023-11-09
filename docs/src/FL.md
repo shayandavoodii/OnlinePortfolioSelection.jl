@@ -6,6 +6,7 @@ The "Follow the Loser" (FL) strategy, introduced by [borodin2003can](@citet), in
 2. Anti-Correlation (Anticor)
 3. Online Moving Average Reversion (OLMAR)
 4. Passive Aggressive Mean Reversion (PAMR)
+5. Confidence Weighted Mean Reversion (CWMR)
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
 
@@ -344,6 +345,137 @@ Annualized Standard Deviation: 0.2365856617445457
 In this case, the algorithm has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see [`PAMR2`](@ref)).
 
 It is worht mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+
+## Confidence Weighted Mean Reversion (CWMR)
+
+Confidence Weighted Mean Reversion (CWMR) [10.1145/2435209.2435213](@cite) combines the mean reversion principle, which assumes that the relative prices of assets tend to return to their historical or intrinsic mean over time, and the confidence weighted learning technique, which models the portfolio vector as a Gaussian distribution and updates it with confidence bounds. CWMR aims to exploit the power of mean reversion for online portfolio selection, and it can adapt to different market conditions and risk preferences. The paper evaluates the performance of CWMR on various real markets and shows that it outperforms the state-of-the-art techniques (see [`cwmr`](@ref)). **It is worth mentioning that all variants of this algorithm have been provided through this package.**
+
+Let's run the algorithm on the real market data. In order to use this algorithm, you have to install [`Distributions.jl`](https://github.com/JuliaStats/Distributions.jl) package. After a successful installation and importing, you can use this algorithm. The deterministic versions of the algorithm are known by by CWMR-Var and CWMR-Stdev and the stochastic ones by CWMR-Var-s and CWMR-Stdev-s. Furthermore, mixed variants are denoted by CWMR-Var-Mix and CWMR-Stdev-Mix for deterministic ones, and CWMR-Var-Mix-s and CWMR-Stdev-Mix-s for stochastic ones. Let's run all the variants of the first method, such as 'CWMR-Var', 'CWMR-Stdev', 'CWMR-Var-s' and 'CWMR-Stdev-s':
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance, Distributions
+
+julia> tickers = ["AAPL", "MSFT", "AMZN"];
+
+julia> startdt, enddt = "2019-01-01", "2019-01-10";
+
+julia> querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker=tickers];
+
+julia> prices = stack(querry) |> permutedims;
+
+julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia> variant, ptf_distrib = CWMRS, Var;
+
+julia> model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia> model.b
+3×5 Matrix{Float64}:
+ 0.344307  1.0         1.0         0.965464   0.0
+ 0.274593  2.76907e-8  0.0         0.0186898  1.0
+ 0.3811    2.73722e-8  2.23057e-9  0.0158464  2.21487e-7
+
+julia> variant, ptf_distrib = CWMRD, Var;
+
+julia> model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia> model.b
+3×5 Matrix{Float64}:
+ 0.333333  1.0  1.0  1.0          0.0
+ 0.333333  0.0  0.0  3.00489e-10  1.0
+ 0.333333  0.0  0.0  0.0          0.0
+
+julia> variant, ptf_distrib = CWMRS, Stdev;
+
+julia> model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia> model.b
+3×5 Matrix{Float64}:
+ 0.340764  1.0         1.0         1.0         0.00107058
+ 0.294578  1.086e-8    1.22033e-9  3.26914e-8  0.998929
+ 0.364658  1.39844e-8  0.0         6.78125e-9  6.94453e-8
+
+julia> variant, ptf_distrib = CWMRD, Stdev;
+
+julia> model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia> model.b
+3×5 Matrix{Float64}:
+ 0.333333  1.0  1.0  1.0          0.0
+ 0.333333  0.0  0.0  3.00475e-10  1.0
+ 0.333333  0.0  0.0  0.0          0.0
+
+julia> variant, ptf_distrib = CWMRS, Var;
+
+julia> model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia> model.b
+3×5 Matrix{Float64}:
+ 0.329642  0.853456   0.863553   0.819096  0.0671245
+ 0.338512  0.0667117  0.0694979  0.102701  0.842985
+ 0.331846  0.0798325  0.0669491  0.078203  0.0898904
+
+julia> variant, ptf_distrib = CWMRD, Var;
+
+julia> model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia> model.b
+3×5 Matrix{Float64}:
+0.333333  0.866506   0.866111   0.864635   0.0671175
+0.333333  0.0667268  0.0669182  0.0676007  0.865363
+0.333333  0.0667675  0.0669704  0.0677642  0.0675194
+
+julia> variant, ptf_distrib = CWMRS, Stdev;
+
+julia> model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia> model.b
+3×5 Matrix{Float64}:
+ 0.349565  0.832093   0.807798   0.82296    0.0730128
+ 0.289073  0.0859194  0.102561   0.109303   0.859462
+ 0.361362  0.0819874  0.0896411  0.0677375  0.0675254
+
+julia> variant, ptf_distrib = CWMRD, Stdev;
+
+julia> model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia> model.b
+3×5 Matrix{Float64}:
+ 0.333333  0.866506   0.866111   0.864635   0.0671175
+ 0.333333  0.0667268  0.0669182  0.0676007  0.865363
+ 0.333333  0.0667675  0.0669704  0.0677642  0.0675194
+
+# Now, let's pass two different 'EG' portfolios as additional expert's portfolios:
+
+julia> variant, ptf_distrib = CWMRS, Var;
+
+julia> eg1 = eg(rel_pr, eta=0.1).b;
+
+julia> eg2 = eg(rel_pr, eta=0.2).b;
+
+julia> model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib, adt_ptf=[eg1, eg2]);
+
+julia> model.b
+3×5 Matrix{Float64}:
+ 0.318927  0.768507  0.721524  0.753618  0.135071
+ 0.338759  0.111292  0.16003   0.133229  0.741106
+ 0.342314  0.120201  0.118446  0.113154  0.123823
+```
+
+One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
+
+```julia
+julia> sn(model.b, rel_pr)
+6-element Vector{Float64}:
+ 1.0
+ 0.9494421425374454
+ 0.9899730968369733
+ 0.9912079696970942
+ 1.010103241988922 
+ 1.0244230620335244
+```
+
+The result indicates that if we had invested in the given period, we would have gained ~2.4% of our wealth. Note that [`sn`](@ref) automatically takes the last 6 relative prices in this case. Check out the [Performance evaluation](@ref) section for more information.
 
 ## References
 

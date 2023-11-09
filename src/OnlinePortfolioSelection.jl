@@ -10,6 +10,7 @@ using DataStructures
 include("Types/Algorithms.jl")
 include("Types/Clustering.jl")
 include("Types/PAMR.jl")
+include("Types/CWMR.jl")
 include("Algos/CRP.jl")
 include("Algos/CW-OGD.jl")
 include("Algos/EG.jl")
@@ -27,15 +28,17 @@ include("Algos/uniform.jl")
 include("Algos/PAMR.jl")
 include("Algos/CLUSLOG.jl")
 include("Algos/PPT.jl")
+include("Algos/CWMR.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog, pamr, ppt
+export uniform, cluslog, pamr, ppt, cwmr
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm, KMNLOG, KMDLOG, ClusLogVariant, PAMR, PAMR1, PAMR2
+export CWMRD, CWMRS, Var, Stdev
 export opsmethods
 
 @setup_workload begin
@@ -93,6 +96,7 @@ function opsmethods()
   println("   ClusLog: Clustering and logarithmic expected return - Call `cluslog`")
   println("      PAMR: Passive Aggressive Mean Reversion - Call `pamr`")
   println("       PPT: Peak Price Tracking - Call `ppt`")
+  println("      CWMR: Confidence Weighted Mean Reversion - Call `cwmr`")
 end
 # COV_EXCL_STOP
 

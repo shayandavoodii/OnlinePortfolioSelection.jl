@@ -76,7 +76,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Price Peak Tracking (PPT)
 
-The Price Peak Tracking (PPT) algorithm ([7942104](@citet)) is a novel linear learning system for online portfolio selection, based on the idea of tracking control. The algorithm uses a transform function that aggressively tracks the increasing power of different assets, and allocates more investment to the better performing ones. The PPT objective can be solved by a fast backpropagation algorithm, which is suitable for large-scale and time-limited applications, such as high-frequency trading. The algorithm has been shown to outperform other state-of-the-art systems in computational time, cumulative wealth, and risk-adjusted metrics (See [`ppt`](@ref)).
+The Price Peak Tracking (PPT) algorithm [7942104](@cite) is a novel linear learning system for online portfolio selection, based on the idea of tracking control. The algorithm uses a transform function that aggressively tracks the increasing power of different assets, and allocates more investment to the better performing ones. The PPT objective can be solved by a fast backpropagation algorithm, which is suitable for large-scale and time-limited applications, such as high-frequency trading. The algorithm has been shown to outperform other state-of-the-art systems in computational time, cumulative wealth, and risk-adjusted metrics (See [`ppt`](@ref)).
 
 Let's run the algorithm on the real market data.
 

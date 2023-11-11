@@ -234,7 +234,7 @@ It is worht mentioning that each metric can be accessed individually by writing 
 
 ## Passive Aggressive Mean Reversion (PAMR)
 
-The Passive Aggressive Mean Reversion (PAMR) algorithm ([Li2012-ks](@citet)) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PAMR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PAMR is expressed as:
+The Passive Aggressive Mean Reversion (PAMR) algorithm [Li2012-ks](@cite) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PAMR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PAMR is expressed as:
 
 ```math
 \tau_t = \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2}}

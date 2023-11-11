@@ -29,13 +29,14 @@ include("Algos/PAMR.jl")
 include("Algos/CLUSLOG.jl")
 include("Algos/PPT.jl")
 include("Algos/CWMR.jl")
+include("Algos/CAEG.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog, pamr, ppt, cwmr
+export uniform, cluslog, pamr, ppt, cwmr, caeg
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
@@ -97,6 +98,7 @@ function opsmethods()
   println("      PAMR: Passive Aggressive Mean Reversion - Call `pamr`")
   println("       PPT: Peak Price Tracking - Call `ppt`")
   println("      CWMR: Confidence Weighted Mean Reversion - Call `cwmr`")
+  println("      CAEG: Continuous Aggregating Exponential Gradient - Call `caeg`")
 end
 # COV_EXCL_STOP
 

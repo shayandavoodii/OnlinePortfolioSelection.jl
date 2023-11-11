@@ -16,27 +16,27 @@ Run CAEG algorithm.
 
 # Examples
 ```julia
-using OnlinePortfolioSelection, YFinance
+julia> using OnlinePortfolioSelection, YFinance
 
-tickers = ["AAPL", "MSFT", "GOOG"];
+julia> tickers = ["AAPL", "MSFT", "GOOG"];
 
-startdt, enddt = "2020-1-1", "2020-1-10";
+julia> startdt, enddt = "2020-1-1", "2020-1-10";
 
-open_querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["open"] for ticker ∈ tickers];
+julia> open_querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["open"] for ticker ∈ tickers];
 
-open_ = stack(open_querry) |> permutedims;
+julia> open_ = stack(open_querry) |> permutedims;
 
-close_querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker ∈ tickers];
+julia> close_querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker ∈ tickers];
 
-close_ = stack(close_querry) |> permutedims;
+julia> close_ = stack(close_querry) |> permutedims;
 
-rel_pr = close_./open_;
+julia> rel_pr = close_./open_;
 
-learning_rates = [0.02, 0.05];
+julia> learning_rates = [0.02, 0.05];
 
-model = caeg(rel_pr, learning_rates);
+julia> model = caeg(rel_pr, learning_rates);
 
-model.b
+julia> model.b
 3×6 Matrix{Float64}:
  0.333333  0.333322  0.333286  0.333271  0.333287  0.333368
  0.333333  0.333295  0.333271  0.333171  0.333123  0.333076

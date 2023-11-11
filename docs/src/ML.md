@@ -73,10 +73,10 @@ It is worth mentioning that each metric can be accessed individually by writing 
 
 ## Continuous Aggregating Exponential Gradient (CAEG)
 
-[doi:10.1080/01605682.2020.1848358](@cite) presents a new online portfolio strategy that aggregates multiple exponential gradient strategies with different learning rates using the weak aggregating algorithm1. The strategy has a universal property that guarantees its average logarithmic growth rate to be the same as the best constant rebalanced portfolio in hindsight. The authors combine the portfolio pool using the following formula:
+[doi:10.1080/01605682.2020.1848358](@cite) presents a new online portfolio strategy that aggregates multiple exponential gradient strategies with different learning rates using the weak aggregating algorithm. The strategy has a universal property that guarantees its average logarithmic growth rate to be the same as the best constant rebalanced portfolio in hindsight. The authors combine the portfolio pool using the following formula:
 
 ```math
-\[{b_{t + 1}} = \frac{{\sum\nolimits_{\eta  \in \tilde E} {{b_{t + 1}}\left( \eta  \right){{\left( {{S_t}\left( \eta  \right)} \right)}^{\frac{1}{{\sqrt {t + 1} }}}}} }}{{\sum\nolimits_{\eta  \in \tilde E} {{{\left( {{S_t}\left( \eta  \right)} \right)}^{\frac{1}{{\sqrt {t + 1} }}}}} }}\]
+{b_{t + 1}} = \frac{{\sum\nolimits_{\eta  \in \tilde E} {{b_{t + 1}}\left( \eta  \right){{\left( {{S_t}\left( \eta  \right)} \right)}^{\frac{1}{{\sqrt {t + 1} }}}}} }}{{\sum\nolimits_{\eta  \in \tilde E} {{{\left( {{S_t}\left( \eta  \right)} \right)}^{\frac{1}{{\sqrt {t + 1} }}}}} }}
 ```
 
 ### Run CAEG

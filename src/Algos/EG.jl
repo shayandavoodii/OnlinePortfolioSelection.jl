@@ -1,5 +1,5 @@
 """
-    eg(rel_pr::Matrix{Float64}; eta=0.05)
+    eg(rel_pr::AbstractMatrix; eta::AbstractFloat=0.05)
 
 Exponential Gradient (EG) algorithm.
 
@@ -8,10 +8,10 @@ using the given historical prices and parameters and return
 an EG object.
 
 # Arguments
-- `rel_pr::Matrix{Float64}`: Historical relative prices.
+- `rel_pr::AbstractMatrix`: Historical relative prices.
 
 ## Keyword Arguments
-- `eta=0.05`: Learning rate.
+- `eta::AbstractFloat=0.05`: Learning rate.
 
 !!! warning "Beware!"
     `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
@@ -41,7 +41,7 @@ true
 # References
 > [On-Line Portfolio Selection Using Multiplicative Updates](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058)
 """
-function eg(rel_pr::Matrix{Float64}; eta=0.05)
+function eg(rel_pr::AbstractMatrix; eta::AbstractFloat=0.05)
   # Calculate relative prices
   n_assets, n_periods = size(rel_pr)
 

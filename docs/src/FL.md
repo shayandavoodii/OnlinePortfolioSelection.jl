@@ -160,77 +160,121 @@ It is worth mentioning that each metric can be accessed individually by writing 
 
 ## Online Moving Average Reversion (OLMAR)
 
-The OLMAR algorithm, short for On-Line Moving Average Reversion [li2012online](@cite), introduces a novel approach to online portfolio selection. It incorporates multi-period mean reversion by utilizing “Moving Average Reversion” (MAR), which predicts next price relatives through moving averages. As far as the available literature indicates, OLMAR is the initial algorithm to employ moving averages within the framework of online portfolio selection [LI2015104](@cite). While relatively straightforward, OLMAR includes a reasonable updating strategy and has been empirically validated through extensive real-market experiments.
-
-See [`olmar`](@ref).
+The OLMAR algorithm, short for On-Line Moving Average Reversion [li2012online](@cite), introduces a novel approach to online portfolio selection. It incorporates multi-period mean reversion by utilizing “Moving Average Reversion” (MAR), which predicts next price relatives through moving averages. As far as the available literature indicates, OLMAR is the initial algorithm to employ moving averages within the framework of online portfolio selection [LI2015104](@cite). While relatively straightforward, OLMAR includes a reasonable updating strategy and has been empirically validated through extensive real-market experiments. [li2012online](@citet) proposed two different variant of the algorithm, namely 'OLMAR' and 'BAH(OLMAR)'. The difference between these two variants is that the latter one defines several OLMAR experts with different window sizes and combines them to achieve a final portfolio. **In this package, both variants are provided (See [`olmar`](@ref)).**
 
 ### Run OLMAR
 
-Let's run the algorithm on the real market data. In this case, the data is collected as noted in the [Fetch Data](@ref) section.
+Let's run the algorithm on the real market data:
 
 ```julia
-juila> using OnlinePortfolioSelection
+julia> using OnlinePortfolioSelection, YFinance
 
-julia> size(prices)
-(17, 5)
+julia> tickers = ["AAPL", "MSFT", "AMZN", "GOOG", "META"];
 
-# OnlinePortfolioSelection suppose that the data is in the form of a matrix
-# where each row is the price vector of the assets at a specific time period.
-julia> prices = prices |> permutedims;
+julia> startdt, enddt = "2019-01-01", "2020-01-01"
 
-julia> window_size = 3;
-julia> eps = 2;
+julia> querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
 
-# Let's run the algorithm for the last 15 days of the data.
-julia> m_olmar = olmar(prices[:, end-14:end], eps, window_size);
+julia> prices = stack(querry) |> permutedims;
 
-# Get the weights of the assets for each day
-juila> m_olmar.b
-5×15 Matrix{Float64}:
- 0.2  0.2  0.0  0.0  0.0  0.0  …  0.0  0.0  0.0  0.0
- 0.2  0.2  0.0  0.0  1.0  0.0     1.0  0.0  0.0  0.147231   
- 0.2  0.2  0.0  0.0  0.0  1.0     0.0  0.0  0.0  0.0        
- 0.2  0.2  1.0  1.0  0.0  0.0     0.0  1.0  1.0  0.0        
- 0.2  0.2  0.0  0.0  0.0  0.0     0.0  0.0  0.0  0.852769
+julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia> horizon = 5;
+julia> windows = 3;
+julia> epsilon = 4;
+
+julia> m_olmar = olmar(rel_pr, horizon, windows, epsilon);
+
+julia> m_olmar.b
+5×5 Matrix{Float64}:
+ 0.2  1.0         0.484825  1.97835e-8  0.0
+ 0.2  1.95724e-8  0.515175  0.0         0.0
+ 0.2  0.0         0.0       1.0         1.0
+ 0.2  0.0         0.0       0.0         0.0
+ 0.2  0.0         0.0       0.0         1.9851e-8
 ```
 
 One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
-julia> sn(m_olmar.b, rel_price)
-16-element Vector{Float64}:
+julia> sn(m_olmar.b, rel_pr)
+6-element Vector{Float64}:
  1.0
- 1.0026929997309684
- 0.9931968903246916
- 0.9844182209638911
- 0.979271976499212
- ⋮
- 0.9390854420408513
- 0.9192499651820158
- 0.89507547776031
- 0.886526969495664
+ 0.9979181552890171
+ 1.017717331692027
+ 1.0184883306518602
+ 1.0060091504010344
+ 1.0065266263361812
 ```
 
-The outcome highlights a potential loss of approximately 11.3% in our wealth had an investment been made during the specified period. It's essential to note that [`sn`](@ref) automatically considers the last 15 relative prices in this particular case.
-Next, let's proceed to evaluate the algorithm's performance based on several key metrics.
+The outcome highlights a potential gain of ~0.7% if an investment were made during the provided period. Note that in this instance, [`sn`](@ref) automatically considers the last 5 (`horizon=5`) relative prices. Next, let's examine the algorithm's performance based on several significant metrics.
 
 ```julia
-julia> results = OPSMetrics(m_olmar.b, rel_price)
-        
-            Cumulative Return: 0.886526969495664
-                          APY: -0.8678020275925177
-Annualized Standard Deviation: 0.20186187705069908
-      Annualized Sharpe Ratio: -4.398066839384139
-             Maximum Drawdown: 0.11585403534927716
-                 Calmar Ratio: -7.490477349159786
+julia> results = OPSMetrics(m_olmar.b, rel_pr)
+
+            Cumulative Return: 1.0065266263361812
+        Mean Excessive Return: -0.009414275874519928
+  Annualized Percentage Yield: 0.38801292579932145
+Annualized Standard Deviation: 0.18519745676483274
+      Annualized Sharpe Ratio: 1.9871381185683952
+             Maximum Drawdown: 0.012252649220672674
+                 Calmar Ratio: 31.66767601121445
 
 julia> results.MDD
-0.11585403534927716
+0.012252649220672674
 ```
 
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key.
+
+### Run BAH(OLMAR)
+
+In order to run this variant, you have to pass a `Vector` of window sizes to the method as the third positional argument. Let's run the algorithm on the real market data:
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["AAPL", "MSFT", "AMZN", "GOOG", "META"];
+
+julia> startdt, enddt = "2019-01-01", "2020-01-01"
+
+julia> querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
+
+julia> prices = stack(querry) |> permutedims;
+
+julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia> horizon = 5;
+julia> windows = [3, 5, 7];
+julia> epsilon = 4;
+
+julia> model = olmar(rel_pr, horizon, windows, epsilon);
+
+julia> model.b
+5×5 Matrix{Float64}:
+ 0.2  0.2  0.333333    0.162297  1.33072e-8
+ 0.2  0.2  1.31177e-8  0.555158  0.0
+ 0.2  0.2  6.57906e-9  0.0       0.667358
+ 0.2  0.2  0.0         0.0       0.332642
+ 0.2  0.2  0.666667    0.282545  0.0
+```
+
+Finally, let's assess the algorithm's performance based on several key metrics.
+
+```julia
+julia> results = OPSMetrics(model.b, rel_pr)
+
+            Cumulative Return: 1.0099455075377595
+        Mean Excessive Return: -0.008744240554973382
+  Annualized Percentage Yield: 0.6467067326806284
+Annualized Standard Deviation: 0.16828625245124013
+      Annualized Sharpe Ratio: 3.7240518672920873
+             Maximum Drawdown: 0.008831430868281412
+                 Calmar Ratio: 73.22785427708125
+```
+
+As can be seen, 'BAH(OLMAR)' has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio compared to the 'OLMAR' algorithm. However, the maximum drawdown is slightly higher than the 'OLMAR' algorithm. In this case, 'BAH(OLMAR)' algorithm performed better than the 'OLMAR' algorithm in terms of the 'Mean Excessive Return' and 'Annualized Percentage Yield' metrics.
+
+Note that one can individually investigate the performance of the algorithm regarding each metric. See [Performance evaluation](@ref) section for more information.
 
 ## Passive Aggressive Mean Reversion (PAMR)
 

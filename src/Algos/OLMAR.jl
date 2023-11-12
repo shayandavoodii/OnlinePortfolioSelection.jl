@@ -61,7 +61,7 @@ function olmar(adj_close::Matrix{Float64}, ϵ::Int, ω::Int)::OPSAlgorithm
   return OPSAlgorithm(nassets, b, "OLMAR")
 end
 
-function pred_relpr(relpr::Matrix{Float64}, ω::Int)::Vector{Float64}
+function pred_relpr(relpr::AbstractMatrix, ω::Int)
   n = size(relpr, 2)
   n < ω && return relpr[:, end]
   return 1/ω .* sum(relpr[:, idx]./relpr[:, end] for idx=n:-1:n-ω+1)

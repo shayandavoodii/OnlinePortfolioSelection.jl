@@ -1,5 +1,5 @@
 """
-    olmar(rel_pr::AbstractMatrix, ϵ::Int, ω::Int)::OPSAlgortihm
+    olmar(rel_pr::AbstractMatrix, horizon::Int, ω::Int, ϵ::Int)
 
 Run the Online Moving Average Reversion algorithm.
 
@@ -13,7 +13,7 @@ Run the Online Moving Average Reversion algorithm.
     `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgortihm`: An [`OPSAlgortihm`](@ref) object.
+- `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
 # Example
 ```julia

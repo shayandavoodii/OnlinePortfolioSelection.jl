@@ -3,24 +3,28 @@ adj1 = [
   1.215 1.111 1.215 1.35614 1.454 1.2158 1.32561
 ]
 adj2 = rand(3, 20);
+n_assets_adj1 = size(adj1, 1)
+n_assets_adj2 = size(adj2, 1)
+horizon = 3
 
 @testset "OLMAR.jl" begin
   @testset "All good" begin
-    model = olmar(adj1, 2, 3)
+    model = olmar(adj1, horizon, 3, 2)
 
     @test all(sum(model.b, dims=1) .≈ 1.0)
 
-    @test size(model.b) == size(adj1)
+    @test size(model.b) == (n_assets_adj1, horizon)
 
-    model = olmar(adj2, 2, 3)
+    model = olmar(adj2, horizon, 3, 2)
 
     @test all(sum(model.b, dims=1) .≈ 1.0)
 
-    @test size(model.b) == size(adj2)
+    @test size(model.b) == (n_assets_adj2, horizon)
   end
 
   @testset "Errors" begin
-    @test_throws ArgumentError olmar(adj1, 1, 3)
-    @test_throws ArgumentError olmar(adj1, 2, 2)
+    @test_throws ArgumentError olmar(adj1, horizon, 3, 1)
+    @test_throws ArgumentError olmar(adj1, horizon, 2, 2)
+    @test_throws ArgumentError olmar(adj1, 6, 3, 2)
   end
 end

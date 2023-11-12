@@ -103,3 +103,8 @@ end
   @info "Run unit tests in CAEG.jl"
   include("CAEG.jl")
 end
+
+@testset "IndivFuncs.jl" begin
+  @info "Run unit tests in IndivFuncs.jl"
+  include("IndivFuncs.jl")
+end

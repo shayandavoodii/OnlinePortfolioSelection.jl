@@ -340,3 +340,75 @@ function Δfunc(a::T, b::T, c::T) where T<:AbstractFloat
     return 0.
   end
 end
+
+"""
+    positify(x::AbstractVecOrMat)
+    positify!(x::AbstractVecOrMat)
+
+# Method 1
+
+```julia
+positify(x::AbstractVecOrMat)
+```
+Maintain the positive elements of `x` and set the negative elements to 0.
+
+# Arguments
+- `x::VecOrMat`: A vector or matrix.
+
+# Returns
+- `::VecOrMat`: A vector or matrix with positive elements.
+
+# Example
+```julia
+julia> x = [-1, 2, -3, 4];
+
+julia> positify(x)
+4-element Vector{Int64}:
+ 0
+ 2
+ 0
+ 4
+
+julia> x = [-1.1 2.2 -3.3 4.4; 5.5 -6.6 7.7 -8.8]
+2×4 Matrix{Float64}:
+ -1.1   2.2  -3.3   4.4
+  5.5  -6.6   7.7  -8.8
+
+julia> positify(x)
+2×4 Matrix{Float64}:
+ 0.0  2.2  0.0  4.4
+ 5.5  0.0  7.7  0.0
+```
+
+# Method 2
+
+```julia
+positify!(x::AbstractVecOrMat)
+```
+
+Modifies `x` in place by maintaining the positive elements and setting the negative \
+elements to 0.
+
+# Example
+```julia
+julia> x = [-1, 2, -3, 4];
+
+julia> positify!(x)
+4-element Vector{Int64}:
+ 0
+ 2
+ 0
+ 4
+
+julia> x
+4-element Vector{Int64}:
+ 0
+ 2
+ 0
+ 4
+```
+
+As can bee seen, the `x` got modified inplace.
+"""
+positify(x::AbstractVecOrMat) = max.(x, 0)
+positify!(x::AbstractVecOrMat) = x .= max.(x, 0)

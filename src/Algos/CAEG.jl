@@ -48,8 +48,9 @@ julia> model.b
 """
 function caeg(rel_pr::AbstractMatrix, ηs::AbstractVector)
   all(ηs .> 0) || ArgumentError("ηs must contain only positive values.") |> throw
+  length(ηs) ≥ 2 || ArgumentError("ηs must contain at least two values.") |> throw
   n_assets, n_days = size(rel_pr)
-  exp_weights      = (eg((rel_pr), eta=val).b for val = ηs)
+  exp_weights      = (eg(rel_pr, eta=val).b for val = ηs)
   Sη               = sn.(Ref(rel_pr), exp_weights)
   b                = similar(rel_pr, n_assets, n_days)
   b[:, 1]          = ones(n_assets)/n_assets

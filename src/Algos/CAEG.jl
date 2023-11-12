@@ -51,7 +51,7 @@ function caeg(rel_pr::AbstractMatrix, ηs::AbstractVector)
   length(ηs) ≥ 2 || ArgumentError("ηs must contain at least two values.") |> throw
   n_assets, n_days = size(rel_pr)
   exp_weights      = (eg(rel_pr, eta=val).b for val = ηs)
-  Sη               = sn.(Ref(rel_pr), exp_weights)
+  Sη               = sn.(exp_weights, Ref(rel_pr))
   b                = similar(rel_pr, n_assets, n_days)
   b[:, 1]          = ones(n_assets)/n_assets
   numerator_       = zeros(n_assets)

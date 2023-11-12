@@ -1,18 +1,19 @@
 """
-    olmar(adj_close::Matrix{Float64}, ϵ::Int, ω::Int)::OPSAlgortihm
+    olmar(rel_pr::AbstractMatrix, ϵ::Int, ω::Int)::OPSAlgortihm
 
 Run the Online Moving Average Reversion algorithm.
 
 # Arguments
-- `adj_close::Matrix{Float64}`: matrix of adjusted closing prices.
-- `ϵ::Int`: Reversion threshold.
+- `rel_pr::AbstractMatrix`: Matrix of relative prices.
+- `horizon::Int`: Investment horizon.
 - `ω::Int`: Window size.
+- `ϵ::Int`: Reversion threshold.
 
 !!! warning "Beware!"
-    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
+    `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgortihm(n_asset, b, alg)`: An `OPSAlgortihm` object.
+- `::OPSAlgortihm`: An [`OPSAlgortihm`](@ref) object.
 
 # Example
 ```julia
@@ -26,7 +27,7 @@ julia> adj = [
 julia> m_olmar = olmar(adj, 2, 3);
 
 julia> m_olmar.b
-2×7 Matrix{Float64}:
+2×7 AbstractMatrix:
  0.5  0.5  1.0  1.0  1.0  1.0  0.0
  0.5  0.5  0.0  0.0  0.0  0.0  1.0
 
@@ -37,32 +38,33 @@ true
 # References
 > [On-Line Portfolio Selection with Moving Average Reversion](https://doi.org/10.48550/arXiv.1206.4626)
 """
-function olmar(adj_close::Matrix{Float64}, ϵ::Int, ω::Int)::OPSAlgorithm
+function olmar(rel_pr::AbstractMatrix, horizon::Int, ω::Int, ϵ::Int)
+  nassets, n_samples = size(rel_pr)
   ϵ>1 || ArgumentError("ϵ must be > 1") |> throw
   ω≥3 || ArgumentError("ω must be ≥ 3") |> throw
-  nassets, nperiods = size(adj_close)
-  b                 = fill(1/nassets, nassets, nperiods)
-  rel_pr            = adj_close[:, 2:end]./adj_close[:, 1:end-1]
-  rel_pr            = hcat(fill(1.0, nassets, 1), rel_pr)
+  n_samples≥ω+horizon-1 || ArgumentError("n_samples must be ≥ ω+horizon-1. Insufficient /
+  amount of data is provided. Either provide $(ω+horizon-1-n_samples) more data points or /
+  decrease ω and/or horizon.") |> throw
+  b        = similar(rel_pr, nassets, horizon)
+  b[:, 1] .= 1/nassets
 
-  @inbounds for day_idx ∈ 2:nperiods
-    rel_pr_       = rel_pr[:, 1:day_idx-1]
-    x̃ₜ₊₁          = pred_relpr(rel_pr_, ω)
-    x̄ₜ₊₁          = mean(rel_pr_, dims=2)
-    nominator     = ϵ-b[:, day_idx-1]'*x̃ₜ₊₁
-    denominator   = (x̃ₜ₊₁.-x̄ₜ₊₁).^2 |> sum
-    λₜ₊₁          = iszero(denominator) ? 0. : max(0., nominator/denominator)
-    bₜ₊₁          = b[:, day_idx-1] .+ λₜ₊₁.*(x̃ₜ₊₁.-x̄ₜ₊₁)
-    bₜ₊₁          = bₜ₊₁ |> vec |> simplex_proj
-    sum(bₜ₊₁)≈1.0 || normalizer!(bₜ₊₁)
-    b[:, day_idx] = bₜ₊₁
+  @inbounds for t ∈ 1:horizon-1
+    # rel_pr_       = rel_pr[:, 1:t-1]
+    x̃ₜ₊₁        = pred_relpr(rel_pr[:, end-horizon-ω+1+t:end-horizon+t], ω)
+    x̄ₜ₊₁        = mean(rel_pr[:, end-horizon+t])
+    nominator   = ϵ-sum(b[:, t].*x̃ₜ₊₁)
+    denominator = (x̃ₜ₊₁.-x̄ₜ₊₁).^2 |> sum
+    # λₜ₊₁        = iszero(denominator) ? 0. : max(0., nominator/denominator)
+    λₜ₊₁        = max(0., nominator/denominator)
+    bₜ₊₁        = b[:, t] .+ λₜ₊₁.*(x̃ₜ₊₁.-x̄ₜ₊₁)
+    bₜ₊₁        = bₜ₊₁ |> OnlinePortfolioSelection.normptf
+    b[:, t+1]   = bₜ₊₁
   end
-
+  any(b .< 0.) && b |> positify! |> normalizer!
   return OPSAlgorithm(nassets, b, "OLMAR")
 end
 
-function pred_relpr(relpr::Matrix{Float64}, ω::Int)::Vector{Float64}
+function pred_relpr(relpr::AbstractMatrix, ω::Int)
   n = size(relpr, 2)
-  n < ω && return relpr[:, end]
-  return 1/ω .* sum(relpr[:, idx]./relpr[:, end] for idx=n:-1:n-ω+1)
+  return 1/ω * sum(relpr[:, idx]./relpr[:, end] for idx=1:n)
 end

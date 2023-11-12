@@ -14,15 +14,11 @@ n_assets = size(rel_pr, 1)
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
     @test model.b[:, 1] == ones(n_assets)/n_assets
     @test size(model.b) == size(rel_pr)
-
-    model = caeg(rel_pr, ηs2)
-    @test sum(model.b, dims=1) .|> isapprox(1.) |> all
-    @test model.b[:, 1] == ones(n_assets)/n_assets
-    @test size(model.b) == size(rel_pr)
   end
 
   @testset "With invalid arguments" begin
     @test_throws ArgumentError caeg(rel_pr, [0.02, 0.05, -0.01])
     @test_throws ArgumentError caeg(rel_pr, [0.02, 0.05, 0.])
+    @test_throws ArgumentError caeg(rel_pr, ηs2)
   end
 end

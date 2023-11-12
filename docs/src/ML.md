@@ -79,7 +79,7 @@ It is worth mentioning that each metric can be accessed individually by writing 
 {\mathbf{b}_{t + 1}} = \frac{{\sum\nolimits_{\eta  \in \tilde E} {{\mathbf{b}_{t + 1}}\left( \eta  \right){{\left( {{S_t}\left( \eta  \right)} \right)}^{\frac{1}{{\sqrt {t + 1} }}}}} }}{{\sum\nolimits_{\eta  \in \tilde E} {{{\left( {{S_t}\left( \eta  \right)} \right)}^{\frac{1}{{\sqrt {t + 1} }}}}} }}
 ```
 
-where $t$ is the today's index, $\tilde E = \{ {\eta _1},{\eta _2}, \ldots ,{\eta _n}\}$, the cumulative return of the expert $\eta$ is denoted as ${S_t}\left( \eta  \right)$, and the portfolio by expert $\eta$ at time $t+1$ is represented as $\mathbf{b}_{t + 1}$.
+where $t$ is the today's index, $\tilde E = \{ {\eta _1},{\eta _2}, \ldots ,{\eta _n}\}$ is a set of EG experts with different $\eta$ parameters, the cumulative return of the expert $\eta$ at time $t$ is denoted as ${S_t}\left( \eta  \right)$, and the portfolio by expert $\eta$ at time $t+1$ is represented as $\mathbf{b}_{t + 1}$.
 
 ### Run CAEG
 

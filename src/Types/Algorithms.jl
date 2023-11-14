@@ -1,7 +1,7 @@
 """
     OPSAlgorithm{T<:AbstractFloat}
 
-A `OPSAlgorithm` object that contains the result of running the algorithm.
+An object that contains the result of running the algorithm.
 
 # Fields
 - `n_asset::Int`: Number of assets in the portfolio.

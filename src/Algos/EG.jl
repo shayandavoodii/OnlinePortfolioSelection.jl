@@ -1,11 +1,7 @@
 """
     eg(rel_pr::AbstractMatrix; eta::AbstractFloat=0.05)
 
-Exponential Gradient (EG) algorithm.
-
-Calculate the Exponential Gradient (EG) weights and budgets
-using the given historical prices and parameters and return
-an EG object.
+Run Exponential Gradient (EG) algorithm.
 
 # Arguments
 - `rel_pr::AbstractMatrix`: Historical relative prices.
@@ -17,7 +13,7 @@ an EG object.
     `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, alg)`: OPSAlgorithm object.
+- `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
 # Examples
 ```julia
@@ -42,13 +38,8 @@ true
 > [On-Line Portfolio Selection Using Multiplicative Updates](https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058)
 """
 function eg(rel_pr::AbstractMatrix; eta::AbstractFloat=0.05)
-  # Calculate relative prices
   n_assets, n_periods = size(rel_pr)
-
-  # Initialiate Vector of weights
   b = ones(n_assets, n_periods)/n_assets
-
-  # Calculate weights
   @inbounds for t ∈ 1:n_periods-1
     last_b   = @view b[:, t]
     last_rel = @view rel_pr[:, t]

@@ -68,8 +68,8 @@ julia> x = rand(0.8:0.001:1.2, 6, 10)
 """
 function createXₜ⁽ˡ⁾(w::T, t::T, 𝑙::AbstractVector{<:Int}, x::AbstractMatrix) where T<:Int
   all(𝑙.∈Ref(1:size(x, 1))) || DomainError("$𝑙 ∉ 1:$(size(x, 1))") |> throw
-  t-w>0 || DomainError("t-w<0") |> throw
-  t>0   || DomainError("t<0") |> throw
+  t-w>0 || DomainError("t-w<0 is invalid") |> throw
+  t>0   || DomainError("t<0 is invalid") |> throw
   return rotl90(x[𝑙, t-w:t-1])
 end
 
@@ -115,6 +115,89 @@ end
 
 x̂ₜ₊₁ₖ⁽ˡ⁾func(xₜ⁽ˡ⁾::T, β̂ₖ⁽ˡ⁾::T) where T<:AbstractVector = sum(xₜ⁽ˡ⁾.*β̂ₖ⁽ˡ⁾)
 
+"""
+    Rₜ⁽ˡ⁾(xₜ::T, x̂ₜ⁽ˡ⁾::T, w::Int) where T<:AbstractMatrix
+
+Calculate the mean squared error for all assets.
+
+# Arguments
+- `xₜ::T`: A matrix of size `n_assets` × `T` containing the price relatives of assets where \
+  ``T=t-i`` and ``i=0\\to w-1``.
+- `x̂ₜ⁽ˡ⁾::T`: A matrix of size `n_assets` × `T` containing the estimated price relatives of \
+  assets where ``T=t-i`` and ``i=0\\to w-1``.
+- `w::Int`: Window size.
+
+# Returns
+- `::AbstractVector`: A vector of length `n_assets` containing the mean squared error \
+  for all assets.
+"""
+function Rₜ⁽ˡ⁾(xₜ::T, x̂ₜ⁽ˡ⁾::T, w::Int) where T<:AbstractMatrix
+  size(xₜ) == size(x̂ₜ⁽ˡ⁾) || DimensionMismatch("size(xₜ) != size(x̂ₜ⁽ˡ⁾)") |> throw
+  w == size(xₜ, 2) || DimensionMismatch("w != size(xₜ, 2)") |> throw
+  w>0 || DomainError("w<0 is invalid") |> throw
+  return 1/w*(sum((xₜ .- x̂ₜ⁽ˡ⁾).^2, dims=2))
+end
+
+"""
+    vₜ⁽ˡ⁾func(Rₜ::AbstractMatrix, σ::AbstractFloat)
+
+Calculate weight of 𝑙'th subsystem.
+
+# Arguments
+- `Rₜ::AbstractMatrix`: A matrix of size `n_assets` × `𝑙` containing the mean squared error \
+  for all assets.
+- `σ::AbstractFloat`: Kernel bandwidth.
+
+# Returns
+- `::AbstractMatrix`: A matrix of size `n_assets` × `𝑙` containing the weight of 𝑙'th \
+  subsystem.
+
+# Example
+```julia
+julia> Rₜ = rand(4, 6)
+4×6 Matrix{Float64}:
+ 0.0960631  0.967273    0.762214  0.0622623  0.854902  0.137409
+ 0.730288   0.530231    0.488309  0.495134   0.480655  0.663915
+ 0.471691   0.271454    0.210108  0.298702   0.268271  0.974648
+ 0.420664   0.00286611  0.920839  0.985436   0.086436  0.603461
+
+julia> σ = 0.2
+
+julia> vₜ⁽ˡ⁾func(Rₜ, σ)
+4×6 Matrix{Float64}:
+ 0.271464     9.43352e-11  1.58879e-8  0.631974     1.56574e-9  0.096562
+ 0.000689913  0.102539     0.292452    0.246573     0.354119    0.00362605
+ 0.000926364  0.138302     0.641032    0.0699813    0.149757    3.20621e-9
+ 2.58894e-5   0.88983      9.606e-11   1.91068e-11  0.110144    2.68181e-7
+```
+"""
+function vₜfunc(Rₜ::AbstractMatrix, σ::AbstractFloat)
+  numerator_ = exp.((-1*Rₜ)/(σ^2))
+  vₜ = numerator_./sum(numerator_, dims=2)
+  any(isnan.(vₜ)) && ArgumentError("Result contains NaN values. You may want to increase \
+  σ.") |> throw
+  return vₜ
+end
+
+"""
+    x̂ₜ₊₁func(vₜ::T, x̂ₜ₊₁::T) where T<:AbstractMatrix
+
+Calculate the aggregated price relatives predictions for all assets.
+
+# Arguments
+- `vₜ::T`: A matrix of size `n_assets` × `𝑙` containing the weight of 𝑙'th subsystem for all \
+  assets.
+- `x̂ₜ₊₁::T`: A matrix of size `n_assets` × `𝑙` containing the estimated price relatives of \
+  assets for each subsystem ``l``.
+
+# Returns
+- `::AbstractVector`: A vector of length `n_assets` containing the aggregated price relatives \
+  predictions for all assets.
+"""
+function x̂ₜ₊₁func(vₜ::T, x̂ₜ₊₁::T) where T<:AbstractMatrix
+  size(vₜ) == size(x̂ₜ₊₁) || DimensionMismatch("size(vₜ) != size(x̂ₜ₊₁)") |> throw
+  return sum(vₜ.*x̂ₜ₊₁, dims=2) |> vec
+end
 
 x = rand(0.8:0.001:1.2, 6, 10)
 createXₜ⁽ˡ⁾(3, 5, [2, 4, 6], x)

@@ -1,3 +1,4 @@
+using StatsBase: sample
 """
     createLDES(L::T, s::T, n_assets::T) where T<:Int
 
@@ -29,7 +30,7 @@ julia> createLDES(3, 2, 4)
 In the above, the third subsystem contains the fourth and the first assets.
 """
 function createLDES(L::T, s::T, n_assets::T) where T<:Int
-  return [rand(1:n_assets, s) for 𝑙=1:L]
+  return [sample(1:n_assets, s, replace=false) for 𝑙=1:L]
 end
 
 """
@@ -79,9 +80,10 @@ end
 Estimate unknown parameters βₖₛ⁽ˡ⁾ using OLS.
 
 # Arguments
-- `Xₜ⁽ˡ⁾::AbstractMatrix`: A matrix of size ``t-i \times j``.
+- `Xₜ⁽ˡ⁾::AbstractMatrix`: A matrix of size ``t-i \times j``. Where ``i=1,2,\\ldots ,w`` \
+  and ``j=1,2,\\ldots ,s``. Note that `length(𝑙)=s`.
 - `xₜₖ::AbstractVector`: Price relative of ``k``th asset at time ``t \\to t-w+1``. In other \
-words, ``x_{t,k}=\\left( x_{t,k}, x_{t-1,k}, \\ldots , x_{t-w+1,k}\\right)``.
+  words, ``x_{t,k}=\\left( x_{t,k}, x_{t-1,k}, \\ldots , x_{t-w+1,k}\\right)``.
 
 # Returns
 - `::AbstractVector`: A `Vector` of length ``j`` containing the estimated parameters.
@@ -197,6 +199,242 @@ Calculate the aggregated price relatives predictions for all assets.
 function x̂ₜ₊₁func(vₜ::T, x̂ₜ₊₁::T) where T<:AbstractMatrix
   size(vₜ) == size(x̂ₜ₊₁) || DimensionMismatch("size(vₜ) != size(x̂ₜ₊₁)") |> throw
   return sum(vₜ.*x̂ₜ₊₁, dims=2) |> vec
+end
+
+"""
+    covxₜₗₚxₜₗqfunc(xₜ⁽ˡ⁾::AbstractMatrix, 𝑙::AbstractVector, w::Int)
+
+Calculate the covariance of price relatives for ``lₚ`` and ``lq`` assets.
+
+# Arguments
+- `xₜ⁽ˡ⁾::AbstractMatrix`: A matrix of size `n_assets` × `w` containing the price relatives \
+  of assets for ``t\to t-w+1``. Example: If w=3, then ``xₜ⁽ˡ⁾=\\left( x_{t}, x_{t-1}, \
+  x_{t-2}`` for each asset.
+- `𝑙::AbstractVector`: A vector of length `2` containing index of two assets in the LDE. \
+  Example: ``𝑙=[2, 4]`` means that the second and the fourth assets are in the LDE.
+- `w::Int`: Window size.
+
+# Returns
+- `::AbstractFloat`: A scalar containing the covariance of price relatives for ``lₚ`` and \
+  ``lq`` assets.
+
+# Example
+```julia
+julia> xₜ⁽ˡ⁾ = [
+ 0.86   0.802  0.837  0.837  0.813  0.932  0.964  0.916  0.919  0.805
+ 1.054  1.103  0.949  1.123  0.926  0.888  0.923  0.904  1.11   0.825
+ 0.955  1.086  1.192  0.817  0.928  0.831  1.153  1.059  1.142  0.996
+ 0.976  0.86   1.166  1.037  0.906  1.095  1.113  0.969  1.068  0.909
+ 0.884  0.859  1.098  0.934  0.851  1.083  0.974  0.985  1.195  1.118
+ 0.804  0.911  0.829  1.187  0.815  1.16   0.958  1.198  1.196  0.836
+];
+
+julia> x = xₜ⁽ˡ⁾[:, t-w+1:t]
+6×3 Matrix{Float64}:
+ 0.802  0.837  0.837
+ 1.103  0.949  1.123
+ 1.086  1.192  0.817
+ 0.86   1.166  1.037
+ 0.859  1.098  0.934
+ 0.911  0.829  1.187
+
+julia> 𝑙 = [2, 4];
+
+julia> t, w = 4, 3;
+
+julia> covxₜₗₚxₜₗqfunc(x, 𝑙, w)
+-0.011005000000000001
+```
+"""
+function covxₜₗₚxₜₗqfunc(xₜ⁽ˡ⁾::AbstractMatrix, 𝑙::AbstractVector, w::Int)
+  length(𝑙)==2 || ArgumentError("length(𝑙) != 2") |> throw
+  w==size(xₜ⁽ˡ⁾, 2) || DimensionMismatch("w != size(xₜ⁽ˡ⁾, 2)") |> throw
+  x̄ₜₗₚ, x̄ₜₗq = mean(xₜ⁽ˡ⁾[𝑙, :], dims=2)
+  𝑙ₚ, 𝑙q = 𝑙
+  numerator_ = ((x[𝑙ₚ, end-i].-x̄ₜₗₚ)*(x[𝑙q, end-i].-x̄ₜₗq) for i=0:w-1) |> sum
+  covxₜₗₚxₜₗq = numerator_/(w-1)
+  return covxₜₗₚxₜₗq
+end
+
+"""
+    covx̂ₜ₊₁⁽ˡ⁾x̂ₜ₊₁⁽ˡ⁾func(xₜ::AbstractMatrix, 𝑙::AbstractVector, β̂⁽ˡ⁾::AbstractVector, w::Int)
+
+Calculate the predicted covariance of price relatives for ``lₚ`` and ``lq`` assets.
+
+# Arguments
+- `xₜ::AbstractMatrix`: A matrix of size `n_assets` × `w` containing the price relatives \
+  of assets for ``t\to t-w+1``. Example: If w=3, then ``xₜ⁽ˡ⁾=\\left( x_{t}, x_{t-1}, \
+  x_{t-2}`` for each asset.
+- `𝑙::AbstractVector`: A vector of length ``s`` where ``s`` is the number of assets in the \
+  LDE. Example: ``𝑙=[2, 4, 6]`` means that the second, the fourth, and the sixth assets are \
+  in the LDE.
+- `β̂⁽ˡ⁾::AbstractVector`: A vector of length ``s`` containing the estimated parameters for \
+  each asset in the LDE.
+- `w::Int`: Window size.
+
+# Returns
+- `::AbstractFloat`: A scalar containing the predicted covariance of price relatives for \
+  ``lₚ`` and ``lq`` assets.
+
+# Example
+```julia
+julia> xₜ = [
+ 0.86   0.802  0.837  0.837  0.813  0.932  0.964  0.916  0.919  0.805
+ 1.054  1.103  0.949  1.123  0.926  0.888  0.923  0.904  1.11   0.825
+ 0.955  1.086  1.192  0.817  0.928  0.831  1.153  1.059  1.142  0.996
+ 0.976  0.86   1.166  1.037  0.906  1.095  1.113  0.969  1.068  0.909
+ 0.884  0.859  1.098  0.934  0.851  1.083  0.974  0.985  1.195  1.118
+ 0.804  0.911  0.829  1.187  0.815  1.16   0.958  1.198  1.196  0.836
+];
+
+julia> x = xₜ[:, t-w+1:t]
+6×3 Matrix{Float64}:
+ 0.802  0.837  0.837
+ 1.103  0.949  1.123
+ 1.086  1.192  0.817
+ 0.86   1.166  1.037
+ 0.859  1.098  0.934
+ 0.911  0.829  1.187
+
+julia> 𝑙 = [2, 4, 6];
+
+julia> β̂⁽ˡ⁾ = [0.1, 0.2, 0.3];
+
+julia> t, w = 4, 3;
+
+julia> covx̂ₜ₊₁⁽ˡ⁾x̂ₜ₊₁⁽ˡ⁾func(x, 𝑙, β̂⁽ˡ⁾, w)
+0.0019026300000000015
+```
+"""
+function covx̂ₜ₊₁⁽ˡ⁾x̂ₜ₊₁⁽ˡ⁾func(xₜ::AbstractMatrix, 𝑙::AbstractVector, β̂⁽ˡ⁾::AbstractVector, w::Int)
+  cov_val = 0.
+  for p ∈ 𝑙
+    for q ∈ 𝑙
+      cov_val += β̂⁽ˡ⁾[p]*β̂⁽ˡ⁾[q]*covxₜₗₚxₜₗqfunc(xₜ, [p, q], w)
+    end
+  end
+  return cov_val
+end
+
+"""
+    covx̂ₜ₊₁ₖx̂ₜ₊₁ₕfunc(
+      xₜ::AbstractMatrix,
+      𝑙::AbstractVector{AbstractVector{<:Int}},
+      β̂::AbstractMatrix,
+      w::Int,
+      v::AbstractMatrix
+    )
+
+Calculate the aggregated predicted covariance of price relatives for all assets.
+
+# Arguments
+- `xₜ::AbstractMatrix`: A matrix of size `n_assets` × `w` containing the price relatives \
+  of assets for ``t\to t-w+1``. Example: If w=3, then ``xₜ⁽ˡ⁾=\\left( x_{t}, x_{t-1}, \
+  x_{t-2}`` for each asset.
+- `𝑙::AbstractVector{AbstractVector{<:Int}}`: A list of LDES of length `L`, each of which \
+  is of length `s` and contains integers from 1 to `n_assets`.
+- `β̂::AbstractMatrix`: A matrix of size `n_assets` × `L` containing the estimated parameters \
+  for each asset in the LDE.
+- `w::Int`: Window size.
+- `v::AbstractMatrix`: A matrix of size `n_assets` × `L` containing the weight of 𝑙'th \
+  subsystem for all assets.
+
+# Returns
+- `::AbstractMatrix`: A matrix of size `n_assets` × `n_assets` containing the aggregated \
+  predicted covariance of price relatives for all assets.
+
+# Example
+```julia
+julia> xₜ = [
+ 0.86   0.802  0.837  0.837  0.813  0.932  0.964  0.916  0.919  0.805
+ 1.054  1.103  0.949  1.123  0.926  0.888  0.923  0.904  1.11   0.825
+ 0.955  1.086  1.192  0.817  0.928  0.831  1.153  1.059  1.142  0.996
+ 0.976  0.86   1.166  1.037  0.906  1.095  1.113  0.969  1.068  0.909
+ 0.884  0.859  1.098  0.934  0.851  1.083  0.974  0.985  1.195  1.118
+ 0.804  0.911  0.829  1.187  0.815  1.16   0.958  1.198  1.196  0.836
+];
+
+julia> n_assets = size(xₜ, 1);
+julia> w = 3;
+
+julia> x = xₜ[:, t-w+1:t]
+6×3 Matrix{Float64}:
+ 0.802  0.837  0.837
+ 1.103  0.949  1.123
+ 1.086  1.192  0.817
+ 0.86   1.166  1.037
+ 0.859  1.098  0.934
+ 0.911  0.829  1.187
+
+julia> l = createLDES(4, 3, n_assets)
+4-element Vector{Vector{Int64}}:
+ [2, 1, 4]
+ [6, 5, 3]
+ [2, 1, 5]
+ [5, 2, 3]
+
+julia> β̂ = rand(0.1:0.1:0.5, n_assets, length(l))
+6×4 Matrix{Float64}:
+ 0.3  0.3  0.3  0.5
+ 0.1  0.3  0.3  0.1
+ 0.1  0.5  0.3  0.2
+ 0.4  0.5  0.3  0.2
+ 0.1  0.4  0.3  0.5
+ 0.5  0.4  0.1  0.3
+
+julia> v = rand(0.1:0.1:0.5, n_assets, length(l))
+6×4 Matrix{Float64}:
+ 0.3  0.3  0.3  0.1
+ 0.4  0.3  0.4  0.4
+ 0.3  0.2  0.1  0.4
+ 0.5  0.3  0.3  0.3
+ 0.5  0.3  0.5  0.4
+ 0.2  0.1  0.5  0.4
+
+julia> res = covx̂ₜ₊₁ₖx̂ₜ₊₁ₕfunc(x, l, β̂, w, v)
+6×6 Matrix{Float64}:
+ 0.00614701  0.00628448  0.00650497  0.00586764  0.0059775   0.00620744
+ 0.00628448  0.00702342  0.00763972  0.00644602  0.00661685  0.00712454
+ 0.00650497  0.00763972  0.00814097  0.00689296  0.00720555  0.00815156
+ 0.00586764  0.00644602  0.00689296  0.00589798  0.00608306  0.00665605
+ 0.0059775   0.00661685  0.00720555  0.00608306  0.00623644  0.00669175
+ 0.00620744  0.00712454  0.00815156  0.00665605  0.00669175  0.00694747
+
+julia> issymmetric(res)
+true
+```
+"""
+function covx̂ₜ₊₁ₖx̂ₜ₊₁ₕfunc(
+  xₜ::AbstractMatrix,
+  𝑙,
+  β̂::AbstractMatrix,
+  w::Int,
+  v::AbstractMatrix
+)
+  n_assets = size(xₜ, 1)
+  L = length(𝑙)
+  vₜₖₕ = zeros(n_assets, n_assets, L)
+  for k ∈ 1:n_assets
+    for h ∈ 1:n_assets
+      sum_ = 0.
+      for l ∈ 1:length(𝑙)
+        vₖ⁽ˡ⁾ = v[k, l]
+        vₕ⁽ˡ⁾ = v[h, l]
+        sum_ += vₖ⁽ˡ⁾*vₕ⁽ˡ⁾
+        vₜₖₕ[k, h, l] += vₖ⁽ˡ⁾*vₕ⁽ˡ⁾/sum_
+      end
+    end
+  end
+
+  covx̂ₜ₊₁ₖx̂ₜ₊₁ₕ = zeros(n_assets, n_assets)
+  for k ∈ 1:n_assets
+    for h ∈ k:n_assets
+      for (idx_l, l) ∈ enumerate(𝑙)
+        covx̂ₜ₊₁ₖx̂ₜ₊₁ₕ[k, h] += covx̂ₜ₊₁⁽ˡ⁾x̂ₜ₊₁⁽ˡ⁾func(xₜ, l, β̂[:, idx_l], w)*vₜₖₕ[k, h, idx_l]
+      end
+    end
+  end
+  return covx̂ₜ₊₁ₖx̂ₜ₊₁ₕ |> Symmetric |> Matrix
 end
 
 x = rand(0.8:0.001:1.2, 6, 10)

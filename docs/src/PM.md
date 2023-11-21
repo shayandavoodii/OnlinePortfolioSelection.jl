@@ -10,6 +10,7 @@ Pattern-matching algorithms stand among the most popular strategies in the domai
 - ClusLog
   - KMNLOG
   - KMDLOG
+- Online Low Dimension Ensemble Method (OLDEM)
 
 ## Correlation-driven Nonparametric Learning
 
@@ -229,6 +230,69 @@ julia> sn(model.b, rel_price)
 ```
 
 The result indicates that the algorithm has lost ~1.8% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+
+## Online Low Dimension Ensemble Method (OLDEM)
+
+[XI2023109872](@citet) proposed a method called OLDEM, which stands for online low-dimension ensemble method. It is a novel online portfolio selection strategy that aims to maximize the cumulative wealth by predicting the future prices and risks of a group of assets. The novelties of this method are:
+
+- High-dimensional learning framework: The method treats the financial market as a complex high-dimensional dynamical system (HDS) and randomly generates a large number of low-dimensional subsystems (LDS) from it. These LDSs capture the correlation and dynamical information of the market from different perspectives and are used to predict the future prices of each asset. The final prediction is obtained by aggregating the predictions from the LDSs using ensemble learning techniques.
+- Predictive instantaneous risk assessment: The method also develops a novel high-dimensional covariance matrix estimation/prediction method for short-term data, which can assess the instantaneous risk structure and uncertainty of the projected portfolio returns. This allows the method to introduce a risk term into the portfolio optimization problem, which is usually missing or inappropriate in existing methods.
+- Improved optimization setting: The method formulates a more appropriate optimization problem for online portfolio selection, which considers the predictive instantaneous risk and the self-financing constraint. The method employs online learning algorithms to solve the optimization problem and update the portfolio at each time slot. See [`oldem`](@ref).
+
+### Run OLDEM
+
+Let's run OLDEM on the real market data:
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["MSFT", "TSLA", "AAPL", "META", "MMM"];
+
+julia> querry = [
+         get_prices(ticker, startdt="2020-01-01", enddt="2020-01-15")["adjclose"]
+         for ticker in tickers
+       ];
+
+julia> prices = stack(querry) |> permutedims;
+
+julia> x = prices[:, 2:end]./prices[:, 1:end-1]
+5×8 Matrix{Float64}:
+ 0.987548  1.00259  0.990882  1.01593  1.01249   0.995373  1.01202  0.992957
+ 1.02963   1.01925  1.0388    1.0492   0.978055  0.993373  1.09769  1.02488
+ 0.990278  1.00797  0.995297  1.01609  1.02124   1.00226   1.02136  0.986497
+ 0.994709  1.01883  1.00216   1.01014  1.01431   0.998901  1.01766  0.987157
+ 0.991389  1.00095  0.995969  1.01535  1.00316   0.995971  1.00249  1.00249
+ 
+julia> σ = 0.025;
+julia> w = 2;
+julia> h = 4;
+julia> L = 4;
+julia> s = 3;
+
+julia> model = oldem(x, h, w, L, s, σ, 0.002, 0.25);
+
+julia> model.b
+5×4 Matrix{Float64}:
+ 0.2  1.99964e-8  1.0         0.0
+ 0.2  1.0         0.0         0.0
+ 0.2  0.0         0.0         1.99964e-8
+ 0.2  0.0         0.0         1.0
+ 0.2  0.0         1.99964e-8  0.0
+```
+
+Keep in mind that since this algorithm randomly select the low-dimensional subsystems, the result may vary from run to run. Using [`sn`](@ref) function, one can compute the cumulative wealth during the investment period:
+
+```julia
+julia> sn(model.b, x)
+5-element Vector{Float64}:
+ 1.0
+ 1.005851012021382
+ 0.9991849380303157
+ 1.0016764248621135
+ 0.9881506219530738
+```
+
+The result indicates that the algorithm has lost ~1.2% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
 ## References
 

@@ -6,6 +6,7 @@ using JuMP
 using Ipopt
 using PrecompileTools
 using DataStructures
+using StatsBase: sample
 
 include("Types/Algorithms.jl")
 include("Types/Clustering.jl")
@@ -30,13 +31,14 @@ include("Algos/CLUSLOG.jl")
 include("Algos/PPT.jl")
 include("Algos/CWMR.jl")
 include("Algos/CAEG.jl")
+include("Algos/OLDEM.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog, pamr, ppt, cwmr, caeg
+export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
@@ -57,7 +59,7 @@ end
 """
     opsmethods()
 
-Print the available methods in the package.
+Print the available algorithms in the package.
 
 # Example
 ```julia
@@ -99,6 +101,7 @@ function opsmethods()
   println("       PPT: Peak Price Tracking - Call `ppt`")
   println("      CWMR: Confidence Weighted Mean Reversion - Call `cwmr`")
   println("      CAEG: Continuous Aggregating Exponential Gradient - Call `caeg`")
+  println("     OLDEM: Online Low Dimension Ensemble Method - Call `oldem`")
 end
 # COV_EXCL_STOP
 

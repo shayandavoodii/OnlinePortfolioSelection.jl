@@ -33,47 +33,6 @@ function createLDES(L::T, s::T, n_assets::T) where T<:Integer
 end
 
 """
-    createXₜ⁽ˡ⁾(w::T, t::T, 𝑙::AbstractVector{<:Int}, x::AbstractMatrix) where T<:Integer
-
-Create a matrix of size `w` × `length(𝑙)` where ``w=i-t`` and ``𝑙={𝑙₁, 𝑙₂, \\ltods, 𝑙ₛ}``.
-
-# Arguments
-- `w::T`: Window size.
-- `t::T`: Current time index.
-- `𝑙::AbstractVector{<:T}`: A vector of length `s` containing index of assets in the subsystem.
-- `x::AbstractMatrix`: A matrix of size `n_assets` × `t` containing the historical price \
-  relatives of assets.
-
-# Returns
-- `::AbstractMatrix`: A Xₜ⁽ˡ⁾ matrix of size ``t-i \\times j``. Where ``i=1,2,\\ldots ,w`` \
-and ``j=1,2,\\ldots ,s``. Note that `length(𝑙)=s`.
-
-# Example:
-```julia
-julia> x = rand(0.8:0.001:1.2, 6, 10)
-6×10 Matrix{Float64}:
- 1.058  1.158  1.067  0.803  0.977  1.175  0.954  1.075  1.099  1.035
- 1.01   1.068  0.875  0.873  0.934  0.884  1.198  1.073  1.127  1.098
- 0.897  1.115  0.995  0.833  1.151  0.839  1.104  1.166  1.151  1.11
- 0.829  0.893  1.046  0.956  1.057  1.119  1.109  1.095  1.059  0.82
- 1.145  1.014  0.87   1.137  1.029  0.904  1.095  1.111  1.079  1.109
- 1.023  0.992  1.059  1.15   0.915  0.916  1.137  0.9    1.033  0.864
-
- julia> createXₜ⁽ˡ⁾(3, 5, [2, 4, 6, 3], x)
-3×4 Matrix{Float64}:
- 0.873  0.956  1.15   0.833
- 0.875  1.046  1.059  0.995
- 1.068  0.893  0.992  1.115
-```
-"""
-function createXₜ⁽ˡ⁾(w::T, t::T, 𝑙::AbstractVector{<:T}, x::AbstractMatrix) where T<:Integer
-  all(𝑙.∈Ref(1:size(x, 1))) || DomainError("$𝑙 ∉ 1:$(size(x, 1))") |> throw
-  t-w>0 || DomainError("t-w<0 is invalid") |> throw
-  t>0   || DomainError("t<0 is invalid") |> throw
-  return rotl90(x[𝑙, t-w:t-1])
-end
-
-"""
     β̂ₖ⁽ˡ⁾func(Xₜ⁽ˡ⁾::AbstractMatrix, xₜₖ::AbstractVector)
 
 Estimate unknown parameters βₖₛ⁽ˡ⁾ using OLS.

@@ -26,6 +26,11 @@ s = 3;
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
     @test size(model.b) == (n_assets, h)
     @test model.n_assets == n_assets
+
+    model = oldem(rel_pr, h, w, L, s, σ, 0.002, 0.25, bt=b̂, progress=true)
+    @test sum(model.b, dims=1) .|> isapprox(1.) |> all
+    @test size(model.b) == (n_assets, h)
+    @test model.n_assets == n_assets
   end
 
   @testset "With invalid arguments" begin

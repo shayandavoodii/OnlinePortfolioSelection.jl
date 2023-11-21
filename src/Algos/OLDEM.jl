@@ -621,7 +621,7 @@ function oldem(
   σ::T,
   ξ::T,
   γ::T;
-  bt::AbstractVector = ones(size(rel_pr, 1))/size(rel_pr, 1)
+  bt::AbstractVector = ones(size(rel_pr, 1))/size(rel_pr, 1),
   progress::Bool=false
 ) where {S<:Integer, T<:AbstractFloat}
   n_assets, n_samples = size(rel_pr)

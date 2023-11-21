@@ -43,4 +43,11 @@ s = 3;
     @test_throws DomainError oldem(rel_pr, h, w+2, L, s, σ, 0.002, 0.25)
     @test_throws DomainError oldem(rel_pr, h+1, w, L, s, σ, 0.002, 0.25)
   end
+
+  @testset "Individual functions" begin
+    x = rand(0.8:0.001:1.2, 6, 10)
+    @test_throws DomainError OnlinePortfolioSelection.createXₜ⁽ˡ⁾(3, 5, [2, 4, 6, 7], x)
+    @test_throws DomainError OnlinePortfolioSelection.createXₜ⁽ˡ⁾(3, 0, [2, 4, 6], x)
+    @test_throws DomainError OnlinePortfolioSelection.createXₜ⁽ˡ⁾(5, 5, [2, 4, 6], x)
+  end
 end

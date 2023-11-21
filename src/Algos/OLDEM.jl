@@ -604,6 +604,7 @@ Run Online Low Dimension Ensemble Method (OLDEM).
   weights. Presumebly, the initial portfolio portfolio is the equally weighted portfolio. \
   However, one can use any other portfolio weights that satisfy the following condition: \
   ``\\sum_{i=1}^{n\\_assets} b_{i} = 1``.
+- `progress::Bool=false`: Show the progress bar.
 
 !!! warning "Beware!"
     `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
@@ -662,6 +663,7 @@ function oldem(
   ξ::T,
   γ::T;
   bt::AbstractVector = ones(size(rel_pr, 1))/size(rel_pr, 1)
+  progress::Bool=false
 ) where {S<:Integer, T<:AbstractFloat}
   n_assets, n_samples = size(rel_pr)
   sum(bt)≈1               || ArgumentError("sum(bt) != 1")         |> throw
@@ -694,6 +696,7 @@ function oldem(
     cₜ₊₁ = cₜ₊₁func(x̂ₜ₊₁, Σ̂ₜ₊₁, γ, ξ, bt)
     bₜ₊₁ = cₜ₊₁ + bt
     b[:, t+1] = normptf(bₜ₊₁)
+    progress && progressbar(stdout, horizon-1, t)
   end
 
   any(b.<0) && b |> positify! |> normalizer!

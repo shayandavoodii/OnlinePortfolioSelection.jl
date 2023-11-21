@@ -412,3 +412,11 @@ As can bee seen, the `x` got modified inplace.
 """
 positify(x::AbstractVecOrMat) = max.(x, 0)
 positify!(x::AbstractVecOrMat) = x .= max.(x, 0)
+
+# COV_EXCL_START
+function __LogVecOrMat__(mat, filename="output")
+  open("C:/Users/Shayan/Desktop/$filename.txt", "a+") do io
+    show(io, "text/plain", mat)
+  end
+end
+# COV_EXCL_STOP

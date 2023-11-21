@@ -7,7 +7,7 @@ end
 # Introduction
 
 Online Portfolio Selection (OPS) strategies represent trading algorithms that sequentially allocate capital among a pool of assets with the aim of maximizing investment returns. This forms a fundamental issue in computational finance, extensively explored across various research domains, including finance, statistics, artificial intelligence, machine learning, and data mining. Framed within an online machine learning context, OPS is defined as a sequential decision problem, providing a range of advanced approaches to tackle this challenge. These approaches categorize into benchmarks, “Follow-the-Winner” and “Follow-the-Loser” strategies, “Pattern-Matching” based methodologies, and "Meta-Learning" Algorithms [li2013online](@cite).
-This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, eighteen algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
+This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, twenty algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
 
 !!! note
     In the following table, the abbreviations **PM**, **ML**, **FL**, and **FW** stand for **Pattern-Matching**, **Meta-Learning**, **Follow the Loser**, and **Follow the Winner**, respectively.
@@ -23,7 +23,7 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 | 7     | [RPRT](@ref Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))  | FL       | 2020 | 17    | [PPT](@ref Price-Peak-Tracking-(PPT))                                           | FW       | 2018 |
 | 8     | [Anticor](@ref Anti-Correlation-(Anticor))                                                          | FL       | 2003 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                          | FL       | 2013 |
 | 9     | [1/N](@ref)                                                                                         | Market   | -    | 19    | [CAEG](@ref Continuous-Aggregating-Exponential-Gradient-(CAEG))                 | ML       | 2020 |
-| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 20    |                                                                                 |          |      |
+| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 20    | [OLDEM](@ref Online-Low-Dimension-Ensemble-Method-(OLDEM))                      | PM       | 2023 |
 
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.

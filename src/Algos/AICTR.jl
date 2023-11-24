@@ -448,7 +448,7 @@ end
       bt::AbstractVector = ones(size(prices, 1))/size(prices, 1)
     )
 
-Run the Adaptive Input and Composite Trend Representation (AICR) algorithm.
+Run the Adaptive Input and Composite Trend Representation (AICTR) algorithm.
 
 # Arguments
 - `prices::AbstractMatrix`: Matrix of prices.

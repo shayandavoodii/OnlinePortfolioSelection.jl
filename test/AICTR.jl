@@ -56,4 +56,12 @@ bt = bt ./ sum(bt)
     @test_throws ArgumentError aictr(prices, horizon, w, ϵ, σ, models, bt=bt)
     @test_throws DomainError aictr(prices, horizon+1, w, ϵ, σ, models)
   end
+
+  @testset "Individual functions" begin
+    L = 3;
+    n_assets = 4;
+    X̂ₜ₊₁ = rand(n_assets, L)
+    𝝓 = zeros(L)
+    @test OnlinePortfolioSelection.cₜ₊₁func(𝝓, X̂ₜ₊₁, ϵ) == zeros(n_assets)
+  end
 end

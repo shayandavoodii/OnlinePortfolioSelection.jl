@@ -4,6 +4,7 @@ The Follow the Winner (FW) strategies operate on the principle that assets that 
 
 1. Exponential Gradient (EG)
 2. Price Peak Tracking (PPT)
+3. Adaptive Input and Composite Trend Representation (AICTR)
 
 ## Exponential Gradient
 
@@ -133,6 +134,66 @@ julia> results.MER
 ```
 
 It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+
+## Adaptive Input and Composite Trend Representation (AICTR)
+
+Adaptive Input and Composite Trend Representation (AICTR)[8356708](@cite) is an extension of the Price Peak Tracking (PPT) algorithm. This algorithm adopt multiple trend representations to capture the asset price trends, which enhances price prediction performance. for each investment period, the algorithm selects the best trend representation according to the recent investing performance of different price predictions. See [`aictr`](@ref).
+
+Let's run the algorithm on the real market data.
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["AAPL", "MSFT", "GOOG", "AMZN", "META", "TSLA", "BRK-A", "NVDA", "JPM", "JNJ"];
+
+julia> querry = [get_prices(ticker, startdt="2019-01-01", enddt="2019-12-31")["adjclose"] for ticker ∈ tickers];
+
+julia> prices = stack(querry) |> permutedims;
+
+julia> horizon = 5;
+
+julia> w = 3;
+
+julia> ϵ = 500;
+
+julia> σ = [0.5, 0.5];
+
+julia> models = [SMA(), EMA(0.5)];
+
+julia> bt = [0.3, 0.3, 0.4];
+
+julia> model = aictr(prices, horizon, w, ϵ, σ, models)
+
+julia> model.b
+10×5 Matrix{Float64}:
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  1.0         6.92439e-8  0.0         0.0
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  0.0         1.0         0.0         0.0
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  6.92278e-8  0.0         0.0         0.0
+ 0.1  0.0         0.0         6.95036e-8  1.0
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  0.0         0.0         1.0         6.95537e-8
+```
+
+One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
+
+```julia
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia> sn(model.b, rel_price)
+6-element Vector{Float64}:
+ 1.0
+ 1.004712570810936
+ 1.000779650243031
+ 1.0138065607851992
+ 1.0132505575298283
+ 0.9937871965996727
+```
+
+The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 2.8% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Other metrics can be found in the [Performance evaluation](@ref) section.
 
 ## References
 

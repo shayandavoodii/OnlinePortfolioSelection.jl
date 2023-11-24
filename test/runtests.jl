@@ -113,3 +113,8 @@ end
   @info "Run unit tests in OLDEM.jl"
   include("OLDEM.jl")
 end
+
+@testset "AICTR.jl" begin
+  @info "Run unit tests in AICTR.jl"
+  include("AICTR.jl")
+end

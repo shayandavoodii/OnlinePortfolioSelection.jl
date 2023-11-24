@@ -108,3 +108,8 @@ end
   @info "Run unit tests in IndivFuncs.jl"
   include("IndivFuncs.jl")
 end
+
+@testset "AICTR.jl" begin
+  @info "Run unit tests in AICTR.jl"
+  include("AICTR.jl")
+end

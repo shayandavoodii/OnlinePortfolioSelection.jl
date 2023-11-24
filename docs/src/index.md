@@ -23,7 +23,7 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 | 7     | [RPRT](@ref Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))  | FL       | 2020 | 17    | [PPT](@ref Price-Peak-Tracking-(PPT))                                           | FW       | 2018 |
 | 8     | [Anticor](@ref Anti-Correlation-(Anticor))                                                          | FL       | 2003 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                          | FL       | 2013 |
 | 9     | [1/N](@ref)                                                                                         | Market   | -    | 19    | [CAEG](@ref Continuous-Aggregating-Exponential-Gradient-(CAEG))                 | ML       | 2020 |
-| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 20    |                                                                                 |          |      |
+| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 20    | [OLDEM](@ref Online-Low-Dimension-Ensemble-Method-(OLDEM))                      | PM       | 2023 |
 
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.

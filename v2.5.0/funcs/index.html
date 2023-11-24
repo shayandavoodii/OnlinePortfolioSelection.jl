@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Functions · OnlinePortfolioSelection.jl</title><meta name="title" content="Functions · OnlinePortfolioSelection.jl"/><meta property="og:title" content="Functions · OnlinePortfolioSelection.jl"/><meta property="twitter:title" content="Functions · OnlinePortfolioSelection.jl"/><meta name="description" content="Documentation for OnlinePortfolioSelection.jl."/><meta property="og:description" content="Documentation for OnlinePortfolioSelection.jl."/><meta property="twitter:description" content="Documentation for OnlinePortfolioSelection.jl."/><meta property="og:url" content="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/funcs/"/><meta property="twitter:url" content="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/funcs/"/><link rel="canonical" href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/funcs/"/><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../search_index.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script><link href="../assets/citations.css" rel="stylesheet" type="text/css"/></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../"><img src="../assets/logo.png" alt="OnlinePortfolioSelection.jl logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../">OnlinePortfolioSelection.jl</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../fetchdata/">Fetch Financial Data</a></li><li><a class="tocitem" href="../python/">Use In Python</a></li><li><span class="tocitem">OPS Strategies</span><ul><li><a class="tocitem" href="../benchmark/">Benchmark</a></li><li><a class="tocitem" href="../FL/">Follow the Loser</a></li><li><a class="tocitem" href="../FW/">Follow the Winner</a></li><li><a class="tocitem" href="../PM/">Pattern-Matching</a></li><li><a class="tocitem" href="../ML/">Meta-Learning</a></li><li><a class="tocitem" href="../Combined/">Combined Strategies</a></li></ul></li><li><a class="tocitem" href="../performance_eval/">Performance Evaluation</a></li><li class="is-active"><a class="tocitem" href>Functions</a></li><li><a class="tocitem" href="../types/">Types</a></li><li><a class="tocitem" href="../refs/">References</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Functions</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Functions</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/docs/src/funcs.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Functions"><a class="docs-heading-anchor" href="#Functions">Functions</a><a id="Functions-1"></a><a class="docs-heading-anchor-permalink" href="#Functions" title="Permalink"></a></h1><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.aictr-Tuple{AbstractMatrix, Integer, Integer, Integer, AbstractVector, AbstractVector{&lt;:OnlinePortfolioSelection.TrendRep}}" href="#OnlinePortfolioSelection.aictr-Tuple{AbstractMatrix, Integer, Integer, Integer, AbstractVector, AbstractVector{&lt;:OnlinePortfolioSelection.TrendRep}}"><code>OnlinePortfolioSelection.aictr</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">aictr(
+  prices::AbstractMatrix,
+  horizon::Integer,
+  w::Integer,
+  ϵ::Integer,
+  σ::AbstractVector,
+  trend_model::AbstractVector{&lt;:TrendRep};
+  bt::AbstractVector = ones(size(prices, 1))/size(prices, 1)
+)</code></pre><p>Run the Adaptive Input and Composite Trend Representation (AICTR) algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>prices::AbstractMatrix</code>: Matrix of prices.</li><li><code>horizon::Integer</code>: Number investing days.</li><li><code>w::Integer</code>: Window size.</li><li><code>ϵ::Integer</code>: Update strength.</li><li><code>σ::AbstractVector</code>: Vector of size <code>L</code> that contains the standard deviation of each trend representation.</li><li><code>trend_model::AbstractVector{&lt;:TrendRep}</code>: Vector of trend representations. <a href="../types/#OnlinePortfolioSelection.SMA"><code>SMA</code></a>, <a href="../types/#OnlinePortfolioSelection.EMA"><code>EMA</code></a>, and <a href="../types/#OnlinePortfolioSelection.PP"><code>PP</code></a> are supported.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>bt::AbstractVector</code>: Initial portfolio vector of size <code>n_assets</code>.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware</header><div class="admonition-body"><p><code>prices</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An object of type <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;GOOG&quot;, &quot;AMZN&quot;, &quot;META&quot;, &quot;TSLA&quot;, &quot;BRK-A&quot;, &quot;NVDA&quot;, &quot;JPM&quot;, &quot;JNJ&quot;];
+
+julia&gt; querry = [get_prices(ticker, startdt=&quot;2019-01-01&quot;, enddt=&quot;2019-12-31&quot;)[&quot;adjclose&quot;] for ticker ∈ tickers];
+
+julia&gt; prices = stack(querry) |&gt; permutedims;
+
+julia&gt; horizon = 5;
+
+julia&gt; w = 3;
+
+julia&gt; ϵ = 500;
+
+julia&gt; σ = [0.5, 0.5];
+
+julia&gt; models = [SMA(), EMA(0.5)];
+
+julia&gt; bt = [0.3, 0.3, 0.4];
+
+julia&gt; model = aictr(prices, horizon, w, ϵ, σ, models)
+
+julia&gt; model.b
+10×5 Matrix{Float64}:
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  1.0         6.92439e-8  0.0         0.0
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  0.0         1.0         0.0         0.0
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  6.92278e-8  0.0         0.0         0.0
+ 0.1  0.0         0.0         6.95036e-8  1.0
+ 0.1  0.0         0.0         0.0         0.0
+ 0.1  0.0         0.0         1.0         6.95537e-8</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://www.doi.org/10.1109/TNNLS.2018.2827952">Radial Basis Functions With Adaptive Input and Composite Trend Representation for Portfolio Selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/AICTR.jl#L440-L510">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat" href="#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>OnlinePortfolioSelection.ann_sharpe</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T&lt;:AbstractFloat</code></pre><p>Calculate the Annualized Sharpe Ratio of investment. Also, see <a href="#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="#OnlinePortfolioSelection.mer-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, T}} where T&lt;:AbstractFloat"><code>mer</code></a>, <a href="#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, <a href="#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>, and <a href="../types/#OnlinePortfolioSelection.OPSMetrics"><code>OPSMetrics</code></a>.</p><p><strong>Arguments</strong></p><ul><li><code>APY::T</code>: the APY of investment.</li><li><code>Rf::T</code>: the risk-free rate of return.</li><li><code>sigma_prtf::T</code>: the standard deviation of the portfolio <span>$sigma_p$</span>.</li></ul><p><strong>Returns</strong></p><ul><li><code>::AbstractFloat</code>: the Annualized Sharpe Ratio of investment.</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Tools/metrics.jl#L185-L197">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}" href="#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>OnlinePortfolioSelection.ann_std</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">ann_std(cum_ret::AbstractVector{AbstractFloat}; dpy)</code></pre><p>Calculate the Annualized Standard Deviation (σₚ) of portfolio. Also, see <a href="#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="#OnlinePortfolioSelection.mer-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, T}} where T&lt;:AbstractFloat"><code>mer</code></a>, <a href="#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, <a href="#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>, and <a href="../types/#OnlinePortfolioSelection.OPSMetrics"><code>OPSMetrics</code></a>.</p><p><strong>Arguments</strong></p><ul><li><code>cum_ret::AbstractVector{AbstractFloat}</code>: the cumulative return of investment during the investment period.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>dpy</code>: the number of days in a year.</li></ul><p><strong>Returns</strong></p><ul><li><code>::AbstractFloat</code>: the Annualized Standard Deviation (σₚ) of portfolio.</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Tools/metrics.jl#L145-L158">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.anticor-Union{Tuple{T}, Tuple{Matrix{T}, Int64}} where T&lt;:Real" href="#OnlinePortfolioSelection.anticor-Union{Tuple{T}, Tuple{Matrix{T}, Int64}} where T&lt;:Real"><code>OnlinePortfolioSelection.anticor</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">anticor(adj_close::Matrix{T}, window::Int) where {T&lt;:Real}</code></pre><p>Run the Anticor algorithm on <code>adj_close</code> with window sizes <code>window</code>.</p><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adj_close</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Arguments</strong></p><ul><li><code>adj_close::Matrix{T}</code>: matrix of adjusted close prices</li><li><code>window::Int</code>: size of the window</li></ul><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: An OPSAlgorithm object.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; adj_close = [
+       1. 2.
+       4. 9.
+       7. 8.
+       10. 11.
+       13. 7.
+       8. 17.
+       19. 20.
+       22. 23.
+       25. 8.
+       2. 12.
+       5. 12.
+       5. 0.
+       0. 2.
+       1. 1.
+       ];
+
+julia&gt; adj_close = permutedims(adj_close);
+
+julia&gt; m_anticor = anticor(adj_close, 3);
+
+julia&gt; m_anticor.b
+2×14 Matrix{Float64}:
+ 0.5  0.5  0.5  0.5  …  0.0  0.0  0.0  1.0
+ 0.5  0.5  0.5  0.5     1.0  1.0  1.0  0.0
+
+julia&gt; sum(m_anticor.b, dims=1) .|&gt; isapprox(1., atol=1e-8) |&gt; all
+true</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://www.doi.org/10.1613/jair.1336">Can We Learn to Beat the Best Stock</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/Anticor.jl#L1-L52">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64" href="#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>OnlinePortfolioSelection.apy</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">apy(Sn::AbstractFloat, n_periods::S; dpy::S=252) where S&lt;:Int</code></pre><p>Calculate the Annual Percentage Yield (APY) of investment. Also, see <a href="#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="#OnlinePortfolioSelection.mer-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, T}} where T&lt;:AbstractFloat"><code>mer</code></a>, <a href="#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, <a href="#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>, and <a href="../types/#OnlinePortfolioSelection.OPSMetrics"><code>OPSMetrics</code></a>.</p><p><strong>Arguments</strong></p><ul><li><code>Sn::AbstractFloat</code>: the cumulative return of investment.</li><li><code>n_periods::S</code>: the number investment periods.</li><li><code>dpy::S=252</code>: the number of days in a year.</li></ul><p><strong>Returns</strong></p><ul><li><code>::AbstractFloat</code>: the APY of investment.</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Tools/metrics.jl#L166-L178">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.bk-Union{Tuple{S}, Tuple{T}, Tuple{Matrix{T}, S, S, Any}} where {T&lt;:Float64, S&lt;:Int64}" href="#OnlinePortfolioSelection.bk-Union{Tuple{S}, Tuple{T}, Tuple{Matrix{T}, S, S, Any}} where {T&lt;:Float64, S&lt;:Int64}"><code>OnlinePortfolioSelection.bk</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">bk(rel_price::Matrix{T}, K::S, L::S, c) where {T&lt;:Float64, S&lt;:Int}</code></pre><p>Run Bᴷ algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>rel_price::Matrix{T}</code>: Relative prices of assets.</li><li><code>K::S</code>: Number of experts.</li><li><code>L::S</code>: Number of time windows.</li><li><code>c::T</code>: The similarity threshold.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_price</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: An object of type <code>OPSAlgorithm</code>.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; daily_relative_prices = rand(10, 100);
+
+julia&gt; model = bk(daily_relative_prices, 10, 10, 0.5);
+
+julia&gt; model.alg
+&quot;Bᵏ&quot;
+
+julia&gt; sum(model.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p><strong>Reference</strong></p><blockquote><p><a href="https://doi.org/10.1111/j.1467-9965.2006.00274.x">NONPARAMETRIC KERNEL-BASED SEQUENTIAL INVESTMENT STRATEGIES</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/BK.jl#L1-L35">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.bs-Union{Tuple{Matrix{T}}, Tuple{T}} where T&lt;:Float64" href="#OnlinePortfolioSelection.bs-Union{Tuple{Matrix{T}}, Tuple{T}} where T&lt;:Float64"><code>OnlinePortfolioSelection.bs</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">bs(adj_close::Matrix{T}; last_n::Int=0) where {T&lt;:Float64}</code></pre><p>Run the Best So Far algorithm on the given data.</p><p><strong>Arguments</strong></p><ul><li><code>adj_close::Matrix{T}</code>: A matrix of adjusted closing prices of assets.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>last_n::Int</code>: The number of periods to look back for the performance of each asset. If <code>last_n</code> is 0, then the performance is calculated from the first period to the previous period.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p>The <code>adj_close</code> matrix should be in the order of assets x periods.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: An instance of <code>OPSAlgorithm</code>.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; adj_close = rand(5, 10);
+
+julia&gt; model = bs(adj_close, last_n=2);
+
+julia&gt; model.b
+5×10 Matrix{Float64}:
+ 0.2  0.0  0.0  0.0  1.0  0.0  0.0  0.0  0.0  0.0
+ 0.2  0.0  0.0  1.0  0.0  1.0  0.0  0.0  0.0  0.0
+ 0.2  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+ 0.2  1.0  1.0  0.0  0.0  0.0  1.0  0.0  1.0  1.0
+ 0.2  0.0  0.0  0.0  0.0  0.0  0.0  1.0  0.0  0.0
+
+julia&gt; sum(model.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.1142/S0219024907004251">KERNEL-BASED SEMI-LOG-OPTIMAL EMPIRICAL PORTFOLIO SELECTION STRATEGIES</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/BS.jl#L1-L40">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.caeg-Tuple{AbstractMatrix, AbstractVector}" href="#OnlinePortfolioSelection.caeg-Tuple{AbstractMatrix, AbstractVector}"><code>OnlinePortfolioSelection.caeg</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">caeg(rel_pr::AbstractMatrix, ηs::AbstractVector)</code></pre><p>Run CAEG algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: Historical relative prices. The paper&#39;s authors used <em>&quot;the ratio of closing price to last closing price&quot;</em>.</li><li><code>ηs::AbstractVector</code>: Learning rates.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> object.</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;GOOG&quot;];
+
+julia&gt; startdt, enddt = &quot;2020-1-1&quot;, &quot;2020-1-10&quot;;
+
+julia&gt; open_querry = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;open&quot;] for ticker ∈ tickers];
+
+julia&gt; open_ = stack(open_querry) |&gt; permutedims;
+
+julia&gt; close_querry = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker ∈ tickers];
+
+julia&gt; close_ = stack(close_querry) |&gt; permutedims;
+
+julia&gt; rel_pr = close_./open_;
+
+julia&gt; learning_rates = [0.02, 0.05];
+
+julia&gt; model = caeg(rel_pr, learning_rates);
+
+julia&gt; model.b
+3×6 Matrix{Float64}:
+ 0.333333  0.333322  0.333286  0.333271  0.333287  0.333368
+ 0.333333  0.333295  0.333271  0.333171  0.333123  0.333076
+ 0.333333  0.333383  0.333443  0.333558  0.33359   0.333557</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.1080/01605682.2020.1848358">Aggregating exponential gradient expert advice for online portfolio selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/CAEG.jl#L1-L47">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat" href="#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>OnlinePortfolioSelection.calmar</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">calmar(APY::T, MDD::T) where T&lt;:AbstractFloat</code></pre><p>Calculate the Calmar Ratio of investment. Also, see <a href="#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="#OnlinePortfolioSelection.mer-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, T}} where T&lt;:AbstractFloat"><code>mer</code></a>, <a href="#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, and <a href="../types/#OnlinePortfolioSelection.OPSMetrics"><code>OPSMetrics</code></a>.</p><p><strong>Arguments</strong></p><ul><li><code>APY::T</code>: the APY of investment.</li><li><code>MDD::T</code>: the MDD of investment.</li></ul><p><strong>Returns</strong></p><ul><li><code>::AbstractFloat</code>: the Calmar Ratio of investment.</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Tools/metrics.jl#L230-L241">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.cluslog" href="#OnlinePortfolioSelection.cluslog"><code>OnlinePortfolioSelection.cluslog</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">cluslog(
+  rel_pr::AbstractMatrix{&lt;:AbstractFloat},
+  horizon::Int,
+  TW::Int,
+  clus_mod::Type{&lt;:ClusLogVariant},
+  nclusters::Int,
+  nclustering::Int,
+  boundries::NTuple{2, AbstractFloat};
+  progress::Bool=true
+)</code></pre><p>Run KMNLOG, KMDLOG, etc., algorithms on the given data.</p><div class="admonition is-info"><header class="admonition-header">Important note</header><div class="admonition-body"><p>In order to use this function, you have to install the <a href="https://github.com/JuliaStats/Clustering.jl">Clustering.jl</a> package first, and then import it along with the OnlinePortfolioSelection.jl package:</p><pre><code class="language-julia hljs">julia&gt; using Pkg; Pkg.add(name=&quot;Clustering&quot;, version=&quot;0.15.2&quot;)
+julia&gt; using OnlinePortfolioSelection, Clustering</code></pre></div></div><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix{&lt;:AbstractFloat}</code>: Relative prices of assets. Each column represents the price of an asset at a given time.</li><li><code>horizon::Int</code>: Number of trading days.</li><li><code>TW::Int</code>: Maximum time window length to be examined.</li><li><code>clus_mod::Type{&lt;:ClusLogVariant}</code>: Clustering model to be used. Currently, only <a href="../types/#OnlinePortfolioSelection.KMNLOG"><code>KMNLOG</code></a> and <a href="../types/#OnlinePortfolioSelection.KMDLOG"><code>KMDLOG</code></a> are supported.</li><li><code>nclusters::Int</code>: The maximum number of clusters to be examined.</li><li><code>nclustering::Int</code>: The number of times clustering algorithm is run for optimal number of clusters.</li><li><code>boundries::NTuple{2, AbstractFloat}</code>: The lower and upper boundries for the weights of assets in the portfolio.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>progress::Bool=true</code>: Whether to log the progress or not.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> object.</li></ul><p><strong>Example</strong></p><p>Two clustering model is available as of now: <a href="../types/#OnlinePortfolioSelection.KMNLOG"><code>KMNLOG</code></a>, and <a href="../types/#OnlinePortfolioSelection.KMDLOG"><code>KMDLOG</code></a>. The first example utilizes <a href="../types/#OnlinePortfolioSelection.KMNLOG"><code>KMNLOG</code></a>:</p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, Clustering
+
+julia&gt; adj_close = [
+         1.5464 1.5852 1.6532 1.7245 1.5251 1.4185 1.2156 1.3231 1.3585 1.4563 1.4456
+         1.2411 1.2854 1.3456 1.4123 1.5212 1.5015 1.4913 1.5212 1.5015 1.4913 1.5015
+         1.3212 1.3315 1.3213 1.3153 1.3031 1.2913 1.2950 1.2953 1.3315 1.3213 1.3315
+       ]
+
+julia&gt; rel_pr = adj_close[:, 2:end]./adj_close[:, 1:end-1]
+
+julia&gt; horizon = 3; TW = 3; nclusters_ = 3; nclustering = 10; lb, ub = 0.0, 1.;
+
+julia&gt; model = cluslog(rel_pr, horizon, TW, KMNLOG, nclusters_, nclustering, (lb, ub));
+
+julia&gt; model.b
+3×3 Matrix{Float64}:
+0.00264911  0.00317815  0.148012
+0.973581    0.971728    0.848037
+0.02377     0.0250939   0.00395028
+
+julia&gt; sum(model.b , dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p>The same approach works for <a href="../types/#OnlinePortfolioSelection.KMDLOG"><code>KMDLOG</code></a> as well:</p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, Clustering
+
+julia&gt; model = cluslog(rel_pr, horizon, TW, KMDLOG, nclusters_, nclustering, (lb, ub));
+
+julia&gt; model.b
+3×3 Matrix{Float64}:
+4.59938e-7  4.96421e-7  4.89426e-7
+0.999998    0.999997    0.999997
+2.02964e-6  2.02787e-6  2.02964e-6
+
+julia&gt; sum(model.b , dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p>See also <a href="../types/#OnlinePortfolioSelection.KMNLOG"><code>KMNLOG</code></a>, and <a href="../types/#OnlinePortfolioSelection.KMDLOG"><code>KMDLOG</code></a>.</p><p><strong>Reference</strong></p><blockquote><p><a href="https://doi.org/10.1016/j.eswa.2020.113546">An online portfolio selection algorithm using clustering approaches and considering transaction costs</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/CLUSLOG.jl#L1-L89">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.cornk-Union{Tuple{T}, Tuple{Matrix{Float64}, Vararg{T, 4}}} where T&lt;:Int64" href="#OnlinePortfolioSelection.cornk-Union{Tuple{T}, Tuple{Matrix{Float64}, Vararg{T, 4}}} where T&lt;:Int64"><code>OnlinePortfolioSelection.cornk</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">cornk(
+  adj_close::Matrix{Float64},
+  horizon::T,
+  k::T,
+  w::T,
+  p::T;
+  init_budg=1,
+  progress::Bool=false
+) where T&lt;:Int</code></pre><p>Run CORN-K algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>adj_close::Matrix{Float64}</code>: Adjusted close prices of assets.</li><li><code>horizon::T</code>: The number of periods to invest.</li><li><code>k::T</code>: The number of top experts to be selected.</li><li><code>w::T</code>: maximum length of time window to be examined.</li><li><code>p::T</code>: maximum number of correlation coefficient thresholds.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>init_budg=1</code>: The initial budget for investment.</li><li><code>progress::Bool=false</code>: Whether to show the progress bar.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adj_close</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: An object of type <code>OPSAlgorithm</code>.</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; adj_close = rand(5, 100);
+
+julia&gt; model = cornk(adj_close, 10, 3, 5, 3);
+
+julia&gt; model.alg
+&quot;CORN-K&quot;
+
+julia&gt; sum(model.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p>See <a href="#OnlinePortfolioSelection.cornu-Union{Tuple{M}, Tuple{T}, Tuple{Matrix{T}, M, M}} where {T&lt;:Float64, M&lt;:Int64}"><code>cornu</code></a>, and <a href="#OnlinePortfolioSelection.dricornk-Union{Tuple{M}, Tuple{T}, Tuple{Matrix{T}, Vector{T}, Vararg{M, 4}}} where {T&lt;:Float64, M&lt;:Int64}"><code>dricornk</code></a>.</p><p><strong>Reference</strong></p><blockquote><p><a href="https://doi.org/10.1145/1961189.1961193">CORN: Correlation-driven nonparametric learning approach for portfolio selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/CORN.jl#L84-L133">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.cornu-Union{Tuple{M}, Tuple{T}, Tuple{Matrix{T}, M, M}} where {T&lt;:Float64, M&lt;:Int64}" href="#OnlinePortfolioSelection.cornu-Union{Tuple{M}, Tuple{T}, Tuple{Matrix{T}, M, M}} where {T&lt;:Float64, M&lt;:Int64}"><code>OnlinePortfolioSelection.cornu</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">cornu(
+  adj_close::Matrix{T},
+  horizon::M,
+  w::M;
+  rho::T=0.2,
+  init_budg=1,
+  progress::Bool=false
+) where {T&lt;:Float64, M&lt;:Int}</code></pre><p>Run CORN-U algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>adj_close::Matrix{T}</code>: Adjusted close prices of assets.</li><li><code>horizon::M</code>: The number of periods to invest.</li><li><code>w::M</code>: maximum length of time window to be examined.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>rho::T=0.2</code>: The correlation coefficient threshold.</li><li><code>init_budg=1</code>: The initial budget for investment.</li><li><code>progress::Bool=false</code>: Whether to show the progress bar.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adj_close</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: An object of type <code>OPSAlgorithm</code>.</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; adj_close = rand(5, 100);
+
+julia&gt; model = cornu(adj_close, 10, 5, 0.5);
+
+julia&gt; model.alg
+&quot;CORN-U&quot;
+
+julia&gt; sum(model.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p>See <a href="#OnlinePortfolioSelection.cornk-Union{Tuple{T}, Tuple{Matrix{Float64}, Vararg{T, 4}}} where T&lt;:Int64"><code>cornk</code></a>, and <a href="#OnlinePortfolioSelection.dricornk-Union{Tuple{M}, Tuple{T}, Tuple{Matrix{T}, Vector{T}, Vararg{M, 4}}} where {T&lt;:Float64, M&lt;:Int64}"><code>dricornk</code></a>.</p><p><strong>Reference</strong></p><blockquote><p><a href="https://doi.org/10.1145/1961189.1961193">CORN: Correlation-driven nonparametric learning approach for portfolio selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/CORN.jl#L1-L48">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.crp-Union{Tuple{Matrix{T}}, Tuple{T}} where T&lt;:Float64" href="#OnlinePortfolioSelection.crp-Union{Tuple{Matrix{T}}, Tuple{T}} where T&lt;:Float64"><code>OnlinePortfolioSelection.crp</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">crp(adj_close::Matrix{T}) where T&lt;:Float64</code></pre><p>Run Constant Rebalanced Portfolio (CRP) algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>adj_close::Matrix{Float64}</code>: adjusted close prices</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adj_close</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: OPSAlgorithm object</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; typeof(adj_close), size(adj_close)
+(Matrix{Float64}, (3, 10))
+
+julia&gt; m_crp = crp(adj_close);
+
+julia&gt; m_crp.b
+3×10 Matrix{Float64}:
+ 0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333
+ 0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333
+ 0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333  0.333333
+
+julia&gt; sum(m_crp.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1467-9965.1991.tb00002.x">Universal Portfolios</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/CRP.jl#L1-L36">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.cwmr" href="#OnlinePortfolioSelection.cwmr"><code>OnlinePortfolioSelection.cwmr</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">cwmr(
+  rel_pr::AbstractMatrix,
+  ϕ::AbstractFloat,
+  ϵ::AbstractFloat,
+  variant::Type{&lt;:CWMRVariant},
+  ptfdis::Type{&lt;:PtfDisVariant}
+)
+
+cwmr(
+  rel_pr::AbstractMatrix,
+  ϕ::AbstractVector,
+  ϵ::AbstractVector,
+  variant::Type{&lt;:CWMRVariant},
+  ptfdis::Type{&lt;:PtfDisVariant};
+  adt_ptf::Union{Nothing, AbstractVector{&lt;:AbstractMatrix}}=nothing
+)</code></pre><p>Run the Confidence Weighted Mean Reversion (CWMR) algorithm.</p><div class="admonition is-info"><header class="admonition-header">Important note</header><div class="admonition-body"><p>In order to use this function, you have to install the <a href="https://github.com/JuliaStats/Distributions.jl">Distributions.jl</a> package first, and then import it along with the OnlinePortfolioSelection.jl package:</p><pre><code class="language-julia hljs">julia&gt; using Pkg; Pkg.add(&quot;Distributions&quot;)
+julia&gt; using Distributions, OnlinePortfolioSelection</code></pre></div></div><p><strong>Methods</strong></p><ul><li><code>cwmr(rel_pr::AbstractMatrix, ϕ::AbstractFloat, ϵ::AbstractFloat, variant::Type{&lt;:CWMRVariant}, ptfdis::Type{&lt;:PtfDisVariant})</code></li><li><code>cwmr(rel_pr::AbstractMatrix, ϕ::AbstractVector, ϵ::AbstractVector, variant::Type{&lt;:CWMRVariant}, ptfdis::Type{&lt;:PtfDisVariant}; adt_ptf::Union{Nothing, AbstractVector{&lt;:AbstractMatrix}}=nothing)</code></li></ul><p><strong>Method 1</strong></p><p>Through this method, we can run the following variants of the CWMR algorithm: <code>CWMR-Var</code>, <code>CWMR-Stdev</code>, <code>CWMR-Var-s</code> and <code>CWMR-Stdev-s</code>.</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: Relative prices of the assets.</li><li><code>ϕ::AbstractFloat</code>: Learning rate.</li><li><code>ϵ::AbstractFloat</code>: Expert&#39;s weight. It should be ∈ [0, 1].</li><li><code>variant::Type{&lt;:CWMRVariant}</code>: Variant of the algorithm. It can be <code>CWMRD</code> or <code>CWMRS</code>.</li><li><code>ptfdis::Type{&lt;:PtfDisVariant}</code>: Portfolio distribution. It can be <code>Var</code> or <code>Stdev</code>.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> object that contains the result of running the algorithm.</li></ul><p><strong>Example</strong></p><p>Let&#39;s run all the variants of the first method, such as <code>CWMR-Var</code>, <code>CWMR-Stdev</code>, <code>CWMR-Var-s</code> and <code>CWMR-Stdev-s</code>:</p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance, Distributions
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;AMZN&quot;];
+
+julia&gt; startdt, enddt = &quot;2019-01-01&quot;, &quot;2019-01-10&quot;;
+
+julia&gt; querry = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker=tickers];
+
+julia&gt; prices = stack(querry) |&gt; permutedims;
+
+julia&gt; rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia&gt; variant, ptf_distrib = CWMRS, Var;
+
+julia&gt; model = cwmr(rel_pr, 0.5, 0.1, variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.344307  1.0         1.0         0.965464   0.0
+ 0.274593  2.76907e-8  0.0         0.0186898  1.0
+ 0.3811    2.73722e-8  2.23057e-9  0.0158464  2.21487e-7</code></pre><p><strong>Method 2</strong></p><p>Through this method, we can run the following variants of the CWMR algorithm: <code>CWMR-Var-Mix</code>, <code>CWMR-Stdev-Mix</code>, <code>CWMR-Var-s-Mix</code> and <code>CWMR-Stdev-s-Mix</code>.</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: Relative prices of the assets.</li><li><code>ϕ::AbstractVector</code>: A vector of learning rates.</li><li><code>ϵ::AbstractVector</code>: A vector of expert&#39;s weights. Each element should be ∈ [0, 1].</li><li><code>variant::Type{&lt;:CWMRVariant}</code>: Variant of the algorithm. It can be <code>CWMRD</code> or <code>CWMRS</code>.</li><li><code>ptfdis::Type{&lt;:PtfDisVariant}</code>: Portfolio distribution. It can be <code>Var</code> or <code>Stdev</code>.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Keyword Arguments</strong></p><ul><li><code>adt_ptf::Union{Nothing, AbstractVector{&lt;:AbstractMatrix}}=nothing</code>: A vector of additional expert&#39;s portfolios.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adt_ptf</code> can be <code>nothing</code> or a vector of matrices of size <code>n_assets</code> × <code>n_periods</code>. As noted in the paper, the additional expert&#39;s portfolios should be chosen from the set of universal strategies, such as &#39;UP&#39;, &#39;EG&#39;, &#39;ONS&#39;, etc. See <a href="#OnlinePortfolioSelection.eg-Tuple{AbstractMatrix}"><code>eg</code></a>, and <a href="#OnlinePortfolioSelection.up-Tuple{Matrix{Float64}}"><code>up</code></a> for more details.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> object that contains the result of running the algorithm.</li></ul><p><strong>Example</strong></p><p>Let&#39;s run all the variants of the second method, such as <code>CWMR-Var-Mix</code>, <code>CWMR-Stdev-Mix</code>, <code>CWMR-Var-s-Mix</code> and <code>CWMR-Stdev-s-Mix</code>:</p><pre><code class="language-julia hljs">julia&gt; variant, ptf_distrib = CWMRS, Var;
+
+julia&gt; model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.329642  0.853456   0.863553   0.819096  0.0671245
+ 0.338512  0.0667117  0.0694979  0.102701  0.842985
+ 0.331846  0.0798325  0.0669491  0.078203  0.0898904</code></pre><p>Now, let&#39;s pass two different &#39;EG&#39; portfolios as additional expert&#39;s portfolios:</p><pre><code class="language-julia hljs">julia&gt; variant, ptf_distrib = CWMRS, Var;
+
+julia&gt; eg1 = eg(rel_pr, eta=0.1).b;
+
+julia&gt; eg2 = eg(rel_pr, eta=0.2).b;
+
+julia&gt; model = cwmr(rel_pr, [0.5, 0.5], [0.1, 0.1], variant, ptf_distrib, adt_ptf=[eg1, eg2]);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.318927  0.768507  0.721524  0.753618  0.135071
+ 0.338759  0.111292  0.16003   0.133229  0.741106
+ 0.342314  0.120201  0.118446  0.113154  0.123823</code></pre><p>See <a href="../FL/#Confidence-Weighted-Mean-Reversion-(CWMR)">Confidence Weighted Mean Reversion (CWMR)</a> for more informaton and examples.</p><p><strong>References</strong></p><blockquote><p><a href="http://dx.doi.org/10.1145/2435209.2435213">Confidence Weighted Mean Reversion Strategy for Online Portfolio Selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/CWMR.jl#L2-L138">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.cwogd-Tuple{AbstractMatrix, AbstractFloat, Any}" href="#OnlinePortfolioSelection.cwogd-Tuple{AbstractMatrix, AbstractFloat, Any}"><code>OnlinePortfolioSelection.cwogd</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">cwogd(
+  rel_pr::AbstractMatrix,
+  γ::AbstractFloat,
+  H;
+  bj::AbstractMatrix=diagm(ones(size(rel_pr, 1)))
+)</code></pre><p>Run the CW-OGD algorithm.</p><p><strong>Positional Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: Relative price matrix where it represents proportion of the closing price to the opening price of each asset in each day.</li><li><code>γ::AbstractFloat</code>: Regular term coefficient of the basic expert&#39;s loss function.</li><li><code>H::AbstractFloat</code>: Constant for calculating step sizes.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>bj::AbstractMatrix=diagm(ones(size(rel_pr, 1)))</code>: Matrix of experts opinions. Each column of this matrix must have just one positive element == 1. and others are zero. Also, sum of each column must be equal to 1. and number of rows must be equal to number of rows of <code>rel_pr</code>.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An object of <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> type.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;GOOG&quot;];
+
+julia&gt; startdt, enddt = &quot;2019-01-01&quot;, &quot;2019-01-10&quot;;
+
+julia&gt; querry_open_price = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;open&quot;] for ticker in tickers];
+
+julia&gt; open_pr = reduce(hcat, querry_open_price) |&gt; permutedims;
+
+julia&gt; querry_close_pr = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker in tickers];
+
+julia&gt; close_pr = reduce(hcat, querry_close_pr) |&gt; permutedims;
+
+julia&gt; rel_pr = close_pr ./ open_pr
+3×6 Matrix{Float64}:
+ 1.01956  0.987568  1.02581  0.994822  1.00796   1.01335
+ 1.01577  0.973027  1.02216  1.00413   0.997671  1.00395
+ 1.0288   0.976042  1.03692  0.997097  1.00016   0.993538
+
+julia&gt; gamma = 0.1; H = 0.5;
+
+julia&gt; model = cwogd(rel_pr, gamma, H);
+
+julia&gt; model.b
+3×5 Matrix{Float64}:
+ 0.333333  0.351048  0.346241  0.338507  0.350524
+ 0.333333  0.321382  0.309454  0.320351  0.311853
+ 0.333333  0.32757   0.344305  0.341142  0.337623
+
+julia&gt; sum(model.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p>Or using a custom matrix of experts opinions:</p><pre><code class="language-julia hljs">julia&gt; b1 = [
+          0.0 1.0 0.0
+          1.0 0.0 0.0
+          0.0 0.0 1.0
+        ]
+
+julia&gt; model = cwogd(rel_pr, gamma, H, bj=b1);
+
+julia&gt; model.b
+3×6 Matrix{Float64}:
+ 0.333333  0.329802  0.347517  0.34271   0.334976  0.346992
+ 0.333333  0.322351  0.3104    0.298472  0.309369  0.300871
+ 0.333333  0.347847  0.342083  0.358819  0.355655  0.352137
+
+julia&gt; sum(model.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.1016/j.knosys.2021.107533">[1] Combining expert weights for online portfolio selection based on the gradient descent algorithm.</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/CW-OGD.jl#L59-L142">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.dricornk-Union{Tuple{M}, Tuple{T}, Tuple{Matrix{T}, Vector{T}, Vararg{M, 4}}} where {T&lt;:Float64, M&lt;:Int64}" href="#OnlinePortfolioSelection.dricornk-Union{Tuple{M}, Tuple{T}, Tuple{Matrix{T}, Vector{T}, Vararg{M, 4}}} where {T&lt;:Float64, M&lt;:Int64}"><code>OnlinePortfolioSelection.dricornk</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">dricornk(
+  adj_close::Matrix{T},
+  adj_close_market::Vector{T},
+  horizon::M,
+  k::M,
+  w::M,
+  p::M;
+  lambda::T=1e-3,
+  init_budg=1,
+  progress::Bool=false
+) where {T&lt;:Float64, M&lt;:Int}</code></pre><p>Run the DRICORNK algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>adj_close::Matrix{T}</code>: A matrix of adjusted close prices of the assets.</li><li><code>adj_close_market::Vector{T}</code>: A vector of adjusted close prices of the market in the same period.</li><li><code>horizon::M</code>: The investment horizon.</li><li><code>k::M</code>: The number of experts.</li><li><code>w::M</code>: maximum length of time window to be examined.</li><li><code>p::M</code>: maximum number of correlation coefficient thresholds.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>lambda::T=1e-3</code>: The regularization parameter.</li><li><code>init_budg=1</code>: The initial budget for investment.</li><li><code>progress::Bool=false</code>: Whether to show the progress bar.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adj_close</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: An object of type <code>OPSAlgorithm</code>.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; stocks_adj, market_adj = rand(10, 100), rand(100);
+
+julia&gt; m_dricornk = dricornk(stocks_adj, market_adj, 5, 2, 4, 3);
+
+julia&gt; sum(m_dricornk.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p>See <a href="#OnlinePortfolioSelection.cornk-Union{Tuple{T}, Tuple{Matrix{Float64}, Vararg{T, 4}}} where T&lt;:Int64"><code>cornk</code></a>, and <a href="#OnlinePortfolioSelection.cornu-Union{Tuple{M}, Tuple{T}, Tuple{Matrix{T}, M, M}} where {T&lt;:Float64, M&lt;:Int64}"><code>cornu</code></a>.</p><p><strong>Reference</strong></p><blockquote><p><a href="https://www.doi.org/10.1007/978-3-030-66151-9_12">DRICORN-K: A Dynamic RIsk CORrelation-driven Non-parametric Algorithm for Online Portfolio Selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/DRICORNK.jl#L1-L51">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.eg-Tuple{AbstractMatrix}" href="#OnlinePortfolioSelection.eg-Tuple{AbstractMatrix}"><code>OnlinePortfolioSelection.eg</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">eg(rel_pr::AbstractMatrix; eta::AbstractFloat=0.05)</code></pre><p>Run Exponential Gradient (EG) algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: Historical relative prices.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>eta::AbstractFloat=0.05</code>: Learning rate.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> object.</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; typeof(rel_pr), size(rel_pr)
+(Matrix{Float64}, (3, 10))
+
+julia&gt; m_eg = eg(rel_pr);
+
+julia&gt; m_eg.b
+3×10 Matrix{Float64}:
+ 0.333333  0.334092  0.325014  0.331234  0.314832  0.324674  0.326467  0.357498  0.353961  0.340167
+ 0.333333  0.345278  0.347718  0.337116  0.359324  0.363286  0.36466   0.348263  0.345386  0.355034
+ 0.333333  0.32063   0.327267  0.331649  0.325843  0.31204   0.308873  0.294239  0.300652  0.304799
+
+julia&gt; sum(m_eg.b, dims=1) .|&gt; isapprox(1.0) |&gt; all
+true</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://onlinelibrary.wiley.com/doi/10.1111/1467-9965.00058">On-Line Portfolio Selection Using Multiplicative Updates</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/EG.jl#L1-L39">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.load-Union{Tuple{S}, Tuple{T}, Tuple{AbstractMatrix{T}, T, S, S, T}} where {T&lt;:Float64, S&lt;:Int64}" href="#OnlinePortfolioSelection.load-Union{Tuple{S}, Tuple{T}, Tuple{AbstractMatrix{T}, T, S, S, T}} where {T&lt;:Float64, S&lt;:Int64}"><code>OnlinePortfolioSelection.load</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T, ϵ::T=1.5) where {T&lt;:Float64, S&lt;:Int}</code></pre><p>Run LOAD algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>adj_close::AbstractMatrix{T}</code>: Adjusted close price data.</li><li><code>α::T</code>: Decay factor. (0 &lt; α &lt; 1)</li><li><code>ω::S</code>: Window size. (ω &gt; 0)</li><li><code>horizon::S</code>: Investment horizon. (n_periods &gt; horizon &gt; 0)</li><li><code>η::T</code>: Threshold value. (η &gt; 0)</li><li><code>ϵ::T=1.5</code>: Expected return threshold value.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adj_close</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An object of type <code>OPSAlgorithm</code> containing the weights of each asset for each period.</li><li><code>Sₜ::Vector{Float64}</code>: Cumulative wealth for each period.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs"># Get data
+julia&gt; using YFinance
+julia&gt; startdt, enddt = &quot;2022-04-01&quot;, &quot;2023-04-27&quot;;
+julia&gt; querry = [
+          get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker in tickers
+       ];
+julia&gt; prices = reduce(hcat, querry);
+julia&gt; prices = permutedims(prices);
+
+julia&gt; using OnlinePortfolioSelection
+
+julia&gt; model, s = load(prices, 0.5, 30, 5, 0.1);
+
+julia&gt; model.b
+5×5 Matrix{Float64}:
+ 0.2  2.85298e-8  0.0        0.0       0.0
+ 0.2  0.455053    0.637299   0.694061  0.653211
+ 0.2  0.215388    0.0581291  0.0       0.0
+ 0.2  0.329559    0.304572   0.305939  0.346789
+ 0.2  6.06128e-9  0.0        0.0       0.0
+
+julia&gt; sum(model.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true
+
+julia&gt; s
+6-element Vector{Float64}:
+ 1.0
+ 0.9879822754225864
+ 0.9853561439014098
+ 0.9836737048568326
+ 0.971437501096619
+ 0.9660091217094392</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.1016/j.knosys.2019.104958">A local adaptive learning system for online portfolio selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/LOAD.jl#L124-L182">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat" href="#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>OnlinePortfolioSelection.mdd</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">mdd(Sn::AbstractVector{T}) where T&lt;:AbstractFloat</code></pre><p>Calculate the Maximum Drawdown (MDD) of investment. Also, see <a href="#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="#OnlinePortfolioSelection.mer-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, T}} where T&lt;:AbstractFloat"><code>mer</code></a>, <a href="#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>, and <a href="../types/#OnlinePortfolioSelection.OPSMetrics"><code>OPSMetrics</code></a>.</p><p><strong>Arguments</strong></p><ul><li><code>Sn::AbstractVector{T}</code>: the cumulative return of investment during the investment period.</li></ul><p><strong>Returns</strong></p><ul><li><code>::AbstractFloat</code>: the MDD of investment.</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Tools/metrics.jl#L201-L211">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.mer-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, T}} where T&lt;:AbstractFloat" href="#OnlinePortfolioSelection.mer-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, T}} where T&lt;:AbstractFloat"><code>OnlinePortfolioSelection.mer</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">mer(
+  weights::AbstractMatrix{T},
+  rel_pr::AbstractMatrix{T},
+  𝘷::T=0.
+) where T&lt;:AbstractFloat</code></pre><p>Calculate the investments&#39;s Mean excess return (MER). Also, see <a href="#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>sn</code></a>, <a href="#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, <a href="#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>, and <a href="../types/#OnlinePortfolioSelection.OPSMetrics"><code>OPSMetrics</code></a>.</p><p><strong>Arguments</strong></p><ul><li><code>weights::AbstractMatrix{T}</code>: the weights of the portfolio.</li><li><code>rel_pr::AbstractMatrix{T}</code>: the relative price of the stocks.</li><li><code>𝘷::T=0.</code>: the transaction cost rate.</li></ul><div class="admonition is-warning"><header class="admonition-header">Warning</header><div class="admonition-body"><p>The size of <code>weights</code> and <code>rel_pr</code> must be <code>(n_stocks, n_periods)</code>.</p></div></div><div class="admonition is-info"><header class="admonition-header">Note</header><div class="admonition-body"><p>If <code>size(rel_pr, 2)</code> is greater than <code>size(weights, 2)</code>, then the last <code>size(weights, 2)</code> columns of <code>rel_pr</code> will be used.</p></div></div><p><strong>Returns</strong></p><ul><li><code>MER::AbstractFloat</code>: the investments&#39;s Mean excess return (MER).</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Tools/metrics.jl#L94-L116">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.mrvol-Union{Tuple{S}, Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, S, S, S, T, T}} where {T&lt;:AbstractFloat, S&lt;:Integer}" href="#OnlinePortfolioSelection.mrvol-Union{Tuple{S}, Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, S, S, S, T, T}} where {T&lt;:AbstractFloat, S&lt;:Integer}"><code>OnlinePortfolioSelection.mrvol</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">mrvol(
+  rel_pr::AbstractMatrix{T},
+  rel_vol::AbstractMatrix{T},
+  horizon::S,
+  Wₘᵢₙ::S,
+  Wₘₐₓ::S,
+  λ::T,
+  η::T
+) where {T&lt;:AbstractFloat, S&lt;:Integer}</code></pre><p>Run MRvol algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix{T}</code>: Relative price matrix where it represents proportion of the closing price to the opening price of each asset in each day.</li><li><code>rel_vol::AbstractMatrix{T}</code>: Relative volume matrix where 𝘷ᵢⱼ represents the tᵗʰ trading volume of asset 𝑖 divided by the (t - 1)ᵗʰ trading volume of asset 𝑖.</li><li><code>horizon::S</code>: Investment horizon. The last <code>horizon</code> days of the data will be used to run the algorithm.</li><li><code>Wₘᵢₙ::S</code>: Minimum window size.</li><li><code>Wₘₐₓ::S</code>: Maximum window size.</li><li><code>λ::T</code>: Trade-off parameter in the loss function.</li><li><code>η::T</code>: Learning rate.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> and <code>rel_vol</code> should be matrixes of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> object.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;GOOG&quot;];
+
+julia&gt; startdt, enddt = &quot;2019-01-01&quot;, &quot;2020-01-01&quot;;
+
+julia&gt; querry_open_price = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;open&quot;] for ticker in tickers];
+
+julia&gt; open_pr = reduce(hcat, querry_open_price) |&gt; permutedims;
+
+julia&gt; querry_close_pr = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker in tickers];
+
+julia&gt; close_pr = reduce(hcat, querry_close_pr) |&gt; permutedims;
+
+julia&gt; querry_vol = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;vol&quot;] for ticker in tickers];
+
+julia&gt; vol = reduce(hcat, querry_vol) |&gt; permutedims;
+
+julia&gt; rel_pr = (close_pr ./ open_pr)[:, 2:end];
+
+julia&gt; rel_vol = vol[:, 2:end] ./ vol[:, 1:end-1];
+
+julia&gt; size(rel_pr) == size(rel_vol)
+true
+
+julia&gt; horizon = 100; Wₘᵢₙ = 4; Wₘₐₓ = 10; λ = 0.05; η = 0.01;
+
+julia&gt; r = mrvol(rel_pr, rel_vol, horizon, Wₘᵢₙ, Wₘₐₓ, λ, η);
+
+julia&gt; r.b
+3×100 Matrix{Float64}:
+ 0.333333  0.0204062  0.0444759  …  0.38213   0.467793
+ 0.333333  0.359864   0.194139      0.213264  0.281519
+ 0.333333  0.61973    0.761385      0.404606  0.250689</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.1016/j.eswa.2023.121472">Online portfolio selection of integrating expert strategies based on mean reversion and trading volume.</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/MRvol.jl#L257-L325">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.oldem-Union{Tuple{T}, Tuple{S}, Tuple{AbstractMatrix, S, S, S, S, T, T, T}} where {S&lt;:Integer, T&lt;:AbstractFloat}" href="#OnlinePortfolioSelection.oldem-Union{Tuple{T}, Tuple{S}, Tuple{AbstractMatrix, S, S, S, S, T, T, T}} where {S&lt;:Integer, T&lt;:AbstractFloat}"><code>OnlinePortfolioSelection.oldem</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">oldem(
+  rel_pr::AbstractMatrix,
+  horizon::S,
+  w::S,
+  L::S,
+  s::S,
+  σ::T,
+  ξ::T,
+  γ::T;
+  bt::AbstractVector = ones(size(rel_pr, 1))/size(rel_pr, 1)
+) where {S&lt;:Integer, T&lt;:AbstractFloat}</code></pre><p>Run Online Low Dimension Ensemble Method (OLDEM).</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: A matrix of size <code>n_assets</code> × <code>T</code> containing the price relatives of assets.</li><li><code>horizon::S</code>: Investment horizon.</li><li><code>w::S</code>: Window size.</li><li><code>L::S</code>: Number of subsystems.</li><li><code>s::S</code>: Number of assets in each subsystem.</li><li><code>σ::T</code>: Kernel bandwidth.</li><li><code>ξ::T</code>: tradeoff parameter.</li><li><code>γ::T</code>: tradeoff parameter.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>bt::AbstractVector</code>: A vector of length <code>n_assets</code> containing the initial portfolio weights. Presumebly, the initial portfolio portfolio is the equally weighted portfolio. However, one can use any other portfolio weights that satisfy the following condition: <span>$\sum_{i=1}^{n\_assets} b_{i} = 1$</span>.</li><li><code>progress::Bool=false</code>: Show the progress bar.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An object of type <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;MSFT&quot;, &quot;TSLA&quot;, &quot;AAPL&quot;, &quot;META&quot;, &quot;MMM&quot;];
+
+julia&gt; querry = [
+         get_prices(ticker, startdt=&quot;2020-01-01&quot;, enddt=&quot;2020-01-15&quot;)[&quot;adjclose&quot;]
+         for ticker in tickers
+       ];
+
+julia&gt; prices = stack(querry) |&gt; permutedims;
+
+julia&gt; x = prices[:, 2:end]./prices[:, 1:end-1]
+5×8 Matrix{Float64}:
+ 0.987548  1.00259  0.990882  1.01593  1.01249   0.995373  1.01202  0.992957
+ 1.02963   1.01925  1.0388    1.0492   0.978055  0.993373  1.09769  1.02488
+ 0.990278  1.00797  0.995297  1.01609  1.02124   1.00226   1.02136  0.986497
+ 0.994709  1.01883  1.00216   1.01014  1.01431   0.998901  1.01766  0.987157
+ 0.991389  1.00095  0.995969  1.01535  1.00316   0.995971  1.00249  1.00249
+
+julia&gt; σ = 0.025;
+julia&gt; w = 2;
+julia&gt; h = 4;
+julia&gt; L = 4;
+julia&gt; s = 3;
+
+julia&gt; model = oldem(x, h, w, L, s, σ, 0.002, 0.25);
+
+julia&gt; model.b
+5×4 Matrix{Float64}:
+ 0.2  1.99964e-8  1.0         0.0
+ 0.2  1.0         0.0         0.0
+ 0.2  0.0         0.0         1.99964e-8
+ 0.2  0.0         0.0         1.0
+ 0.2  0.0         1.99964e-8  0.0</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.1016/j.patcog.2023.109872">Online portfolio selection with predictive instantaneous risk assessment</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/OLDEM.jl#L535-L610">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.olmar-Tuple{AbstractMatrix, Int64, Int64, Int64}" href="#OnlinePortfolioSelection.olmar-Tuple{AbstractMatrix, Int64, Int64, Int64}"><code>OnlinePortfolioSelection.olmar</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">olmar(rel_pr::AbstractMatrix, horizon::Int, ω::Int, ϵ::Int)
+olmar(rel_pr::AbstractMatrix, horizon::Int, ω::AbstractVector{&lt;:Int}, ϵ::Int)</code></pre><p><strong>Method 1</strong></p><p>Run the Online Moving Average Reversion algorithm (OLMAR).</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: Matrix of relative prices.</li><li><code>horizon::Int</code>: Investment horizon.</li><li><code>ω::Int</code>: Window size.</li><li><code>ϵ::Int</code>: Reversion threshold.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> object.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;AMZN&quot;, &quot;GOOG&quot;, &quot;META&quot;];
+
+julia&gt; startdt, enddt = &quot;2019-01-01&quot;, &quot;2020-01-01&quot;
+
+julia&gt; querry = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker in tickers];
+
+julia&gt; prices = stack(querry) |&gt; permutedims;
+
+julia&gt; rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia&gt; horizon = 5;
+julia&gt; windows = 3;
+julia&gt; epsilon = 4;
+
+julia&gt; m_olmar = olmar(rel_pr, horizon, windows, epsilon);
+
+julia&gt; m_olmar.b
+5×5 Matrix{Float64}:
+ 0.2  1.0         0.484825  1.97835e-8  0.0
+ 0.2  1.95724e-8  0.515175  0.0         0.0
+ 0.2  0.0         0.0       1.0         1.0
+ 0.2  0.0         0.0       0.0         0.0
+ 0.2  0.0         0.0       0.0         1.9851e-8
+
+julia&gt; all(sum(m_olmar.b, dims=1) .≈ 1.0)
+true</code></pre><p><strong>Method 2</strong></p><p>Run BAH(OLMAR) algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: Matrix of relative prices.</li><li><code>horizon::Int</code>: Investment horizon.</li><li><code>ω::AbstractVector{&lt;:Int}</code>: Window sizes.</li><li><code>ϵ::Int</code>: Reversion threshold.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_pr</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> object.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;AMZN&quot;, &quot;GOOG&quot;, &quot;META&quot;];
+
+julia&gt; startdt, enddt = &quot;2019-01-01&quot;, &quot;2020-01-01&quot;
+
+julia&gt; querry = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker in tickers];
+
+julia&gt; prices = stack(querry) |&gt; permutedims;
+
+julia&gt; rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia&gt; horizon = 5;
+julia&gt; windows = [3, 5, 7];
+julia&gt; epsilon = 4;
+
+julia&gt; model = olmar(rel_pr, horizon, windows, epsilon);
+
+julia&gt; model.b
+5×5 Matrix{Float64}:
+ 0.2  0.2  0.333333    0.162297  1.33072e-8
+ 0.2  0.2  1.31177e-8  0.555158  0.0
+ 0.2  0.2  6.57906e-9  0.0       0.667358
+ 0.2  0.2  0.0         0.0       0.332642
+ 0.2  0.2  0.666667    0.282545  0.0</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.48550/arXiv.1206.4626">On-Line Portfolio Selection with Moving Average Reversion</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/OLMAR.jl#L1-L98">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.opsmethods-Tuple{}" href="#OnlinePortfolioSelection.opsmethods-Tuple{}"><code>OnlinePortfolioSelection.opsmethods</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">opsmethods()</code></pre><p>Print the available algorithms in the package.</p><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; opsmethods()
+
+      ===== OnlinePortfolioSelection.jl =====
+            Currently available methods
+       =====================================
+
+        up: Universal Portfolio - Call `up`
+        eg: Exponential Gradient - Call `eg`
+     cornu: CORN-U - Call `cornu`
+          ⋮</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/OnlinePortfolioSelection.jl#L62-L82">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.pamr-Tuple{AbstractMatrix, AbstractFloat, OnlinePortfolioSelection.PAMRModel}" href="#OnlinePortfolioSelection.pamr-Tuple{AbstractMatrix, AbstractFloat, OnlinePortfolioSelection.PAMRModel}"><code>OnlinePortfolioSelection.pamr</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">pamr(rel_pr::AbstractMatrix, ϵ::AbstractFloat, C::AbstractFloat, model::PAMRModel)</code></pre><p>Run the PAMR algorithm on the matrix of relative prices <code>rel_pr</code>.</p><p><strong>Arguments</strong></p><ul><li><code>rel_pr::AbstractMatrix</code>: matrix of relative prices.</li><li><code>ϵ::AbstractFloat</code>: Sensitivity parameter.</li><li><code>C::AbstractFloat</code>: Aggressiveness parameter.</li><li><code>model::PAMRModel</code>: PAMR model to use. All three variants, namely, <code>PAMR()</code>, <code>PAMR1()</code>, and <code>PAMR2()</code> are supported.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>rel_price</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Output</strong></p><ul><li><code>::OPSAlgorithm</code>: An object of type <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;MSFT&quot;, &quot;AMZN&quot;, &quot;META&quot;, &quot;GOOG&quot;]
+
+julia&gt; startdt, enddt = &quot;2019-01-01&quot;, &quot;2020-01-01&quot;
+
+julia&gt; querry = [get_prices(ticker, startdt=startdt, enddt=enddt)[&quot;adjclose&quot;] for ticker in tickers]
+
+julia&gt; prices = stack(querry) |&gt; permutedims
+
+julia&gt; rel_pr =  prices[:, 2:end]./prices[:, 1:end-1]
+
+julia&gt; model = PAMR()
+
+julia&gt; eps = 0.01
+
+julia&gt; result = pamr(rel_pr, eps, model)
+
+julia&gt; result.b
+5×251 Matrix{Float64}:
+ 0.2  0.224672  0.22704   0.230855  0.229743  …  0.0966823  0.0966057  0.0900667
+ 0.2  0.196884  0.197561  0.199825  0.203945     0.172787   0.171734   0.171626
+ 0.2  0.191777  0.190879  0.178504  0.178478     0.290126   0.289638   0.291135
+ 0.2  0.193456  0.193855  0.196363  0.189322     0.182514   0.181609   0.185527
+ 0.2  0.193211  0.190665  0.194453  0.198513     0.25789    0.260414   0.261645
+
+julia&gt; sum(result.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p>In the same way, you can use <code>PAMR1()</code> and <code>PAMR2()</code>:</p><pre><code class="language-julia hljs">julia&gt; model = PAMR1(C=0.02)
+
+julia&gt; eps = 0.01
+
+julia&gt; result = pamr(rel_pr, eps, model)
+
+julia&gt; result.b
+5×251 Matrix{Float64}:
+ 0.2  0.200892  0.200978  0.201116  …  0.196264  0.19626   0.196257  0.19602
+ 0.2  0.199887  0.199912  0.199994     0.198835  0.199017  0.198979  0.198975
+ 0.2  0.199703  0.19967   0.199223     0.203659  0.203261  0.203243  0.203297
+ 0.2  0.199763  0.199778  0.199868     0.199246  0.199351  0.199319  0.19946
+ 0.2  0.199754  0.199662  0.199799     0.201997  0.20211   0.202202  0.202246
+
+julia&gt; model = PAMR2(C=1.)
+
+julia&gt; eps = 0.01
+
+julia&gt; result = pamr(rel_pr, eps, model)
+
+julia&gt; result.b
+5×251 Matrix{Float64}:
+ 0.2  0.219093  0.220963  0.223948  …  0.119093  0.119013  0.118953  0.11385
+ 0.2  0.197589  0.198123  0.199895     0.175224  0.179199  0.178376  0.178291
+ 0.2  0.193636  0.192928  0.183242     0.279176  0.27052   0.270138  0.271307
+ 0.2  0.194936  0.19525   0.197214     0.183626  0.185922  0.185215  0.188272
+ 0.2  0.194746  0.192736  0.195701     0.242882  0.245346  0.247319  0.248279</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://www.doi.org/10.1007/s10994-012-5281-z">PAMR: Passive aggressive mean reversion strategy for portfolio selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/PAMR.jl#L1-L84">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.ppt" href="#OnlinePortfolioSelection.ppt"><code>OnlinePortfolioSelection.ppt</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">ppt(
+  prices::AbstractMatrix,
+  w::Int,
+  ϵ::Int,
+  horizon::Int,
+  b̂ₜ::AbstractVector=ones(size(prices, 1))/size(prices, 1)
+)</code></pre><p>Run the Price Peak Tracking (PPT) algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>prices::AbstractMatrix</code>: Matrix of prices.</li><li><code>w::Int</code>: Window size.</li><li><code>ϵ::Int</code>: Constraint parameter.</li><li><code>horizon::Int</code>: Number of days to run the algorithm.</li><li><code>b̂ₜ::AbstractVector=ones(size(prices, 1))/size(prices, 1)</code>: Initial weights.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>prices</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Output</strong></p><ul><li><code>::OPSAlgorithm</code>: An object of type <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a>.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection, YFinance
+
+julia&gt; tickers = [&quot;AAPL&quot;, &quot;AMZN&quot;, &quot;GOOG&quot;, &quot;MSFT&quot;];
+
+julia&gt; querry = [get_prices(ticker, startdt=&quot;2019-01-01&quot;, enddt=&quot;2020-01-01&quot;)[&quot;adjclose&quot;] for ticker in tickers];
+
+julia&gt; prices = stack(querry) |&gt; permutedims;
+
+julia&gt; model = ppt(prices, 10, 100, 100);
+
+julia&gt; sum(model, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.1109/TNNLS.2017.2705658">A Peak Price Tracking-Based Learning System for Portfolio Selection</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/PPT.jl#L1-L43">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.rprt-Union{Tuple{Matrix{T}}, Tuple{T}} where T&lt;:Float64" href="#OnlinePortfolioSelection.rprt-Union{Tuple{Matrix{T}}, Tuple{T}} where T&lt;:Float64"><code>OnlinePortfolioSelection.rprt</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">rprt(
+  adj_close::Matrix{T};
+  w::Int64=5,
+  theta::T=0.8,
+  epsilon=50
+) where T&lt;:Float64</code></pre><p>Run RPRT algorithm.</p><p><strong>Arguments</strong></p><ul><li><code>adj_close::Matrix{T}</code>: Adjusted close prices of assets.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>w::Int64=5</code>: maximum length of time window to be examined.</li><li><code>theta::T=0.8</code>: The threshold for the relative price.</li><li><code>epsilon=50</code>: The threshold for the condition of the portfolio.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adj_close</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: An object of type <code>OPSAlgorithm</code>.</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; typeof(adj_close), size(adj_close)
+(Matrix{Float64}, (3, 7))
+
+julia&gt; m_rprt = rprt(adj_close);
+
+julia&gt; m_rprt.b
+3×7 Matrix{Float64}:
+ 0.333333  0.333333  0.0  0.0  0.0  1.0  0.0
+ 0.333333  0.333333  1.0  1.0  1.0  0.0  1.0
+ 0.333333  0.333333  0.0  0.0  0.0  0.0  0.0
+
+julia&gt; sum(m_rprt.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p><strong>Reference</strong></p><blockquote><p><a href="https://ieeexplore.ieee.org/document/8411138/">Reweighted Price Relative Tracking System for Automatic Portfolio Optimization</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/RPRT.jl#L1-L46">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat" href="#OnlinePortfolioSelection.sn-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}} where T&lt;:AbstractFloat"><code>OnlinePortfolioSelection.sn</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv::T=1.) where T&lt;:AbstractFloat</code></pre><p>Calculate the cumulative return of the portfolio during a period of time. Also, see <a href="#OnlinePortfolioSelection.mer-Union{Tuple{T}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}}, Tuple{AbstractMatrix{T}, AbstractMatrix{T}, T}} where T&lt;:AbstractFloat"><code>mer</code></a>, <a href="#OnlinePortfolioSelection.ann_std-Tuple{AbstractVector{&lt;:AbstractFloat}}"><code>ann_std</code></a>, <a href="#OnlinePortfolioSelection.apy-Union{Tuple{S}, Tuple{AbstractFloat, S}} where S&lt;:Int64"><code>apy</code></a>, <a href="#OnlinePortfolioSelection.ann_sharpe-Union{Tuple{T}, Tuple{T, T, T}} where T&lt;:AbstractFloat"><code>ann_sharpe</code></a>, <a href="#OnlinePortfolioSelection.mdd-Union{Tuple{AbstractVector{T}}, Tuple{T}} where T&lt;:AbstractFloat"><code>mdd</code></a>, <a href="#OnlinePortfolioSelection.calmar-Union{Tuple{T}, Tuple{T, T}} where T&lt;:AbstractFloat"><code>calmar</code></a>, and <a href="../types/#OnlinePortfolioSelection.OPSMetrics"><code>OPSMetrics</code></a>.</p><p>The formula for calculating the cumulative return of the portfolio is as follows:</p><p class="math-container">\[{S_n} = {S_0}\prod\limits_{t = 1}^T {\left\langle {{b_t},{x_t}} \right\rangle }\]</p><p>where <span>$S_0$</span> is the initial budget, <span>$n$</span> is the investment horizon, <span>$b_t$</span> is the vector of weights of the period <span>$t$</span>, and <span>$x_t$</span> is the relative price of the <span>$t$</span>-th period.</p><p><strong>Arguments</strong></p><ul><li><code>weights::AbstractMatrix{T}</code>: the weights of the portfolio.</li><li><code>rel_pr::AbstractMatrix{T}</code>: the relative price of the stocks.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>init_inv::T=1</code>: the initial investment.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p>The size of <code>weights</code> and <code>rel_pr</code> must be <code>(n_stocks, n_periods)</code>.</p></div></div><div class="admonition is-info"><header class="admonition-header">Note</header><div class="admonition-body"><p>If <code>size(rel_pr, 2)</code> is greater than <code>size(weights, 2)</code>, then the last <code>size(weights, 2)</code> columns of <code>rel_pr</code> will be used.</p></div></div><p><strong>Returns</strong></p><ul><li><code>all_sn::Vector{T}</code>: the cumulative return of investment during the investment period.</li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Tools/metrics.jl#L48-L76">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.uniform-Tuple{Int64, Int64}" href="#OnlinePortfolioSelection.uniform-Tuple{Int64, Int64}"><code>OnlinePortfolioSelection.uniform</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">uniform(n_assets::Int, horizon::Int)</code></pre><p>Construct uniform portfolios.</p><p><strong>Arguments</strong></p><ul><li><code>n_assets::Int</code>: The number of assets.</li><li><code>horizon::Int</code>: The number of investment periods.</li></ul><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm</code>: An object of <a href="../types/#OnlinePortfolioSelection.OPSAlgorithm"><code>OPSAlgorithm</code></a> type.</li></ul><p><strong>Example</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; model = uniform(3, 10)
+
+julia&gt; sum(model.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/uniform.jl#L1-L22">source</a></section></article><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="OnlinePortfolioSelection.up-Tuple{Matrix{Float64}}" href="#OnlinePortfolioSelection.up-Tuple{Matrix{Float64}}"><code>OnlinePortfolioSelection.up</code></a> — <span class="docstring-category">Method</span></header><section><div><pre><code class="language-julia hljs">up(adj_close::Matrix{Float64}; eval_points::Int=10^4)</code></pre><p>Universal Portfolio (UP) algorithm.</p><p>Calculate the Universal Portfolio (UP) weights and budgets using the given historical prices and parameters.</p><p><strong>Arguments</strong></p><ul><li><code>adj_close::Matrix{Float64}</code>: Historical adjusted close prices.</li></ul><p><strong>Keyword Arguments</strong></p><ul><li><code>eval_points::Int=10^4</code>: Number of evaluation points.</li></ul><div class="admonition is-warning"><header class="admonition-header">Beware!</header><div class="admonition-body"><p><code>adj_close</code> should be a matrix of size <code>n_assets</code> × <code>n_periods</code>.</p></div></div><p><strong>Returns</strong></p><ul><li><code>::OPSAlgorithm(n_assets, b, alg)</code>: OPSAlgorithm object.</li></ul><p><strong>Examples</strong></p><pre><code class="language-julia hljs">julia&gt; using OnlinePortfolioSelection
+
+julia&gt; typeof(adj_close), size(adj_close)
+(Matrix{Float64}, (3, 30))
+
+julia&gt; m_up = up(adj_close);
+
+julia&gt; m_up.b
+3×30 Matrix{Float64}:
+ 0.333333  0.331149  0.33204   0.331716  …  0.326788  0.325788  0.325829  0.326222
+ 0.333333  0.336058  0.335239  0.336304     0.343405  0.342161  0.342283  0.340693
+ 0.333333  0.332793  0.33272   0.331981     0.329807  0.332051  0.331888  0.333086
+
+julia&gt; sum(m_up.b, dims=1) .|&gt; isapprox(1.) |&gt; all
+true</code></pre><p><strong>References</strong></p><blockquote><p><a href="https://doi.org/10.1111/j.1467-9965.1991.tb00002.x">Universal Portfolios</a></p></blockquote></div><a class="docs-sourcelink" target="_blank" href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/da86ccb544c985be970e0ed04e0227fa833d075c/src/Algos/UP.jl#L1-L42">source</a></section></article></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../performance_eval/">« Performance Evaluation</a><a class="docs-footer-nextpage" href="../types/">Types »</a><div class="flexbox-break"></div><p class="footer-message"><a href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl">OnlinePortfolioSelection.jl</a> v2.5.0 docs powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.1.2 on <span class="colophon-date" title="Friday 24 November 2023 13:24">Friday 24 November 2023</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

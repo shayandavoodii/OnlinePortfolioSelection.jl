@@ -118,3 +118,8 @@ end
   @info "Run unit tests in AICTR.jl"
   include("AICTR.jl")
 end
+
+@testset "EGM.jl" begin
+  @info "Run unit tests in EGM.jl"
+  include("EGM.jl")
+end

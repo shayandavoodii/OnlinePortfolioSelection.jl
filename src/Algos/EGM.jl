@@ -141,7 +141,11 @@ julia> querry = [get_prices(ticker, startdt="2019-01-01", enddt="2019-01-12")["a
 
 julia> prices = stack(querry) |> permutedims;
 
-julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1]
+3×7 Matrix{Float64}:
+ 0.900393  1.04269  0.997774  1.01906  1.01698   1.0032    0.990182
+ 0.963212  1.04651  1.00128   1.00725  1.0143    0.993574  0.992278
+ 0.971516  1.05379  0.997833  1.00738  0.998495  0.995971  0.987723
 
 julia> # EGE variant
 julia> variant = EGE(0.5)
@@ -181,6 +185,7 @@ julia> model.b
 > [Exponential Gradient with Momentum for Online Portfolio Selection](https://doi.org/10.1016/j.eswa.2021.115889)
 """
 function egm(rel_pr::AbstractMatrix, variant::EGMFramework, η::AbstractFloat=0.05)
+  η>0 || ArgumentError("η must be positive") |> throw
   n_assets, n_periods = size(rel_pr)
   b                   = ones(n_assets, n_periods)/n_assets
   vₜ                  = zeros(n_assets)

@@ -11,6 +11,7 @@ include("Types/Algorithms.jl")
 include("Types/Clustering.jl")
 include("Types/PAMR.jl")
 include("Types/CWMR.jl")
+include("Types/AICTR.jl")
 include("Algos/CRP.jl")
 include("Algos/CW-OGD.jl")
 include("Algos/EG.jl")
@@ -30,16 +31,18 @@ include("Algos/CLUSLOG.jl")
 include("Algos/PPT.jl")
 include("Algos/CWMR.jl")
 include("Algos/CAEG.jl")
+include("Algos/AICTR.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog, pamr, ppt, cwmr, caeg
+export uniform, cluslog, pamr, ppt, cwmr, caeg, aictr
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar
 export OPSAlgorithm, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
+export SMA, EMA, PP
 export opsmethods
 
 @setup_workload begin
@@ -99,6 +102,7 @@ function opsmethods()
   println("       PPT: Peak Price Tracking - Call `ppt`")
   println("      CWMR: Confidence Weighted Mean Reversion - Call `cwmr`")
   println("      CAEG: Continuous Aggregating Exponential Gradient - Call `caeg`")
+  println("     AICTR: Adaptive Input and Composite Trend Representation - Call `aictr`")
 end
 # COV_EXCL_STOP
 

@@ -14,17 +14,17 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 
 | Row № |                                                   Algorithm                                         | Strategy | Year | Row № |                                       Algorithm                                 | Strategy | Year |
 |:-----:|:---------------------------------------------------------------------------------------------------:|:--------:|:----:|:-----:|:-------------------------------------------------------------------------------:|:--------:|:----:|
-| 1     | [CORN](@ref Correlation-driven-Nonparametric-Learning)                                              | PM       | 2011 | 11    | [Bᴷ](@ref)                                                                      | PM       | 2006 |
-| 2     | [DRICORN-K](@ref Dynamic-RIsk-CORrelation-driven-Non-parametric)                                    | PM       | 2020 | 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                              | Combined | 2019 |
-| 3     | [CRP](@ref)                                                                                         | Market   | 1991 | 13    | [MRvol](@ref)                                                                   | Combined | 2023 |
-| 4     | [UP](@ref Universal-Portfolio)                                                                      | Market   | 1991 | 14    | [CW-OGD](@ref Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))    | ML       | 2021 |
-| 5     | [EG](@ref Exponential-Gradient)                                                                     | FW       | 1998 | 15    | [ClusLog](@ref)                                                                 | PM       | 2020 |
-| 6     | [BS](@ref)                                                                                          | Market   | 2007 | 16    | [PAMR](@ref Passive-Aggressive-Mean-Reversion-(PAMR))                           | FL       | 2012 |
-| 7     | [RPRT](@ref Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))  | FL       | 2020 | 17    | [PPT](@ref Price-Peak-Tracking-(PPT))                                           | FW       | 2018 |
-| 8     | [Anticor](@ref Anti-Correlation-(Anticor))                                                          | FL       | 2003 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                          | FL       | 2013 |
-| 9     | [1/N](@ref)                                                                                         | Market   | -    | 19    | [CAEG](@ref Continuous-Aggregating-Exponential-Gradient-(CAEG))                 | ML       | 2020 |
-| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 20    | [OLDEM](@ref Online-Low-Dimension-Ensemble-Method-(OLDEM))                      | PM       | 2023 |
-
+| 1     | [CORN](@ref Correlation-driven-Nonparametric-Learning)                                              | PM       | 2011 | 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                              | Combined | 2019 |
+| 2     | [DRICORN-K](@ref Dynamic-RIsk-CORrelation-driven-Non-parametric)                                    | PM       | 2020 | 13    | [MRvol](@ref)                                                                   | Combined | 2023 |
+| 3     | [CRP](@ref)                                                                                         | Market   | 1991 | 14    | [CW-OGD](@ref Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))    | ML       | 2021 |
+| 4     | [UP](@ref Universal-Portfolio)                                                                      | Market   | 1991 | 15    | [ClusLog](@ref)                                                                 | PM       | 2020 |
+| 5     | [EG](@ref Exponential-Gradient)                                                                     | FW       | 1998 | 16    | [PAMR](@ref Passive-Aggressive-Mean-Reversion-(PAMR))                           | FL       | 2012 |
+| 6     | [BS](@ref)                                                                                          | Market   | 2007 | 17    | [PPT](@ref Price-Peak-Tracking-(PPT))                                           | FW       | 2018 |
+| 7     | [RPRT](@ref Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))  | FL       | 2020 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                          | FL       | 2013 |
+| 8     | [Anticor](@ref Anti-Correlation-(Anticor))                                                          | FL       | 2003 | 19    | [CAEG](@ref Continuous-Aggregating-Exponential-Gradient-(CAEG))                 | ML       | 2020 |
+| 9     | [1/N](@ref)                                                                                         | Market   | -    | 20    | [OLDEM](@ref Online-Low-Dimension-Ensemble-Method-(OLDEM))                      | PM       | 2023 |
+| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 21    | [AICTR](@ref Adaptive-Input-and-Composite-Trend-Representation-(AICTR))         | FW       | 2018 |
+| 11    | [Bᴷ](@ref)                                                                                          | PM       | 2006 |
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

@@ -150,7 +150,7 @@ julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1]
 julia> # EGE variant
 julia> variant = EGE(0.5)
 
-julia> model = egm(rel_pr, variant)
+julia> model = egm(rel_pr, variant);
 
 julia> model.b
 3×7 Matrix{Float64}:
@@ -161,7 +161,7 @@ julia> model.b
 julia> # EGR variant
 julia> variant = EGR(0.)
 
-julia> model = egm(rel_pr, variant)
+julia> model = egm(rel_pr, variant);
 
 julia> model.b
 3×7 Matrix{Float64}:
@@ -172,7 +172,7 @@ julia> model.b
 julia> # EGA variant
 julia> variant = EGA(0.5, 0.)
 
-julia> model = egm(rel_pr, variant)
+julia> model = egm(rel_pr, variant);
 
 julia> model.b
 3×7 Matrix{Float64}:

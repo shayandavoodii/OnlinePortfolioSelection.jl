@@ -6,7 +6,7 @@ abstract type TrendRep end
 Simple Moving Average trend representation. Formula:
 
 ```math
-\\mathbf{\\hat{x}}_{S, t+1}\\left(w\\right)=frac{\\sum_{k=0}^{w-1}\\mathbf{p}_{t-k}}{w\\mathbf{p}_t}
+\\mathbf{\\hat{x}}_{S, t+1}\\left(w\\right)= \\frac{\\sum_{k=0}^{w-1}\\mathbf{p}_{t-k}}{w\\mathbf{p}_t}
 ```
 
 # Examples

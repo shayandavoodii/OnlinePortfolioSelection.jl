@@ -105,8 +105,10 @@ Below is a simple example that illustrates how to utilize the metrics. Initially
 
 The OPSMetrics function facilitates the computation of all metrics simultaneously. It requires the following positional arguments:
 
-`weights`: A matrix sized $m \times t$, representing the portfolio weights on each trading day utilizing the chosen OPS algorithm.
-`rel_pr`: A matrix sized $m \times t$, which includes the relative prices of assets on each trading day. Typically, these prices are computed as $\frac{p_{t,i}}{p_{t-1,i}}$ in most studies, where $p_{t,i}$ denotes the price of asset $i$ at time $t$. Alternatively, in some studies, relative prices are calculated as $\frac{c_{t,i}}{o_{t,i}}$, where $c_{t,i}$ and $o_{t,i}$ are the closing and opening prices of asset $i$ at time $t$. The user can decide which relative prices to employ and input the corresponding matrix into the function.
+- `weights`: A matrix sized $m \times t$, representing the portfolio weights on each trading day utilizing the chosen OPS algorithm.
+- `rel_pr`: A matrix sized $m \times t$, which includes the relative prices of assets on each trading day. Typically, these prices are computed as $\frac{p_{t,i}}{p_{t-1,i}}$ in most studies, where $p_{t,i}$ denotes the price of asset $i$ at time $t$. Alternatively, in some studies, relative prices are calculated as $\frac{c_{t,i}}{o_{t,i}}$, where $c_{t,i}$ and $o_{t,i}$ are the closing and opening prices of asset $i$ at time $t$. The user can decide which relative prices to employ and input the corresponding matrix into the function.
+- `rel_pr_market`: A vector sized $t$, which includes the relative prices of the market benchmark on each trading day. The relative prices of the market benchmark are computed similarly to the relative prices of assets. Note that the function takes the last `t` values of the vector if `rel_pr_market` containts more than `t` values.
+
 Additionally, the function accepts the following keyword arguments:
 
 - `init_inv=1.`: The initial investment, which is set to `1.0` by default.

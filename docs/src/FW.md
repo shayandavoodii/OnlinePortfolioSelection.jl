@@ -9,7 +9,7 @@ The Follow the Winner (FW) strategies operate on the principle that assets that 
 
 ## Exponential Gradient
 
-Exponential Gradient (EG) is a FW strategy introduced by [https://doi.org/10.1111/1467-9965.00058](@citet). The authors assert that EG can nearly attain the same wealth as the best constant rebalanced portfolio (BCRP), discerned retrospectively from the actual market outcomes. This algorithm is notably straightforward to implement.
+Exponential Gradient (EG) is a FW strategy introduced by [10.1111/1467-9965.00058](@citet). The authors assert that EG can nearly attain the same wealth as the best constant rebalanced portfolio (BCRP), discerned retrospectively from the actual market outcomes. This algorithm is notably straightforward to implement.
 
 See [`eg`](@ref).
 

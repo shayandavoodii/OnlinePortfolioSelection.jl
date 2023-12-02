@@ -2,6 +2,7 @@
 adj_close = rand(3, 40) .* [4., 3., 2.] .+ [1., 5., 4.];
 rel_pr = adj_close[:, 2:end] ./ adj_close[:, 1:end-1];
 adj_close_market = rand(40);
+rel_pr_market = adj_close_market[2:end] ./ adj_close_market[1:end-1];
 
 @testset "OPSMetrics" begin
   @testset "DRICORNK" begin
@@ -16,10 +17,12 @@ adj_close_market = rand(40);
 
     met = OPSMetrics(
       res.b,
-      rel_pr
+      rel_pr,
+      rel_pr_market
     )
 
     @test isa(met, OPSMetrics)
+    @test propertynames(met) == fieldnames(OPSMetrics)
   end
 
   @testset "CORN-K" begin
@@ -33,10 +36,12 @@ adj_close_market = rand(40);
 
     met = OPSMetrics(
       res.b,
-      rel_pr
+      rel_pr,
+      rel_pr_market
     )
 
     @test isa(met, OPSMetrics)
+    @test propertynames(met) == fieldnames(OPSMetrics)
   end
 
   @testset "CORN-U" begin
@@ -49,10 +54,12 @@ adj_close_market = rand(40);
 
     met = OPSMetrics(
       res.b,
-      rel_pr
+      rel_pr,
+      rel_pr_market
     )
 
     @test isa(met, OPSMetrics)
+    @test propertynames(met) == fieldnames(OPSMetrics)
   end
 end
 

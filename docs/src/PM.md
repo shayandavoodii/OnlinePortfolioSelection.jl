@@ -134,7 +134,7 @@ The result indicates that the algorithm has lost ~2.6% of the initial wealth dur
 
 ## Bᴷ
 
-Bᴷ, presented as a type of kernel-based investment strategy, is a pattern-matching algorithm introduced by [https://doi.org/10.1111/j.1467-9965.2006.00274.x](@citet). In essence, Bᴷ shares similarities with histogram-based strategies, albeit utilizing more flexible elementary strategies that replace rigid past market vector discretization with a "moving-window" rule. This implementation incorporates the uniform kernel function. Check [`bk`](@ref) for more information.
+Bᴷ, presented as a type of kernel-based investment strategy, is a pattern-matching algorithm introduced by [10.1111/j.1467-9965.2006.00274.x](@citet). In essence, Bᴷ shares similarities with histogram-based strategies, albeit utilizing more flexible elementary strategies that replace rigid past market vector discretization with a "moving-window" rule. This implementation incorporates the uniform kernel function. Check [`bk`](@ref) for more information.
 
 ### Run Bᴷ
 

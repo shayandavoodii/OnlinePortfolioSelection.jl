@@ -319,7 +319,8 @@ calmar(APY::T, MDD::T) where T<:AbstractFloat = APY/MDD;
     ) where {T<:AbstractFloat, S<:Int}
 
 Calculate the metrics of an OPS algorithm. Also, see [`sn`](@ref), [`mer`](@ref), \
-[`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref).
+[`ir`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), \
+and [`calmar`](@ref).
 
 # Arguments
 - `weights::AbstractMatrix{T}`: the weights of the portfolio.

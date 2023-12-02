@@ -202,7 +202,7 @@ function ir(
   ret_prtf         = @. sn_[2:end]/sn_[1:end-1] |> log
   ret_market       = @. rel_pr_market |> log
   numerator_       = mean(ret_prtf) - mean(ret_market)
-  denominator_     = std(ret_prtf)
+  denominator_     = std(ret_prtf.-ret_market)
   return numerator_/denominator_
 end
 

@@ -54,7 +54,7 @@ julia> sn(m_eg.b, rel_price)
  0.9716460557458115
 ```
 
-The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 2.8% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Let's proceed to investigate the algorithm's performance using key metrics.
+The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately more than 2.8% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Let's proceed to investigate the algorithm's performance using key metrics.
 
 ```julia
 julia> results = OPSMetrics(m_eg.b, rel_price)
@@ -117,7 +117,7 @@ julia> sn(model.b, rel_price)
  1.2371383272398555
 ```
 
-The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 2.8% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Let's proceed to investigate the algorithm's performance using key metrics.
+The outcome suggests that if we had invested during the given period, we would have gained ~23% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Let's proceed to investigate the algorithm's performance using key metrics.
 
 ```julia
 julia> results = OPSMetrics(model.b, rel_price)
@@ -194,7 +194,7 @@ julia> sn(model.b, rel_price)
  0.9937871965996727
 ```
 
-The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 2.8% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Other metrics can be found in the [Performance evaluation](@ref) section.
+The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 1% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Other metrics can be found in the [Performance evaluation](@ref) section.
 
 ## Exponential Gradient with Momentum (EGM)
 
@@ -266,7 +266,7 @@ julia> sn(model.b, rel_pr)
  0.9976113744470753
 ```
 
-The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 2.8% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 7 relative prices in this case. Other metrics can be found in the [Performance evaluation](@ref) section.
+The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 1% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 7 relative prices in this case. Other metrics can be found in the [Performance evaluation](@ref) section.
 
 ## References
 

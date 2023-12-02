@@ -190,7 +190,7 @@ julia> mer(cornkm.b, rel_pr)
 
 # Compute the information ratio
 julia> ir(cornkm.b, rel_pr, rel_pr_market)
-0.15500292052290482
+0.14797935671154802
 
 # Compute the annualized return
 julia> apy_ = apy(last(sn_), size(cornkm.b, 2))

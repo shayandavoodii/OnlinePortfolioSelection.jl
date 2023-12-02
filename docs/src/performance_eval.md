@@ -27,6 +27,16 @@ MER = {1 \over n}\sum\nolimits_{t = 1}^n {{R_t} - } {1 \over n}\sum\nolimits_{t 
 where $R$ and ${R_t^*}$ represent the daily returns of a portfolio and the market strategy at the $t$th trading day, respectively. For a given OPS method, accounting for transaction costs, ${{R_t}}$ is calculated by ${R_t} = \left( {\mathbf{x}_t\mathbf{b}_t} \right) \times \left( {1 - {\nu  \over 2} \times \sum\nolimits_{i = 1}^d {\left| {{b_{t,i}} - {{\tilde b}_{t,i}}} \right|} } \right) - 1$. The market strategy initially allocates capital equally among all assets and remains unchanged. ${R_t^*}$ is defined as:
 $R_t^* = \mathbf{x}_t \cdot \mathbf{b}^* - 1$ and ${\mathbf{b}^*} = {\left( {{1 \over d},{1 \over d}, \ldots ,{1 \over d}} \right)^ \top }$, where $d$ is the number of assets, and $n$ is the number of trading days. This metric can be calculated using the [`mer`](@ref) function. (see [XI2023109872](@cite) for more details.)
 
+- Information Ratio (IR)
+
+The information ratio is a risk-adjusted excess return metric compared with the market benchmark. It is defined as:
+
+```math
+IR = \frac{{{{\bar R}_s} - {{\bar R}_m}}}{{\sigma \left( {{R_s} - {R_m}} \right)}}
+```
+
+where $R_s$ represents the portfolio's daily return, $R_m$ represents the market's daily return, $\bar R_s$ represents the portfolio's average daily return, $\bar R_m$ represents the market's average daily return, and $\sigma$ represents the standard deviation of the portfolio's daily excess return over the market. Note that in this package, the logarithmic return is used. See [`ir`](@ref).
+
 - Annualized Return (APY)
 
 This metric computes the annualized return of the algorithm throughout the investment period. The annualized return is defined as:
@@ -107,7 +117,7 @@ Additionally, the function accepts the following keyword arguments:
 The function returns an object of type [`OPSMetrics`](@ref) containing all the metrics as fields. Now, let's choose few algorithms and assess their performance using the aforementioned function.
 
 ```julia
-using OnlinePortfolioSelection, YFinance, Plots
+using OnlinePortfolioSelection, YFinance, StatsPlots
 
 # Fetch data
 tickers = ["AAPL", "MSFT", "AMZN", "META", "GOOG"]
@@ -118,7 +128,11 @@ querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticke
 
 prices = stack(querry) |> permutedims;
 
+market = get_prices("^GSPC", startdt=startdt, enddt=enddt)["adjclose"];
+
 rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+rel_pr_market = market[2:end]./market[1:end-1];
 
 nassets, ndays = size(rel_pr);
 
@@ -126,22 +140,23 @@ nassets, ndays = size(rel_pr);
 horizon = 30;
 
 # Run models on the given data
-loadm = load(prices, 0.5, 8, horizon, 0.1)[1];
+loadm = load(prices, 0.5, 8, horizon, 0.1);
 uniformm = uniform(nassets, horizon);
 cornkm = cornk(prices, horizon, 5, 5, 10, progress=true);
 ┣████████████████████████████████████████┫ 100.0% |30/30 
 
 names = ["LOAD", "UNIFORM", "CORNK"];
 
-metrics = (:Sn, :MER, :APY, :Ann_Std, :Ann_Sharpe, :MDD, :Calmar);
+metrics = (:Sn, :MER, :IR, :APY, :Ann_Std, :Ann_Sharpe, :MDD, :Calmar);
 
-all_metrics_vals = OPSMetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr));
+all_metrics_vals = OPSMetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr), Ref(rel_pr_market));
 
 # Draw a bar plot to depict the values of each metric for each algorithm
 groupedbar(
   vcat([repeat([String(metric)], length(names)) for metric in metrics]...),
   [getfield(result, metric) |> last for metric in metrics for result in all_metrics_vals],
   group=repeat(names, length(metrics)),
+  dpi=300
 )
 ```
 
@@ -170,6 +185,10 @@ julia> sn_ = sn(cornkm.b, rel_pr)
 # Compute the mean excess return
 julia> mer(cornkm.b, rel_pr)
 0.0331885901993342
+
+# Compute the information ratio
+julia> ir(cornkm.b, rel_pr, rel_pr_market)
+0.15500292052290482
 
 # Compute the annualized return
 julia> apy_ = apy(last(sn_), size(cornkm.b, 2))
@@ -203,7 +222,7 @@ Annualized Standard Deviation: 0.312367085936459
                  Calmar Ratio: 11.026402121997583
 ```
 
-As shown, the results are consistent with the results obtained using the [`OPSMetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) for more information).
+As shown, the results are consistent with the results obtained using the [`OPSMetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) for more information).
 
 ## References
 

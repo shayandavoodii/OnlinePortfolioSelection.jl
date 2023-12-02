@@ -6,6 +6,7 @@ A struct to store the metrics of the OPS algorithm.
 # Fields
 - `Sn::Vector{T}`: the cumulative return of investment during the investment period.
 - `MER::T`: the investments's Mean excess return (MER).
+- `IR::T`: the Information Ratio (IR) of portfolio for the investment period.
 - `APY::T`: the Annual Percentage Yield (APY) of investment.
 - `Ann_Std::T`: the Annualized Standard Deviation (σₚ) of investment.
 - `Ann_Sharpe::T`: the Annualized Sharpe Ratio (SR) of investment.
@@ -15,6 +16,7 @@ A struct to store the metrics of the OPS algorithm.
 struct OPSMetrics{T<:AbstractFloat}
   Sn::Vector{T}
   MER::T
+  IR::T
   APY::T
   Ann_Std::T
   Ann_Sharpe::T
@@ -143,6 +145,68 @@ function mer(
 end
 
 """
+    ir(
+      weights::AbstractMatrix{S},
+      rel_pr::AbstractMatrix{S},
+      rel_pr_market::AbstractVector{S};
+      init_inv::S=1.
+    ) where S<:AbstractFloat
+
+Calculate the Information Ratio (IR) of portfolio. Also, see [`sn`](@ref), [`mer`](@ref), \
+[`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and \
+[`OPSMetrics`](@ref).
+
+The formula for calculating the Information Ratio (IR) of portfolio is as follows:
+
+```math
+IR = \\frac{{{{\\bar R}_s} - {{\\bar R}_m}}}{{\\sigma \\left( {{R_s} - {R_m}} \\right)}}
+```
+
+where ``R_s`` represents the portfolio's daily return, ``R_m`` represents the market's daily \
+return, ``\\bar R_s`` represents the portfolio's average daily return, ``\\bar R_m`` represents \
+the market's average daily return, and ``\\sigma`` represents the standard deviation of the \
+portfolio's daily excess return over the market. Note that in this package, the logarithmic \
+return is used.
+
+# Arguments
+- `weights::AbstractMatrix{S}`: the weights of the portfolio.
+- `rel_pr::AbstractMatrix{S}`: the relative price of the stocks.
+- `rel_pr_market::AbstractVector{S}`: the relative price of the market.
+
+## Keyword Arguments
+- `init_inv::S=1`: the initial investment.
+
+!!! warning
+    The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
+
+!!! note
+    If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last \
+    `size(weights, 2)` columns of `rel_pr` will be used. The size of `rel_pr_market` will \
+    automatically be adjusted to the size of `w`.
+
+# Returns
+- `::AbstractFloat`: the Information Ratio (IR) of portfolio for the investment period.
+
+# References
+> [Adaptive online portfolio strategy based on exponential gradient updates](https://doi.org/10.1007/s10878-021-00800-7)
+"""
+function ir(
+  weights::AbstractMatrix{S},
+  rel_pr::AbstractMatrix{S},
+  rel_pr_market::AbstractVector{S};
+  init_inv::S=1.
+) where S<:AbstractFloat
+
+  rel_pr_market, _ = alignperiods(weights, rel_pr_market')
+  sn_              = sn(weights, rel_pr, init_inv=init_inv)
+  ret_prtf         = @. sn_[2:end]/sn_[1:end-1] |> log
+  ret_market       = @. rel_pr_market |> log
+  numerator_       = mean(ret_prtf) - mean(ret_market)
+  denominator_     = std(ret_prtf)
+  return numerator_/denominator_
+end
+
+"""
     ann_std(cum_ret::AbstractVector{AbstractFloat}; dpy)
 
 Calculate the Annualized Standard Deviation (σₚ) of portfolio. Also, see [`sn`](@ref), \
@@ -245,7 +309,8 @@ calmar(APY::T, MDD::T) where T<:AbstractFloat = APY/MDD;
 """
     OPSMetrics(
       weights::AbstractMatrix{T},
-      rel_pr::AbstractMatrix{T};
+      rel_pr::AbstractMatrix{T},
+      rel_pr_market::AbstractVector{T};
       init_inv::T=1.,
       Rf::T=0.02
       dpy::S=252,
@@ -259,6 +324,7 @@ Calculate the metrics of an OPS algorithm. Also, see [`sn`](@ref), [`mer`](@ref)
 # Arguments
 - `weights::AbstractMatrix{T}`: the weights of the portfolio.
 - `rel_pr::AbstractMatrix{T}`: the relative price of the stocks.
+- `rel_pr_market::AbstractVector{T}`: the relative price of the market.
 
 ## Keyword Arguments
 - `init_inv::T=1`: the initial investment.
@@ -278,7 +344,8 @@ Calculate the metrics of an OPS algorithm. Also, see [`sn`](@ref), [`mer`](@ref)
 """
 function OPSMetrics(
   weights::AbstractMatrix{T},
-  rel_pr::AbstractMatrix{T};
+  rel_pr::AbstractMatrix{T},
+  rel_pr_market::AbstractVector{T};
   init_inv::T=1.,
   Rf::T=0.02,
   dpy::S=252,
@@ -290,11 +357,12 @@ function OPSMetrics(
 
   all_sn     = sn(weights, rel_pr, init_inv=init_inv)
   MER        = mer(weights, rel_pr, v)
+  IR         = ir(weights, rel_pr, rel_pr_market, init_inv=init_inv)
   σₚ         = ann_std(all_sn, dpy=dpy)
   APY        = apy(all_sn[end], n_periods, dpy=dpy)
   ann_Sharpe = ann_sharpe(APY, Rf, σₚ)
   MDD        = mdd(all_sn)
   Calmar     = calmar(APY, MDD)
 
-  return OPSMetrics(all_sn, MER, APY, σₚ, ann_Sharpe, MDD, Calmar)
+  return OPSMetrics(all_sn, MER, IR, APY, σₚ, ann_Sharpe, MDD, Calmar)
 end

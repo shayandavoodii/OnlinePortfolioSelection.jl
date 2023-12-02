@@ -209,7 +209,7 @@ end
 """
     ann_std(cum_ret::AbstractVector{AbstractFloat}; dpy)
 
-Calculate the Annualized Standard Deviation (σₚ) of portfolio. Also, see [`sn`](@ref), \
+Calculate the Annualized Standard Deviation (``\\sigma_p``) of portfolio. Also, see [`sn`](@ref), \
 [`mer`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and \
 [`OPSMetrics`](@ref).
 
@@ -221,7 +221,7 @@ investment period.
 - `dpy`: the number of days in a year.
 
 # Returns
-- `::AbstractFloat`: the Annualized Standard Deviation (σₚ) of portfolio.
+- `::AbstractFloat`: the Annualized Standard Deviation (``\\sigma_p``) of portfolio.
 """
 function ann_std(cum_ret::AbstractVector{<:AbstractFloat}; dpy)
   return (cum_ret |> diff |> std) * sqrt(dpy)
@@ -255,7 +255,7 @@ Calculate the Annualized Sharpe Ratio of investment. Also, see [`sn`](@ref), [`m
 # Arguments
 - `APY::T`: the APY of investment.
 - `Rf::T`: the risk-free rate of return.
-- `sigma_prtf::T`: the standard deviation of the portfolio ``sigma_p``.
+- `sigma_prtf::T`: the standard deviation of the portfolio ``\\sigma_p``.
 
 # Returns
 - `::AbstractFloat`: the Annualized Sharpe Ratio of investment.

@@ -353,7 +353,6 @@ function OPSMetrics(
   v::T=0.
 ) where {T<:AbstractFloat, S<:Int}
 
-  n_periods = size(rel_pr, 2)
   rel_pr, n_periods = alignperiods(weights, rel_pr)
 
   all_sn     = sn(weights, rel_pr, init_inv=init_inv)

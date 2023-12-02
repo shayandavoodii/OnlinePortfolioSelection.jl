@@ -28,7 +28,7 @@
     <tr>
         <td>DOI</td>
         <td>
-            <a href="https://doi.org/10.5281/zenodo.8414411"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.8414411.svg"/></a>
+            <a href="https://doi.org/10.5281/zenodo.10251038"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.10251038.svg"/></a>
         </td>
     </tr>
 </table>
@@ -296,15 +296,15 @@ If you use the package in your research, please cite the package using the follo
 </div>
 
 ```bibtex
-@software{shayan_davoodi_2023_10079806,
+@software{shayan_davoodi_2023_10251038,
   author       = {Shayan Davoodi},
-  title        = {shayandavoodii/OnlinePortfolioSelection.jl: v2.2.0},
-  month        = nov,
+  title        = {shayandavoodii/OnlinePortfolioSelection.jl: v2.6.1},
+  month        = dec,
   year         = 2023,
   publisher    = {Zenodo},
-  version      = {v2.2.0},
-  doi          = {10.5281/zenodo.10079806},
-  url          = {https://doi.org/10.5281/zenodo.10079806}
+  version      = {v2.6.1},
+  doi          = {10.5281/zenodo.10251038},
+  url          = {https://doi.org/10.5281/zenodo.10251038}
 }
 ```
 

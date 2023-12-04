@@ -4,9 +4,9 @@
 
 This package provides a variety of metrics for evaluating algorithm performance. These metrics are widely recognized in the literature and serve as benchmarks for comparing the performances of different algorithms. Currently, the supported metrics include:
 
-- Cumulative Return (CR, Also known as $S_n$)
+- Cumulative Wealth (CW, Also known as $S_n$)
 
-This metric computes the portfolio's cumulative return of the algorithm throughout an investment period. The cumulative return is defined as:
+This metric computes the portfolio's cumulative wealth of the algorithm throughout an investment period. The cumulative wealth is defined as:
 
 ```math
 \begin{aligned}
@@ -101,7 +101,7 @@ This metric can be computed using the [`calmar`](@ref) function. Additionally, i
 
 Below is a simple example that illustrates how to utilize the metrics. Initially, I utilize the [`OPSMetrics`](@ref) function to compute all the metrics collectively. Subsequently, I present the procedure to compute each metric individually.
 
-### [`OPSMetrics`](@ref) function
+### [`opsmetrics`](@ref) function
 
 The OPSMetrics function facilitates the computation of all metrics simultaneously. It requires the following positional arguments:
 
@@ -151,7 +151,7 @@ names = ["LOAD", "UNIFORM", "CORNK"];
 
 metrics = (:Sn, :MER, :IR, :APY, :Ann_Std, :Ann_Sharpe, :MDD, :Calmar);
 
-all_metrics_vals = OPSMetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr), Ref(rel_pr_market));
+all_metrics_vals = opsmetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr), Ref(rel_pr_market));
 
 # Draw a bar plot to depict the values of each metric for each algorithm
 groupedbar(
@@ -224,7 +224,7 @@ Annualized Standard Deviation: 0.312367085936459
                  Calmar Ratio: 11.026402121997583
 ```
 
-As shown, the results are consistent with the results obtained using the [`OPSMetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) for more information).
+As shown, the results are consistent with the results obtained using the [`opsmetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) for more information).
 
 ## References
 

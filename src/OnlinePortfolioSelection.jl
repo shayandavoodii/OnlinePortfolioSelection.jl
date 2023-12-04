@@ -36,13 +36,14 @@ include("Algos/CAEG.jl")
 include("Algos/OLDEM.jl")
 include("Algos/AICTR.jl")
 include("Algos/EGM.jl")
+include("Algos/TPPT.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm
+export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm, tppt
 export OPSMetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir
 export OPSAlgorithm, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
@@ -110,6 +111,7 @@ function opsmethods()
   println("     OLDEM: Online Low Dimension Ensemble Method - Call `oldem`")
   println("     AICTR: Adaptive Input and Composite Trend Representation - Call `aictr`")
   println("       EGM: Exponential Gradient with Momentum - Call `egm`")
+  println("      TPPT: Trend Promote Price Tracking - Call `tppt`")
 end
 # COV_EXCL_STOP
 

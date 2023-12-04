@@ -138,7 +138,7 @@ It is worth mentioning that each metric can be accessed individually by writing 
 
 ## Adaptive Input and Composite Trend Representation (AICTR)
 
-Adaptive Input and Composite Trend Representation (AICTR)[8356708](@cite) is an extension of the Price Peak Tracking (PPT) algorithm. This algorithm adopt multiple trend representations to capture the asset price trends, which enhances price prediction performance. for each investment period, the algorithm selects the best trend representation according to the recent investing performance of different price predictions. See [`aictr`](@ref).
+Adaptive Input and Composite Trend Representation (AICTR)[8356708](@cite) is an extension of the [Price Peak Tracking (PPT)](@ref) algorithm. This algorithm adopt multiple trend representations to capture the asset price trends, which enhances price prediction performance. for each investment period, the algorithm selects the best trend representation according to the recent investing performance of different price predictions. See [`aictr`](@ref).
 
 Let's run the algorithm on the real market data.
 

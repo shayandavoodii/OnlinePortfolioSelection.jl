@@ -15,7 +15,7 @@ rel_pr_market = adj_close_market[2:end] ./ adj_close_market[1:end-1];
       2
     )
 
-    met = OPSMetrics(
+    met = opsmetrics(
       res.b,
       rel_pr,
       rel_pr_market
@@ -34,7 +34,7 @@ rel_pr_market = adj_close_market[2:end] ./ adj_close_market[1:end-1];
       2
     )
 
-    met = OPSMetrics(
+    met = opsmetrics(
       res.b,
       rel_pr,
       rel_pr_market
@@ -52,7 +52,7 @@ rel_pr_market = adj_close_market[2:end] ./ adj_close_market[1:end-1];
       rho=0.8,
     )
 
-    met = OPSMetrics(
+    met = opsmetrics(
       res.b,
       rel_pr,
       rel_pr_market

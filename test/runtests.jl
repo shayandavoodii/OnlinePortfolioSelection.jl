@@ -123,3 +123,8 @@ end
   @info "Run unit tests in EGM.jl"
   include("EGM.jl")
 end
+
+@testset "TPPT.jl" begin
+  @info "Run unit tests in TPPT.jl"
+  include("TPPT.jl")
+end

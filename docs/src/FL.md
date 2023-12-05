@@ -7,6 +7,7 @@ The "Follow the Loser" (FL) strategy, introduced by [borodin2003can](@citet), in
 3. Online Moving Average Reversion (OLMAR)
 4. Passive Aggressive Mean Reversion (PAMR)
 5. Confidence Weighted Mean Reversion (CWMR)
+6. Gaussian Weighting Reversion (GWR)
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
 
@@ -520,6 +521,48 @@ julia> sn(model.b, rel_pr)
 ```
 
 The result indicates that if we had invested in the given period, we would have gained ~2.4% of our wealth. Note that [`sn`](@ref) automatically takes the last 6 relative prices in this case. Check out the [Performance evaluation](@ref) section for more information.
+
+## Gaussian Weighting Reversion (GWR)
+
+[8834832](@citet) presented a new online portfolio selection strategy called Gaussian Weighting Reversion (GWR), which improves the reversion estimator to form optimal portfolios and overcomes the shortcomings of existing on-line portfolio selection strategies. The proposed algorithm contains two variants, namely 'GWR' and 'GWR-A' which both are available in this package. See [`gwr`](@ref).
+
+Let's run the algorithm on the real market data.
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["MSFT", "GOOG", "META"];
+
+julia> querry = [get_prices(ticker, startdt="2020-01-01", enddt="2020-01-23")["adjclose"] for ticker in tickers];
+
+julia> prices = stack(querry, dims=1)
+3×14 Matrix{Float64}:
+ 154.78    152.852  153.247   151.85   154.269  156.196   155.473   157.343   156.235  157.246  160.128  161.024   160.446  159.675
+  68.3685   68.033   69.7105   69.667   70.216   70.9915   71.4865   71.9615   71.544   71.96    72.585   74.0195   74.22    74.2975
+ 209.78    208.67   212.6     213.06   215.22   218.3     218.06    221.91    219.06   221.15   221.77   222.14    221.44   221.32
+
+julia> h = 3
+
+julia> # GWR Variant
+julia> model = gwr(prices, h);
+
+julia> model.b
+3×3 Matrix{Float64}:
+ 0.333333  0.333333  1.4095e-11
+ 0.333333  0.333333  0.0
+ 0.333333  0.333333  1.0
+
+julia> # GWR-A Variant
+julia> model = gwr(prices, h, [2, 3, 4]);
+
+julia> model.b
+3×3 Matrix{Float64}:
+ 0.333333  0.0  1.20769e-11
+ 0.333333  0.0  0.0
+ 0.333333  1.0  1.0
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## References
 

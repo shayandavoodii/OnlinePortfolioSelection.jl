@@ -1,11 +1,13 @@
 # Introduction
 
 Nowadays researchers are trying to take advantage of each strategy and propose new methods that combine them. I plan to implement some of these methods in this package. A list of the methods that I've implemented so far is as follows:
-1. LOcal ADaptive learning system (LOAD)
-2. MRvol
-3. Trend Promote Price Tracking (TPPT) 
+
+1. [LOcal ADaptive learning system (LOAD)](@ref)
+2. [MRvol](@ref)
+3. [Trend Promote Price Tracking (TPPT)](@ref)
 
 ## LOcal ADaptive learning system (LOAD)
+
 [GUAN2019104958](@citet) proposed a new OPS method, named LOcal ADaptive learning system (LOAD), which is a combination of the Follow the Winner (FW) and Follow the Loser principles. They tried to find the stocks that have a positive trend in the most recent time window by fitting a linear regression on the price data of the stocks against time. They used momentum principle to predict the next price of assets in this case. On the other hand, for the stocks that does not have a satisfactory trend in the most recent time window, they used the mean reversion principle to predict the next price of assets. They claim that through this fusion, the overall system can be more adaptive and effective than systems based on single strategies. After predicting the next prices, the next relative prices are predicted and used in the portfolio optimization.
 
 ### Run LOAD
@@ -61,7 +63,7 @@ julia> metrics.Sn
  1.0121073197606183
 ```
 
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## MRvol
 
@@ -134,7 +136,7 @@ julia> metrics.Sn
  1.0277067897356449
 ```
 
-The result of `metrics.Sn` indicates that if we had invested in the given period, we would have gained ~2.8% profit. It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+The result of `metrics.Sn` indicates that if we had invested in the given period, we would have gained ~2.8% profit. It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Trend Promote Price Tracking (TPPT)
 

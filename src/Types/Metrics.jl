@@ -1,7 +1,8 @@
 """
     OPSMetrics{T<:AbstractFloat}
 
-A struct to store the metrics of the OPS algorithm.
+A struct to store the metrics of the OPS algorithm. This object is returned by the \
+[`opsmetrics`](@ref) function.
 
 # Fields
 - `Sn::Vector{T}`: the cumulative return of investment during the investment period.

@@ -2,12 +2,12 @@
 
 The Follow the Winner (FW) strategies operate on the principle that assets that have shown superior performance in the past are likely to continue excelling in the future. In this package, the following FW strategies have been implemented:
 
-1. Exponential Gradient (EG)
-2. Price Peak Tracking (PPT)
-3. Adaptive Input and Composite Trend Representation (AICTR)
-4. Exponential Gradient with Momentum (EGM)
+1. [Exponential Gradient (EG)](@ref)
+2. [Price Peak Tracking (PPT)](@ref)
+3. [Adaptive Input and Composite Trend Representation (AICTR)](@ref)
+4. [Exponential Gradient with Momentum (EGM)](@ref)
 
-## Exponential Gradient
+## Exponential Gradient (EG)
 
 Exponential Gradient (EG) is a FW strategy introduced by [10.1111/1467-9965.00058](@citet). The authors assert that EG can nearly attain the same wealth as the best constant rebalanced portfolio (BCRP), discerned retrospectively from the actual market outcomes. This algorithm is notably straightforward to implement.
 
@@ -74,11 +74,11 @@ julia> results.MDD
 0.028353944254188468
 ```
 
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Price Peak Tracking (PPT)
 
-The Price Peak Tracking (PPT) algorithm [7942104](@cite) is a novel linear learning system for online portfolio selection, based on the idea of tracking control. The algorithm uses a transform function that aggressively tracks the increasing power of different assets, and allocates more investment to the better performing ones. The PPT objective can be solved by a fast backpropagation algorithm, which is suitable for large-scale and time-limited applications, such as high-frequency trading. The algorithm has been shown to outperform other state-of-the-art systems in computational time, cumulative wealth, and risk-adjusted metrics (See [`ppt`](@ref)).
+The PPT algorithm [7942104](@cite) is a novel linear learning system for online portfolio selection, based on the idea of tracking control. The algorithm uses a transform function that aggressively tracks the increasing power of different assets, and allocates more investment to the better performing ones. The PPT objective can be solved by a fast backpropagation algorithm, which is suitable for large-scale and time-limited applications, such as high-frequency trading. The algorithm has been shown to outperform other state-of-the-art systems in computational time, cumulative wealth, and risk-adjusted metrics (See [`ppt`](@ref)).
 
 Let's run the algorithm on the real market data.
 
@@ -134,7 +134,7 @@ julia> results.MER
 -0.15974968844419762
 ```
 
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Adaptive Input and Composite Trend Representation (AICTR)
 

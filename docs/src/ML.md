@@ -2,8 +2,8 @@
 
 Meta-learning strategies are employed to combine opinions from experts to formulate a final portfolio. Each expert's opinion is represented as a vector of weights summing to one. Subsequently, the performance of each expert is quantified, influencing the final portfolio. Each expert can either be a portfolio optimization model or simply a vector of weights as an input. The following meta-learning strategies are currently implemented in the package:
 
-1. Combination Weights based on Online Gradient Descent (CW-OGD)
-2. Continuous Aggregating Exponential Gradient (CAEG)
+1. [Combination Weights based on Online Gradient Descent (CW-OGD)](@ref)
+2. [Continuous Aggregating Exponential Gradient (CAEG)](@ref)
 
 ## Combination Weights based on Online Gradient Descent (CW-OGD)
 
@@ -69,7 +69,7 @@ juila> metrics.Sn
 ```
 
 The result indicates that if we had invested in the given period, we would have gained ~3.2% profit.
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Continuous Aggregating Exponential Gradient (CAEG)
 

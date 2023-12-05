@@ -217,6 +217,7 @@ julia> last(all_metrics_vals)
 
             Cumulative Return: 1.0661252685319844
         Mean Excessive Return: 0.0331885901993342
+            Information Ratio: 0.14797935671154802
   Annualized Percentage Yield: 0.7123367957886144
 Annualized Standard Deviation: 0.312367085936459
       Annualized Sharpe Ratio: 2.216420445556956

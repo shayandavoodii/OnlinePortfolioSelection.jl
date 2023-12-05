@@ -1,12 +1,12 @@
 # Benchmark Strategies
 In the domain of online portfolio selection, certain strategies are considered benchmark strategies. One of the simplest is the Buy and Hold (BH) strategy, often referred to as the *market strategy*. BH involves an equal investment in m assets at the beginning, maintaining these allocations throughout the subsequent periods, leading to passive weight adjustments based on the assets' price variations. An optimized version, the Best-Stock (BS) strategy, allocates all capital to the best-performing asset over the periods. These benchmark portfolio selection models are straightforward, lacking the use of sophisticated statistical or machine learning techniques to uncover data patterns. Consequently, they serve as baselines for evaluating the performance of newly developed models. Another benchmark strategy, the Constant Rebalanced Portfolio (CRP), maintains a fixed weight for each asset over a specified period. The currently implemented strategies in this package include:
 
-1. Constant Rebalanced Portfolio (CRP)
-2. Best Stock (BS)
-3. Uniform Portfolio (1/N)
-4. UP
+1. [Constant Rebalanced Portfolio (CRP)](@ref)
+2. [Best Stock (BS)](@ref)
+3. [Uniform Portfolio (1/N)](@ref)
+4. [Universal Portfolio (UP)](@ref)
 
-## CRP
+## Constant Rebalanced Portfolio (CRP)
 Let's run the algorithm [COVER451321](@cite) on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
 
 ```julia
@@ -65,7 +65,7 @@ julia> results.MDD
 0.02835403167205386
 ```
 
-## BS
+## Best Stock (BS)
 
 The model [KBSSMOP](@cite) is a variant of the BAH strategy that retroactively acquires the best stock. Within this package, users can select the number of days to retrospectively examine (using the `last_n` keyword argument) and identify the best stock. If `last_n` is either not provided or set to `0`, the algorithm will consider the entire dataset up to the present day for each period to identify the best stock. Conversely, if `last_n` is specified, the algorithm will only consider the performance of each stock within the last `last_n` days and then select the best-performing one. To implement the algorithm on real market data, let's assume the data is collected as detailed in the [Fetch Data](@ref) section.
 
@@ -115,7 +115,7 @@ The outcome suggests that if we had invested during the specified period, we wou
 
 It's important to highlight that this package offers functions designed to assess the algorithm's performance. For additional insights, refer to the [Performance evaluation](@ref) section.
 
-## 1/N
+## Uniform Portfolio (1/N)
 
 This model invests equally in all assets. Let's run the algorithm:
 
@@ -165,7 +165,7 @@ The result reveals that if investment had been made during the specified period,
 
 Additionally, this package offers functions for assessing the algorithm's performance. For further details, refer to the [Performance evaluation](@ref) section.
 
-## Universal Portfolio
+## Universal Portfolio (UP)
 
 Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [COVER451321](@citet). This algorithm is designed to optimize the cumulative return of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
 
@@ -233,7 +233,7 @@ julia> results.MDD
 0.02814700750281207
 ```
 
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## References
 

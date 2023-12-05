@@ -2,12 +2,12 @@
 
 The "Follow the Loser" (FL) strategy, introduced by [borodin2003can](@citet), involves reallocating investment weight from a stock with a superior past performance to a stock with unfavorable performance. This approach is grounded in the belief that a stock exhibiting undesirable past performance may offer a favorable return in the future. Presently, this package includes the following FL strategies:
 
-1. Reweighted Price Relative Tracking System for Automatic Portfolio Optimization
-2. Anti-Correlation (Anticor)
-3. Online Moving Average Reversion (OLMAR)
-4. Passive Aggressive Mean Reversion (PAMR)
-5. Confidence Weighted Mean Reversion (CWMR)
-6. Gaussian Weighting Reversion (GWR)
+1. [Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)](@ref)
+2. [Anti-Correlation (Anticor)](@ref)
+3. [Online Moving Average Reversion (OLMAR)](@ref)
+4. [Passive Aggressive Mean Reversion (PAMR)](@ref)
+5. [Confidence Weighted Mean Reversion (CWMR)](@ref)
+6. [Gaussian Weighting Reversion (GWR)](@ref)
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
 
@@ -81,7 +81,7 @@ julia> results.MDD
 0.06070338058992675
 ```
 
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Anti-Correlation (Anticor)
 
@@ -157,7 +157,7 @@ julia> results.MDD
 0.11070937679745295
 ```
 
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Online Moving Average Reversion (OLMAR)
 
@@ -279,7 +279,7 @@ Note that one can individually investigate the performance of the algorithm rega
 
 ## Passive Aggressive Mean Reversion (PAMR)
 
-The Passive Aggressive Mean Reversion (PAMR) algorithm [Li2012-ks](@cite) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PAMR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PAMR is expressed as:
+The PAMR algorithm [Li2012-ks](@cite) is a machine learning model employed in the domain of quantitative finance, specifically designed for trading strategies in mean-reverting markets. PAMR employs a passive-aggressive learning approach to adjust portfolio weights in response to deviations from the mean, aiming to capitalize on mean reversion phenomena prevalent in financial markets. The algorithm's core component, the step size $\tau_t$, is determined by the ratio of the observed error $\ell_{\in}^t$ to the squared norm of the discrepancy between the current feature vector $\mathbf{x}_t$ and the mean feature vector $\bar{x}_t$ up to time $t$. The formula for the step size in PAMR is expressed as:
 
 ```math
 \tau_t = \frac{{\ell_{\in}^t}}{{\left\| {\mathbf{x}_t - \bar{x}_t \mathbf{1}} \right\|^2}}
@@ -389,11 +389,11 @@ Annualized Standard Deviation: 0.2365856617445457
 
 In this case, the algorithm has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see [`PAMR2`](@ref)).
 
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref). See [Performance evaluation](@ref) section for more information.
+It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
 ## Confidence Weighted Mean Reversion (CWMR)
 
-Confidence Weighted Mean Reversion (CWMR) [10.1145/2435209.2435213](@cite) combines the mean reversion principle, which assumes that the relative prices of assets tend to return to their historical or intrinsic mean over time, and the confidence weighted learning technique, which models the portfolio vector as a Gaussian distribution and updates it with confidence bounds. CWMR aims to exploit the power of mean reversion for online portfolio selection, and it can adapt to different market conditions and risk preferences. The paper evaluates the performance of CWMR on various real markets and shows that it outperforms the state-of-the-art techniques (see [`cwmr`](@ref)). **It is worth mentioning that all variants of this algorithm have been provided through this package.**
+The CWMR algorithm [10.1145/2435209.2435213](@cite) combines the mean reversion principle, which assumes that the relative prices of assets tend to return to their historical or intrinsic mean over time, and the confidence weighted learning technique, which models the portfolio vector as a Gaussian distribution and updates it with confidence bounds. CWMR aims to exploit the power of mean reversion for online portfolio selection, and it can adapt to different market conditions and risk preferences. The paper evaluates the performance of CWMR on various real markets and shows that it outperforms the state-of-the-art techniques (see [`cwmr`](@ref)). **It is worth mentioning that all variants of this algorithm have been provided through this package.**
 
 Let's run the algorithm on the real market data. In order to use this algorithm, you have to install [`Distributions.jl`](https://github.com/JuliaStats/Distributions.jl) package. After a successful installation and importing, you can use this algorithm. The deterministic versions of the algorithm are known by by CWMR-Var and CWMR-Stdev and the stochastic ones by CWMR-Var-s and CWMR-Stdev-s. Furthermore, mixed variants are denoted by CWMR-Var-Mix and CWMR-Stdev-Mix for deterministic ones, and CWMR-Var-Mix-s and CWMR-Stdev-Mix-s for stochastic ones. Let's run all the variants of the first method, such as 'CWMR-Var', 'CWMR-Stdev', 'CWMR-Var-s' and 'CWMR-Stdev-s':
 

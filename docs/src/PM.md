@@ -2,17 +2,13 @@
 
 Pattern-matching algorithms stand among the most popular strategies in the domain of online portfolio selection. These algorithms primarily aim to discern patterns within historical price data and employ them for predicting future prices. They align with the perspective of technical analysts who anticipate the repetition of historical patterns in future market behavior. The current package incorporates the following pattern-matching algorithms:
 
-- Correlation-driven Nonparametric Learning (CORN)
-  - [CORN-U](@ref "Run CORN-U")
-  - [CORN-K](@ref "Run CORN-K")
-- Dynamic RIsk CORrelation-driven Non-parametric (DRICORN-K)
-- Bᴷ
-- ClusLog
-  - KMNLOG
-  - KMDLOG
-- Online Low Dimension Ensemble Method (OLDEM)
+- [Correlation-driven Nonparametric Learning (CORN)](@ref)
+- [Dynamic RIsk CORrelation-driven Non-parametric (DRICORN)](@ref)
+- [Bᴷ](@ref)
+- [ClusLog](@ref)
+- [Online Low Dimension Ensemble Method (OLDEM)](@ref)
 
-## Correlation-driven Nonparametric Learning
+## Correlation-driven Nonparametric Learning (CORN)
 
 Correlation-driven Nonparametric Learning (CORN) is a pattern-matching algorithm introduced by [10.1145/1961189.1961193](@citet). CORN employs correlation as the measure of similarity between different time windows. Within CORN, multiple experts are defined to generate portfolios. Each trading day involves a combination of expert portfolios to create the final portfolio. The distinction between CORN-K and CORN-U lies in their portfolio construction methods. CORN-K selects the K best experts, determined by their historical performance, to create the final portfolio. Conversely, CORN-U amalgamates all experts uniformly to construct the final portfolio. For further details, refer to [`cornu`](@ref) and [`cornk`](@ref).
 
@@ -61,7 +57,7 @@ julia> sn(model.b, rel_price)
  0.9851289224781754
 ```
 
-The result indicates that the algorithm experienced a loss of 1.5% of the initial wealth during the investment period. Further analysis of the algorithm's performance can be conducted using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. For more detailed information, refer to the [Performance evaluation](@ref) section.
+The result indicates that the algorithm experienced a loss of 1.5% of the initial wealth during the investment period. Further analysis of the algorithm's performance can be conducted using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. For more detailed information, refer to the [Performance evaluation](@ref) section.
 
 ### Run CORN-K
 
@@ -91,9 +87,9 @@ julia> sn(model.b, rel_price)
  1.0017637293758395
 ```
 
-Expectedly, CORN-K performed better than CORN-U on the same dataset. The result indicates that the algorithm has gained ~0.18% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+Expectedly, CORN-K performed better than CORN-U on the same dataset. The result indicates that the algorithm has gained ~0.18% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
-## Dynamic RIsk CORrelation-driven Non-parametric
+## Dynamic RIsk CORrelation-driven Non-parametric (DRICORN)
 
 Dynamic Risk CORrelation-driven Non-parametric (DRICORN)[10.1007/978-3-030-66151-9_12](@cite) employs a similar principle to CORN-K. However, DRICORN incorporates the beta of the portfolio as a risk measure in the portfolio optimization. Additionally, it considers the recent market trend to capitalize on positive risks while minimizing exposure to negative risks. For further details, refer to [`dricornk`](@ref).
 
@@ -130,7 +126,7 @@ julia> sn(model.b, rel_price)
  0.9738144349688777
 ```
 
-The result indicates that the algorithm has lost ~2.6% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+The result indicates that the algorithm has lost ~2.6% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
 ## Bᴷ
 
@@ -174,7 +170,7 @@ julia> sn(model.b, rel_price)
  0.9698166561732083
 ```
 
-The result indicates that the algorithm has lost ~3% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+The result indicates that the algorithm has lost ~3% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
 ## ClusLog
 
@@ -229,7 +225,7 @@ julia> sn(model.b, rel_price)
  0.9817775041346212
 ```
 
-The result indicates that the algorithm has lost ~1.8% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+The result indicates that the algorithm has lost ~1.8% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
 ## Online Low Dimension Ensemble Method (OLDEM)
 
@@ -292,7 +288,7 @@ julia> sn(model.b, x)
  0.9881506219530738
 ```
 
-The result indicates that the algorithm has lost ~1.2% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+The result indicates that the algorithm has lost ~1.2% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
 ## References
 

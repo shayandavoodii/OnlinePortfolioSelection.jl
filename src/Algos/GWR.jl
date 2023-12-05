@@ -122,6 +122,9 @@ end
 
 Run the Gaussian Weighting Reversion (GWR) Strategy.
 
+!!! warning "Beware!"
+    `prices` should be a matrix of size `n_assets` × `n_periods`.
+
 # Method 1
 Run 'GWR' variant.
 

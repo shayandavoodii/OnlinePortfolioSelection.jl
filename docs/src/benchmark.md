@@ -49,7 +49,7 @@ julia> sn(m_crp.b, rel_price)
 The outcome demonstrates that if we had invested during the specified period, we would have incurred a loss of approximately 2.8% of our capital. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this instance. Let's further analyze the algorithm's performance based on some significant metrics:
 
 ```julia
-julia> results = OPSMetrics(m_crp.b, rel_price)
+julia> results = opsmetrics(m_crp.b, rel_price)
 
             Cumulative Return: 0.972
                           APY: -0.765
@@ -217,7 +217,7 @@ The outcome shows that if we had invested during that period, we would have incu
 Let's now examine the algorithm's performance using various significant metrics.
 
 ```julia
-julia> results = OPSMetrics(m_up.b, rel_price)
+julia> results = opsmetrics(m_up.b, rel_price)
 
             Cumulative Return: 0.972
                           APY: -0.763

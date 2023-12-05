@@ -95,15 +95,15 @@ CR = {{APY} \over {MDD}}
 \end{aligned}
 ```
 
-This metric can be computed using the [`calmar`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`OPSMetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
+This metric can be computed using the [`calmar`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`opsmetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
 
 ## Examples
 
-Below is a simple example that illustrates how to utilize the metrics. Initially, I utilize the [`OPSMetrics`](@ref) function to compute all the metrics collectively. Subsequently, I present the procedure to compute each metric individually.
+Below is a simple example that illustrates how to utilize the metrics. Initially, I utilize the [`opsmetrics`](@ref) function to compute all the metrics collectively. Subsequently, I present the procedure to compute each metric individually.
 
 ### [`opsmetrics`](@ref) function
 
-The OPSMetrics function facilitates the computation of all metrics simultaneously. It requires the following positional arguments:
+The [`opsmetrics`](@ref) function facilitates the computation of all metrics simultaneously. It requires the following positional arguments:
 
 - `weights`: A matrix sized $m \times t$, representing the portfolio weights on each trading day utilizing the chosen OPS algorithm.
 - `rel_pr`: A matrix sized $m \times t$, which includes the relative prices of assets on each trading day. Typically, these prices are computed as $\frac{p_{t,i}}{p_{t-1,i}}$ in most studies, where $p_{t,i}$ denotes the price of asset $i$ at time $t$. Alternatively, in some studies, relative prices are calculated as $\frac{c_{t,i}}{o_{t,i}}$, where $c_{t,i}$ and $o_{t,i}$ are the closing and opening prices of asset $i$ at time $t$. The user can decide which relative prices to employ and input the corresponding matrix into the function.

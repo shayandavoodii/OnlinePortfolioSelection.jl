@@ -49,7 +49,7 @@ julia> model.b
 Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
 
 ```julia
-julia> metrics = OPSMetrics(model.b, rel_pr)
+julia> metrics = opsmetrics(model.b, rel_pr)
             Cumulative Return: 1.0323425490046683
                           APY: 2.8071567518024554
 Annualized Standard Deviation: 0.2821163077868604
@@ -116,7 +116,7 @@ julia> model.b
 Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
 
 ```julia
-julia> metrics = OPSMetrics(model.b, rel_pr)
+julia> metrics = opsmetrics(model.b, rel_pr)
 
             Cumulative Return: 1.0503793029297175
         Mean Excessive Return: -0.041332740360267836

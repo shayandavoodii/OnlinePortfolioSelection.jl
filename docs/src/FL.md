@@ -65,7 +65,7 @@ julia> sn(m_rprt.b, rel_price)
 The outcome reveals an approximate loss of ~6.3% if an investment were made during the provided period. It's important to note that in this scenario, [`sn`](@ref) automatically considers the last 5 relative prices. Next, let's examine the algorithm's performance based on several significant metrics.
 
 ```julia
-julia> results = OPSMetrics(m_rprt.b, rel_price)
+julia> results = opsmetrics(m_rprt.b, rel_price)
 
             Cumulative Return: 0.945
                           APY: -0.943
@@ -144,7 +144,7 @@ The outcome suggests that if we had invested in the given period, our wealth wou
 Let's now assess the algorithm's performance based on several key metrics.
 
 ```julia
-julia> results = OPSMetrics(m_anticor.b, rel_price)
+julia> results = opsmetrics(m_anticor.b, rel_price)
 
             Cumulative Return: 0.8969343557511426
                           APY: -0.8391655504688253
@@ -211,7 +211,7 @@ julia> sn(m_olmar.b, rel_pr)
 The outcome highlights a potential gain of ~0.7% if an investment were made during the provided period. Note that in this instance, [`sn`](@ref) automatically considers the last 5 (`horizon=5`) relative prices. Next, let's examine the algorithm's performance based on several significant metrics.
 
 ```julia
-julia> results = OPSMetrics(m_olmar.b, rel_pr)
+julia> results = opsmetrics(m_olmar.b, rel_pr)
 
             Cumulative Return: 1.0065266263361812
         Mean Excessive Return: -0.009414275874519928
@@ -262,7 +262,7 @@ julia> model.b
 Finally, let's assess the algorithm's performance based on several key metrics.
 
 ```julia
-julia> results = OPSMetrics(model.b, rel_pr)
+julia> results = opsmetrics(model.b, rel_pr)
 
             Cumulative Return: 1.0099455075377595
         Mean Excessive Return: -0.008744240554973382
@@ -355,7 +355,7 @@ The result indicates that if we had invested in the given period, we would have 
 Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
 
 ```julia
-julia> results = OPSMetrics(result.b, rel_pr)
+julia> results = opsmetrics(result.b, rel_pr)
 
             Cumulative Return: 1.4768989860970627
                           MER: -0.4153297366246913
@@ -376,7 +376,7 @@ julia> model = PAMR1(0.01);
 
 julia> result = PAMR(rel_pr, eps, model);
 
-julia> results = OPSMetrics(result.b, rel_pr)
+julia> results = opsmetrics(result.b, rel_pr)
 
             Cumulative Return: 1.4875128237671749
                           MER: -0.41530107834650865

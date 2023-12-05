@@ -57,7 +57,7 @@ julia> sn(m_eg.b, rel_price)
 The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately more than 2.8% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Let's proceed to investigate the algorithm's performance using key metrics.
 
 ```julia
-julia> results = OPSMetrics(m_eg.b, rel_price)
+julia> results = opsmetrics(m_eg.b, rel_price)
 
             Cumulative Return: 0.9716460557458115
         Mean Excessive Return: 0.022895930308319247
@@ -120,7 +120,7 @@ julia> sn(model.b, rel_price)
 The outcome suggests that if we had invested during the given period, we would have gained ~23% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this case. Let's proceed to investigate the algorithm's performance using key metrics.
 
 ```julia
-julia> results = OPSMetrics(model.b, rel_price)
+julia> results = opsmetrics(model.b, rel_price)
 
             Cumulative Return: 1.2371383272398555
         Mean Excessive Return: -0.15974968844419762

@@ -119,7 +119,7 @@ julia> plot(
 The plot illustrates that the cumulative return of CORN-K consistently outperforms the other algorithms. It's important to note that the initial investment for all algorithms is standardized to 1, although this can be adjusted by setting the keyword argument `init_budg` for each algorithm. Now, let's delve into the performance analysis of the algorithms using prominent [performance metrics](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/):
 
 ```julia
-julia> all_metrics = OPSMetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr));
+julia> all_metrics = opsmetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr));
 ```
 
 Now, one can embed the metrics in a DataFrame and compare the performance of the algorithms with respect to each other:

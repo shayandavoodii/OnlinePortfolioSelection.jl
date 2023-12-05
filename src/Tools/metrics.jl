@@ -26,7 +26,7 @@ end
 
 Calculate the cumulative return of the portfolio during a period of time. Also, \
 see [`mer`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), \
-[`calmar`](@ref), and [`OPSMetrics`](@ref).
+[`calmar`](@ref), and [`opsmetrics`](@ref).
 
 The formula for calculating the cumulative return of the portfolio is as follows:
 
@@ -75,7 +75,7 @@ end
     ) where T<:AbstractFloat
 
 Calculate the investments's Mean excess return (MER). Also, see [`sn`](@ref), [`ann_std`](@ref), \
-[`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`OPSMetrics`](@ref).
+[`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`opsmetrics`](@ref).
 
 # Arguments
 - `weights::AbstractMatrix{T}`: the weights of the portfolio.
@@ -128,7 +128,7 @@ end
 
 Calculate the Information Ratio (IR) of portfolio. Also, see [`sn`](@ref), [`mer`](@ref), \
 [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and \
-[`OPSMetrics`](@ref).
+[`opsmetrics`](@ref).
 
 The formula for calculating the Information Ratio (IR) of portfolio is as follows:
 
@@ -185,7 +185,7 @@ end
 
 Calculate the Annualized Standard Deviation (``\\sigma_p``) of portfolio. Also, see [`sn`](@ref), \
 [`mer`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and \
-[`OPSMetrics`](@ref).
+[`opsmetrics`](@ref).
 
 # Arguments
 - `cum_ret::AbstractVector{AbstractFloat}`: the cumulative return of investment during the \
@@ -205,7 +205,7 @@ end
     apy(Sn::AbstractFloat, n_periods::S; dpy::S=252) where S<:Int
 
 Calculate the Annual Percentage Yield (APY) of investment. Also, see [`sn`](@ref), [`mer`](@ref), \
-[`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`OPSMetrics`](@ref).
+[`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`opsmetrics`](@ref).
 
 # Arguments
 - `Sn::AbstractFloat`: the cumulative return of investment.
@@ -224,7 +224,7 @@ end
     ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:AbstractFloat
 
 Calculate the Annualized Sharpe Ratio of investment. Also, see [`sn`](@ref), [`mer`](@ref), \
-[`ann_std`](@ref), [`apy`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`OPSMetrics`](@ref).
+[`ann_std`](@ref), [`apy`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`opsmetrics`](@ref).
 
 # Arguments
 - `APY::T`: the APY of investment.
@@ -240,7 +240,7 @@ ann_sharpe(APY::T, Rf::T, sigma_prtf::T) where T<:AbstractFloat = (APY - Rf)/sig
     mdd(Sn::AbstractVector{T}) where T<:AbstractFloat
 
 Calculate the Maximum Drawdown (MDD) of investment. Also, see [`sn`](@ref), [`mer`](@ref), \
-[`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`calmar`](@ref), and [`OPSMetrics`](@ref).
+[`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`calmar`](@ref), and [`opsmetrics`](@ref).
 
 # Arguments
 - `Sn::AbstractVector{T}`: the cumulative return of investment during the investment period.
@@ -269,7 +269,7 @@ end
     calmar(APY::T, MDD::T) where T<:AbstractFloat
 
 Calculate the Calmar Ratio of investment. Also, see [`sn`](@ref), [`mer`](@ref), [`ann_std`](@ref), \
-[`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`OPSMetrics`](@ref).
+[`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`opsmetrics`](@ref).
 
 # Arguments
 - `APY::T`: the APY of investment.

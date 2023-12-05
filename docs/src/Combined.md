@@ -43,7 +43,7 @@ The result indicates that if we had invested in the given period, we would have 
 ```julia
 juli> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
 
-julia> metrics = OPSMetrics(model.b, rel_price)
+julia> metrics = opsmetrics(model.b, rel_price)
             Cumulative Return: 1.0121073197606183
                           APY: 0.8340827024050514
 Annualized Standard Deviation: 0.40329283437815505
@@ -114,7 +114,7 @@ true
 Now, let's investiagte the performance of the algorithm according to some of the prominent metrics:
 
 ```julia
-julia> metrics = OPSMetrics(r.b, rel_pr)
+julia> metrics = opsmetrics(r.b, rel_pr)
             Cumulative Return: 1.0277067897356449
                           APY: 0.07129838196490379
 Annualized Standard Deviation: 0.1224831726093685

@@ -25,7 +25,7 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 | 9     | [1/N](@ref)                                                                                         | Market   | -    | 21    | [AICTR](@ref Adaptive-Input-and-Composite-Trend-Representation-(AICTR))         | FW       | 2018 |
 | 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 22    | [EGM](@ref Exponential-Gradient-with-Momentum-(EGM))                            | FW       | 2021 |
 | 11    | [Bᴷ](@ref)                                                                                          | PM       | 2006 | 23    | [TPPT](@ref Trend-Promote-Price-Tracking-(TPPT))                                | Combined | 2021 |
-| 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                                                  | Combined | 2019 |
+| 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                                                  | Combined | 2019 | 24    | [GWR](@ref Gaussian-Weighting-Reversion-(GWR))                                  | FL       | 2019 |
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

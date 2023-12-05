@@ -178,19 +178,22 @@ ClusLog contains some variant of models proposed by [KHEDMATI2020113546](@citet)
 
 ### Run ClusLog
 
-In order to use this function, you have to install the [`Clustering.jl`](https://github.com/JuliaStats/Clustering.jl) package and import it on your own. The reason behind this design is that I do not intend to add extra dependencies to this package for the sake of just an algorithm. The `Clustering.jl` package can be installed by running the following command in the Julia REPL:
+!!! note
+    In order to use this function, you have to install the [`Clustering.jl`](https://github.com/JuliaStats/Clustering.jl) package and import it on your own. The reason behind this design is that I do not intend to add extra dependencies to this package for the sake of just an algorithm. The `Clustering.jl` package can be installed by running the following command in the Julia REPL:
 
-```julia
-julia> using Pkg
+    ```julia
+    julia> using Pkg
 
-julia> pkg"add Clustering@0.15.2"
+    julia> pkg"add Clustering@0.15.2"
 
-# Or
+    # Or
 
-julia> pkg.add(name="Clustering", version="0.15.2")
-```
+    julia> pkg.add(name="Clustering", version="0.15.2")
+    ```
 
-After intalling the package, you can use the [`cluslog`](@ref) function after importing the `Clustering.jl` package. Let's run ClusLog on the same data as CORN-U, CORN-K, etc.:
+    After intalling the package, you can use the [`cluslog`](@ref) function after importing the `Clustering.jl` package.
+
+Let's run ClusLog on the same data as CORN-U, CORN-K, etc.:
 
 ```julia
 julia> using OnlinePortfolioSelection, Clustering

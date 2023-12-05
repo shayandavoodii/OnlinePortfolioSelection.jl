@@ -395,7 +395,10 @@ It is worth mentioning that each metric can be accessed individually by writing 
 
 The CWMR algorithm [10.1145/2435209.2435213](@cite) combines the mean reversion principle, which assumes that the relative prices of assets tend to return to their historical or intrinsic mean over time, and the confidence weighted learning technique, which models the portfolio vector as a Gaussian distribution and updates it with confidence bounds. CWMR aims to exploit the power of mean reversion for online portfolio selection, and it can adapt to different market conditions and risk preferences. The paper evaluates the performance of CWMR on various real markets and shows that it outperforms the state-of-the-art techniques (see [`cwmr`](@ref)). **It is worth mentioning that all variants of this algorithm have been provided through this package.**
 
-Let's run the algorithm on the real market data. In order to use this algorithm, you have to install [`Distributions.jl`](https://github.com/JuliaStats/Distributions.jl) package. After a successful installation and importing, you can use this algorithm. The deterministic versions of the algorithm are known by by CWMR-Var and CWMR-Stdev and the stochastic ones by CWMR-Var-s and CWMR-Stdev-s. Furthermore, mixed variants are denoted by CWMR-Var-Mix and CWMR-Stdev-Mix for deterministic ones, and CWMR-Var-Mix-s and CWMR-Stdev-Mix-s for stochastic ones. Let's run all the variants of the first method, such as 'CWMR-Var', 'CWMR-Stdev', 'CWMR-Var-s' and 'CWMR-Stdev-s':
+!!! note
+    In order to use this algorithm, you have to install [`Distributions.jl`](https://github.com/JuliaStats/Distributions.jl) package. After a successful installation and importing, you can use this algorithm.
+
+Let's run the algorithm on the real market data. The deterministic versions of the algorithm are known by by CWMR-Var and CWMR-Stdev and the stochastic ones by CWMR-Var-s and CWMR-Stdev-s. Furthermore, mixed variants are denoted by CWMR-Var-Mix and CWMR-Stdev-Mix for deterministic ones, and CWMR-Var-Mix-s and CWMR-Stdev-Mix-s for stochastic ones. Let's run all the variants of the first method, such as 'CWMR-Var', 'CWMR-Stdev', 'CWMR-Var-s' and 'CWMR-Stdev-s':
 
 ```julia
 julia> using OnlinePortfolioSelection, YFinance, Distributions

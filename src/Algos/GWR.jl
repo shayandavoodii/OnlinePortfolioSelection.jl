@@ -99,8 +99,8 @@ The ``PassiveAgressive`` function.
 function passiveagressive(x̂ₜ₊₁::AbstractVector, 𝛿::Integer, bₜ::AbstractVector)
   x̄ₜ₊₁ = sum(x̂ₜ₊₁) / length(x̂ₜ₊₁)
   wₜ₊₁ = max((𝛿-sum(x̂ₜ₊₁.*bₜ))/norm(x̂ₜ₊₁.-x̄ₜ₊₁)^2, 0.)
-  bₜ₊ = bₜ .+ wₜ₊₁ .* (x̂ₜ₊₁ .- x̄ₜ₊₁)
-  return normptf(bₜ₊)
+  bₜ₊₁ = bₜ .+ wₜ₊₁ .* (x̂ₜ₊₁ .- x̄ₜ₊₁)
+  return normptf(bₜ₊₁)
 end
 
 """

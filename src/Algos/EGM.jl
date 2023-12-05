@@ -1,5 +1,5 @@
 """
-  wᵢᵗ⁺¹func(
+  wᵢᵗ⁺¹func!(
     model::EGE,
     η::AbstractFloat,
     vᵗ::AbstractVector,
@@ -8,7 +8,7 @@
     xᵗ::AbstractVector
   )
 
-  wᵢᵗ⁺¹func(
+  wᵢᵗ⁺¹func!(
     model::EGR,
     η::AbstractFloat,
     _::AbstractVector,
@@ -17,7 +17,7 @@
     xᵗ::AbstractVector
   )
 
-  wᵢᵗ⁺¹func(
+  wᵢᵗ⁺¹func!(
     model::EGA,
     η::AbstractFloat,
     vᵗ::AbstractVector,
@@ -26,7 +26,8 @@
     xᵗ::AbstractVector
   )
 
-Calculate the weights for the next period using the EGM framework.
+Calculate the weights for the next period using the EGM framework. This function modifies \
+vᵗ and mᵗ inplace.
 
 # Method 1: EGE
 ## Arguments
@@ -64,7 +65,7 @@ Calculate the weights for the next period using the EGM framework.
 ## Returns
 - `::AbstractVector`: vector of size `n_assets` containing the weights for the next period.
 """
-function wᵢᵗ⁺¹func(
+function wᵢᵗ⁺¹func!(
   model::EGE,
   η::AbstractFloat,
   vᵗ::AbstractVector,
@@ -79,7 +80,7 @@ function wᵢᵗ⁺¹func(
   return numerator_/sum(numerator_)
 end
 
-function wᵢᵗ⁺¹func(
+function wᵢᵗ⁺¹func!(
   model::EGR,
   η::AbstractFloat,
   _::AbstractVector,
@@ -94,11 +95,7 @@ function wᵢᵗ⁺¹func(
   return numerator_/sum(numerator_)
 end
 
-algname(::EGE) = "EGE"
-algname(::EGR) = "EGR"
-algname(::EGA) = "EGA"
-
-function wᵢᵗ⁺¹func(
+function wᵢᵗ⁺¹func!(
   model::EGA,
   η::AbstractFloat,
   vᵗ::AbstractVector,
@@ -114,6 +111,10 @@ function wᵢᵗ⁺¹func(
   numerator_ = (wᵗ.*exp.(η.*vᵗ⁺¹))./(sqrt.(mᵗ⁺¹).+1e-8)
   return numerator_/sum(numerator_)
 end
+
+algname(::EGE) = "EGE"
+algname(::EGR) = "EGR"
+algname(::EGA) = "EGA"
 
 """
     egm(rel_pr::AbstractMatrix, model::EGMFramework, η::AbstractFloat=0.05)
@@ -192,7 +193,7 @@ function egm(rel_pr::AbstractMatrix, variant::EGMFramework, η::AbstractFloat=0.
   mₜ                  = zeros(n_assets)
 
   for t ∈ 1:n_periods-1
-    b[:, t+1] = wᵢᵗ⁺¹func(variant, η, vₜ, mₜ, b[:, t], rel_pr[:, t])
+    b[:, t+1] = wᵢᵗ⁺¹func!(variant, η, vₜ, mₜ, b[:, t], rel_pr[:, t])
   end
 
   return OPSAlgorithm(n_assets, b, algname(variant))

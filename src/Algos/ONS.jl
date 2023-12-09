@@ -1,5 +1,3 @@
-using LinearAlgebra, JuMP, Ipopt
-
 function bₜ₋₁func(β::Integer, pτ::AbstractMatrix, rₜ::AbstractMatrix)
   n_assets, t = size(pτ)
   res = zeros(n_assets)
@@ -39,7 +37,7 @@ end
 """
     ons(rel_pr::AbstractMatrix, β::Integer=1, 𝛿::AbstractFloat=1/8, η::AbstractFloat=0.)
 
-Run Online Newton Step algorithm.
+Run Online Newton Step (ONS) algorithm.
 
 # Arguments
 - `rel_pr::AbstractMatrix`: relative prices.
@@ -80,7 +78,7 @@ function ons(rel_pr::AbstractMatrix, β::Integer=1, 𝛿::AbstractFloat=1/8, η:
   0<𝛿≤1 || ArgumentError("𝛿 must be in (0,1]") |> throw
 
   n_assets, t = size(rel_pr)
-  p = zeros(n_assets, t)
+  p = similar(rel_pr, n_assets, t)
   p[:,1] = ones(n_assets)/n_assets
   for τ ∈ 2:t
     bₜ₋₁ = bₜ₋₁func(β, p[:,1:τ-1], rel_pr[:,1:τ-1])

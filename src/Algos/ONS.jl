@@ -79,7 +79,7 @@ function ons(rel_pr::AbstractMatrix, β::Integer=1, 𝛿::AbstractFloat=1/8, η:
 
   n_assets, t = size(rel_pr)
   p = similar(rel_pr, n_assets, t)
-  p[:,1] = ones(n_assets)/n_assets
+  p[:,1] .= 1/n_assets
   for τ ∈ 2:t
     bₜ₋₁ = bₜ₋₁func(β, p[:,1:τ-1], rel_pr[:,1:τ-1])
     Aₜ₋₁ = Aₜ₋₁func(p[:,1:τ-1], rel_pr[:,1:τ-1])

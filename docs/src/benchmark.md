@@ -5,6 +5,7 @@ In the domain of online portfolio selection, certain strategies are considered b
 2. [Best Stock (BS)](@ref)
 3. [Uniform Portfolio (1/N)](@ref)
 4. [Universal Portfolio (UP)](@ref)
+5. [Online Newton Step (ONS)](@ref)
 
 ## Constant Rebalanced Portfolio (CRP)
 Let's run the algorithm [COVER451321](@cite) on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
@@ -234,6 +235,33 @@ julia> results.MDD
 ```
 
 It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
+
+## Online Newton Step (ONS)
+Another benchmark strategy is the Online Newton Step (ONS) algorithm [10.1145/1143844.1143846](@cite), which implicitly predicts the next price ratio via all historical data with a uniform probability. See [`ons`](@ref).
+
+Let's run the algorithm on the real market data:
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["AAPL", "MSFT", "GOOG"];
+
+julia> querry = [get_prices(ticker, startdt="2020-01-01", enddt="2020-01-12")["adjclose"] for ticker in tickers];
+
+julia> prices = stack(querry, dims=1);
+
+julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia> model = ons(rel_pr, 1, 0.005, 0.1);
+
+julia> model.b
+3×6 Matrix{Float64}:
+ 0.333333  0.333327  0.333293  0.333295  0.333319  0.333375
+ 0.333333  0.333302  0.333221  0.333182  0.333205  0.333184
+ 0.333333  0.333371  0.333486  0.333524  0.333475  0.333441
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## References
 

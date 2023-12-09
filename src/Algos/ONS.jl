@@ -21,7 +21,8 @@ function Aₜ₋₁func(pₜ::AbstractMatrix, rₜ::AbstractMatrix)
 end
 
 function ∇²f(pₜ::AbstractVector, rₜ::AbstractVector)
-  return sum(-∇f(pₜ, rₜ).*∇f(pₜ, rₜ))
+  val = ∇f(pₜ, rₜ)
+  return sum(-val.*val)
 end
 
 function pₜfunc(Aₜ₋₁::AbstractMatrix, bₜ₋₁::AbstractVector, 𝛿::AbstractFloat)

@@ -328,6 +328,6 @@ This project is licensed under the MIT License - see the <a href="https://github
 ## Contact
 
 <div align="justify">
-If you have any inquiries or suggestions, please don't hesitate to contact me via email at <a href="sh0davoodi@gmail.com">sh0davoodi@gmail.com</a>. Alternatively, feel free to open an issue in the repository.
+If you have any inquiries or suggestions, please don't hesitate to contact me via email at <a href="mailto:sh0davoodi@gmail.com">sh0davoodi@gmail.com</a>. Alternatively, feel free to open an issue in the repository.
 </div>
 <p align="right">🆙<a href="#top">Table of cotents</a></p>

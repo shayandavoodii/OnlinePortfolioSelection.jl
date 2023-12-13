@@ -7,7 +7,7 @@ end
 # Introduction
 
 Online Portfolio Selection (OPS) strategies represent trading algorithms that sequentially allocate capital among a pool of assets with the aim of maximizing investment returns. This forms a fundamental issue in computational finance, extensively explored across various research domains, including finance, statistics, artificial intelligence, machine learning, and data mining. Framed within an online machine learning context, OPS is defined as a sequential decision problem, providing a range of advanced approaches to tackle this challenge. These approaches categorize into benchmarks, “Follow-the-Winner” and “Follow-the-Loser” strategies, “Pattern-Matching” based methodologies, and "Meta-Learning" Algorithms [li2013online](@cite).
-This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, 24 algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
+This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, 26 algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
 
 !!! note
     In the following table, the abbreviations **PM**, **ML**, **FL**, and **FW** stand for **Pattern-Matching**, **Meta-Learning**, **Follow the Loser**, and **Follow the Winner**, respectively.
@@ -26,7 +26,7 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 | 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 23    | [TPPT](@ref Trend-Promote-Price-Tracking-(TPPT))                                | Combined | 2021 |
 | 11    | [Bᴷ](@ref)                                                                                          | PM       | 2006 | 24    | [GWR](@ref Gaussian-Weighting-Reversion-(GWR))                                  | FL       | 2019 |
 | 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                                                  | Combined | 2019 | 25    | [ONS](@ref Online-Newton-Step-(ONS))                                            | Market   | 2006 |
-| 13    | [MRvol](@ref)                                                                                       | Combined | 2023 |
+| 13    | [MRvol](@ref)                                                                                       | Combined | 2023 | 26    | [DMR](@ref Distributed-Mean-Reversion-(DMR))                                    | FL       | 2023 |
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

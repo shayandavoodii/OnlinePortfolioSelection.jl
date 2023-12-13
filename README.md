@@ -64,7 +64,7 @@ This package presents a selection of proposed Online Portfolio Selection (OPS) a
 </div>
 
 > [!NOTE]
-> In the following table, the abbreviations **FL**, **FW**, **PM**, and **ML** stand for **FL**, **FW**, **Pattern-Matching**, and **Meta-Learning**, respectively.
+> In the following table, the abbreviations **FL**, **FW**, **PM**, and **ML** stand for **Follow the Loser**, **Follow the Winner**, **Pattern-Matching**, and **Meta-Learning**, respectively.
 
 <div align="center">
 

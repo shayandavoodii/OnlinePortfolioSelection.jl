@@ -62,10 +62,11 @@
 <div align="justify">
 This package presents a selection of proposed Online Portfolio Selection (OPS) algorithms found in the literature. The algorithms are implemented in Julia, ensuring complete type stability and suitability for research applications. It's an actively evolving package, with ongoing development work to introduce additional published methods. The aim is to introduce novel methods following the implementation of fundamental benchmark approaches. Presently, the package includes the following algorithms:
 </div>
-<div align="center">
 
 > [!NOTE]
 > In the following table, the abbreviations **FL**, **FW**, **PM**, and **ML** stand for **FL**, **FW**, **Pattern-Matching**, and **Meta-Learning**, respectively.
+
+<div align="center">
 
 |  №    | Algorithm                                                                                                                                                          | Strategy                  | №     | Algorithm                                                                                                                                                          | Strategy                  | №     | Algorithm                                                                                                                                                          | Strategy                  |
 |:-----:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------: |:--------------------------|:-----:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------ |:------------------------- |:-----:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------ |:------------------------- |

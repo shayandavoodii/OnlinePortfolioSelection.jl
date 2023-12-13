@@ -1,33 +1,5 @@
 setdiag!(A::AbstractMatrix, d::Bool) = A[diagind(A)] .= d
 
-"""
-    DCᵥᵢfunc(I::AbstractMatrix, vᵢ::Integer)
-
-Calculate the Degree Centrality of a vertex vᵢ in a graph represented by the
-adjacency matrix I.
-
-# Arguments
-- `I::AbstractMatrix`: The adjacency matrix of the graph.
-- `vᵢ::Integer`: The vertex of interest.
-
-# Returns
-- `::Integer`: The degree centrality of vᵢ.
-
-# Examples
-```julia
-julia> a = rand(3, 3)
-3×3 Matrix{Float64}:
- 0.200694  0.619398  0.571838
- 0.105686  0.273862  0.904177
- 0.306708  0.208045  0.269078
-
-julia> DCᵥᵢfunc(a, 3)
-1.476015602983394
-"""
-function DCᵥᵢfunc(I::AbstractMatrix, vᵢ::Integer)
-  return sum(I[:, vᵢ]) - I[vᵢ, vᵢ]
-end
-
 function doublStochMat(S::AbstractMatrix)
   n = size(S, 1)
   𝜚 = max(maximum(sum(S, dims=1)), maximum(sum(S, dims=2)))

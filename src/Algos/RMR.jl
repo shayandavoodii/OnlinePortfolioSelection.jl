@@ -19,7 +19,9 @@ function x̂ₜ₊₁func(::RMRVariant, p::AbstractMatrix, m::Integer, τ)
   𝜇ᵢ       = similar(p, n_assets)
   for i ∈ 2:m
     𝜇[:, i] = 𝜇ᵢ = 𝑇func(𝜇[:, i-1], p)
-    norm(𝜇[:, i-1].-𝜇[:, i], 1)≤τ*norm(𝜇[:, i], 1) && break
+    if norm(𝜇[:, i-1].-𝜇[:, i], 1)≤τ*norm(𝜇[:, i], 1)
+      break
+    end
   end
   p̂ₜ₊₁ = 𝜇ᵢ
   return p̂ₜ₊₁./p[:, end]

@@ -5,7 +5,7 @@ function T̃func(p::AbstractMatrix, μ::AbstractVector)
 end
 
 function 𝑇func(μ::AbstractVector, p::AbstractMatrix)
-  η = any(map(x->x==μ, eachcol(p)))
+  η = any(x->x==μ, eachcol(p))
   R̃ = sum((x.-μ)/norm(x.-μ) for x=eachcol(p) if x!=μ) |> vec
   γ = norm(R̃)
   T̃ = T̃func(p, μ)

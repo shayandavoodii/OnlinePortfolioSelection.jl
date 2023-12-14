@@ -12,7 +12,7 @@ function 𝑇func(μ::AbstractVector, p::AbstractMatrix)
   return max(0., 1-η/γ)*T̃.+min(1., η/γ)*μ
 end
 
-function x̂ₜ₊₁func(p::AbstractMatrix, m::Integer, τ)
+function x̂ₜ₊₁func(::RMRVariant, p::AbstractMatrix, m::Integer, τ)
   n_assets = size(p, 1)
   𝜇        = similar(p, n_assets, m)
   𝜇[:, 1]  = median(p, dims=2)
@@ -98,7 +98,7 @@ function rmr(p::AbstractMatrix, horizon::Integer, w::Integer, ϵ, m, τ)
   b        = similar(p, n_assets, horizon)
   b[:, 1] .= 1/n_assets
   for t ∈ 1:horizon-1
-    x̂ₜ₊₁      = x̂ₜ₊₁func(p[:, end-horizon-w+t+1:end-horizon+t], m, τ)
+    x̂ₜ₊₁      = x̂ₜ₊₁func(RMR(), p[:, end-horizon-w+t+1:end-horizon+t], m, τ)
     b[:, t+1] = updtportf(ϵ, x̂ₜ₊₁, b[:, t])
   end
   any(b.<0.) && b |> positify! |> normalizer!

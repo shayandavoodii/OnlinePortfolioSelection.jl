@@ -12,7 +12,7 @@ function 𝑇func(μ::AbstractVector, p::AbstractMatrix)
   return max(0., 1-η/γ)*T̃.+min(1., η/γ)*μ
 end
 
-function x̂ₜ₊₁func(::RMRVariant, p::AbstractMatrix, m::Integer, τ)
+function x̂ₜ₊₁func(::RMR, p::AbstractMatrix, m::Integer, τ)
   n_assets = size(p, 1)
   𝜇        = similar(p, n_assets, m)
   𝜇[:, 1]  = median(p, dims=2)

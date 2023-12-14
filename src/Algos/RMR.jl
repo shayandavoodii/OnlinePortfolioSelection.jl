@@ -24,7 +24,8 @@ function x̂ₜ₊₁func(::RMRVariant, p::AbstractMatrix, m::Integer, τ)
     end
     counter += 1
   end
-  p̂ₜ₊₁ = 𝜇[:, counter]
+  idx = min(counter, lastindex(𝜇, 2))
+  p̂ₜ₊₁ = 𝜇[:, idx]
   return p̂ₜ₊₁./p[:, end]
 end
 

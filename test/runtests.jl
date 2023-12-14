@@ -143,3 +143,8 @@ end
   @info "Run unit tests in DMR.jl"
   include("DMR.jl")
 end
+
+@testset "SSPO.jl" begin
+  @info "Run unit tests in SSPO.jl"
+  include("SSPO.jl")
+end

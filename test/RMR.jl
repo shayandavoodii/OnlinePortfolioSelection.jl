@@ -20,7 +20,7 @@ m = 7
     @test (model.b[:, 1] .== 1/n_assets) |> all
     @test size(model.b) == (n_assets, horizon)
 
-    model = rmr(prices, horizon, w, ϵ, m, 0.025)
+    model = rmr(prices, horizon, w, ϵ, m, 1e-12)
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
     @test model.n_assets == n_assets
     @test (model.b[:, 1] .== 1/n_assets) |> all

@@ -14,9 +14,9 @@ end
 
 function x̂ₜ₊₁func(p::AbstractMatrix, m::Integer, τ)
   n_assets = size(p, 1)
-  𝜇 = similar(p, n_assets, m)
-  𝜇[:, 1] = median(p, dims=2)
-  counter = 2
+  𝜇        = similar(p, n_assets, m)
+  𝜇[:, 1]  = median(p, dims=2)
+  counter  = 2
   for i ∈ 2:m
     𝜇[:, i] = 𝑇func(𝜇[:, i-1], p)
     if norm(𝜇[:, i-1].-𝜇[:, i], 1)≤τ*norm(𝜇[:, i], 1)
@@ -95,10 +95,10 @@ function rmr(p::AbstractMatrix, horizon::Integer, w::Integer, ϵ, m, τ)
   n_samples≥horizon+w-1 || ArgumentError("Not enough samples. Got $n_samples, need at least \
   $(horizon+w-1).") |> throw
 
-  b = similar(p, n_assets, horizon)
+  b        = similar(p, n_assets, horizon)
   b[:, 1] .= 1/n_assets
   for t ∈ 1:horizon-1
-    x̂ₜ₊₁ = x̂ₜ₊₁func(p[:, end-horizon-w+t+1:end-horizon+t], m, τ)
+    x̂ₜ₊₁      = x̂ₜ₊₁func(p[:, end-horizon-w+t+1:end-horizon+t], m, τ)
     b[:, t+1] = updtportf(ϵ, x̂ₜ₊₁, b[:, t])
   end
   any(b.<0.) && b |> positify! |> normalizer!

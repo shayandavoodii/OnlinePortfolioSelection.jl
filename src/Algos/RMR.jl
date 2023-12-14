@@ -21,9 +21,8 @@ function x̂ₜ₊₁func(::RMRVariant, p::AbstractMatrix, m::Integer, τ)
     𝜇[:, i] = 𝑇func(𝜇[:, i-1], p)
     if norm(𝜇[:, i-1].-𝜇[:, i], 1)≤τ*norm(𝜇[:, i], 1)
       break
-    else
-      counter += 1
     end
+    counter += 1
   end
   p̂ₜ₊₁ = 𝜇[:, counter]
   return p̂ₜ₊₁./p[:, end]

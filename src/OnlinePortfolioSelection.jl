@@ -41,13 +41,14 @@ include("Algos/TPPT.jl")
 include("Algos/GWR.jl")
 include("Algos/ONS.jl")
 include("Algos/DMR.jl")
+include("Algos/RMR.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
-export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm, tppt, gwr, ons, dmr
+export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm, tppt, gwr, ons, dmr, rmr
 export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir
 export OPSAlgorithm, OPSMetrics, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
@@ -119,6 +120,7 @@ function opsmethods()
   println("       GWR: Gaussian Weighting Reversion - Call `gwr`")
   println("       ONS: Online Newton Step - Call `ons`")
   println("       DMR: Distributed Mean Reversion (DMR) - Call `dmr`")
+  println("       RMR: Robust Median Reversion - Call `rmr`")
 end
 # COV_EXCL_STOP
 

@@ -16,16 +16,12 @@ function x̂ₜ₊₁func(::RMRVariant, p::AbstractMatrix, m::Integer, τ)
   n_assets = size(p, 1)
   𝜇        = similar(p, n_assets, m)
   𝜇[:, 1]  = median(p, dims=2)
-  counter  = 2
+  𝜇ᵢ       = similar(p, n_assets)
   for i ∈ 2:m
-    𝜇[:, i] = 𝑇func(𝜇[:, i-1], p)
-    if norm(𝜇[:, i-1].-𝜇[:, i], 1)≤τ*norm(𝜇[:, i], 1)
-      break
-    end
-    counter += 1
+    𝜇[:, i] = 𝜇ᵢ = 𝑇func(𝜇[:, i-1], p)
+    norm(𝜇[:, i-1].-𝜇[:, i], 1)≤τ*norm(𝜇[:, i], 1) && break
   end
-  idx = min(counter, lastindex(𝜇, 2))
-  p̂ₜ₊₁ = 𝜇[:, idx]
+  p̂ₜ₊₁ = 𝜇ᵢ
   return p̂ₜ₊₁./p[:, end]
 end
 

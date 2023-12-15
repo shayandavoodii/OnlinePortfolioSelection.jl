@@ -1,8 +1,18 @@
 # Performance evaluation
 
-## Introduction
-
 This package provides a variety of metrics for evaluating algorithm performance. These metrics are widely recognized in the literature and serve as benchmarks for comparing the performances of different algorithms. Currently, the supported metrics include:
+
+1. Cumulative Wealth (CW, Also known as $S_n$)
+2. Mean excess return (MER)
+3. Information Ratio (IR)
+4. Annualized Return (APY)
+5. Annualized Standard Deviation ($\sigma_p$)
+6. Annualized Sharpe Ratio (SR)
+7. Maximum Drawdown (MDD)
+8. Calmar Ratio (CR)
+9. Average Turnover (AT)
+
+## Metrics
 
 - Cumulative Wealth (CW, Also known as $S_n$)
 
@@ -105,8 +115,10 @@ This measure computes how frequently the weight of each asset is changing during
 AT = \frac{{{{\sum\nolimits_{t = 2}^T {\left\| {{{\mathbf{b}}_t} - {{\hat {\mathbf{b}}}_{t - 1}}} \right\|} }_1}}}{{2\left( {T - 1} \right)}}
 ```
 
-where $T$ represents the number of invesying days, ${{{\hat {\mathbf{b}}}_{t - 1}}}$ denotes the adjusted portfolio at the end of the $(t − 1)$-th day, which can be calculated using ${\hat {\mathbf{b}}_{t - 1}} = \frac{{{\mathbf{x}_{t - 1}} \odot {\mathbf{b}_{t - 1}}}}{{{\mathbf{x}_{t - 1}}^ \top {\mathbf{b}_{t - 1}}}}$ in which ${{{\mathbf{x}}_{t - 1}}}$ is the price relative vector at time period $t-1$, and ${\left\|  \cdot  \right\|_1}$ is the L1-norm operator.
-This metric can be calculated using the [`at`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`opsmetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
+where $T$ represents the number of investing days, ${{{\hat {\mathbf{b}}}_{t - 1}}}$ denotes the adjusted portfolio at the end of the $(t − 1)$-th day, which can be calculated using ${\hat {\mathbf{b}}_{t - 1}} = \frac{{{\mathbf{x}_{t - 1}} \odot {\mathbf{b}_{t - 1}}}}{{{\mathbf{x}_{t - 1}}^ \top {\mathbf{b}_{t - 1}}}}$ in which ${{{\mathbf{x}}_{t - 1}}}$ is the price relative vector at time period $t-1$, and ${\left\|  \cdot  \right\|_1}$ is the L1-norm operator. This metric can be calculated using the [`at`](@ref) function.
+
+!!! note
+    It's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`opsmetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
 
 ## Examples
 

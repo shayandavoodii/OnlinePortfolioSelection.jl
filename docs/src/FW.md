@@ -6,6 +6,7 @@ The Follow the Winner (FW) strategies operate on the principle that assets that 
 2. [Price Peak Tracking (PPT)](@ref)
 3. [Adaptive Input and Composite Trend Representation (AICTR)](@ref)
 4. [Exponential Gradient with Momentum (EGM)](@ref)
+5. [Short-term Sparse Portfolio Optimization (SSPO)](@ref)
 
 ## Exponential Gradient (EG)
 
@@ -267,6 +268,37 @@ julia> sn(model.b, rel_pr)
 ```
 
 The outcome suggests that if we had invested during the given period, we would have incurred a loss of approximately 1% of our wealth. It's important to note that [`sn`](@ref) automatically considers the last 7 relative prices in this case. Other metrics can be found in the [Performance evaluation](@ref) section.
+
+## Short-term Sparse Portfolio Optimization (SSPO)
+
+Short-term Sparse Portfolio Optimization (SSPO)[JMLR:v19:17-558](@cite) is a unique online portfolio selection method designed to construct sparse portfolios for short-term investments. It adapts the portfolio based on the evolving growth potential of various assets over time. The algorithm is based on the idea of the Follow the Winner (FW) framework and utilizes the inherent sparse nature of the portfolio by concurrently applying an $\ell$1-regularization term and a self-financing constraint. See [`sspo`](@ref).
+
+Let's run the algorithm on the real market data.
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["GOOG", "AAPL", "MSFT", "AMZN"]
+
+julia> querry = [get_prices(ticker, startdt="2020-01-01", enddt="2020-01-31")["adjclose"] for ticker=tickers]
+
+julia> prices = stack(querry, dims=1)
+
+julia> h = 5
+
+julia> w = 5
+
+julia> model = sspo(prices, h, w);
+
+julia> model.b
+4×5 Matrix{Float64}:
+ 0.25  9.92018e-9  1.0         1.0  1.0
+ 0.25  0.0         0.0         0.0  0.0
+ 0.25  0.0         0.0         0.0  0.0
+ 0.25  1.0         9.94367e-9  0.0  0.0
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## References
 

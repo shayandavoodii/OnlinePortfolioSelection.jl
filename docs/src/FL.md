@@ -9,6 +9,7 @@ The "Follow the Loser" (FL) strategy, introduced by [borodin2003can](@citet), in
 5. [Confidence Weighted Mean Reversion (CWMR)](@ref)
 6. [Gaussian Weighting Reversion (GWR)](@ref)
 7. [Distributed Mean Reversion (DMR)](@ref)
+8. [Robust Median Reversion (RMR)](@ref)
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
 
@@ -623,6 +624,43 @@ julia> model.b
  0.0454545  0.0914433   0.0915956       0.000654204  0.000654204  0.000654204
  0.0454545  0.0937513   0.00289981   …  0.00289981   0.0937545    0.00289981
  0.0454545  0.00669052  0.00669052      0.00669052   0.00669052   0.00669052
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
+
+## Robust Median Reversion (RMR)
+
+Robust Median Reversion (RMR) [7465840](@cite) leverages the reversion phenomenon by precisely predicting the next price relative using a robust $\ell$1-median estimator, which offers more accuracy than a basic mean estimator. This algorithm has two variants, namely 'RMR' and 'RMR-Variant' which the former one is available in this package. The distinction between these two versions lies in their method of forecasting the next price relative vector for assets. See [`rmr`](@ref). Hopefully, the latter one will be added to the package in the near future.
+
+Let's run the algorithm on the real market data.
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["GOOG", "AAPL", "MSFT", "AMZN"];
+
+julia> querry = [get_prices(ticker, startdt="2020-01-01", enddt="2020-01-31")["adjclose"] for ticker=tickers];
+
+julia> prices = stack(querry, dims=1);
+
+julia> horizon = 5
+
+julia> window = 5
+
+julia> ϵ = 5
+
+julia> m = 7
+
+julia> τ = 1e6
+
+julia> model = rmr(prices, horizon, window, ϵ, m, τ);
+
+julia> model.b
+4×5 Matrix{Float64}:
+ 0.25  1.0         1.0       1.0         1.0
+ 0.25  0.0         0.0       0.0         0.0
+ 0.25  0.0         0.0       0.0         0.0
+ 0.25  1.14513e-8  9.979e-9  9.99353e-9  1.03254e-8
 ```
 
 You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.

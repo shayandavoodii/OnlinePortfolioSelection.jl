@@ -102,10 +102,10 @@ This metric can be computed using the [`calmar`](@ref) function.
 This measure computes how frequently the weight of each asset is changing during the investment period. The lower the AT, the better is performance of the algorithm. The AT can be calculated by:
 
 ```math
-AT = \frac{{{{\sum\nolimits_{t = 2}^T {\left\| {{\mathbf{b}_t} - {{\hat \mathbf{b}}_{t - 1}}} \right\|} }_1}}}{{2\left( {T - 1} \right)}}
+AT = \frac{{{{\sum\nolimits_{t = 2}^T {\left\| {{{\mathbf{b}}_t} - {{\hat {\mathbf{b}}}_{t - 1}}} \right\|} }_1}}}{{2\left( {T - 1} \right)}}
 ```
 
-where ${{{\hat \mathbf{b}}_{t - 1}}}$ denotes the adjusted portfolio at the end of the $(t − 1)$-th day, which can be calculated using ${\widehat {\mathbf{b}}_{t - 1}} = \frac{{{\mathbf{x}_{t - 1}} \odot {\mathbf{b}_{t - 1}}}}{{{\mathbf{x}_{t - 1}}^ \top {\mathbf{b}_{t - 1}}}}$ in which ${{{\mathbf{x}}_{t - 1}}}$ is the prices relative vector at time period $t-1$, $T$ represents the number of invesying days, and ${\left\|  \cdot  \right\|_1}$ is the L1-norm operator.
+where $T$ represents the number of invesying days, ${{{\hat {\mathbf{b}}}_{t - 1}}}$ denotes the adjusted portfolio at the end of the $(t − 1)$-th day, which can be calculated using ${\hat {\mathbf{b}}_{t - 1}} = \frac{{{\mathbf{x}_{t - 1}} \odot {\mathbf{b}_{t - 1}}}}{{{\mathbf{x}_{t - 1}}^ \top {\mathbf{b}_{t - 1}}}}$ in which ${{{\mathbf{x}}_{t - 1}}}$ is the price relative vector at time period $t-1$, and ${\left\|  \cdot  \right\|_1}$ is the L1-norm operator.
 This metric can be calculated using the [`at`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`opsmetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
 
 ## Examples

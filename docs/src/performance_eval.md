@@ -95,7 +95,7 @@ CR = {{APY} \over {MDD}}
 \end{aligned}
 ```
 
-This metric can be computed using the [`calmar`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`opsmetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
+This metric can be computed using the [`calmar`](@ref) function.
 
 - Average Turnover (AT)
 
@@ -106,7 +106,7 @@ AT = \frac{{{{\sum\nolimits_{t = 2}^T {\left\| {{\mathbf{b}_t} - {{\hat \mathbf{
 ```
 
 where ${{{\hat \mathbf{b}}_{t - 1}}}$ denotes the adjusted portfolio at the end of the $(t − 1)$-th day, which can be calculated using ${\widehat {\mathbf{b}}_{t - 1}} = \frac{{{\mathbf{x}_{t - 1}} \odot {\mathbf{b}_{t - 1}}}}{{{\mathbf{x}_{t - 1}}^ \top {\mathbf{b}_{t - 1}}}}$ in which ${{{\mathbf{x}}_{t - 1}}}$ is the prices relative vector at time period $t-1$, $T$ represents the number of invesying days, and ${\left\|  \cdot  \right\|_1}$ is the L1-norm operator.
-This metric can be calculated using the [`at`](@ref) function.
+This metric can be calculated using the [`at`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`opsmetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
 
 ## Examples
 

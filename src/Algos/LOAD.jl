@@ -140,7 +140,6 @@ Run LOAD algorithm.
 # Returns
 - `::OPSAlgorithm`: An object of type `OPSAlgorithm` containing the weights of each asset for \
 each period.
-- `Sₜ::Vector{Float64}`: Cumulative wealth for each period.
 
 # Example
 ```julia
@@ -155,7 +154,7 @@ julia> prices = permutedims(prices);
 
 julia> using OnlinePortfolioSelection
 
-julia> model, s = load(prices, 0.5, 30, 5, 0.1);
+julia> model = load(prices, 0.5, 30, 5, 0.1);
 
 julia> model.b
 5×5 Matrix{Float64}:
@@ -167,15 +166,6 @@ julia> model.b
 
 julia> sum(model.b, dims=1) .|> isapprox(1.) |> all
 true
-
-julia> s
-6-element Vector{Float64}:
- 1.0
- 0.9879822754225864
- 0.9853561439014098
- 0.9836737048568326
- 0.971437501096619
- 0.9660091217094392
 ```
 
 # References

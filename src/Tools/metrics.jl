@@ -312,9 +312,9 @@ function at(rel_pr::AbstractMatrix, b::AbstractMatrix)
   turnover_ = 0.
   b̂ₜ₊₁      = b̂func(rel_pr, b)
   for t ∈ 2:T
-    turnover_ += norm(b[:, t] - b̂ₜ₊₁[:, t-1], 1)
+    turnover_ += norm(b[:, t] .- b̂ₜ₊₁[:, t-1], 1)
   end
-  return turnover_/2*(T-1)
+  return turnover_/(2*(T-1))
 end
 
 """

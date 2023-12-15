@@ -61,9 +61,16 @@ using Statistics
   include("DMR.jl")
   @info "Run unit tests in RMR.jl"
   include("RMR.jl")
+  @info "Run unit tests in SSPO.jl"
+  include("SSPO.jl")
 end
 
 @testset "metrics.jl" begin
   @info "Run unit tests in metrics.jl"
   include("metrics.jl")
+end
+
+@testset "SSPO.jl" begin
+  @info "Run unit tests in SSPO.jl"
+  include("SSPO.jl")
 end

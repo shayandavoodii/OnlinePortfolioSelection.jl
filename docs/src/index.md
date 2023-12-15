@@ -14,20 +14,21 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 
 | Row № |                                                   Algorithm                                         | Strategy | Year | Row № |                                       Algorithm                                 | Strategy | Year |
 |:-----:|:---------------------------------------------------------------------------------------------------:|:--------:|:----:|:-----:|:-------------------------------------------------------------------------------:|:--------:|:----:|
-| 1     | [CORN](@ref Correlation-driven-Nonparametric-Learning-(CORN))                                       | PM       | 2011 | 15    | [ClusLog](@ref)                                                                 | PM       | 2020 |
-| 2     | [DRICORN-K](@ref Dynamic-RIsk-CORrelation-driven-Non-parametric-(DRICORN))                          | PM       | 2020 | 16    | [PAMR](@ref Passive-Aggressive-Mean-Reversion-(PAMR))                           | FL       | 2012 |
-| 3     | [CRP](@ref Constant-Rebalanced-Portfolio-(CRP))                                                     | Market   | 1991 | 17    | [PPT](@ref Price-Peak-Tracking-(PPT))                                           | FW       | 2018 |
-| 4     | [UP](@ref Universal-Portfolio-(UP))                                                                 | Market   | 1991 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                          | FL       | 2013 |
-| 5     | [EG](@ref Exponential-Gradient-(EG))                                                                | FW       | 1998 | 19    | [CAEG](@ref Continuous-Aggregating-Exponential-Gradient-(CAEG))                 | ML       | 2020 |
-| 6     | [BS](@ref Best-Stock-(BS))                                                                          | Market   | 2007 | 20    | [OLDEM](@ref Online-Low-Dimension-Ensemble-Method-(OLDEM))                      | PM       | 2023 |
-| 7     | [RPRT](@ref Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))  | FL       | 2020 | 21    | [AICTR](@ref Adaptive-Input-and-Composite-Trend-Representation-(AICTR))         | FW       | 2018 |
-| 8     | [Anticor](@ref Anti-Correlation-(Anticor))                                                          | FL       | 2003 | 22    | [EGM](@ref Exponential-Gradient-with-Momentum-(EGM))                            | FW       | 2021 |
-| 9     | [1/N](@ref Uniform-Portfolio-(1/N))                                                                 | Market   | -    | 23    | [TPPT](@ref Trend-Promote-Price-Tracking-(TPPT))                                | Combined | 2021 |
-| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 24    | [GWR](@ref Gaussian-Weighting-Reversion-(GWR))                                  | FL       | 2019 |
-| 11    | [Bᴷ](@ref)                                                                                          | PM       | 2006 | 25    | [ONS](@ref Online-Newton-Step-(ONS))                                            | Market   | 2006 |
-| 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                                                  | Combined | 2019 | 26    | [DMR](@ref Distributed-Mean-Reversion-(DMR))                                    | FL       | 2023 |
-| 13    | [MRvol](@ref)                                                                                       | Combined | 2023 | 27    | [RMR](@ref Robust-Median-Reversion-(RMR))                                       | FL       | 2016 |
-| 14    | [CW-OGD](@ref Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))                        | ML       | 2021 |
+| 1     | [CORN](@ref Correlation-driven-Nonparametric-Learning-(CORN))                                       | PM       | 2011 | 16    | [PAMR](@ref Passive-Aggressive-Mean-Reversion-(PAMR))                           | FL       | 2012 |
+| 2     | [DRICORN-K](@ref Dynamic-RIsk-CORrelation-driven-Non-parametric-(DRICORN))                          | PM       | 2020 | 17    | [PPT](@ref Price-Peak-Tracking-(PPT))                                           | FW       | 2018 | 
+| 3     | [CRP](@ref Constant-Rebalanced-Portfolio-(CRP))                                                     | Market   | 1991 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                          | FL       | 2013 |
+| 4     | [UP](@ref Universal-Portfolio-(UP))                                                                 | Market   | 1991 | 19    | [CAEG](@ref Continuous-Aggregating-Exponential-Gradient-(CAEG))                 | ML       | 2020 |
+| 5     | [EG](@ref Exponential-Gradient-(EG))                                                                | FW       | 1998 | 20    | [OLDEM](@ref Online-Low-Dimension-Ensemble-Method-(OLDEM))                      | PM       | 2023 |
+| 6     | [BS](@ref Best-Stock-(BS))                                                                          | Market   | 2007 | 21    | [AICTR](@ref Adaptive-Input-and-Composite-Trend-Representation-(AICTR))         | FW       | 2018 |
+| 7     | [RPRT](@ref Reweighted-Price-Relative-Tracking-System-for-Automatic-Portfolio-Optimization-(RPRT))  | FL       | 2020 | 22    | [EGM](@ref Exponential-Gradient-with-Momentum-(EGM))                            | FW       | 2021 |
+| 8     | [Anticor](@ref Anti-Correlation-(Anticor))                                                          | FL       | 2003 | 23    | [TPPT](@ref Trend-Promote-Price-Tracking-(TPPT))                                | Combined | 2021 |
+| 9     | [1/N](@ref Uniform-Portfolio-(1/N))                                                                 | Market   | -    | 24    | [GWR](@ref Gaussian-Weighting-Reversion-(GWR))                                  | FL       | 2019 |
+| 10    | [OLMAR](@ref Online-Moving-Average-Reversion-(OLMAR))                                               | FL       | 2012 | 25    | [ONS](@ref Online-Newton-Step-(ONS))                                            | Market   | 2006 |
+| 11    | [Bᴷ](@ref)                                                                                          | PM       | 2006 | 26    | [DMR](@ref Distributed-Mean-Reversion-(DMR))                                    | FL       | 2023 |
+| 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                                                  | Combined | 2019 | 27    | [RMR](@ref Robust-Median-Reversion-(RMR))                                       | FL       | 2016 |
+| 13    | [MRvol](@ref)                                                                                       | Combined | 2023 | 28    | [SSPO](@ref Short-term-Sparse-Portfolio-Optimization-(SSPO))                    | FW       | 2018 |
+| 14    | [ClusLog](@ref)                                                                                     | PM       | 2020 | 
+| 15    | [CW-OGD](@ref Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))                        | ML       | 2021 |
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 
@@ -80,6 +81,8 @@ julia> pr = pr[2:end, :];
 
 julia> market_pr = pr[1, :];
 
+julia> rel_pr_market = market_pr[2:end] ./ market_pr[1:end-1];
+
 julia> size(pr)
 (24, 1276)
 ```
@@ -121,7 +124,7 @@ julia> plot(
 The plot illustrates that the cumulative return of CORN-K consistently outperforms the other algorithms. It's important to note that the initial investment for all algorithms is standardized to 1, although this can be adjusted by setting the keyword argument `init_budg` for each algorithm. Now, let's delve into the performance analysis of the algorithms using prominent [performance metrics](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/):
 
 ```julia
-julia> all_metrics = opsmetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr));
+julia> all_metrics = opsmetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr), Ref(rel_pr_market));
 ```
 
 Now, one can embed the metrics in a DataFrame and compare the performance of the algorithms with respect to each other:
@@ -133,19 +136,22 @@ julia> nmodels = length(all_metrics);
 
 julia> comp_algs = DataFrame(
            Algorithm = ["CORN-U", "CORN-K", "DRICORN-K"],
+           MER = [all_metrics[i].MER for i = 1:nmodels],
+           IR = [all_metrics[i].IR for i = 1:nmodels],
            APY = [all_metrics[i].APY for i = 1:nmodels],
            Ann_Sharpe = [all_metrics[i].Ann_Sharpe for i = 1:nmodels],
            Ann_Std = [all_metrics[i].Ann_Std for i = 1:nmodels],
            Calmar = [all_metrics[i].Calmar for i = 1:nmodels],
            MDD = [all_metrics[i].MDD for i = 1:nmodels],
+           AT = [all_metrics[i].AT for i = 1:nmodels],
        )
-3×6 DataFrame
- Row │ Algorithm  APY        Ann_Sharpe  Ann_Std   Calmar    MDD       
-     │ String     Float64    Float64     Float64   Float64   Float64   
-─────┼─────────────────────────────────────────────────────────────────
-   1 │ CORN-U     -0.126009   -0.505762  0.288691  -1.25383  0.100499
-   2 │ CORN-K      0.826495    2.48378   0.324705  17.688    0.0467263
-   3 │ DRICORN-K  -0.248393   -1.20933   0.221934  -2.54505  0.0975985
+3×9 DataFrame
+ Row │ Algorithm  MER        IR         APY        Ann_Sharpe  Ann_Std   Calmar    MDD        AT        
+     │ String     Float64    Float64    Float64    Float64     Float64   Float64   Float64    Float64   
+─────┼──────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ CORN-U     0.0514619  0.0963865  -0.126009   -0.505762  0.288691  -1.25383  0.100499   0.847198
+   2 │ CORN-K     0.054396   0.198546    0.826495    2.48378   0.324705  17.688    0.0467263  0.87319
+   3 │ DRICORN-K  0.0507907  0.0829576  -0.2487     -1.21085   0.22191   -2.54629  0.0976717  0.0053658
 ```
 
 The comparison analysis, via `comp_algs`, highlights that CORN-K outperforms the other algorithms in terms of annualized percentage yield (APY), annualized Sharpe ratio, Calmar ratio, and maximum drawdown (MDD). However, it's essential to note that the annualized standard deviation of CORN-K surpasses that of the other algorithms within this dataset. These individual metrics can be computed separately by using corresponding functions such as [`sn`](@ref), [`mer`](@ref), [`ir`](@ref). For further insights and details, please refer to the [Performance evaluation](@ref).

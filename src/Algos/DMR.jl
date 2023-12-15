@@ -94,7 +94,7 @@ julia> w = 4
 
 julia> horizon = 50
 
-julia> model = dmr(x, horizon, eta, alpha, n, w);
+julia> model = dmr(x, horizon, alpha, n, w, eta);
 
 julia> model.b
 22×50 Matrix{Float64}:

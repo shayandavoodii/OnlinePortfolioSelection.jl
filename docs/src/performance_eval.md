@@ -95,7 +95,18 @@ CR = {{APY} \over {MDD}}
 \end{aligned}
 ```
 
-This metric can be computed using the [`calmar`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`opsmetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
+This metric can be computed using the [`calmar`](@ref) function.
+
+- Average Turnover (AT)
+
+This measure computes how frequently the weight of each asset is changing during the investment period. The lower the AT, the better is performance of the algorithm. The AT can be calculated by:
+
+```math
+AT = \frac{{{{\sum\nolimits_{t = 2}^T {\left\| {{{\mathbf{b}}_t} - {{\hat {\mathbf{b}}}_{t - 1}}} \right\|} }_1}}}{{2\left( {T - 1} \right)}}
+```
+
+where $T$ represents the number of invesying days, ${{{\hat {\mathbf{b}}}_{t - 1}}}$ denotes the adjusted portfolio at the end of the $(t − 1)$-th day, which can be calculated using ${\hat {\mathbf{b}}_{t - 1}} = \frac{{{\mathbf{x}_{t - 1}} \odot {\mathbf{b}_{t - 1}}}}{{{\mathbf{x}_{t - 1}}^ \top {\mathbf{b}_{t - 1}}}}$ in which ${{{\mathbf{x}}_{t - 1}}}$ is the price relative vector at time period $t-1$, and ${\left\|  \cdot  \right\|_1}$ is the L1-norm operator.
+This metric can be calculated using the [`at`](@ref) function. Additionally, it's noteworthy that these metrics can be computed collectively rather than individually. This can be achieved using the [`opsmetrics`](@ref) function. This function yields an object of type [`OPSMetrics`](@ref) containing all the aforementioned metrics.
 
 ## Examples
 
@@ -213,19 +224,24 @@ julia> mdd_ = mdd(sn_)
 julia> calmar(apy_, mdd_)
 11.026402121997583
 
+# Compute the average turnover
+julia> at(rel_pr, cornkm.b)
+0.5710393403115563 # Meaning that the weight of each asset is changing 57% of the time
+
 julia> last(all_metrics_vals)
 
-            Cumulative Return: 1.0661252685319844
-        Mean Excessive Return: 0.0331885901993342
-            Information Ratio: 0.14797935671154802
-  Annualized Percentage Yield: 0.7123367957886144
-Annualized Standard Deviation: 0.312367085936459
-      Annualized Sharpe Ratio: 2.216420445556956
-             Maximum Drawdown: 0.06460283126873347
-                 Calmar Ratio: 11.026402121997583
+            Cumulative Return: 1.066125303122296
+        Mean Excessive Return: 0.03318859854896919
+            Information Ratio: 0.1479792121956763
+  Annualized Percentage Yield: 0.7123372624638589
+Annualized Standard Deviation: 0.31236709233949556
+      Annualized Sharpe Ratio: 2.216421894119991
+             Maximum Drawdown: 0.06460283279345515
+                 Calmar Ratio: 11.026409085516526
+             Average Turnover: 0.5710393403115563
 ```
 
-As shown, the results are consistent with the results obtained using the [`opsmetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and [`calmar`](@ref) for more information).
+As shown, the results are consistent with the results obtained using the [`opsmetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`at`](@ref) for more information).
 
 ## References
 

@@ -1,7 +1,7 @@
 function bₒ₊₁func(λ, γ, η, gₒ::AbstractVector, ρₒ, φₜ::AbstractVector)
   n_assets   = length(gₒ)
   firstterm  = (λ/γ*I(n_assets) .+ fill(η, n_assets, n_assets))^-1
-  secondterm = λ/γ*gₒ.+fill((η-ρₒ), n_assets).-φₜ
+  secondterm = λ/γ*gₒ.+fill(η-ρₒ, n_assets).-φₜ
   return firstterm*secondterm
 end
 

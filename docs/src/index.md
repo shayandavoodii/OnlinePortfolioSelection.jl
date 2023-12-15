@@ -79,6 +79,8 @@ julia> pr = pr[2:end, :];
 
 julia> market_pr = pr[1, :];
 
+julia> rel_pr_market = market_pr[2:end] ./ market_pr[1:end-1];
+
 julia> size(pr)
 (24, 1276)
 ```
@@ -120,7 +122,7 @@ julia> plot(
 The plot illustrates that the cumulative return of CORN-K consistently outperforms the other algorithms. It's important to note that the initial investment for all algorithms is standardized to 1, although this can be adjusted by setting the keyword argument `init_budg` for each algorithm. Now, let's delve into the performance analysis of the algorithms using prominent [performance metrics](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/):
 
 ```julia
-julia> all_metrics = opsmetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr));
+julia> all_metrics = opsmetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr), Ref(rel_pr_market));
 ```
 
 Now, one can embed the metrics in a DataFrame and compare the performance of the algorithms with respect to each other:
@@ -132,19 +134,22 @@ julia> nmodels = length(all_metrics);
 
 julia> comp_algs = DataFrame(
            Algorithm = ["CORN-U", "CORN-K", "DRICORN-K"],
+           MER = [all_metrics[i].MER for i = 1:nmodels],
+           IR = [all_metrics[i].IR for i = 1:nmodels],
            APY = [all_metrics[i].APY for i = 1:nmodels],
            Ann_Sharpe = [all_metrics[i].Ann_Sharpe for i = 1:nmodels],
            Ann_Std = [all_metrics[i].Ann_Std for i = 1:nmodels],
            Calmar = [all_metrics[i].Calmar for i = 1:nmodels],
            MDD = [all_metrics[i].MDD for i = 1:nmodels],
+           AT = [all_metrics[i].AT for i = 1:nmodels],
        )
-3×6 DataFrame
- Row │ Algorithm  APY        Ann_Sharpe  Ann_Std   Calmar    MDD       
-     │ String     Float64    Float64     Float64   Float64   Float64   
-─────┼─────────────────────────────────────────────────────────────────
-   1 │ CORN-U     -0.126009   -0.505762  0.288691  -1.25383  0.100499
-   2 │ CORN-K      0.826495    2.48378   0.324705  17.688    0.0467263
-   3 │ DRICORN-K  -0.248393   -1.20933   0.221934  -2.54505  0.0975985
+3×9 DataFrame
+ Row │ Algorithm  MER        IR         APY        Ann_Sharpe  Ann_Std   Calmar    MDD        AT        
+     │ String     Float64    Float64    Float64    Float64     Float64   Float64   Float64    Float64   
+─────┼──────────────────────────────────────────────────────────────────────────────────────────────────
+   1 │ CORN-U     0.0514619  0.0963865  -0.126009   -0.505762  0.288691  -1.25383  0.100499   0.847198
+   2 │ CORN-K     0.054396   0.198546    0.826495    2.48378   0.324705  17.688    0.0467263  0.87319
+   3 │ DRICORN-K  0.0507907  0.0829576  -0.2487     -1.21085   0.22191   -2.54629  0.0976717  0.0053658
 ```
 
 The comparison analysis, via `comp_algs`, highlights that CORN-K outperforms the other algorithms in terms of annualized percentage yield (APY), annualized Sharpe ratio, Calmar ratio, and maximum drawdown (MDD). However, it's essential to note that the annualized standard deviation of CORN-K surpasses that of the other algorithms within this dataset. These individual metrics can be computed separately by using corresponding functions such as [`sn`](@ref), [`mer`](@ref), [`ir`](@ref). For further insights and details, please refer to the [Performance evaluation](@ref).

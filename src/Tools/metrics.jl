@@ -281,6 +281,28 @@ Calculate the Calmar Ratio of investment. Also, see [`sn`](@ref), [`mer`](@ref),
 calmar(APY::T, MDD::T) where T<:AbstractFloat = APY/MDD;
 
 """
+    at(b::AbstractMatrix)
+
+Calculate the average turnover of the portfolio. Also, see [`sn`](@ref), [`mer`](@ref), \
+[`ir`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and \
+[`calmar`](@ref).
+
+# Arguments
+- `b::AbstractMatrix`: the weights of the portfolio.
+
+# Returns
+- `::AbstractFloat`: the average turnover of the portfolio.
+"""
+function at(b::AbstractMatrix)
+  T = size(b, 2)
+  turnover_ = 0.
+  for t ∈ 2:T
+    turnover_ += norm(b[:, t] - b[:, t-1], 1)
+  end
+  return turnover_/2*(T-1)
+end
+
+"""
     opsmetrics(
       weights::AbstractMatrix{T},
       rel_pr::AbstractMatrix{T},
@@ -337,6 +359,7 @@ function opsmetrics(
   ann_Sharpe = ann_sharpe(APY, Rf, σₚ)
   MDD        = mdd(all_sn)
   Calmar     = calmar(APY, MDD)
+  AT         = at(weights)
 
-  return OPSMetrics(all_sn, MER, IR, APY, σₚ, ann_Sharpe, MDD, Calmar)
+  return OPSMetrics(all_sn, MER, IR, APY, σₚ, ann_Sharpe, MDD, Calmar, AT)
 end

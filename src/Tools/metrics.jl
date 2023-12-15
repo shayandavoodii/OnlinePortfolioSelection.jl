@@ -22,6 +22,21 @@ function alignperiods(weights, rel_pr)
 end
 
 """
+    b̂func(rel_pr::AbstractMatrix, weights::AbstractMatrix)
+
+This function is also known as the `b̃` in the literature.
+"""
+function b̂func(rel_pr::AbstractMatrix, weights::AbstractMatrix)
+  n_assets, n_periods = size(rel_pr)
+  b̂ = Matrix{Float64}(undef, n_assets, n_periods)
+  for t ∈ 1:n_periods
+    product_ = weights[:, t] .* rel_pr[:, t]
+    b̂[:, t] = (product_)/sum(product_)
+  end
+  return b̂
+end
+
+"""
     sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv::T=1.) where T<:AbstractFloat
 
 Calculate the cumulative return of the portfolio during a period of time. Also, \
@@ -100,11 +115,7 @@ function mer(
   n_assets, n_periods = size(rel_pr)
   conditionset1(weights, rel_pr)
   rel_pr, n_periods = alignperiods(weights, rel_pr)
-  b̃ = Matrix{Float64}(undef, n_assets, n_periods)
-  for t ∈ 1:n_periods
-    product_ = weights[:, t] .* rel_pr[:, t]
-    b̃[:, t] = (product_)/sum(product_)
-  end
+  b̃ = b̂func(rel_pr, weights)
   R = Vector{Float64}(undef, n_periods)
   Rstar = Vector{Float64}(undef, n_periods)
   bstar = ones(n_assets)/n_assets
@@ -281,23 +292,27 @@ Calculate the Calmar Ratio of investment. Also, see [`sn`](@ref), [`mer`](@ref),
 calmar(APY::T, MDD::T) where T<:AbstractFloat = APY/MDD;
 
 """
-    at(b::AbstractMatrix)
+    at(rel_pr::AbstractMatrix, b::AbstractMatrix)
 
 Calculate the average turnover of the portfolio. Also, see [`sn`](@ref), [`mer`](@ref), \
 [`ir`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and \
 [`calmar`](@ref).
 
 # Arguments
-- `b::AbstractMatrix`: the weights of the portfolio.
+- `rel_pr::AbstractMatrix`: The relative price of the stocks.
+- `b::AbstractMatrix`: The weights of the portfolio.
 
 # Returns
 - `::AbstractFloat`: the average turnover of the portfolio.
 """
-function at(b::AbstractMatrix)
-  T = size(b, 2)
+function at(rel_pr::AbstractMatrix, b::AbstractMatrix)
+  conditionset1(b, rel_pr)
+  rel_pr, _ = alignperiods(b, rel_pr)
+  T         = size(b, 2)
   turnover_ = 0.
+  b̂ₜ₊₁      = b̂func(rel_pr, b)
   for t ∈ 2:T
-    turnover_ += norm(b[:, t] - b[:, t-1], 1)
+    turnover_ += norm(b[:, t] - b̂ₜ₊₁[:, t-1], 1)
   end
   return turnover_/2*(T-1)
 end
@@ -359,7 +374,7 @@ function opsmetrics(
   ann_Sharpe = ann_sharpe(APY, Rf, σₚ)
   MDD        = mdd(all_sn)
   Calmar     = calmar(APY, MDD)
-  AT         = at(weights)
+  AT         = at(rel_pr, weights)
 
   return OPSMetrics(all_sn, MER, IR, APY, σₚ, ann_Sharpe, MDD, Calmar, AT)
 end

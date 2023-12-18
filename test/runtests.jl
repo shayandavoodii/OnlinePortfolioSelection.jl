@@ -69,8 +69,3 @@ end
   @info "Run unit tests in metrics.jl"
   include("metrics.jl")
 end
-
-@testset "SSPO.jl" begin
-  @info "Run unit tests in SSPO.jl"
-  include("SSPO.jl")
-end

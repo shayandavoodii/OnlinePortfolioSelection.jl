@@ -225,7 +225,7 @@ function corn_expert(
 
   # index of a day after similar time windows
   idx_days = idx_tws.+w
-  model    = Model(Ipopt.Optimizer)
+  model    = Model(Optimizer)
   set_silent(model)
 
   @variable(model, 0<=b[i=1:n_assets]<=1)

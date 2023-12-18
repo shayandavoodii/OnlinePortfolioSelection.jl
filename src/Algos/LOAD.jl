@@ -112,7 +112,7 @@ output onto the simplex (this is officially included in the LOAD algorithm).
 function portfolio_projection(b̂::T, pred_rel::T, ϵ::S) where {T<:AbstractVector, S<:Real}
   # Find the b that has the minimum distance to b̂ and return it.
   n_assets = length(b̂)
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, 0. <= b[i=1:n_assets] <= 1.)
   @constraint(model, sum(b) == 1.)
   @constraint(model, sum(b .* pred_rel) ≥ ϵ)

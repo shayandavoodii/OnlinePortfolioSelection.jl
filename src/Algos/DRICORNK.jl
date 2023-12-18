@@ -187,7 +187,7 @@ function dricorn_expert(
     )/var(market_ret[end-shift-20:end-shift])
   end
 
-  model = Model(Ipopt.Optimizer)
+  model = Model(Optimizer)
   set_silent(model)
 
   @variable(model, 0<=b[i=1:n_assets]<=1)

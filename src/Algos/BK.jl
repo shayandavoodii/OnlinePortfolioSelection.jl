@@ -152,7 +152,7 @@ function expert(data, k, l, c)
 
   first_m_days = @views historical_data[:, 1:m]
 
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, 0 <= weight[i=1:nstocks] <= 1)
   @constraint(model, sum(weight) == 1)
   @NLobjective(model, Max, sum(first_m_days[j,i] * weight[j] for i=1:m, j=1:nstocks))

@@ -39,7 +39,7 @@ end
 
 function b̂ᵢfunc(ŷᵢ::AbstractVector)
   n_assets = length(ŷᵢ)
-  model    = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model    = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, b[i=1:n_assets])
   @constraint(model, sum(b) == 1.)
   @NLobjective(model, Min, sum((b[i] - ŷᵢ[i])^2 for i=1:n_assets))

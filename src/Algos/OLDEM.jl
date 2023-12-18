@@ -521,7 +521,7 @@ function cₜ₊₁func(
   b̂ₜ::AbstractVector
 )
   n_assets = length(x̂ₜ₊₁)
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, c[1:n_assets])
   @constraint(model, sum(c) == 0)
   @variable(model, t[1:n_assets] >= 0)

@@ -122,7 +122,7 @@ end
 
 function normptf(bₜ₊₁::AbstractVector)
   n_assets = length(bₜ₊₁)
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, 0. ≤ b[i=1:n_assets] ≤ 1.)
   @constraint(model, sum(b) == 1.)
   @NLobjective(model, Min, sum((b[i] - bₜ₊₁[i])^2 for i=1:n_assets))

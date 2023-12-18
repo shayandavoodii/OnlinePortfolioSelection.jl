@@ -32,7 +32,7 @@ Compute the expert weights projection.
 function ∏ₖ(η, 𝜵, 𝘄ₜ)
   k = length(𝘄ₜ)
   y = 𝘄ₜ .- η*𝜵
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, 0. <= 𝘄ₜ₊₁[i=1:k] <= 1.)
   @constraint(model, sum(𝘄ₜ₊₁) == 1.)
   @NLobjective(model, Min, sum((𝘄ₜ₊₁[i] - y[i])^2 for i=1:k))

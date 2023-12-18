@@ -51,7 +51,7 @@ end
 
 function portfolio_projection(x̂ₜ₊₁::T, bₜ::T, ϵ::Integer) where {T<:AbstractVector}
   n_assets = length(bₜ)
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, 0. <= b[i=1:n_assets] <= 1.)
   @constraint(model, sum(b) == 1.)
   @NLconstraint(model, sum(item^2 for item=(b - bₜ)) ≤ ϵ)

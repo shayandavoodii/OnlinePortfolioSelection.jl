@@ -27,7 +27,7 @@ end
 
 function pₜfunc(Aₜ₋₁::AbstractMatrix, bₜ₋₁::AbstractVector, 𝛿::AbstractFloat)
   q = 𝛿*Aₜ₋₁^-1 * bₜ₋₁
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, 0 <= p[1:length(bₜ₋₁)] <= 1)
   @constraint(model, sum(p) == 1)
   @objective(model, Min, (q-p)'*Aₜ₋₁*(q-p))

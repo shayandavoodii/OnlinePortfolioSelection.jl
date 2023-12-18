@@ -94,7 +94,7 @@ end
 
 function b̂ₜ₊₁func(b̃ₜ₊₁)
   n_assets = length(b̃ₜ₊₁)
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, 0. ≤ b[i=1:n_assets] ≤ 1.)
   @constraint(model, sum(b) == 1.)
   @NLobjective(model, Min, sum((b[i] - b̃ₜ₊₁[i])^2 for i=1:n_assets))

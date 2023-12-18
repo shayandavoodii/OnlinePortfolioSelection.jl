@@ -1,9 +1,11 @@
 module CWMRModelExt
 
-using OnlinePortfolioSelection, Distributions
-using LinearAlgebra
-using JuMP
-using Ipopt
+using OnlinePortfolioSelection
+using Distributions: Normal
+using LinearAlgebra: diag, I, diagm
+using JuMP:          Model, @variable, @constraint, @NLobjective, optimizer_with_attributes
+using JuMP:          optimize!, value
+using Ipopt:         Optimizer
 
 bₜfunc(::Type{CWMRD}, μₜ::AbstractVector, ::AbstractMatrix) = μₜ
 
@@ -15,7 +17,7 @@ end
 
 function projection(b̃ₜ::AbstractVector)
   n_assets = length(b̃ₜ)
-  model = Model(optimizer_with_attributes(Ipopt.Optimizer, "print_level" => 0))
+  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, 0. ≤ b[i=1:n_assets] ≤ 1.)
   @constraint(model, sum(b) == 1.)
   @NLobjective(model, Min, sum((b[i] - b̃ₜ[i])^2 for i=1:n_assets))

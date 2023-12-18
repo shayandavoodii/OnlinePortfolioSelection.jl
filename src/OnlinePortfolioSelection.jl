@@ -1,12 +1,12 @@
 module OnlinePortfolioSelection
 
-using Statistics
-using LinearAlgebra
-using JuMP
-using Ipopt
-using PrecompileTools
-using DataStructures
-using StatsBase: sample
+using Statistics:      cor, var, mean, median, std
+using LinearAlgebra:   I, norm, Symmetric, diagm, tr, diagind
+using JuMP:            Model, @variable, @constraint, @NLobjective, @expression, @objective
+using JuMP:            value, @NLconstraint, set_silent, optimize!, optimizer_with_attributes
+using Ipopt:           Optimizer
+using PrecompileTools: @setup_workload, @compile_workload
+using StatsBase:       sample
 
 include("Types/Algorithms.jl")
 include("Types/Clustering.jl")

@@ -1,12 +1,14 @@
 module ClusLogModelExt
 
-using OnlinePortfolioSelection, Clustering
-using JuMP
-using Ipopt
-using Statistics
-using LinearAlgebra
-using Distances
-using DataStructures
+using OnlinePortfolioSelection
+using Clustering:     kmeans, kmedoids, assignments, counts, silhouettes
+using JuMP:           Model, @variable, @constraint, @NLobjective, set_silent, optimize!
+using JuMP:           value
+using Ipopt:          Optimizer
+using Statistics:     cor, mean
+using LinearAlgebra:  Symmetric
+using Distances:      Euclidean, pairwise
+using DataStructures: OrderedSet, counter
 
 function OnlinePortfolioSelection.cluslog(
   rel_pr::AbstractMatrix{<:AbstractFloat},
@@ -141,7 +143,7 @@ end
 function optimization(corrs::AbstractVector, relpr::AbstractMatrix, boundries::NTuple{2, AbstractFloat})
   lb, ub   = boundries
   nassets  = size(relpr, 1)
-  optmodel = Model(Ipopt.Optimizer)
+  optmodel = Model(Optimizer)
   @variable(optmodel, lb ≤ w[1:nassets] ≤ ub)
   @constraint(optmodel, sum(w)==1)
   @NLobjective(

@@ -142,47 +142,47 @@ Additionally, the function accepts the following keyword arguments:
 The function returns an object of type [`OPSMetrics`](@ref) containing all the metrics as fields. Now, let's choose few algorithms and assess their performance using the aforementioned function.
 
 ```julia
-using OnlinePortfolioSelection, YFinance, StatsPlots
+julia> using OnlinePortfolioSelection, YFinance, StatsPlots
 
 # Fetch data
-tickers = ["AAPL", "MSFT", "AMZN", "META", "GOOG"]
+julia> tickers = ["AAPL", "MSFT", "AMZN", "META", "GOOG"];
 
-startdt, enddt = "2023-04-01", "2023-08-27";
+julia> startdt, enddt = "2023-04-01", "2023-08-27";
 
-querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
+julia> querry = [get_prices(ticker, startdt=startdt, enddt=enddt)["adjclose"] for ticker in tickers];
 
-prices = stack(querry) |> permutedims;
+julia> prices = stack(querry) |> permutedims;
 
-market = get_prices("^GSPC", startdt=startdt, enddt=enddt)["adjclose"];
+julia> market = get_prices("^GSPC", startdt=startdt, enddt=enddt)["adjclose"];
 
-rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
+julia> rel_pr = prices[:, 2:end]./prices[:, 1:end-1];
 
-rel_pr_market = market[2:end]./market[1:end-1];
+julia> rel_pr_market = market[2:end]./market[1:end-1];
 
-nassets, ndays = size(rel_pr);
+julia> nassets, ndays = size(rel_pr);
 
 # Run algorithms for 30 days
-horizon = 30;
+julia> horizon = 30;
 
 # Run models on the given data
-loadm = load(prices, 0.5, 8, horizon, 0.1);
-uniformm = uniform(nassets, horizon);
-cornkm = cornk(prices, horizon, 5, 5, 10, progress=true);
+julia> loadm = load(prices, 0.5, 8, horizon, 0.1);
+julia> uniformm = uniform(nassets, horizon);
+julia> cornkm = cornk(prices, horizon, 5, 5, 10, progress=true);
 ┣████████████████████████████████████████┫ 100.0% |30/30 
 
-names = ["LOAD", "UNIFORM", "CORNK"];
+julia> names = ["LOAD", "UNIFORM", "CORNK"];
 
-metrics = (:Sn, :MER, :IR, :APY, :Ann_Std, :Ann_Sharpe, :MDD, :Calmar);
+julia> metrics = (:Sn, :MER, :IR, :APY, :Ann_Std, :Ann_Sharpe, :MDD, :Calmar);
 
-all_metrics_vals = opsmetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr), Ref(rel_pr_market));
+julia> all_metrics_vals = opsmetrics.([loadm.b, uniformm.b, cornkm.b], Ref(rel_pr), Ref(rel_pr_market));
 
 # Draw a bar plot to depict the values of each metric for each algorithm
-groupedbar(
-  vcat([repeat([String(metric)], length(names)) for metric in metrics]...),
-  [getfield(result, metric) |> last for metric in metrics for result in all_metrics_vals],
-  group=repeat(names, length(metrics)),
-  dpi=300
-)
+julia> groupedbar(
+         vcat([repeat([String(metric)], length(names)) for metric in metrics]...),
+         [getfield(result, metric) |> last for metric in metrics for result in all_metrics_vals],
+         group=repeat(names, length(metrics)),
+         dpi=300
+       )
 ```
 
 ```@raw html

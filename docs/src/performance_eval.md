@@ -2,19 +2,22 @@
 
 This package provides a variety of metrics for evaluating algorithm performance. These metrics are widely recognized in the literature and serve as benchmarks for comparing the performances of different algorithms. Currently, the supported metrics include:
 
-1. Cumulative Wealth (CW, Also known as $S_n$)
-2. Mean excess return (MER)
-3. Information Ratio (IR)
-4. Annualized Return (APY)
-5. Annualized Standard Deviation ($\sigma_p$)
-6. Annualized Sharpe Ratio (SR)
-7. Maximum Drawdown (MDD)
-8. Calmar Ratio (CR)
-9. Average Turnover (AT)
+| Row № | Metric                                                                              | Abbreviation                        | Direction                 |
+|:-----:|:----------------------------------------------------------------------------------- |:-----------------------------------:|:-------------------------:|
+| 1     | [Cumulative Wealth](@ref "Cumulative Wealth (CW, Also known as $S_n$)")             | CW (Also known as $S_n$)            | The **higher** the better |
+| 2     | [Mean Excess Return](@ref "Mean Excess Return (MER)")                               | MER                                 | The **higher** the better |
+| 3     | [Information Ratio](@ref "Information Ratio (IR)")                                  | IR                                  | The **higher** the better |
+| 4     | [Annualized Return](@ref "Annualized Return (APY)")                                 | APY                                 | The **higher** the better |
+| 5     | [Annualized Standard Deviation](@ref "Annualized Standard Deviation ($\sigma_p$)")  | $\sigma_p$                          | The lower the better      |
+| 6     | [Annualized Sharpe Ratio](@ref "Annualized Sharpe Ratio (SR)")                      | SR                                  | The **higher** the better |
+| 7     | [Maximum Drawdown](@ref "Maximum Drawdown (MDD)")                                   | MDD                                 | The lower the better      |
+| 8     | [Calmar Ratio](@ref "Calmar Ratio (CR)")                                            | CR                                  | The **higher** the better |
+| 9     | [Average Turnover](@ref "Average Turnover (AT)")                                    | AT                                  | The lower the better      |
+
 
 ## Metrics
 
-- Cumulative Wealth (CW, Also known as $S_n$)
+### Cumulative Wealth (CW, Also known as $S_n$)
 
 This metric computes the portfolio's cumulative wealth of the algorithm throughout an investment period. The cumulative wealth is defined as:
 
@@ -26,7 +29,7 @@ This metric computes the portfolio's cumulative wealth of the algorithm througho
 
 where $S_0$ represents the initial capital, $b_t$ stands for the portfolio vector at time $t$, and $x_t$ denotes the relative price vector at time $t$. This metric can be evaluated using the [`sn`](@ref) function.
 
-- Mean excess return (MER)
+### Mean Excess Return (MER)
 
 MER is utilized to gauge the average excess returns of an OPS method that surpasses the benchmark market strategy. MER is defined as:
 
@@ -37,7 +40,7 @@ MER = {1 \over n}\sum\nolimits_{t = 1}^n {{R_t} - } {1 \over n}\sum\nolimits_{t 
 where $R$ and ${R_t^*}$ represent the daily returns of a portfolio and the market strategy at the $t$th trading day, respectively. For a given OPS method, accounting for transaction costs, ${{R_t}}$ is calculated by ${R_t} = \left( {\mathbf{x}_t\mathbf{b}_t} \right) \times \left( {1 - {\nu  \over 2} \times \sum\nolimits_{i = 1}^d {\left| {{b_{t,i}} - {{\tilde b}_{t,i}}} \right|} } \right) - 1$. The market strategy initially allocates capital equally among all assets and remains unchanged. ${R_t^*}$ is defined as:
 $R_t^* = \mathbf{x}_t \cdot \mathbf{b}^* - 1$ and ${\mathbf{b}^*} = {\left( {{1 \over d},{1 \over d}, \ldots ,{1 \over d}} \right)^ \top }$, where $d$ is the number of assets, and $n$ is the number of trading days. This metric can be calculated using the [`mer`](@ref) function. (see [XI2023109872](@cite) for more details.)
 
-- Information Ratio (IR)
+### Information Ratio (IR)
 
 The information ratio is a risk-adjusted excess return metric compared with the market benchmark. It is defined as:
 
@@ -47,7 +50,7 @@ IR = \frac{{{{\bar R}_s} - {{\bar R}_m}}}{{\sigma \left( {{R_s} - {R_m}} \right)
 
 where $R_s$ represents the portfolio's daily return, $R_m$ represents the market's daily return, $\bar R_s$ represents the portfolio's average daily return, $\bar R_m$ represents the market's average daily return, and $\sigma$ represents the standard deviation of the portfolio's daily excess return over the market. Note that in this package, the logarithmic return is used. See [`ir`](@ref).
 
-- Annualized Return (APY)
+### Annualized Return (APY)
 
 This metric computes the annualized return of the algorithm throughout the investment period. The annualized return is defined as:
 
@@ -59,11 +62,11 @@ This metric computes the annualized return of the algorithm throughout the inves
 
 where $y$ represents the number of years in the investment period. This metric can be evaluated using the [`apy`](@ref) function.
 
-- Annualized Standard Deviation ($\sigma_p$)
+### Annualized Standard Deviation ($\sigma_p$)
 
 Another measurement employed to assess risk is the annual standard deviation of portfolio returns. The daily standard deviation is computed to derive the annual standard deviation, after which it is multiplied by $\sqrt{252}$ (assuming 252 days in a year). Users can adjust the number of days in a year by specifying the `dpy` keyword argument. This metric can be computed using the [`ann_std`](@ref) function.
 
-- Annualized Sharpe Ratio (SR)
+### Annualized Sharpe Ratio (SR)
 
 The Sharpe ratio serves as a measure of risk-adjusted return. It is defined as:
 
@@ -75,7 +78,7 @@ SR = {{APY - {R_f}} \over {{\sigma _p}}}
 
 Here, $R_f$ denotes the risk-free rate, typically equivalent to the treasury bill rate at the investment period. This metric can be computed using the [`ann_sharpe`](@ref) function.
 
-- Maximum Drawdown (MDD)
+### Maximum Drawdown (MDD)
 
 The maximum drawdown is the largest loss observed from a peak to a trough within a portfolio, before a subsequent peak is attained. The calculation of MDD relies on the capital break value. Capital break serves as a critical criterion for assessing the capital market and equals the maximum decline from the peak of the portfolio cumulative function. Capital break is defined as:
 
@@ -95,7 +98,7 @@ MDD\left( n \right) = {\sup _{t \in \left( {0,n} \right)}}\left[ {DD\left( t \ri
 
 This metric can be calculated using the [`mdd`](@ref) function.
 
-- Calmar Ratio (CR)
+### Calmar Ratio (CR)
 
 The Calmar ratio is a risk-adjusted return metric based on the maximum drawdown. It is defined as:
 
@@ -107,7 +110,7 @@ CR = {{APY} \over {MDD}}
 
 This metric can be computed using the [`calmar`](@ref) function.
 
-- Average Turnover (AT)
+### Average Turnover (AT)
 
 This measure computes how frequently the weight of each asset is changing during the investment period. The lower the AT, the better is performance of the algorithm. The AT can be calculated by:
 

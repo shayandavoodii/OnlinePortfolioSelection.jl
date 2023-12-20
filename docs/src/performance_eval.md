@@ -7,7 +7,7 @@ This package provides a variety of metrics for evaluating algorithm performance.
 | 1     | [Cumulative Wealth](@ref "Cumulative Wealth (CW, Also known as $S_n$)")             | CW (Also known as $S_n$)            | The **higher** the better |
 | 2     | [Mean Excess Return](@ref "Mean Excess Return (MER)")                               | MER                                 | The **higher** the better |
 | 3     | [Information Ratio](@ref "Information Ratio (IR)")                                  | IR                                  | The **higher** the better |
-| 4     | [Annualized Return](@ref "Annualized Return (APY)")                                 | APY                                 | The **higher** the better |
+| 4     | [Annualized Percentage Yield](@ref "Annualized Percentage Yield (APY)")             | APY                                 | The **higher** the better |
 | 5     | [Annualized Standard Deviation](@ref "Annualized Standard Deviation ($\sigma_p$)")  | $\sigma_p$                          | The lower the better      |
 | 6     | [Annualized Sharpe Ratio](@ref "Annualized Sharpe Ratio (SR)")                      | SR                                  | The **higher** the better |
 | 7     | [Maximum Drawdown](@ref "Maximum Drawdown (MDD)")                                   | MDD                                 | The lower the better      |
@@ -50,7 +50,7 @@ IR = \frac{{{{\bar R}_s} - {{\bar R}_m}}}{{\sigma \left( {{R_s} - {R_m}} \right)
 
 where $R_s$ represents the portfolio's daily return, $R_m$ represents the market's daily return, $\bar R_s$ represents the portfolio's average daily return, $\bar R_m$ represents the market's average daily return, and $\sigma$ represents the standard deviation of the portfolio's daily excess return over the market. Note that in this package, the logarithmic return is used. See [`ir`](@ref).
 
-### Annualized Return (APY)
+### Annualized Percentage Yield (APY)
 
 This metric computes the annualized return of the algorithm throughout the investment period. The annualized return is defined as:
 

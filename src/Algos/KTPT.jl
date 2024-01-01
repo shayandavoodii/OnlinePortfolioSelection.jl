@@ -30,7 +30,7 @@ end
 ιfunc!(v::AbstractVector) = v[v.>1] .= 1.
 
 function p̂ₜ₊₁func(λₜ₊₁::AbstractFloat, xₜ::AbstractVector, p̃ₜ₊₁::AbstractVector, ŷₜ₊₁::AbstractVector)
-  val = λₜ₊₁./2xₜ
+  val = λₜ₊₁./(2xₜ)
   ιfunc!(val)
   return val.*p̃ₜ₊₁ .+ (1 .- val).*ŷₜ₊₁
 end

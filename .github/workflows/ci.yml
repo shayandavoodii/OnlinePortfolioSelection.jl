@@ -10,12 +10,17 @@ jobs:
      fail-fast: false
      matrix:
        version:
-         - '1'
-         - 'nightly'
+         - '1.9' # LTS
+         - '1'   # Current stable
        os:
          - ubuntu-latest
        arch:
          - x64
+       include:
+         - version: 'nightly'
+           os: ubuntu-latest
+           arch: x64
+           allow_failure: true
    steps:
      - uses: actions/checkout@v2
      - uses: julia-actions/setup-julia@v1

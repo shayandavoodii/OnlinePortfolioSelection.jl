@@ -300,15 +300,15 @@ If you use the package in your research, please cite the package using the follo
 </div>
 
 ```bibtex
-@software{shayan_davoodi_2023_10251038,
+@software{shayan_davoodi_2023_10391027,
   author       = {Shayan Davoodi},
-  title        = {shayandavoodii/OnlinePortfolioSelection.jl: v2.6.1},
+  title        = {{shayandavoodii/OnlinePortfolioSelection.jl: v2.10.0}},
   month        = dec,
   year         = 2023,
   publisher    = {Zenodo},
-  version      = {v2.6.1},
-  doi          = {10.5281/zenodo.10251038},
-  url          = {https://doi.org/10.5281/zenodo.10251038}
+  version      = {v2.10.0},
+  doi          = {10.5281/zenodo.10391027},
+  url          = {https://doi.org/10.5281/zenodo.10391027}
 }
 ```
 

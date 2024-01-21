@@ -9,5 +9,5 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 [compat]
 Ipopt = "1.2"
 JuMP = "1.10"
-Clustering = "=0.15.2"
+Clustering = "0.15.7"
 Distributions = "0.25.0"

@@ -96,7 +96,7 @@ function nclusopt(model::Type{<:OnlinePortfolioSelection.ClusLogVariant}, cor_tw
   for nclus ∈ 2:nclusters
     fitted  = clustering(model, cor_tw, nclus)
     dists   = pairwise(Euclidean(), cor_tw)
-    sils[nclus-1] = silhouettes(assignments(fitted), counts(fitted), dists) |> mean
+    sils[nclus-1] = silhouettes(fitted, cor_tw) |> mean
   end
   return argmax(sils) + 1
 end

@@ -1,7 +1,7 @@
 name            = "OnlinePortfolioSelection"
 uuid            = "038f9fe3-14bd-47ca-b081-2e00e8c46dfa"
 authors         = ["Shayan Davoodi"]
-version         = "2.10.0"
+version         = "2.10.1"
 
 [deps]
 DataStructures  = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
@@ -22,7 +22,7 @@ CWMRModelExt    = "Distributions"
 ClusLogModelExt = "Clustering"
 
 [compat]
-Clustering      = "=0.15.2"
+Clustering      = "0.15.7"
 DataStructures  = "0.18"
 Distances       = "0.10"
 Distributions   = "0.25.0"

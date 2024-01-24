@@ -5,7 +5,8 @@ There are two prominent packages that facilitate using Julia packages in Python 
 1. [juliacall](@ref)
 2. [Pyjulia](@ref)
 
-It is recommended to use juliacall since it is more stable according to one of active julia developers [[1](https://stackoverflow.com/questions/77264168/importerror-pkg-name-not-found-in-importing-a-julia-package-in-python-using-p#comment136214601_77264168)].
+!!! note
+    It is recommended to use juliacall since it is more stable according to one of active julia developers [[1](https://stackoverflow.com/questions/77264168/importerror-pkg-name-not-found-in-importing-a-julia-package-in-python-using-p#comment136214601_77264168)].
 
 ## juliacall
 

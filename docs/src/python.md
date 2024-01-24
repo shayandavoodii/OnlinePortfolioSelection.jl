@@ -1,6 +1,110 @@
 # Use `OnlinePortfolioSelection.jl` in Python
 
-Generally, Julia packages can be used in a Python environment with ease by employing wrapper packages that facilitate the translation of Julia functionalities into Python. A notable package in this domain is [PyJulia](https://pyjulia.readthedocs.io/en/latest/index.html). Comprehensive installation guidelines can be found in the [PyJulia documentation](https://pyjulia.readthedocs.io/en/latest/installation.html). To leverage Julia packages in Python, previously discussed methods have covered importing Julia code into Python ([1](https://stackoverflow.com/q/73070845/11747148), [2](https://blog.esciencecenter.nl/how-to-call-julia-code-from-python-8589a56a98f2)). In this section, I'll demonstrate how to utilize `OnlinePortfolioSelection.jl` in Python. For resolution of potential issues during package importation, please refer to [this](https://stackoverflow.com/questions/77264168/importerror-pkg-name-not-found-in-importing-a-julia-package-in-python-using-p) discussion.
+There are two prominent packages that facilitate using Julia packages in Python environment:
+
+1. [juliacall](@ref)
+2. [Pyjulia](@ref)
+
+!!! note
+    It is recommended to use juliacall since it is more stable according to one of active julia developers [[1](https://stackoverflow.com/questions/77264168/importerror-pkg-name-not-found-in-importing-a-julia-package-in-python-using-p#comment136214601_77264168)].
+
+## juliacall
+
+To use [`juliacall`](https://github.com/JuliaPy/PythonCall.jl), simply install it using `pip install juliacall` and then follow the subsequent steps to use `OnlinePortfolioSelection.jl` in Python (keep in mind that I've truncated the long outputs to avoid a lengthy documentation):
+
+```python
+>>> from juliacall import Main as jl
+>>> jl.Pkg.add("OnlinePortfolioSelection")
+
+>>> # Confirm the installation using the following command
+>>> jl.Pkg.status()
+Status `C:\Users\Shayan\miniconda3\envs\im\julia_env\Project.toml`
+  [038f9fe3] OnlinePortfolioSelection v2.10.1
+  [6099a3de] PythonCall v0.9.15
+
+>>> # And then use the package
+>>> jl.seval("using OnlinePortfolioSelection")
+>>> jl.opsmethods()
+
+      ===== OnlinePortfolioSelection.jl =====
+            Currently available methods
+       =====================================
+
+        UP: Universal Portfolio - Call `up`
+        EG: Exponential Gradient - Call `eg`
+     CORNU: CORN-U - Call `cornu`
+     CORNK: CORN-K - Call `cornk`
+     ⋮
+
+>>> # Run the following command in order to get the documentation of `sspo` function
+>>> jl.Docs.doc(jl.sspo)
+Julia:
+  sspo(
+    p::AbstractMatrix,
+    horizon::Integer,
+    w::Integer,
+    b̂ₜ::Union{Nothing, AbstractVector}=nothing,
+    η::AbstractFloat=0.005,
+    γ::AbstractFloat=0.01,
+    λ::AbstractFloat=0.5,
+    ζ::Integer=500,
+    ϵ::AbstractFloat=1e-4,
+    max_iter=1e4
+  )
+
+
+  Run Short-term Sparse Portfolio Optimization (SSPO) algorithm.
+
+  Arguments
+  ≡≡≡≡≡≡≡≡≡
+
+    •  p::AbstractMatrix: Prices of the assets.
+
+    •  horizon::Integer: Number of investment periods.
+    ⋮
+```
+
+Now that you know how to import the package in Python, let's run the [sspo](@ref "Short-term Sparse Portfolio Optimization (SSPO)") algorithm in Python:
+
+```python
+>>> import numpy as np
+>>> prices = np.random.rand(4, 80)
+>>> model = jl.sspo(
+...   prices,
+...   6,
+...   5,
+...   jl.nothing,
+...   0.003
+... )
+
+******************************************************************************
+This program contains Ipopt, a library for large-scale nonlinear optimization.
+ Ipopt is released as open source code under the Eclipse Public License (EPL).
+         For more information visit https://github.com/coin-or/Ipopt
+******************************************************************************
+
+>>> model
+Julia: OPSAlgorithm{Float64}(4, [0.25 0.0 … 0.0 0.0; 0.25 0.0 … 0.0 0.9999990246207479; 0.25 9.948297404456596e-9 … 0.0 0.0; 0.25 0.9999999900517027 … 1.0 9.75379252201141e-7], "SSPO")
+>>> model.b
+Julia:
+4×6 Matrix{Float64}:
+ 0.25  0.0        0.0         0.0         0.0  0.0
+ 0.25  0.0        1.0         9.92937e-9  0.0  0.999999
+ 0.25  9.9483e-9  9.93036e-9  0.0         0.0  0.0
+ 0.25  1.0        0.0         1.0         1.0  9.75379e-7
+```
+
+Hence, you can access the weights that are obtined by the algorithm using the `b` attribute of the `model` object. You can also access the algorithm name using the `alg` attribute of the `model` object:
+
+```python
+>>> model.alg
+'SSPO'
+```
+
+Refer to the [`OPSAlgorithm`](@ref) documentation for more details about the attributes of the `model` object.
+## Pyjulia
+
+Generally, Julia packages can be used in a Python environment with ease by employing wrapper packages that facilitate the translation of Julia functionalities into Python. A notable package in this domain is [PyJulia](https://pyjulia.readthedocs.io/en/latest/index.html). Comprehensive installation guidelines can be found in the [PyJulia documentation](https://pyjulia.readthedocs.io/en/latest/installation.html). To leverage Julia packages in Python, previously discussed methods have covered importing Julia code into Python ([2](https://stackoverflow.com/q/73070845/11747148), [3](https://blog.esciencecenter.nl/how-to-call-julia-code-from-python-8589a56a98f2)). In this section, I'll demonstrate how to utilize `OnlinePortfolioSelection.jl` in Python. For resolution of potential issues during package importation, please refer to [this](https://stackoverflow.com/questions/77264168/importerror-pkg-name-not-found-in-importing-a-julia-package-in-python-using-p) discussion.
 
 1. Begin by installing PyJulia via `pip install julia`. Ensure that the Julia path is added to the system environment variable `PATH`, enabling the usage of `julia` from the command line. Typically, the Julia path is found in `\.julia\juliaup\julia-<VERSION>\bin` or `C:\Users\your-user-name\AppData\Local\Programs\Julia\Julia-<VERSION>\bin`.
 2. Launch Python.

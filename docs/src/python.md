@@ -116,7 +116,7 @@ Generally, Julia packages can be used in a Python environment with ease by emplo
 >>> from julia import OnlinePortfolioSelection as OPS
 ```
 
-# Run [MRvol](@ref) Algorithm
+### Run [MRvol](@ref) Algorithm
 In this instance, I'm demonstrating the execution of the [MRvol](@ref) algorithm.
 
 ```python
@@ -192,7 +192,7 @@ Run MRvol algorithm.
 ...
 ```
 
-# Run [ClusLog](@ref) Algorithm
+### Run [ClusLog](@ref) Algorithm
 
 Another example can be using [`cluslog`](@ref) function to perform 'KMNLOG' or 'KMDLOG' model (see [ClusLog](@ref), [`KMNLOG`](@ref), and [`KMDLOG`](@ref) for more details):
 

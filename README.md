@@ -83,6 +83,24 @@ This package presents a selection of proposed Online Portfolio Selection (OPS) a
 | 10    | [CW-OGD](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/ML/#Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))                       | ML                        | 20    | [Bᴷ](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/PM/#Bᴷ)                                                                                      | PM                        |
 </div>
 
+<div align="justify">
+OPS algorithms have been evaluated using a set of promimnent metrics through the literature, such as the Annualized Sharpe Ratio, the Annualized Percentage Yield, and etc. The package also includes a set of utility functions to calculate these metrics to facilitate the evaluation process. The available metrics are as follows:
+</div>
+
+| Row № | Metric                                                                                                                                                         | Abbreviation                        |
+|:-----:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------- |:-----------------------------------:|
+| 1     | [Cumulative Wealth](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Cumulative-Wealth-(CW,-Also-known-as-S_n))              | CW (Also known as $S_n$)            |
+| 2     | [Mean Excess Return](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Mean-Excess-Return-(MER))                              | MER                                 |
+| 3     | [Information Ratio](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Information-Ratio-(IR))                                 | IR                                  |
+| 4     | [Annualized Percentage Yield](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Annualized-Percentage-Yield-(APY))            | APY                                 |
+| 5     | [Annualized Standard Deviation](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Annualized-Standard-Deviation-(\\sigma_p))  | $\sigma_p$                          |
+| 6     | [Annualized Sharpe Ratio](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Annualized-Sharpe-Ratio-(SR))                     | SR                                  |
+| 7     | [Maximum Drawdown](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Maximum-Drawdown-(MDD))                                  | MDD                                 |
+| 8     | [Calmar Ratio](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Calmar-Ratio-(CR))                                           | CR                                  |
+| 9     | [Average Turnover](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/#Average-Turnover-(AT))                                   | AT                                  |
+
+Further information about the metrics can be found in the <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval">documentation</a>.
+
 <p align="right">🆙<a href="#top">Table of cotents</a></p>
 
 <!-- Disclaimer -->

@@ -80,23 +80,13 @@ Here, $R_f$ denotes the risk-free rate, typically equivalent to the treasury bil
 
 ### Maximum Drawdown (MDD)
 
-The maximum drawdown is the largest loss observed from a peak to a trough within a portfolio, before a subsequent peak is attained. The calculation of MDD relies on the capital break value. Capital break serves as a critical criterion for assessing the capital market and equals the maximum decline from the peak of the portfolio cumulative function. Capital break is defined as:
+The maximum drawdown is the largest drop percentage of [CW](@ref "Cumulative Wealth (CW, Also known as $S_n$)") from its running maximum over all periods, which looks for the most considerable movement from a peak point to a trough point. Following the definition of [LI2022115889](@citet), the maximum drawdown is defined as:
 
 ```math
-\begin{aligned}
-DD\left( T \right) = \sup \left[ {0,{{\sup }_{i \in \left( {0,t} \right)}}{S_i} - {S_t}} \right]
-\end{aligned}
+MDD = \mathop {\max }\limits_{t \in \left[ {1,T} \right]} \frac{{{M_t} - {S_t}}}{{{M_t}}},\quad {M_t} = \mathop {\max }\limits_{k \in \left[ {1,t} \right]} {S_k}
 ```
 
-where $S_t$ denotes the portfolio cumulative function at time $t$. The maximum capital break, used to gauge risk, is defined as:
-
-```math
-\begin{aligned}
-MDD\left( n \right) = {\sup _{t \in \left( {0,n} \right)}}\left[ {DD\left( t \right)} \right]
-\end{aligned}
-```
-
-This metric can be calculated using the [`mdd`](@ref) function.
+where $M_t$ represents the running maximum of CW, and $S_t$ represents the CW at time $t$. This metric can be calculated using the [`mdd`](@ref) function.
 
 ### Calmar Ratio (CR)
 

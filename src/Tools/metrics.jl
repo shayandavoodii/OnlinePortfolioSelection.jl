@@ -254,25 +254,18 @@ Calculate the Maximum Drawdown (MDD) of investment. Also, see [`sn`](@ref), [`me
 [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`calmar`](@ref), and [`opsmetrics`](@ref).
 
 # Arguments
-- `Sn::AbstractVector{T}`: the cumulative return of investment during the investment period.
+- `Sn::AbstractVector{T}`: the cumulative return of investment during the investment period. \
+  see [`sn`](@ref).
 
 # Returns
 - `::AbstractFloat`: the MDD of investment.
 """
 function mdd(Sn::AbstractVector{T}) where T<:AbstractFloat
-  n_periods = length(Sn)
-  max_sn    = zeros(T, n_periods)
-  max_sn[1] = Sn[1]
-
-  for t ∈ 2:n_periods
-      max_sn[t] = max(max_sn[t-1], Sn[t])
+  max_sn    = (maximum(Sn[1:t]) for t=eachindex(Sn))
+  max_dd    = similar(Sn)
+  for (t, snₜ) ∈ enumerate(max_sn)
+    max_dd[t] = (snₜ - Sn[t])/snₜ
   end
-
-  max_dd = zeros(T, n_periods)
-  for t ∈ 1:n_periods
-      max_dd[t] = (max_sn[t] - Sn[t])/max_sn[t]
-  end
-
   return maximum(max_dd)
 end
 

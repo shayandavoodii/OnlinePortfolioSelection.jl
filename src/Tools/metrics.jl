@@ -262,8 +262,8 @@ Calculate the Maximum Drawdown (MDD) of investment. Also, see [`sn`](@ref), [`me
 function mdd(Sn::AbstractVector{T}) where T<:AbstractFloat
   max_sn    = (maximum(Sn[1:t]) for t=eachindex(Sn))
   max_dd    = similar(Sn)
-  for (idx, snₜ) ∈ enumerate(max_sn)
-    max_dd[idx] = (snₜ - Sn[idx])/snₜ
+  for (t, snₜ) ∈ enumerate(max_sn)
+    max_dd[t] = (snₜ - Sn[t])/snₜ
   end
   return maximum(max_dd)
 end

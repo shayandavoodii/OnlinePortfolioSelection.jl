@@ -189,7 +189,7 @@ The plot illustrates the value of each metric for each algorithm.
 The metrics can be calculated individually as well. For instance, in the next code block, I compute each metric individually for the 'CORNK' algorithm.
 
 ```julia
-# Compute the cumulative return
+# Compute the cumulative wealth
 julia> sn_ = sn(cornkm.b, rel_pr)
 31-element Vector{Float64}:
  1.0
@@ -235,7 +235,7 @@ julia> at(rel_pr, cornkm.b)
 
 julia> last(all_metrics_vals)
 
-            Cumulative Return: 1.066125303122296
+            Cumulative Wealth: 1.066125303122296
         Mean Excessive Return: 0.03318859854896919
             Information Ratio: 0.1479792121956763
   Annualized Percentage Yield: 0.7123372624638589

@@ -46,7 +46,7 @@ The result indicates that if we had invested in the given period, we would have 
 juli> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
 
 julia> metrics = opsmetrics(model.b, rel_price)
-            Cumulative Return: 1.0121073197606183
+            Cumulative Wealth: 1.0121073197606183
                           APY: 0.8340827024050514
 Annualized Standard Deviation: 0.40329283437815505
       Annualized Sharpe Ratio: 2.0185895533212266
@@ -117,7 +117,7 @@ Now, let's investiagte the performance of the algorithm according to some of the
 
 ```julia
 julia> metrics = opsmetrics(r.b, rel_pr)
-            Cumulative Return: 1.0277067897356449
+            Cumulative Wealth: 1.0277067897356449
                           APY: 0.07129838196490379
 Annualized Standard Deviation: 0.1224831726093685
       Annualized Sharpe Ratio: 0.41881983354977265

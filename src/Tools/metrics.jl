@@ -39,11 +39,11 @@ end
 """
     sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv::T=1.) where T<:AbstractFloat
 
-Calculate the cumulative return of the portfolio during a period of time. Also, \
+Calculate the cumulative wealth of the portfolio during a period of time. Also, \
 see [`mer`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), \
 [`calmar`](@ref), and [`opsmetrics`](@ref).
 
-The formula for calculating the cumulative return of the portfolio is as follows:
+The formula for calculating the cumulative wealth of the portfolio is as follows:
 
 ```math
 {S_n} = {S_0}\\prod\\limits_{t = 1}^T {\\left\\langle {{b_t},{x_t}} \\right\\rangle }
@@ -67,7 +67,7 @@ of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-t
     `size(weights, 2)` columns of `rel_pr` will be used.
 
 # Returns
-- `all_sn::Vector{T}`: the cumulative return of investment during the investment period.
+- `all_sn::Vector{T}`: the cumulative wealth of investment during the investment period.
 """
 function sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv::T=1.) where T<:AbstractFloat
   n_periods = size(rel_pr, 2)
@@ -199,7 +199,7 @@ Calculate the Annualized Standard Deviation (``\\sigma_p``) of portfolio. Also, 
 [`opsmetrics`](@ref).
 
 # Arguments
-- `cum_ret::AbstractVector{AbstractFloat}`: the cumulative return of investment during the \
+- `cum_ret::AbstractVector{AbstractFloat}`: the cumulative wealth of investment during the \
 investment period.
 
 ## Keyword Arguments
@@ -219,7 +219,7 @@ Calculate the Annual Percentage Yield (APY) of investment. Also, see [`sn`](@ref
 [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`opsmetrics`](@ref).
 
 # Arguments
-- `Sn::AbstractFloat`: the cumulative return of investment.
+- `Sn::AbstractFloat`: the cumulative wealth of investment.
 - `n_periods::S`: the number investment periods.
 - `dpy::S=252`: the number of days in a year.
 
@@ -254,7 +254,7 @@ Calculate the Maximum Drawdown (MDD) of investment. Also, see [`sn`](@ref), [`me
 [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`calmar`](@ref), and [`opsmetrics`](@ref).
 
 # Arguments
-- `Sn::AbstractVector{T}`: the cumulative return of investment during the investment period. \
+- `Sn::AbstractVector{T}`: the cumulative wealth of investment during the investment period. \
   see [`sn`](@ref).
 
 # Returns

@@ -165,7 +165,7 @@ julia> market_prices = get_prices("^GSPC", startdt=start_date, enddt=end_date)["
 julia> relative_prices = prices[:, 2:end] ./ prices[:, 1:end-1]
 julia> metrics = opsmetrics(model.b, relative_prices, market_prices)
 
-            Cumulative Return: 1.0463984165558158
+            Cumulative Wealth: 1.0463984165558158
         Mean Excessive Return: -0.029945871482074782
             Information Ratio: -654.9268365917005
   Annualized Percentage Yield: 16.414686027992634

@@ -33,3 +33,43 @@ It is worth mentioning that in these algorithms it is assumed that the market is
 
 # State of the field
 
+Algorithm trading researchers were used to rely on analyse the market conditions and perform calculations by hand. Nowadays, with the advent of infrustructure, the amount of data and the speed of the data flow has increased dramatically. Therefore, market practitioners would lose good investment opportunities if they opt to manual computations. Thus, the need for algorithms that can process the data and perform computations in a short amount of time is felt. OPS algorithms are trading algorithms that are meant to process the data and make decisions in a time-efficient manner. The proposed approaches in the literature generaly involve Machine Learning (ML) concepts or directly employ ML algorithms as a part of the model in the decision-making and/or data processing procedure. Hence, developing open-sourced softwares that can provide these algorithms is justifiable as they can be used by researchers to compare their novel algorithms against the traditional algorithms and also for better grasping the idea behind the state-of-the-art algorithms. Accordingly, there are several tools in various languages that present OPS algorithms. Some of them provide a single algorithm, and some of them provide a variety of algorithms. `SSPO` provides the Matlab implementation of the 'sspo' algorithm by the authors of the related paper. `OLPS` is a Matlab toolbox that provides the implementation for a set of traditional OPS algorithms. Although the toolbox is open-sourced, its required software, Matlab, is not freely accessable. Furthermore, the aforementioned toolbox does not provide the implementation of the novel OPS algorithms. `universal-portfolios` is a Python package that only provides the traditional OPS algorithms and is poorly documented. `olpsR` presents a limited set of state-of-the-art OPS algorithms in R language .
+
+# Statement of need
+
+While the tools mentioned above lacking some features such as the novel OPS algorithms in the literature, being free to use, and well-documented, `OnlinePortfolioSelection` package is designed to fill these gaps by providing a vast variety of OPS algorithms including the most novel algorithms published in the literature with detailed documentation and examples, that are free to use. The package is implemented in `Julia` programming language, which is known for its high performance and readable syntax.  
+The package presents methods for the following OPS algorithms:
+
+| Algorithm | Year |   FL  |   FW  |   PM  |   Meta-Learning |   Combinatorics |   Market |
+| --------- | ---- | :---: | :---: | :---: | :-------------: | :-------------: | :------: |
+| 1/N       | -    |       |       |       |                 |                 |   ×      |
+| CRP       | 1991 |       |       |       |                 |                 |   ×      |
+| UP        | 1991 |       |       |       |                 |                 |   ×      |
+| EG        | 1998 |       |   ×   |       |                 |                 |          |
+| Anticor   | 2003 |   ×   |       |       |                 |                 |          |
+| Bk        | 2006 |       |       |   ×   |                 |                 |          |
+| ONS       | 2006 |       |       |       |                 |                 |   ×      |
+| BS        | 2007 |       |       |       |                 |                 |   ×      |
+| CORN      | 2011 |       |       |   ×   |                 |                 |          |
+| PAMR      | 2012 |   ×   |       |       |                 |                 |          |
+| OLMAR     | 2012 |   ×   |       |       |                 |                 |          |
+| CWMR      | 2013 |   ×   |       |       |                 |                 |          |
+| RMR       | 2016 |   ×   |       |       |                 |                 |          |
+| PPT       | 2018 |       |   ×   |       |                 |                 |          |
+| AICTR     | 2018 |       |   ×   |       |                 |                 |          |
+| SSPO      | 2018 |       |   ×   |       |                 |                 |          |
+| LOAD      | 2019 |       |       |       |                 |   ×             |          |
+| GWR       | 2019 |   ×   |       |       |                 |                 |          |
+| DRICORN-K | 2020 |       |       |   ×   |                 |                 |          |
+| ClusLog   | 2020 |       |       |   ×   |                 |                 |          |
+| RPRT      | 2020 |   ×   |       |       |                 |                 |          |
+| CAEG      | 2020 |       |       |       |   ×             |                 |          |
+| CW-OGD    | 2021 |       |       |       |   ×             |                 |          |
+| EGM       | 2021 |       |   ×   |       |                 |                 |          |
+| TPPT      | 2021 |       |       |       |                 |   ×             |          |
+| MRvol     | 2023 |       |       |       |                 |   ×             |          |
+| OLDEM     | 2023 |       |       |   ×   |                 |                 |          |
+| DMR       | 2023 |   ×   |       |       |                 |                 |          |
+
+Additionally, the package provides a set of methods for evaluating the performance of the algorithms according to the following metrics:
+

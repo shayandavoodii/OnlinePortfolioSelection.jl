@@ -72,7 +72,7 @@ julia> model = cornk(prices, horizon, k, w, rho);
 julia> model.b
 ```
 
-Last but not least, the cumulative return of the algorithm on the investment period and given dataset can be computed by using the [`sn`](@ref) function:
+Last but not least, the cumulative wealth of the algorithm on the investment period and given dataset can be computed by using the [`sn`](@ref) function:
 
 ```julia
 julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];

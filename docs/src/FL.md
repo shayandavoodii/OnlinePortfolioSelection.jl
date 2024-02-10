@@ -69,7 +69,7 @@ The outcome reveals an approximate loss of ~6.3% if an investment were made duri
 ```julia
 julia> results = opsmetrics(m_rprt.b, rel_price)
 
-            Cumulative Return: 0.945
+            Cumulative Wealth: 0.945
                           APY: -0.943
 Annualized Standard Deviation: 0.202
       Annualized Sharpe Ratio: -4.760
@@ -148,7 +148,7 @@ Let's now assess the algorithm's performance based on several key metrics.
 ```julia
 julia> results = opsmetrics(m_anticor.b, rel_price)
 
-            Cumulative Return: 0.8969343557511426
+            Cumulative Wealth: 0.8969343557511426
                           APY: -0.8391655504688253
 Annualized Standard Deviation: 0.1618626725690273
       Annualized Sharpe Ratio: -5.307990636954478
@@ -215,7 +215,7 @@ The outcome highlights a potential gain of ~0.7% if an investment were made duri
 ```julia
 julia> results = opsmetrics(m_olmar.b, rel_pr)
 
-            Cumulative Return: 1.0065266263361812
+            Cumulative Wealth: 1.0065266263361812
         Mean Excessive Return: -0.009414275874519928
   Annualized Percentage Yield: 0.38801292579932145
 Annualized Standard Deviation: 0.18519745676483274
@@ -266,7 +266,7 @@ Finally, let's assess the algorithm's performance based on several key metrics.
 ```julia
 julia> results = opsmetrics(model.b, rel_pr)
 
-            Cumulative Return: 1.0099455075377595
+            Cumulative Wealth: 1.0099455075377595
         Mean Excessive Return: -0.008744240554973382
   Annualized Percentage Yield: 0.6467067326806284
 Annualized Standard Deviation: 0.16828625245124013
@@ -275,7 +275,7 @@ Annualized Standard Deviation: 0.16828625245124013
                  Calmar Ratio: 73.22785427708125
 ```
 
-As can be seen, 'BAH(OLMAR)' has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio compared to the 'OLMAR' algorithm. However, the maximum drawdown is slightly higher than the 'OLMAR' algorithm. In this case, 'BAH(OLMAR)' algorithm performed better than the 'OLMAR' algorithm in terms of the 'Mean Excessive Return' and 'Annualized Percentage Yield' metrics.
+As can be seen, 'BAH(OLMAR)' has a better performance in terms of the cumulative wealth, annualized sharpe ratio, and calmar ratio compared to the 'OLMAR' algorithm. However, the maximum drawdown is slightly higher than the 'OLMAR' algorithm. In this case, 'BAH(OLMAR)' algorithm performed better than the 'OLMAR' algorithm in terms of the 'Mean Excessive Return' and 'Annualized Percentage Yield' metrics.
 
 Note that one can individually investigate the performance of the algorithm regarding each metric. See [Performance evaluation](@ref) section for more information.
 
@@ -359,7 +359,7 @@ Now, let's investiagte the performance of the algorithm according to some of the
 ```julia
 julia> results = opsmetrics(result.b, rel_pr)
 
-            Cumulative Return: 1.4768989860970627
+            Cumulative Wealth: 1.4768989860970627
                           MER: -0.4153297366246913
                           APY: 0.47919522668054726
 Annualized Standard Deviation: 0.2379066078050204
@@ -380,7 +380,7 @@ julia> result = PAMR(rel_pr, eps, model);
 
 julia> results = opsmetrics(result.b, rel_pr)
 
-            Cumulative Return: 1.4875128237671749
+            Cumulative Wealth: 1.4875128237671749
                           MER: -0.41530107834650865
                           APY: 0.48986807082085115
 Annualized Standard Deviation: 0.2365856617445457
@@ -389,7 +389,7 @@ Annualized Standard Deviation: 0.2365856617445457
                  Calmar Ratio: 3.4997729172537
 ```
 
-In this case, the algorithm has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see [`PAMR2`](@ref)).
+In this case, the algorithm has a better performance in terms of the cumulative wealth, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see [`PAMR2`](@ref)).
 
 It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 

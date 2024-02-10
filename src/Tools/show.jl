@@ -1,7 +1,7 @@
 # COV_EXCL_START
 function Base.show(io::IO, metrics::OPSMetrics)
   println()
-  println(io, "            Cumulative Return: ", metrics.Sn[end])
+  println(io, "            Cumulative Wealth: ", metrics.Sn[end])
   println(io, "        Mean Excessive Return: ", metrics.MER)
   println(io, "            Information Ratio: ", metrics.IR)
   println(io, "  Annualized Percentage Yield: ", metrics.APY)

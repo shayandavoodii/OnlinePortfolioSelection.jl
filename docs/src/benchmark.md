@@ -52,7 +52,7 @@ The outcome demonstrates that if we had invested during the specified period, we
 ```julia
 julia> results = opsmetrics(m_crp.b, rel_price)
 
-            Cumulative Return: 0.972
+            Cumulative Wealth: 0.972
                           APY: -0.765
 Annualized Standard Deviation: 0.087
       Annualized Sharpe Ratio: -9.008
@@ -168,7 +168,7 @@ Additionally, this package offers functions for assessing the algorithm's perfor
 
 ## Universal Portfolio (UP)
 
-Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [COVER451321](@citet). This algorithm is designed to optimize the cumulative return of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
+Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [COVER451321](@citet). This algorithm is designed to optimize the cumulative wealth of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
 
 See [`up`](@ref).
 
@@ -220,7 +220,7 @@ Let's now examine the algorithm's performance using various significant metrics.
 ```julia
 julia> results = opsmetrics(m_up.b, rel_price)
 
-            Cumulative Return: 0.972
+            Cumulative Wealth: 0.972
                           APY: -0.763
 Annualized Standard Deviation: 0.088
       Annualized Sharpe Ratio: -8.857

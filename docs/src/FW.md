@@ -60,7 +60,7 @@ The outcome suggests that if we had invested during the given period, we would h
 ```julia
 julia> results = opsmetrics(m_eg.b, rel_price)
 
-            Cumulative Return: 0.9716460557458115
+            Cumulative Wealth: 0.9716460557458115
         Mean Excessive Return: 0.022895930308319247
   Annualized Percentage Yield: -0.7653568719687657
 Annualized Standard Deviation: 0.08718280263716766
@@ -123,7 +123,7 @@ The outcome suggests that if we had invested during the given period, we would h
 ```julia
 julia> results = opsmetrics(model.b, rel_price)
 
-            Cumulative Return: 1.2371383272398555
+            Cumulative Wealth: 1.2371383272398555
         Mean Excessive Return: -0.15974968844419762
   Annualized Percentage Yield: 0.709598073342651
 Annualized Standard Deviation: 0.1837958159802144

@@ -151,7 +151,7 @@ As demonstrated, the [`mrvol`](@ref) function returns a `PyCall.jlwrap` object. 
 >>> metrics = OPS.opsmetrics(model.b, rel_pr)
 >>> metrics
 
-<PyCall.jlwrap             Cumulative Return: 0.0003879435247256176
+<PyCall.jlwrap             Cumulative Wealth: 0.0003879435247256176
                           APY: -1.0
 Annualized Standard Deviation: 2.7595804965778328
       Annualized Sharpe Ratio: -0.36962139762362656

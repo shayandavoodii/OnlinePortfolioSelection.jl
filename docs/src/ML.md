@@ -50,7 +50,7 @@ Now, let's investiagte the performance of the algorithm according to some of the
 
 ```julia
 julia> metrics = opsmetrics(model.b, rel_pr)
-            Cumulative Return: 1.0323425490046683
+            Cumulative Wealth: 1.0323425490046683
                           APY: 2.8071567518024554
 Annualized Standard Deviation: 0.2821163077868604
       Annualized Sharpe Ratio: 9.879459906685577
@@ -79,7 +79,7 @@ It is worth mentioning that each metric can be accessed individually by writing 
 {\mathbf{b}_{t + 1}} = \frac{{\sum\nolimits_{\eta  \in \tilde E} {{\mathbf{b}_{t + 1}}\left( \eta  \right){{\left( {{S_t}\left( \eta  \right)} \right)}^{\frac{1}{{\sqrt {t + 1} }}}}} }}{{\sum\nolimits_{\eta  \in \tilde E} {{{\left( {{S_t}\left( \eta  \right)} \right)}^{\frac{1}{{\sqrt {t + 1} }}}}} }}
 ```
 
-where $t$ is the today's index, $\tilde E = \{ {\eta _1},{\eta _2}, \ldots ,{\eta _n}\}$ is a set of EG experts with different $\eta$ parameters, the cumulative return of the expert $\eta$ at time $t$ is denoted as ${S_t}\left( \eta  \right)$, and the portfolio by expert $\eta$ at time $t+1$ is represented as $\mathbf{b}_{t + 1}$.
+where $t$ is the today's index, $\tilde E = \{ {\eta _1},{\eta _2}, \ldots ,{\eta _n}\}$ is a set of EG experts with different $\eta$ parameters, the cumulative wealth of the expert $\eta$ at time $t$ is denoted as ${S_t}\left( \eta  \right)$, and the portfolio by expert $\eta$ at time $t+1$ is represented as $\mathbf{b}_{t + 1}$.
 
 ### Run CAEG
 
@@ -118,7 +118,7 @@ Now, let's investiagte the performance of the algorithm according to some of the
 ```julia
 julia> metrics = opsmetrics(model.b, rel_pr)
 
-            Cumulative Return: 1.0503793029297175
+            Cumulative Wealth: 1.0503793029297175
         Mean Excessive Return: -0.041332740360267836
   Annualized Percentage Yield: 6.880223548529358
 Annualized Standard Deviation: 0.16251944416204514

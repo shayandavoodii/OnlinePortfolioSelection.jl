@@ -5,7 +5,7 @@ A struct to store the metrics of the OPS algorithm. This object is returned by t
 [`opsmetrics`](@ref) function.
 
 # Fields
-- `Sn::Vector{T}`: The cumulative return of investment during the investment period.
+- `Sn::Vector{T}`: The cumulative wealth of investment during the investment period.
 - `MER::T`: The investments's Mean excess return (MER).
 - `IR::T`: The Information Ratio (IR) of portfolio for the investment period.
 - `APY::T`: The Annual Percentage Yield (APY) of investment.

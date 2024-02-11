@@ -112,7 +112,7 @@ function normΣₜ₊₁(Σₜ₊₁::AbstractMatrix)
   return Σₜ₊₁ ./ (m*sum(diag(Σₜ₊₁)))
 end
 
-isuniform(b::AbstractVector, n_asset::Int) = b .== 1/n_asset |> all
+isuniform(b::AbstractVector, n_asset::Int) = all(b .== 1/n_asset)
 
 modelname(::Type{CWMRD}, ::Type{Var})             = "CWMR-Var"
 modelname(::Type{CWMRD}, ::Type{Stdev})           = "CWMR-Stdev"

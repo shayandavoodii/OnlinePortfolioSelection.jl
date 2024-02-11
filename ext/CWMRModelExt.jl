@@ -112,16 +112,16 @@ function normΣₜ₊₁(Σₜ₊₁::AbstractMatrix)
   return Σₜ₊₁ ./ (m*sum(diag(Σₜ₊₁)))
 end
 
-checkuniformity(b::AbstractVector, n_asset::Int) = b == ones(n_asset)/n_asset
+isuniform(b::AbstractVector, n_asset::Int) = all(b .== 1/n_asset)
 
-modelname(::Type{CWMRD}, ::Type{Var})                    = "CWMR-Var"
-modelname(::Type{CWMRD}, ::Type{Stdev})                  = "CWMR-Stdev"
-modelname(::Type{CWMRS}, ::Type{Var})                    = "CWMR-Var-s"
-modelname(::Type{CWMRS}, ::Type{Stdev})                  = "CWMR-Stdev-s"
-modelname(::Type{CWMRD}, ::Type{Var}, ::String)          = "CWMR-Var-Mix"
-modelname(::Type{CWMRD}, ::Type{Stdev}, ::String)        = "CWMR-Stdev-Mix"
-modelname(::Type{CWMRS}, ::Type{Var}, ::String)          = "CWMR-Var-s-Mix"
-modelname(::Type{CWMRS}, ::Type{Stdev}, ::String)        = "CWMR-Stdev-s-Mix"
+modelname(::Type{CWMRD}, ::Type{Var})             = "CWMR-Var"
+modelname(::Type{CWMRD}, ::Type{Stdev})           = "CWMR-Stdev"
+modelname(::Type{CWMRS}, ::Type{Var})             = "CWMR-Var-s"
+modelname(::Type{CWMRS}, ::Type{Stdev})           = "CWMR-Stdev-s"
+modelname(::Type{CWMRD}, ::Type{Var}, ::String)   = "CWMR-Var-Mix"
+modelname(::Type{CWMRD}, ::Type{Stdev}, ::String) = "CWMR-Stdev-Mix"
+modelname(::Type{CWMRS}, ::Type{Var}, ::String)   = "CWMR-Var-s-Mix"
+modelname(::Type{CWMRS}, ::Type{Stdev}, ::String) = "CWMR-Stdev-s-Mix"
 
 function OnlinePortfolioSelection.cwmr(
   rel_pr::AbstractMatrix,
@@ -135,15 +135,15 @@ function OnlinePortfolioSelection.cwmr(
   n_assets, n_days = size(rel_pr)
   μₜ = ones(n_assets)/n_assets
   Σₜ = I(n_assets)*(1/n_assets^2) |> Matrix
-  b = similar(rel_pr, n_assets, n_days)
+  b  = similar(rel_pr, n_assets, n_days)
   for t ∈ 1:n_days
     b[:, t] = bₜfunc(variant, μₜ, Σₜ)
     Mₜ, Vₜ, Wₜ, x̄ₜ = calcvars(μₜ, Σₜ, rel_pr[:, t])
     λₜ₊₁ = λₜ₊₁func(ptfdis, Vₜ, ϕ, x̄ₜ, Wₜ, Mₜ, ϵ)
     μₜ₊₁ = μₜ₊₁func(μₜ, λₜ₊₁, Σₜ, x̄ₜ, rel_pr[:, t]) |> projection
     Σₜ₊₁ = Σₜ₊₁func(ptfdis, Σₜ, λₜ₊₁, rel_pr[:, t], ϕ, Vₜ) |> normΣₜ₊₁
-    μₜ = μₜ₊₁
-    Σₜ = Σₜ₊₁
+    μₜ   = μₜ₊₁
+    Σₜ   = Σₜ₊₁
   end
   if any(b .< 0.)
     b = max.(b, 0.)
@@ -167,12 +167,12 @@ function OnlinePortfolioSelection.cwmr(
   all(0. .≤ ϕ) || ArgumentError("All of the ϕ elements must be non-negative") |> throw
   if !isnothing(adt_ptf)
     for exp ∈ adt_ptf
-      res = sum(exp)==n_days
-      res || ArgumentError("For each element within `adt_ptf`, the sum of the columns must \
-      be uniform. Got $(sum(exp, dims=1))") |> throw
-      res = checkuniformity(exp[:, 1], n_assets)
-      res || ArgumentError("The first portfolio (column) of each element of adt_ptf must be \
-      uniform. Got $(exp[:, 1])") |> throw
+      sum(exp)==n_days || ArgumentError("For each portfolio within `adt_ptf` kwarg, the sum \
+        of the elements in each column must be uniform. Got $(sum(exp, dims=1))"
+      ) |> throw
+      isuniform(exp[:, 1], n_assets) || ArgumentError("The first portfolio (column) of each \
+        element of adt_ptf must be uniform. Got $(exp[:, 1])"
+      ) |> throw
     end
   end
 

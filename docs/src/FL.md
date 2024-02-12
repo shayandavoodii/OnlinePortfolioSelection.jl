@@ -32,58 +32,39 @@ julia> size(prices)
 # where each row is the price vector of the assets at a specific time period.
 julia> prices = prices |> permutedims;
 
-julia> window_length, threshold, epsilon = 2, 0.6, 40;
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
 
-# Let's run the algorithm for the last 5 days of the data.
-julia> prices = prices[:, end-4:end];
+julia> horizon, window_length, v, epsilon = 7, 3, 0.6, 40;
 
-julia> m_rprt = rprt(prices, w=window_length, theta=threshold, epsilon=epsilon);
+julia> m_rprt = rprt(rel_price, horizon, window_length, v, epsilon);
 
 # Get the weights of the assets for each day
 juila> m_rprt.b
-5×5 Matrix{Float64}:
- 0.2  0.2  0.0  0.0  0.0
- 0.2  0.2  0.0  0.0  0.0
- 0.2  0.2  0.0  0.0  0.0
- 0.2  0.2  1.0  1.0  1.0
- 0.2  0.2  0.0  0.0  0.0
+5×7 Matrix{Float64}:
+ 0.2  0.0         0.0         0.0         0.0        0.0         0.0
+ 0.2  1.98902e-8  1.0         1.0         1.0        1.98959e-8  1.9889e-8
+ 0.2  0.0         0.0         0.0         0.0        0.0         0.0
+ 0.2  0.0         0.0         0.0         2.0457e-8  1.0         1.0
+ 0.2  1.0         1.99133e-8  1.98933e-8  0.0        0.0         0.0
 ```
 
 One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
 julia> sn(m_rprt.b, rel_price)
-6-element Vector{Float64}:
+8-element Vector{Float64}:
  1.0
- 0.9879822800308067
- 0.985480892911241
- 0.9646654456994471
- 0.9392966194100733
- 0.9448257537201438
+ 1.0010783376762362
+ 0.9979108682071396
+ 0.9675830381758964
+ 0.9769305815452377
+ 0.9844087616434942
+ 0.9585207785955709
+ 0.9641629932083053
 ```
 
-The outcome reveals an approximate loss of ~6.3% if an investment were made during the provided period. It's important to note that in this scenario, [`sn`](@ref) automatically considers the last 5 relative prices. Next, let's examine the algorithm's performance based on several significant metrics.
-
-```julia
-julia> results = opsmetrics(m_rprt.b, rel_price)
-
-            Cumulative Wealth: 0.945
-                          APY: -0.943
-Annualized Standard Deviation: 0.202
-      Annualized Sharpe Ratio: -4.760
-             Maximum Drawdown: 0.061
-                 Calmar Ratio: -15.531
-
-julia> results.
-APY         Ann_Sharpe  Ann_Std     Calmar      MDD         Sn
-
-julia> results.MDD
-0.06070338058992675
-```
-
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
+The outcome reveals an approximate loss of ~3.6% if an investment were made during the provided period. It's important to note that in this scenario, [`sn`](@ref) automatically considers the last 5 relative prices. Next, let's examine the algorithm's performance based on several significant metrics.  
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## Anti-Correlation (Anticor)
 

@@ -54,7 +54,7 @@ export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm, tppt, gwr, on
 export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir, at
 export OPSAlgorithm, OPSMetrics, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
-export SMA, EMA, PP
+export SMAP, SMAR, EMA, PP
 export EGE, EGR, EGA
 export opsmethods
 

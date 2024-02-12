@@ -45,6 +45,6 @@ adj_close = [
   end
 
   @testset "Individual functions" begin
-    OnlinePortfolioSelection.λ̂ₜ₊₁func(zeros(5), rand(5), 3)
+    @test OnlinePortfolioSelection.λ̂ₜ₊₁func(zeros(5), rand(5), 3)==0.
   end
 end

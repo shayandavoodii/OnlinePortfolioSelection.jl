@@ -15,7 +15,7 @@ n_assets = size(prices, 1)
 horizon = 2
 w = 2
 ϵ = 1000
-models = [SMA(), EMA(0.5)]
+models = [SMAP(), EMA(0.5)]
 bt = rand(n_assets)
 bt = bt ./ sum(bt)
 
@@ -28,7 +28,7 @@ bt = bt ./ sum(bt)
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
     @test size(model.b) == (n_assets, horizon)
     @test model.n_assets == n_assets
-    model = aictr(prices, horizon, w, ϵ, [0.1, 0.05, 0.03], [SMA(), EMA(0.2), PP()])
+    model = aictr(prices, horizon, w, ϵ, [0.1, 0.05, 0.03], [SMAP(), EMA(0.2), PP()])
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all
     @test size(model.b) == (n_assets, horizon)
     @test model.n_assets == n_assets

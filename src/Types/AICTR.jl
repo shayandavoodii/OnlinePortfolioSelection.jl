@@ -1,9 +1,9 @@
 abstract type TrendRep end
 
 """
-    SMA<:TrendRep
+    SMAP<:TrendRep
 
-Simple Moving Average trend representation. Formula:
+Simple Moving Average trend representation **using the close prices**. Formula:
 
 ```math
 \\mathbf{\\hat{x}}_{S, t+1}\\left(w\\right)= \\frac{\\sum_{k=0}^{w-1}\\mathbf{p}_{t-k}}{w\\mathbf{p}_t}
@@ -13,11 +13,30 @@ Simple Moving Average trend representation. Formula:
 ```julia
 julia> using OnlinePortfolioSelection
 
-julia> sma = SMA()
+julia> sma = SMAP()
 SMA()
 ```
 """
-struct SMA<:TrendRep end
+struct SMAP<:TrendRep end
+
+"""
+SMAR<:TrendRep
+
+Simple Moving Average trend representation **using the relative prices**. Formula:
+
+```math
+{\\mathbf{1}} + \\frac{{\\mathbf{1}}}{{{{\\mathbf{x}}_t}}} +  \\cdots  + \\frac{{\\mathbf{1}}}{{ \\otimes _{k = 0}^{w - 2}{{\\mathbf{x}}_{t - k}}}}
+```
+
+# Examples
+```julia
+julia> using OnlinePortfolioSelection
+
+julia> sma = SMAR()
+SMAR()
+```
+"""
+struct SMAR<:TrendRep end
 
 """
     EMA{T<:AbstractFloat}<:TrendRep

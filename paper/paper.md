@@ -37,39 +37,39 @@ Algorithm trading researchers were used to rely on analyse the market conditions
 
 # Statement of need
 
-While the tools mentioned above lacking some features such as the novel OPS algorithms in the literature, being free to use, and well-documented, `OnlinePortfolioSelection` package is designed to fill these gaps by providing a vast variety of OPS algorithms including the most novel algorithms published in the literature with detailed documentation and examples, that are free to use. The package is implemented in `Julia` programming language, which is known for its high performance and readable syntax.  
+While the tools mentioned above lacking some features such as the novel OPS algorithms in the literature, being free to use, and well-documented, `OnlinePortfolioSelection` package is designed to fill these gaps by providing a vast variety of OPS algorithms including the most novel algorithms published in the literature with detailed documentation and examples, that are freely available to use. The package is implemented in `Julia` programming language, which is known for its high performance and readable syntax.  
 The package presents methods for the following OPS algorithms:
 
-| Row № | Algorithm | Year |   FL  |   FW  |   PM  |   Meta-Learning |   Combinatorics |   Market |
-|:-----:| --------- | ---- | :---: | :---: | :---: | :-------------: | :-------------: | :------: |
-| 1     | 1/N       | -    |       |       |       |                 |                 |   ×      |
-| 2     | CRP       | 1991 |       |       |       |                 |                 |   ×      |
-| 3     | UP        | 1991 |       |       |       |                 |                 |   ×      |
-| 4     | EG        | 1998 |       |   ×   |       |                 |                 |          |
-| 5     | Anticor   | 2003 |   ×   |       |       |                 |                 |          |
-| 6     | Bk        | 2006 |       |       |   ×   |                 |                 |          |
-| 7     | ONS       | 2006 |       |       |       |                 |                 |   ×      |
-| 8     | BS        | 2007 |       |       |       |                 |                 |   ×      |
-| 9     | CORN      | 2011 |       |       |   ×   |                 |                 |          |
-| 10    | PAMR      | 2012 |   ×   |       |       |                 |                 |          |
-| 11    | OLMAR     | 2012 |   ×   |       |       |                 |                 |          |
-| 12    | CWMR      | 2013 |   ×   |       |       |                 |                 |          |
-| 13    | RMR       | 2016 |   ×   |       |       |                 |                 |          |
-| 14    | PPT       | 2018 |       |   ×   |       |                 |                 |          |
-| 15    | AICTR     | 2018 |       |   ×   |       |                 |                 |          |
-| 16    | SSPO      | 2018 |       |   ×   |       |                 |                 |          |
-| 17    | LOAD      | 2019 |       |       |       |                 |   ×             |          |
-| 18    | GWR       | 2019 |   ×   |       |       |                 |                 |          |
-| 19    | DRICORN-K | 2020 |       |       |   ×   |                 |                 |          |
-| 20    | ClusLog   | 2020 |       |       |   ×   |                 |                 |          |
-| 21    | RPRT      | 2020 |   ×   |       |       |                 |                 |          |
-| 22    | CAEG      | 2020 |       |       |       |   ×             |                 |          |
-| 23    | CW-OGD    | 2021 |       |       |       |   ×             |                 |          |
-| 24    | EGM       | 2021 |       |   ×   |       |                 |                 |          |
-| 25    | TPPT      | 2021 |       |       |       |                 |   ×             |          |
-| 26    | MRvol     | 2023 |       |       |       |                 |   ×             |          |
-| 27    | OLDEM     | 2023 |       |       |   ×   |                 |                 |          |
-| 28    | DMR       | 2023 |   ×   |       |       |                 |                 |          |
+| Row № | Algorithm |    referencne   |   FL  |   FW  |   PM  |   Meta-Learning |   Combinatorics |   Market |
+|:-----:| --------- | --------------- | :- -: | :---: | :---: | :-------------: | :-------------: | :------: |
+| 1     | 1/N       | -               |       |       |       |                 |                 |   ×      |
+| 2     | CRP       | [@Cover1991]    |       |       |       |                 |                 |   ×      |
+| 3     | UP        | [@Cover1991]    |       |       |       |                 |                 |   ×      |
+| 4     | EG        | [@Helmbold1998] |       |   ×   |       |                 |                 |          |
+| 5     | Anticor   | [@Borodin2003]  |   ×   |       |       |                 |                 |          |
+| 6     | Bk        | [@Györfi2006]   |       |       |   ×   |                 |                 |          |
+| 7     | ONS       | [@Agarwal2006]  |       |       |       |                 |                 |   ×      |
+| 8     | BS        | [@Györfi2007]   |       |       |       |                 |                 |   ×      |
+| 9     | CORN      | [@Li2011]       |       |       |   ×   |                 |                 |          |
+| 10    | PAMR      | [@Li2012]       |   ×   |       |       |                 |                 |          |
+| 11    | OLMAR     | [@Bin.li2012]   |   ×   |       |       |                 |                 |          |
+| 12    | CWMR      | [@Bin.Li2013]   |   ×   |       |       |                 |                 |          |
+| 13    | RMR       | [@Huang2016]    |   ×   |       |       |                 |                 |          |
+| 14    | PPT       | [@Lai2018]      |       |   ×   |       |                 |                 |          |
+| 15    | AICTR     | [@Lai2018.2]    |       |   ×   |       |                 |                 |          |
+| 16    | SSPO      | [@Lai2018.3]    |       |   ×   |       |                 |                 |          |
+| 17    | LOAD      | [@Guan2019]     |       |       |       |                 |   ×             |          |
+| 18    | GWR       | [@Cai2019]      |       |       |       |                 |                 |          |
+| 19    | DRICORN-K | [@Sooklal2020]  |       |       |   ×   |                 |                 |          |
+| 20    | ClusLog   | [@Khedmati2020] |       |       |   ×   |                 |                 |          |
+| 21    | RPRT      | [@Lai2020]      |   ×   |       |       |                 |                 |          |
+| 22    | CAEG      | [@Yang2020]     |       |       |       |   ×             |                 |          |
+| 23    | CW-OGD    | [@Zhang2021]    |       |       |       |   ×             |                 |          |
+| 24    | EGM       | [@Li2022]       |       |   ×   |       |                 |                 |          |
+| 25    | TPPT      | [@Dai2022]      |       |       |       |                 |   ×             |          |
+| 26    | OLDEM     | [@Xi2023]       |       |       |   ×   |                 |                 |          |
+| 27    | DMR       | [@Zhong2023]    |   ×   |       |       |                 |                 |          |
+| 28    | MRvol     | [@Lin2024]      |       |       |       |                 |   ×             |          |
 
 Additionally, the package provides a set of metrics that have been used in the literature for evaluating the performance of the algorithms. The metrics can easily get employed by researchers to evaluate the performance of their novel algorithms. The provided metrics are as follows:
 

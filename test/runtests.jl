@@ -16,7 +16,7 @@ using Statistics
   @info "Run unit tests in EG.jl"
   include("EG.jl")
   @info "Run unit tests in CRP.jl"
-  include("CRP.jl")
+  include("BCRP.jl")
   @info "Run unit tests in BS.jl"
   include("BS.jl")
   @info "Run unit tests in Anticor.jl"

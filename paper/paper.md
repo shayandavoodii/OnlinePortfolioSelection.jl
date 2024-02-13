@@ -1,6 +1,6 @@
 # Summary
 
-`OnlinePortfolioSelection` is a `Julia` package that implements a variety of prominent Online Portfolio Selection (OPS) algorithms to be used by researchers and developers of OPS algorithms. This package facilitates benchmarking for researchers who intend to compare their OPS algorithms with the statet-of-the-art OPS algorithms. Also, `OnlinePortfolioSelection` package provides a set of tools for researchers to evaluate the performance of their proposed algorithms according to vaious well-known performance metrics in the OPS literature. The package brings together a variety of OPS algorithms and performance metrics to a relatively new programming language, `Julia`, which is known for its high performance and ease of use. In addition to the performance merits of `Julia`, the algorithms within this package are implemented in a way that follows the pseudocode and the mathematical signature of the original papers, which makes it easier for researchers to understand and compare the algorithms. This paper presents the basic of the Application Programming Interface (API), example usage, and code snippets for the `OnlinePortfolioSelection` package.
+`OnlinePortfolioSelection` is a `Julia` package that implements a variety of prominent Online Portfolio Selection (OPS) algorithms to be used by researchers and developers of OPS algorithms. This package facilitates benchmarking for researchers who intend to compare their OPS algorithms with the statet-of-the-art OPS algorithms. Also, `OnlinePortfolioSelection` provides a set of tools for researchers to evaluate the performance of their proposed algorithms according to vaious well-known performance metrics in the OPS literature. Reaserchers can evaluate an OPS algorithm regarding the metrics by employing the `opsmetrics` function. The package brings together a variety of OPS algorithms and performance metrics to a relatively new programming language, `Julia`, which is known for its high performance and ease of use. In addition to the performance merits of `Julia`, the algorithms within this package are implemented in a way that follows the pseudocode and the mathematical signature of the original papers, which makes it easier for researchers to understand and compare the algorithms. This paper presents the basic of the Application Programming Interface (API), example usage, and code snippets for the `OnlinePortfolioSelection` package.
 
 # Introduction
 
@@ -102,23 +102,18 @@ After the installation, the package can be imported and used as follows:
 julia> using OnlinePortfolioSelection
 ```
 
-Suppose the 'CORN-U' algorithm is to be employed for the portfolio selection over the adjusted close prices of the 'MSFT', 'AAPL', 'META', and 'GOOGL' stocks from 1st January, 2024 to 6th January, 2024. The required data can be obtained from the Yahoo Finance using the `YFinance` package in Julia:
+Suppose the 'CORN-U' algorithm is to be employed for the portfolio selection over the adjusted close prices of the 'MSFT', 'AAPL', 'META', and 'GOOGL' stocks from 1st January, 2024 to 6th January, 2024. The required data can be obtained from the Yahoo Finance. Assume that the data is as follows:
 
 ```julia
-julia> using YFinance
-julia> tickers = ["MSFT", "AAPL", "META", "GOOGL"]
-julia> start_date = "2024-01-01"
-julia> end_date = "2024-01-12"
-julia> querry = [get_prices(ticker, startdt=start_date, enddt=end_date)["adjclose"] for ticker in tickers]
-julia> prices = stack(querry) |> permutedims
-4×6 Matrix{Float64}:
- 370.87   370.6    367.94   367.75   374.69   375.79
- 185.403  184.015  181.678  180.949  185.324  184.904
- 346.29   344.47   347.12   351.95   358.66   357.43
- 138.17   138.92   136.39   135.73   138.84   140.95
+julia> prices = [
+         370.87   370.6    367.94   367.75   374.69   375.79
+         185.403  184.015  181.678  180.949  185.324  184.904
+         346.29   344.47   347.12   351.95   358.66   357.43
+         138.17   138.92   136.39   135.73   138.84   140.95
+       ];
 ```
 
-The matrix above contains the adjusted close prices of the stocks where the rows represent the stocks and the columns represent the days. The 'CORN-U' algorithm can be employed as follows:
+The matrix above contains the adjusted close prices of the stocks where the rows and columns represent the stocks and days, respectively. The 'CORN-U' algorithm can be employed as follows:
 
 ```julia
 julia> using OnlinePortfolioSelection
@@ -128,7 +123,7 @@ julia> model = cornu(prices, horizon, window_size)
 OPSAlgorithm{Float64}(4, [0.12513423100917873 0.1252014698797476 0.12364583463206219 0.0; 0.12513423100917873 0.6243955903607573 0.12364583463206219 0.0; 0.6245973069724639 0.1252014698797476 0.6290624961038135 0.5052279142063506; 0.12513423100917873 0.1252014698797476 0.12364583463206219 0.4947720857936494], "CORN-U")
 ```
 
-For the sake of coherence, all of the algorithms in the package return the same type of object, which is named `OPSAlgorithm`. The returned object has three different fields, number of assets, portfolio matrix, and the name of the algorithm. The portfolio matrix is the matrix of the portfolio vectors where the rows represent the stocks and the columns represent the investment days. The fields can be accessed as follows:
+For the sake of coherence, all of the algorithms in the package return the same type of object, which is named `OPSAlgorithm`. The returned object has three different fields, number of assets, portfolio matrix, and the name of the algorithm. The portfolio matrix is the matrix of the portfolio vectors where the rows and columns represent the stocks and investment days, respectively. The fields of the `model` can be accessed as follows:
 
 ```julia
 julia> model.n_assets
@@ -150,18 +145,8 @@ In terms of evaluating the performance of the algorithm regarding all of the ava
 ```julia
 julia> # In order to calculate the 'Information Ratio (IR)' of the algorithm, the market prices are required.
 julia> # Since the selected stocks are from the 'S&P 500' index
-julia> # the adjusted close prices of the 'S&P 500' index can be obtained from the Yahoo Finance as follows:
-julia> market_prices = get_prices("^GSPC", startdt=start_date, enddt=end_date)["adjclose"]
-8-element Vector{Float64}:
- 4742.830078125
- 4704.81005859375
- 4688.68017578125
- 4697.240234375
- 4763.5400390625
- 4756.5
- 4783.4501953125
- 4780.240234375
-
+julia> # the adjusted close prices of the 'S&P 500' index is required. Assume that the prices are as follows:
+julia> market_prices = [4742.830078125, 4704.81005859375, 4688.68017578125, 4697.240234375, 4763.5400390625, 4756.5, 4783.4501953125, 4780.240234375]
 julia> relative_prices = prices[:, 2:end] ./ prices[:, 1:end-1]
 julia> metrics = opsmetrics(model.b, relative_prices, market_prices)
 

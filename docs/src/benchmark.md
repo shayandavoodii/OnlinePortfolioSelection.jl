@@ -1,13 +1,14 @@
 # Benchmark Strategies
-In the domain of online portfolio selection, certain strategies are considered benchmark strategies. One of the simplest is the Buy and Hold (BH) strategy, often referred to as the *market strategy*. BH involves an equal investment in m assets at the beginning, maintaining these allocations throughout the subsequent periods, leading to passive weight adjustments based on the assets' price variations. An optimized version, the Best-Stock (BS) strategy, allocates all capital to the best-performing asset over the periods. These benchmark portfolio selection models are straightforward, lacking the use of sophisticated statistical or machine learning techniques to uncover data patterns. Consequently, they serve as baselines for evaluating the performance of newly developed models. Another benchmark strategy, the Constant Rebalanced Portfolio (CRP), maintains a fixed weight for each asset over a specified period. The currently implemented strategies in this package include:
 
-1. [Constant Rebalanced Portfolio (CRP)](@ref)
+In the domain of online portfolio selection, certain strategies are considered benchmark strategies. One of the simplest is the Buy and Hold (BH) strategy, often referred to as the *market strategy*. BH involves an equal investment in m assets at the beginning, maintaining these allocations throughout the subsequent periods, leading to passive weight adjustments based on the assets' price variations. An optimized version, the Best-Stock (BS) strategy, allocates all capital to the best-performing asset over the periods. These benchmark portfolio selection models are straightforward, lacking the use of sophisticated statistical or machine learning techniques to uncover data patterns. Consequently, they serve as baselines for evaluating the performance of newly developed models. Another benchmark strategy, the Best Constant Rebalanced Portfolio (BCRP), is a hindsight strategy which maintains the best portfolio over a specified period; the portfolio achieves the maximum return among a set of portfolios. The currently implemented strategies in this package include:
+
+1. [Best Constant Rebalanced Portfolio (BCRP)](@ref)
 2. [Best Stock (BS)](@ref)
 3. [Uniform Portfolio (1/N)](@ref)
 4. [Universal Portfolio (UP)](@ref)
 5. [Online Newton Step (ONS)](@ref)
 
-## Constant Rebalanced Portfolio (CRP)
+## Best Constant Rebalanced Portfolio (BCRP)
 Let's run the algorithm [COVER451321](@cite) on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
 
 ```julia

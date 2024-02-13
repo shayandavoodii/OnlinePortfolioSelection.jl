@@ -3,7 +3,7 @@ module OnlinePortfolioSelection
 using Statistics:      cor, var, mean, median, std
 using LinearAlgebra:   I, norm, Symmetric, diagm, tr, diagind
 using JuMP:            Model, @variable, @constraint, @NLobjective, @expression, @objective
-using JuMP:            value, @NLconstraint, set_silent, optimize!, optimizer_with_attributes
+using JuMP:            value, @NLconstraint, set_silent, optimize!, optimizer_with_attributes, objective_value
 using Ipopt:           Optimizer
 using PrecompileTools: @setup_workload, @compile_workload
 using StatsBase:       sample
@@ -16,7 +16,7 @@ include("Types/AICTR.jl")
 include("Types/EGM.jl")
 include("Types/RMR.jl")
 include("Types/Metrics.jl")
-include("Algos/CRP.jl")
+include("Algos/BCRP.jl")
 include("Algos/CW-OGD.jl")
 include("Algos/EG.jl")
 include("Algos/RPRT.jl")
@@ -49,7 +49,7 @@ include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
-export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
+export up, eg, cornu, cornk, dricornk, bcrp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm, tppt, gwr, ons, dmr, rmr, sspo
 export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir, at
 export OPSAlgorithm, OPSMetrics, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
@@ -100,7 +100,7 @@ function opsmethods()
   println("     CORNU: CORN-U - Call `cornu`")
   println("     CORNK: CORN-K - Call `cornk`")
   println("  DRICORNK: DRICORN-K - Call `dricornk`")
-  println("       CRP: Constant Rebalanced Portfolio - Call `crp`")
+  println("      BCRP: Best Constant Rebalanced Portfolio - Call `crp`")
   println("        BS: Best Stock - Call `bs`")
   println("      RPRT: Reweighted Price Relative Tracking - Call `rprt`")
   println("   ANTICOR: Anticor - Call `anticor`")

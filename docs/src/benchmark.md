@@ -21,51 +21,35 @@ julia> size(prices)
 # where each row is the price vector of the assets at a specific time period.
 julia> prices = prices |> permutedims;
 
-# Let's run the algorithm on the last 5 days of the data.
-julia> m_crp = crp(prices[:, end-4:end]);
+julia> rel_pr = prices[:, 2:end] ./ prices[:, 1:end-1];
 
-juila> m_crp.b
-5×5 Matrix{Float64}:
- 0.2  0.2  0.2  0.2  0.2
- 0.2  0.2  0.2  0.2  0.2
- 0.2  0.2  0.2  0.2  0.2
- 0.2  0.2  0.2  0.2  0.2
- 0.2  0.2  0.2  0.2  0.2
+julia> m_bcrp = bcrp(rel_pr);
+
+juila> m_bcrp.b
+5×16 Matrix{Float64}:
+ 2.47893e-7  2.47893e-7  2.47893e-7  …  2.47893e-7  2.47893e-7  2.47893e-7        
+ 2.42733e-7  2.42733e-7  2.42733e-7     2.42733e-7  2.42733e-7  2.42733e-7        
+ 2.74331e-7  2.74331e-7  2.74331e-7     2.74331e-7  2.74331e-7  2.74331e-7        
+ 1.88828e-7  1.88828e-7  1.88828e-7     1.88828e-7  1.88828e-7  1.88828e-7
+ 0.999999    0.999999    0.999999       0.999999    0.999999    0.999999
 ```
 
 One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
-julia> sn(m_crp.b, rel_price)
+julia> sn(m_bcrp.b, rel_pr)
 6-element Vector{Float64}:
+17-element Vector{Float64}:
  1.0
- 0.9879822623031318
- 0.9854808899164217
- 0.9871240426268018
- 0.977351149446221
- 0.9716459683279461
+ 0.9904417595935182
+ 1.0074055375392224
+ ⋮
+ 1.003358256415448
+ 0.9941445393197398
 ```
 
-The outcome demonstrates that if we had invested during the specified period, we would have incurred a loss of approximately 2.8% of our capital. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this instance. Let's further analyze the algorithm's performance based on some significant metrics:
-
-```julia
-julia> results = opsmetrics(m_crp.b, rel_price)
-
-            Cumulative Wealth: 0.972
-                          APY: -0.765
-Annualized Standard Deviation: 0.087
-      Annualized Sharpe Ratio: -9.008
-             Maximum Drawdown: 0.028
-                 Calmar Ratio: -26.993
-
-julia> results.
-APY         Ann_Sharpe  Ann_Std     Calmar      MDD         Sn
-
-julia> results.MDD
-0.02835403167205386
-```
+The outcome demonstrates that if we had invested during the specified period, we would have incurred a loss of approximately 0.6% of our capital. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this instance.  
+It is possible to analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## Best Stock (BS)
 

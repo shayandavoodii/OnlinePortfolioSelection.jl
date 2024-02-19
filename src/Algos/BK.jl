@@ -43,16 +43,16 @@ function bk(rel_price::AbstractMatrix{T}, K::S, L::S, c::T) where {T<:AbstractFl
   0<c≤1 || DomainError("c must be graeter than 0 and less than or equal to 1 (0 < c ≤ 1)") |> throw
   K>0 || DomainError("K must be a positive value (K > 0)") |> throw
   L>0 || DomainError("L must be a positive value (L > 0)") |> throw
-  nstocks, ndays  = size(rel_price)
-  b               = similar(rel_price)
-  b[:, 1]        .= 1/nstocks
-  𝑆ₙ              = ones(T, L+1, K)
-  𝐡⁽ᵏˡ⁾           = ones(T, nstocks, K * (L+1)) / nstocks
+  nstocks, ndays = size(rel_price)
+  b              = similar(rel_price)
+  b[:, 1]       .= 1/nstocks
+  𝑆ₙ             = ones(T, L+1, K)
+  𝐡⁽ᵏˡ⁾          = ones(T, nstocks, K * (L+1)) / nstocks
 
   for t ∈ 1:ndays
     if t>1
-      𝐛, 𝐡⁽ᵏˡ⁾   = kernel(rel_price[:, 1:t-1], K, L, c, 𝑆ₙ, 𝐡⁽ᵏˡ⁾)
-      b[:, t]    = 𝐛 ./ sum(𝐛)
+      𝐛, 𝐡⁽ᵏˡ⁾ = kernel(rel_price[:, 1:t-1], K, L, c, 𝑆ₙ, 𝐡⁽ᵏˡ⁾)
+      b[:, t]  = 𝐛 ./ sum(𝐛)
     end
     𝑆ₙ[L+1, 1] = 𝑆ₙ[L+1, 1]*sum(rel_price[:, t].*𝐡⁽ᵏˡ⁾[:, K*L+1])
     for l ∈ 1:L, k ∈ 1:K
@@ -65,7 +65,7 @@ end
 
 """
     function kernel(
-      data::AbstractMatrix{T},
+      𝐱::AbstractMatrix{T},
       K::S,
       L::S,
       c::T,
@@ -76,7 +76,7 @@ end
 Compute the kernel function.
 
 # Arguments
-- `data::AbstractMatrix{T}`: Relative prices of assets.
+- `𝐱::AbstractMatrix{T}`: Relative prices of assets.
 - `K::S`: Maximum window size.
 - `L::S`: the number of splits into L parts in each K.
 - `c::T`: the similarity threshold.
@@ -86,7 +86,7 @@ Compute the kernel function.
 
 """
 function kernel(
-  data::AbstractMatrix{T},
+  𝐱::AbstractMatrix{T},
   K::S,
   L::S,
   c::T,
@@ -94,19 +94,21 @@ function kernel(
   𝐡⁽ᵏˡ⁾::AbstractMatrix{T}
 ) where {T<:AbstractFloat, S<:Integer}
   # Initialize the first expert's portfolio
-  𝐡⁽ᵏˡ⁾[:, K*L+1] = 𝐡⁽ᵏˡ⁾func(data, 0, 0, c)
+  𝐡⁽ᵏˡ⁾[:, K*L+1] = 𝐡⁽ᵏˡ⁾func(𝐱, 0, 0, c)
 
   # Initialize the remaining experts' portfolios
   for l ∈ 1:L, k ∈ 1:K
-    𝐡⁽ᵏˡ⁾[:, (k-1)*L+l] = 𝐡⁽ᵏˡ⁾func(data, k, l, c)
+    𝐡⁽ᵏˡ⁾[:, (k-1)*L+l] = 𝐡⁽ᵏˡ⁾func(𝐱, k, l, c)
   end
-
-  numerator   = 1/(K*L+1) * 𝑆ₙ[L+1, 1] * 𝐡⁽ᵏˡ⁾[:, K*L+1]
-  denominator = 1/(K*L+1) * 𝑆ₙ[L+1, 1]
+  qₖₗ = 1/(K*L+1)
+  inves_wealth = qₖₗ * 𝑆ₙ[L+1, 1]
+  numerator    = inves_wealth * 𝐡⁽ᵏˡ⁾[:, K*L+1]
+  denominator  = inves_wealth
 
   for l ∈ 1:L, k ∈ 1:K
-    numerator   += 1/(K*L+1) * 𝑆ₙ[l, k] * 𝐡⁽ᵏˡ⁾[:, (k-1)*L+l]
-    denominator += 1/(K*L+1) * 𝑆ₙ[l, k]
+    inves_wealth = qₖₗ * 𝑆ₙ[l, k]
+    numerator   += inves_wealth * 𝐡⁽ᵏˡ⁾[:, (k-1)*L+l]
+    denominator += inves_wealth
   end
 
   # Calculate the weight of the final portfolio
@@ -116,12 +118,12 @@ function kernel(
 end
 
 """
-    𝐡⁽ᵏˡ⁾func(data::AbstractMatrix{T}, k::S, l::S, c::T) where {T<:AbstractFloat, S<:Integer}
+    𝐡⁽ᵏˡ⁾func(𝐱::AbstractMatrix{T}, k::S, l::S, c::T) where {T<:AbstractFloat, S<:Integer}
 
 Compute the expert's portfolio.
 
 # Arguments
-- `data::AbstractMatrix{T}`: Relative prices of assets.
+- `𝐱::AbstractMatrix{T}`: Relative prices of assets.
 - `k::S`: The window size.
 - `l::S`: The number of splits into L parts in each K.
 - `c::T`: The similarity threshold.
@@ -129,21 +131,23 @@ Compute the expert's portfolio.
 # Returns
 - `::AbstractVector{T}`: The expert's portfolio.
 """
-function 𝐡⁽ᵏˡ⁾func(data::AbstractMatrix{T}, k::S, l::S, c::T) where {T<:AbstractFloat, S<:Integer}
-  nstocks, day = size(data)
+function 𝐡⁽ᵏˡ⁾func(𝐱::AbstractMatrix{T}, k::S, l::S, c::T) where {T<:AbstractFloat, S<:Integer}
+  nstocks, day = size(𝐱)
   day ≤ k+1 && return ones(T, nstocks) / nstocks
-  m = 0
   historical_data = zeros(T, nstocks, day)
+  m = zero(S)
 
   if k==l==0
-    historical_data = data[:, 1:day]
+    historical_data = 𝐱[:, 1:day]
     m = day
   else
     for i ∈ k+1:day
-      data2 = data[:, i-k:i-1]-data[:, day-k+1:day]
-      if √(tr(transpose(data2) * data2))≤c/l
+      @views xᵢ₋ₖⁱ⁻¹ = 𝐱[:, i-k:i-1]
+      @views 𝐬 = 𝐱[:, day-k+1:day]
+      dif = xᵢ₋ₖⁱ⁻¹ - 𝐬
+      if norm(dif)≤c/l
         m += 1
-        historical_data[:, m] = data[:, i]
+        historical_data[:, m] = 𝐱[:, i]
       end
     end
   end

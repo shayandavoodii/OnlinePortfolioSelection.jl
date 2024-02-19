@@ -41,26 +41,29 @@ true
 """
 function bk(rel_price::AbstractMatrix{T}, K::S, L::S, c::T) where {T<:AbstractFloat, S<:Integer}
   0<c≤1 || DomainError("c must be graeter than 0 and less than or equal to 1 (0 < c ≤ 1)") |> throw
-  K>0 || DomainError("K must be a positive value (K > 0)") |> throw
-  L>0 || DomainError("L must be a positive value (L > 0)") |> throw
+  K>0   || DomainError("K must be a positive value (K > 0)") |> throw
+  L>0   || DomainError("L must be a positive value (L > 0)") |> throw
   nstocks, ndays = size(rel_price)
   b              = similar(rel_price)
   b[:, 1]       .= 1/nstocks
   𝑆ₙ             = ones(T, L+1, K)
-  𝐡⁽ᵏˡ⁾          = ones(T, nstocks, K * (L+1)) / nstocks
-
-  for t ∈ 1:ndays
-    if t>1
-      𝐛, 𝐡⁽ᵏˡ⁾ = kernel(rel_price[:, 1:t-1], K, L, c, 𝑆ₙ, 𝐡⁽ᵏˡ⁾)
-      b[:, t]  = 𝐛 ./ sum(𝐛)
-    end
-    𝑆ₙ[L+1, 1] = 𝑆ₙ[L+1, 1]*sum(rel_price[:, t].*𝐡⁽ᵏˡ⁾[:, K*L+1])
-    for l ∈ 1:L, k ∈ 1:K
-      𝑆ₙ[l, k] = 𝑆ₙ[l, k]*sum(rel_price[:, t].*𝐡⁽ᵏˡ⁾[:, (k-1)*L+l])
-    end
+  𝐡⁽ᵏˡ⁾          = fill(1/nstocks, nstocks, K * (L+1))
+  𝑆ₙfunc!(𝑆ₙ, rel_price[:, 1], 𝐡⁽ᵏˡ⁾, K, L)
+  for t ∈ 2:ndays
+    𝐛, 𝐡⁽ᵏˡ⁾ = kernel(rel_price[:, 1:t-1], K, L, c, 𝑆ₙ, 𝐡⁽ᵏˡ⁾)
+    normalizer!(𝐛)
+    b[:, t]  = 𝐛
+    𝑆ₙfunc!(𝑆ₙ, rel_price[:, t], 𝐡⁽ᵏˡ⁾, K, L)
   end
 
   return OPSAlgorithm(nstocks, b, "Bᴷ")
+end
+
+function 𝑆ₙfunc!(𝑆ₙ::AbstractMatrix, 𝐱ₜ::AbstractVector, 𝐡⁽ᵏˡ⁾::AbstractMatrix, K, L)
+  𝑆ₙ[L+1, 1] = 𝑆ₙ[L+1, 1]*sum(𝐱ₜ.*𝐡⁽ᵏˡ⁾[:, K*L+1])
+  for l ∈ 1:L, k ∈ 1:K
+    𝑆ₙ[l, k] = 𝑆ₙ[l, k]*sum(𝐱ₜ.*𝐡⁽ᵏˡ⁾[:, (k-1)*L+l])
+  end
 end
 
 """

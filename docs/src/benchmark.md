@@ -47,24 +47,7 @@ julia> sn(m_crp.b, rel_price)
  0.9716459683279461
 ```
 
-The outcome demonstrates that if we had invested during the specified period, we would have incurred a loss of approximately 2.8% of our capital. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this instance. Let's further analyze the algorithm's performance based on some significant metrics:
-
-```julia
-julia> results = opsmetrics(m_crp.b, rel_price)
-
-            Cumulative Wealth: 0.972
-                          APY: -0.765
-Annualized Standard Deviation: 0.087
-      Annualized Sharpe Ratio: -9.008
-             Maximum Drawdown: 0.028
-                 Calmar Ratio: -26.993
-
-julia> results.
-APY         Ann_Sharpe  Ann_Std     Calmar      MDD         Sn
-
-julia> results.MDD
-0.02835403167205386
-```
+The outcome demonstrates that if we had invested during the specified period, we would have incurred a loss of approximately 2.8% of our capital. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this instance. It is possible to analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## Best Stock (BS)
 
@@ -185,36 +168,35 @@ julia> size(prices)
 
 # OnlinePortfolioSelection suppose that the data is in the form of a matrix
 # where each row is the price vector of the assets at a specific time period.
-julia> prices = prices |> permutedims;
+julia> prices = prices |> transpose;
 
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
 # Let's run the algorithm on the last 5 days of the data.
-julia> m_up = up(prices[:, end-4:end], eval_points=100);
+julia> m_up = up(rel_price[:, end-4:end], eval_points=100);
 
 juila> m_up.b
 5×5 Matrix{Float64}:
- 0.2  0.216518  0.216638  0.21681   0.216542
- 0.2  0.203395  0.203615  0.203754  0.203528
- 0.2  0.191899  0.191793  0.192316  0.192473
- 0.2  0.193023  0.192302  0.191687  0.19208
- 0.2  0.195164  0.195652  0.195433  0.195377
+ 0.2  0.208371  0.20835   0.208378  0.208491
+ 0.2  0.171292  0.17157   0.171647  0.171811
+ 0.2  0.221486  0.221459  0.221315  0.221753
+ 0.2  0.187741  0.187294  0.186637  0.186165
+ 0.2  0.21111   0.211327  0.212023  0.21178
 ```
 
 One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
 julia> sn(m_up.b, rel_price)
 6-element Vector{Float64}:
  1.0
- 0.9879822623031318
- 0.9856240412854884
- 0.9874863498385578
- 0.9778277061434468
- 0.9718529924971879
+ 0.9879822800563391
+ 0.9853362080114016
+ 0.9872299951993896
+ 0.9778393831200343
+ 0.9721457631543731
 ```
 
-The outcome shows that if we had invested during that period, we would have incurred a loss of approximately 2.8% in wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this context.
+The outcome shows that if we had invested during that period, we would have incurred a loss of approximately 2.7% in wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this context.
 Let's now examine the algorithm's performance using various significant metrics.
 
 ```julia

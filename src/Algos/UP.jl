@@ -1,5 +1,8 @@
 """
-    up(adj_close::Matrix{Float64}; eval_points::Int=10^4)
+    function up(
+      rel_pr::AbstractMatrix{T};
+      eval_points::Integer=10^4
+    ) where T<:AbstractFloat
 
 Universal Portfolio (UP) algorithm.
 
@@ -7,31 +10,30 @@ Calculate the Universal Portfolio (UP) weights and budgets
 using the given historical prices and parameters.
 
 # Arguments
-- `adj_close::Matrix{Float64}`: Historical adjusted close prices.
+- `rel_pr::AbstractMatrix{T}`: Historical relative prices.
 
 ## Keyword Arguments
-- `eval_points::Int=10^4`: Number of evaluation points.
+- `eval_points::Integer=10^4`: Number of evaluation points.
 
 !!! warning "Beware!"
-    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
+    `rel_pr` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, alg)`: OPSAlgorithm object.
+- `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
 # Examples
 ```julia
 julia> using OnlinePortfolioSelection
 
-julia> typeof(adj_close), size(adj_close)
-(Matrix{Float64}, (3, 30))
+julia> rel_pr = rand(3, 9);
 
-julia> m_up = up(adj_close);
+julia> m_up = up(rel_pr);
 
 julia> m_up.b
-3×30 Matrix{Float64}:
- 0.333333  0.331149  0.33204   0.331716  …  0.326788  0.325788  0.325829  0.326222
- 0.333333  0.336058  0.335239  0.336304     0.343405  0.342161  0.342283  0.340693
- 0.333333  0.332793  0.33272   0.331981     0.329807  0.332051  0.331888  0.333086
+3×9 Matrix{Float64}:
+ 0.333333  0.272709  0.345846  0.385378  0.308659  0.328867  0.280564  0.349619  0.433529
+ 0.333333  0.288016  0.315603  0.249962  0.252828  0.24165   0.270741  0.2621    0.235743
+ 0.333333  0.439276  0.338551  0.364661  0.438512  0.429483  0.448695  0.388281  0.330729
 
 julia> sum(m_up.b, dims=1) .|> isapprox(1.) |> all
 true
@@ -41,30 +43,25 @@ true
 > [Universal Portfolios](https://doi.org/10.1111/j.1467-9965.1991.tb00002.x)
 """
 function up(
-  adj_close::Matrix{Float64};
-  eval_points::Int=10^4
-)
+  rel_pr::AbstractMatrix{T};
+  eval_points::Integer=10^4
+) where T<:AbstractFloat
 
-  relative_prices     = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-  n_assets, n_periods = size(relative_prices)
+  n_assets, n_periods = size(rel_pr)
 
   # Initialize weights
-  weights       = zeros(n_assets, n_periods+1)
-  weights[:, 1] = fill(1/n_assets, n_assets)
-  W             = mc_simplex(n_assets-1, eval_points)
-  m             = size(W, 1)
-  S             = reshape(ones(m), m, 1)
+  b        = similar(rel_pr)
+  b[:, 1] .= 1/n_assets
+  W        = simplex(n_assets-1, eval_points)
+  m        = size(W, 1)
+  S        = ones(T, m, 1)
 
   # Update weights
-  @inbounds for t ∈ 1:n_periods
-    last_rel = relative_prices[:, t]
-    n        = length(last_rel)
-    S        = S.*(W*reshape(last_rel, n, 1))
-    b        = W'*S
-
-    normalizer!(b)
-    weights[:, t+1] = b
+  @inbounds for t ∈ 1:n_periods-1
+    last_rel   = rel_pr[:, t]
+    S          = S.*(W*reshape(last_rel, n_assets, 1))
+    b[:, t+1]  = W'*S
   end
-
-  return OPSAlgorithm(n_assets, weights, "UP")
+  normalizer!(b)
+  return OPSAlgorithm(n_assets, b, "UP")
 end

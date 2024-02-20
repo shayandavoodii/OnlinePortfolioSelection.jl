@@ -160,7 +160,7 @@ function pred_relpr(::PP, prices::AbstractMatrix, w::Integer)
 end
 
 """
-    mc_simplex(d::S, points::S) where {S<:Int}
+    simplex(d::S, points::S) where {S<:Int}
 
 Generate a simplex with the size of `points` × (`d`+1).
 
@@ -173,7 +173,7 @@ Generate a simplex with the size of `points` × (`d`+1).
 
 # Example
 ```julia
-julia> res = mc_simplex(2, 1)
+julia> res = simplex(2, 1)
 1×3 Matrix{Float64}:
  0.14692  0.00824556  0.844835
 
@@ -182,7 +182,7 @@ julia> sum(res, dims=2)
  1.0
 ```
 """
-function mc_simplex(d::S, points::S)::Matrix{Float64} where {S<:Int}
+function simplex(d::S, points::S)::Matrix{Float64} where {S<:Int}
   a = sort(rand(points, d), dims=2)
   a = [zeros(points) a ones(points)]
   return diff(a, dims=2)

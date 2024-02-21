@@ -52,12 +52,12 @@ The package presents methods for the following OPS algorithms:
 | 8     | BS        | [@Györfi2007]   |       |       |       |                 |                 |   ×      |
 | 9     | CORN      | [@Li2011]       |       |       |   ×   |                 |                 |          |
 | 10    | PAMR      | [@Li2012]       |   ×   |       |       |                 |                 |          |
-| 11    | OLMAR     | [@Bin.li2012]   |   ×   |       |       |                 |                 |          |
-| 12    | CWMR      | [@Bin.Li2013]   |   ×   |       |       |                 |                 |          |
+| 11    | OLMAR     | [@Binli2012]    |   ×   |       |       |                 |                 |          |
+| 12    | CWMR      | [@BinLi2013]    |   ×   |       |       |                 |                 |          |
 | 13    | RMR       | [@Huang2016]    |   ×   |       |       |                 |                 |          |
 | 14    | PPT       | [@Lai2018]      |       |   ×   |       |                 |                 |          |
-| 15    | AICTR     | [@Lai2018.2]    |       |   ×   |       |                 |                 |          |
-| 16    | SSPO      | [@Lai2018.3]    |       |   ×   |       |                 |                 |          |
+| 15    | AICTR     | [@Lai20182]     |       |   ×   |       |                 |                 |          |
+| 16    | SSPO      | [@Lai20183]     |       |   ×   |       |                 |                 |          |
 | 17    | LOAD      | [@Guan2019]     |       |       |       |                 |   ×             |          |
 | 18    | GWR       | [@Cai2019]      |       |       |       |                 |                 |          |
 | 19    | DRICORN-K | [@Sooklal2020]  |       |       |   ×   |                 |                 |          |

@@ -202,3 +202,335 @@ julia> metrics.AT
 For any method, `?methodname` shows the documentation in the same way in other Julia packages.
 
 # References
+
+@article{Cover1991,
+author = {Cover, Thomas M.},
+title = {Universal Portfolios},
+journal = {Mathematical Finance},
+volume = {1},
+number = {1},
+pages = {1-29},
+keywords = {portfolio selection, robust trading strategies, performance weighting, rebalancing},
+doi = {10.1111/j.1467-9965.1991.tb00002.x},
+abstract = {We exhibit an algorithm for portfolio selection that asymptotically outperforms the best stock in the market. Let xi= (xi, xi2,…, xim)t denote the performance of the stock market on day i, where xii is the factor by which the jth stock increases on day i. Let bi= (bi1 bi2, bim)t, b;ij≫ 0, bij= 1, denote the proportion bij of wealth invested in the j th stock on day i. Then Sn= IIin= bitxi is the factor by which wealth is increased in n trading days. Consider as a goal the wealth Sn*= maxb IIin=1 btxi that can be achieved by the best constant rebalanced portfolio chosen after the stock outcomes are revealed. It can be shown that Sn * exceeds the best stock, the Dow Jones average, and the value line index at time n. In fact, Sn* usually exceeds these quantities by an exponential factor. Let x1, x2, be an arbitrary sequence of market vectors. It will be shown that the nonanticipating sequence of portfolios db yields wealth such that , for every bounded sequence x1, x2…, and, under mild conditions, achieve where J, is an (m - 1) x (m - I) sensitivity matrix. Thus this portfolio strategy has the same exponential rate of growth as the apparently unachievable S*n.},
+year = {1991}
+}
+
+@article{Helmbold1998,
+author = {Helmbold, David P. and Schapire, Robert E. and Singer, Yoram and Warmuth, Manfred K.},
+title = {On-Line Portfolio Selection Using Multiplicative Updates},
+journal = {Mathematical Finance},
+volume = {8},
+number = {4},
+pages = {325-347},
+keywords = {portfolio selection, rebalancing, machine learning algorithms},
+doi = {10.1111/1467-9965.00058},
+abstract = {We present an on-line investment algorithm that achieves almost the same wealth as the best constant-rebalanced portfolio determined in hindsight from the actual market outcomes. The algorithm employs a multiplicative update rule derived using a framework introduced by Kivinen and Warmuth. Our algorithm is very simple to implement and requires only constant storage and computing time per stock in each trading period. We tested the performance of our algorithm on real stock data from the New York Stock Exchange accumulated during a 22-year period. On these data, our algorithm clearly outperforms the best single stock as well as Cover's universal portfolio selection algorithm. We also present results for the situation in which the investor has access to additional “side information.”},
+year = {1998}
+}
+
+@article{Borodin2003,
+title={Can we learn to beat the best stock},
+author={Borodin, Allan and El-Yaniv, Ran and Gogan, Vincent},
+journal={Advances in Neural Information Processing Systems},
+volume={16},
+doi={10.1613/jair.1336},
+year={2003}
+}
+
+@article{Györfi2006,
+author = {Györfi, László and Lugosi, Gábor and Udina, Frederic},
+title = {NONPARAMETRIC KERNEL-BASED SEQUENTIAL INVESTMENT STRATEGIES},
+journal = {Mathematical Finance},
+volume = {16},
+number = {2},
+pages = {337-357},
+keywords = {sequential investment, universal portfolios, kernel estimation},
+doi = {10.1111/j.1467-9965.2006.00274.x},
+abstract = {The purpose of this paper is to introduce sequential investment strategies that guarantee an optimal rate of growth of the capital, under minimal assumptions on the behavior of the market. The new strategies are analyzed both theoretically and empirically. The theoretical results show that the asymptotic rate of growth matches the optimal one that one could achieve with a full knowledge of the statistical properties of the underlying process generating the market, under the only assumption that the market is stationary and ergodic. The empirical results show that the performance of the proposed investment strategies measured on past nyse and currency exchange data is solid, and sometimes even spectacular.},
+year = {2006}
+}
+
+@inproceedings{Agarwal2006,
+author = {Agarwal, Amit and Hazan, Elad and Kale, Satyen and Schapire, Robert E.},
+title = {Algorithms for Portfolio Management Based on the Newton Method},
+year = {2006},
+isbn = {1595933832},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+doi = {10.1145/1143844.1143846},
+abstract = {We experimentally study on-line investment algorithms first proposed by Agarwal and Hazan and extended by Hazan et al. which achieve almost the same wealth as the best constant-rebalanced portfolio determined in hindsight. These algorithms are the first to combine optimal logarithmic regret bounds with efficient deterministic computability. They are based on the Newton method for offline optimization which, unlike previous approaches, exploits second order information. After analyzing the algorithm using the potential function introduced by Agarwal and Hazan, we present extensive experiments on actual financial data. These experiments confirm the theoretical advantage of our algorithms, which yield higher returns and run considerably faster than previous algorithms with optimal regret. Additionally, we perform financial analysis using mean-variance calculations and the Sharpe ratio.},
+booktitle = {Proceedings of the 23rd International Conference on Machine Learning},
+pages = {9–16},
+numpages = {8},
+location = {Pittsburgh, Pennsylvania, USA},
+series = {ICML '06}
+}
+
+@article{Györfi2007,
+author = {GY\"{O}RFI, L\'{A}SZL\'{O} and URB\'{A}N, ANDR\'{A}S and VAJDA, ISTV\'{A}N},
+title = {KERNEL-BASED SEMI-LOG-OPTIMAL EMPIRICAL PORTFOLIO SELECTION STRATEGIES},
+journal = {International Journal of Theoretical and Applied Finance},
+volume = {10},
+number = {03},
+pages = {505-516},
+year = {2007},
+doi = {10.1142/S0219024907004251},
+abstract = { The purpose of this paper is to introduce an approximation of the kernel-based log-optimal investment strategy that guarantees an almost optimal rate of growth of the capital under minimal assumptions on the behavior of the market. The new strategy uses much less knowledge on the distribution of the market process. It is analyzed both theoretically and empirically. The theoretical results show that the asymptotic rate of growth well approximates the optimal one that one could achieve with a full knowledge of the statistical properties of the underlying process generating the market, under the only assumption that the market is stationary and ergodic. The empirical results show that the proposed semi-log-optimal and the log-optimal strategies have essentially the same performance measured on past NYSE data.}
+}
+
+@article{Li2011,
+author = {Li, Bin and Hoi, Steven C.H. and Gopalkrishnan, Vivekanand},
+title = {CORN: Correlation-Driven Nonparametric Learning Approach for Portfolio Selection},
+year = {2011},
+issue_date = {April 2011},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {2},
+number = {3},
+issn = {2157-6904},
+doi = {10.1145/1961189.1961193},
+abstract = {Machine learning techniques have been adopted to select portfolios from financial markets in some emerging intelligent business applications. In this article, we propose a novel learning-to-trade algorithm termed CORrelation-driven Nonparametric learning strategy (CORN) for actively trading stocks. CORN effectively exploits statistical relations between stock market windows via a nonparametric learning approach. We evaluate the empirical performance of our algorithm extensively on several large historical and latest real stock markets, and show that it can easily beat both the market index and the best stock in the market substantially (without or with small transaction costs), and also surpass a variety of state-of-the-art techniques significantly.},
+journal = {ACM Trans. Intell. Syst. Technol.},
+month = {may},
+articleno = {21},
+numpages = {29},
+keywords = {nonparametric learning, Correlation coefficient, online portfolio selection}
+}
+
+@ARTICLE{Li2012,
+title= "{PAMR}: Passive aggressive mean reversion strategy for portfolio selection",
+author= "Li, Bin and Zhao, Peilin and Hoi, Steven C H and Gopalkrishnan, Vivekanand",
+abstract = "This article proposes a novel online portfolio selection strategy named ``Passive Aggressive Mean Reversion'' (PAMR). Unlike traditional trend following approaches, the proposed approach relies upon the mean reversion relation of financial markets. Equipped with online passive aggressive learning technique from machine learning, the proposed portfolio selection strategy can effectively exploit the mean reversion property of markets. By analyzing PAMR's update scheme, we find that it nicely trades off between portfolio return and volatility risk and reflects the mean reversion trading principle. We also present several variants of PAMR algorithm, including a mixture algorithm which mixes PAMR and other strategies. We conduct extensive numerical experiments to evaluate the empirical performance of the proposed algorithms on various real datasets. The encouraging results show that in  most cases the proposed PAMR strategy outperforms all benchmarks and almost all state-of-the-art portfolio selection strategies under various performance metrics. In addition to its superior performance, the proposed PAMR runs extremely fast and thus is very suitable for real-life online trading applications. The experimental testbed including source codes and data sets is available at http://www.cais.ntu.edu.sg/~chhoi/PAMR/.",
+journal  = "Machine Learning",
+volume   =  87,
+number   =  2,
+pages    = "221--258",
+month    =  may,
+doi={10.1007/s10994-012-5281-z},
+year     =  2012
+}
+
+@misc{Bin.li2012,
+title={On-Line Portfolio Selection with Moving Average Reversion}, 
+author={Bin Li and Steven C. H. Hoi},
+year={2012},
+eprint={1206.4626},
+archivePrefix={arXiv},
+primaryClass={cs.CE}
+}
+
+@article{Bin.Li2013,
+author = {Li, Bin and Hoi, Steven C. H. and Zhao, Peilin and Gopalkrishnan, Vivekanand},
+title = {Confidence Weighted Mean Reversion Strategy for Online Portfolio Selection},
+year = {2013},
+issue_date = {March 2013},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {7},
+number = {1},
+issn = {1556-4681},
+doi = {10.1145/2435209.2435213},
+abstract = {Online portfolio selection has been attracting increasing attention from the data mining and machine learning communities. All existing online portfolio selection strategies focus on the first order information of a portfolio vector, though the second order information may also be beneficial to a strategy. Moreover, empirical evidence shows that relative stock prices may follow the mean reversion property, which has not been fully exploited by existing strategies. This article proposes a novel online portfolio selection strategy named Confidence Weighted Mean Reversion (CWMR). Inspired by the mean reversion principle in finance and confidence weighted online learning technique in machine learning, CWMR models the portfolio vector as a Gaussian distribution, and sequentially updates the distribution by following the mean reversion trading principle. CWMR’s closed-form updates clearly reflect the mean reversion trading idea. We also present several variants of CWMR algorithms, including a CWMR mixture algorithm that is theoretical universal. Empirically, CWMR strategy is able to effectively exploit the power of mean reversion for online portfolio selection. Extensive experiments on various real markets show that the proposed strategy is superior to the state-of-the-art techniques. The experimental testbed including source codes and data sets is available online.},
+journal = {ACM Trans. Knowl. Discov. Data},
+month = {mar},
+articleno = {4},
+numpages = {38},
+keywords = {Portfolio selection, online learning, confidence weighted learning, mean reversion}
+}
+
+@ARTICLE{Huang2016,
+author={Huang, Dingjiang and Zhou, Junlong and Li, Bin and Hoi, Steven C. H. and Zhou, Shuigeng},
+journal={IEEE Transactions on Knowledge and Data Engineering}, 
+title={Robust Median Reversion Strategy for Online Portfolio Selection}, 
+year={2016},
+volume={28},
+number={9},
+pages={2480-2493},
+doi={10.1109/TKDE.2016.2563433}
+}
+
+@ARTICLE{Lai2018,
+author={Lai, Zhao-Rong and Dai, Dao-Qing and Ren, Chuan-Xian and Huang, Ke-Kun},
+journal={IEEE Transactions on Neural Networks and Learning Systems}, 
+title={A Peak Price Tracking-Based Learning System for Portfolio Selection}, 
+year={2018},
+volume={29},
+number={7},
+pages={2823-2832},
+doi={10.1109/TNNLS.2017.2705658}
+}
+
+@ARTICLE{Lai2018.2,
+author={Lai, Zhao-Rong and Dai, Dao-Qing and Ren, Chuan-Xian and Huang, Ke-Kun},
+journal={IEEE Transactions on Neural Networks and Learning Systems}, 
+title={Radial Basis Functions With Adaptive Input and Composite Trend Representation for Portfolio Selection}, 
+year={2018},
+volume={29},
+number={12},
+pages={6214-6226},
+doi={10.1109/TNNLS.2018.2827952}
+}
+
+@article{Lai2018.3,
+author  = {Zhao-Rong Lai and Pei-Yi Yang and Liangda Fang and Xiaotian Wu},
+title   = {Short-term Sparse Portfolio Optimization Based on Alternating Direction Method of Multipliers},
+journal = {Journal of Machine Learning Research},
+year    = {2018},
+volume  = {19},
+number  = {63},
+pages   = {1--28},
+url     = {http://jmlr.org/papers/v19/17-558.html}
+}
+
+@article{Guan2019,
+title = {A local adaptive learning system for online portfolio selection},
+journal = {Knowledge-Based Systems},
+volume = {186},
+pages = {104958},
+year = {2019},
+issn = {0950-7051},
+doi = {10.1016/j.knosys.2019.104958},
+author = {Hao Guan and Zhiyong An},
+keywords = {Portfolio selection, Online learning, Intelligent decision system, Quantitative finance},
+abstract = {Online portfolio selection is an important problem in financial trading which has attracted increasing interests from the machine learning and data mining community. Most existing state-of-the-art systems, however, rely on the defensive strategies, which lack adaptivity to some extent and may lose investment opportunities in the real financial market. In this paper, we propose a novel local adaptive learning model which seamlessly integrates both defensive and aggressive strategies to enhance the adaptivity and profitability of the whole portfolio system. Different from some popular portfolio selection systems that assume a predefined price tendency, we set up an evaluation function to predict the tendency and activate the corresponding selection strategies. The total capital is allocated according to the value expectations of different assets. Through taking the bests of the complementary strategies, it can make a good balance between wealth returns and risks. In addition, our system is capable of dealing with financial data in linear time, which is suitable for real-time trading applications. Experimental results on several benchmark datasets show that our model outperforms some state-of-the-art ones both in effectiveness and efficiency.}
+}
+
+@ARTICLE{Cai2019,
+author={Cai, Xia and Ye, Zekun},
+journal={IEEE Transactions on Signal Processing}, 
+title={Gaussian Weighting Reversion Strategy for Accurate Online Portfolio Selection}, 
+year={2019},
+volume={67},
+number={21},
+pages={5558-5570},
+doi={10.1109/TSP.2019.2941067}
+}
+
+@InProceedings{Sooklal2020,
+author="Sooklal, Shivaar
+and van Zyl, Terence L.
+and Paskaramoorthy, Andrew",
+editor="Gerber, Aurona",
+title="DRICORN-K: A Dynamic RIsk CORrelation-driven Non-parametric Algorithm for Online Portfolio Selection",
+booktitle="Artificial Intelligence Research",
+doi={10.1007/978-3-030-66151-9_12},
+year="2020",
+publisher="Springer International Publishing",
+address="Cham",
+pages="183--196",
+abstract="Online Portfolio Selection is regarded as a fundamental problem in Computational Finance. Pattern-Matching methods, and the CORN-K algorithm in particular, have provided promising results. Despite making notable progress, there exists a gap in the current state of the art -- systematic risk is not considered. The lack of attention to systematic risk could lead to poor investment returns, especially in volatile markets. In response to this, we extend the CORN-K algorithm to present DRICORN-K -- a Dynamic RIsk CORrelation-driven Non-parametric algorithm. DRICORN-K continuously adjusts a portfolio's market sensitivity based on the current market conditions. We measure market sensitivity using the {\$}{\$}{\backslash}beta {\$}{\$}$\beta$measure. DRICORN-K aims to take advantage of upward market trends and protect portfolios against downward market trends. To this end, we implement a number of market classification methods. We find that an exponentially weighted moving linear regression method provides the best classification of current market conditions. We further conducted an empirical analysis on five real world stock indices: the JSE Top 40, Bovespa, DAX, DJIA and Nikkei 225 against twelve state of the art algorithms. The results show that DRICORN-K can deliver improved performance over the current state of the art, as measured by cumulative return, Sharpe ratio and maximum drawdown. The experimental results lead us to conclude that the addition of dynamic systematic risk adjustments to CORN-K can result in improved portfolio performance.",
+isbn="978-3-030-66151-9"
+}
+
+@article{Khedmati2020,
+title = {An online portfolio selection algorithm using clustering approaches and considering transaction costs},
+journal = {Expert Systems with Applications},
+volume = {159},
+pages = {113546},
+year = {2020},
+issn = {0957-4174},
+doi = {10.1016/j.eswa.2020.113546},
+author = {Majid Khedmati and Pejman Azin},
+keywords = {Online portfolio selection, Algorithmic trading, Pattern-matching, Data mining, Clustering},
+abstract = {This paper presents an online portfolio selection algorithm based on pattern matching principle where it makes a decision on the optimal portfolio in each period and updates the optimal portfolio at the beginning of each period. The proposed method consists of two steps: i) sample selection, ii) portfolio optimization. First, in the sample selection, clustering algorithms including k-means, k-medoids, spectral and hierarchical clustering are applied to discover time windows (TW) similar to the recent time window. Then, after finding the similar time windows and predicting the market behavior of the next day, the optimum function along with the transaction cost is used in the portfolio optimization step in which, four algorithms including KMNLOG, KMDLOG, SPCLOG and HRCLOG are proposed for this purpose. The presented algorithms are applied on 5 different datasets with different characteristics including different markets, stocks, and time periods, and their performance has been evaluated. The results show that the provided algorithms in this paper, have better performance in terms of efficiency compared to the algorithms provided in the literature.}
+}
+
+@ARTICLE{Lai2020,
+author={Lai, Zhao-Rong and Yang, Pei-Yi and Fang, Liangda and Wu, Xiaotian},
+journal={IEEE Transactions on Systems, Man, and Cybernetics: Systems}, 
+title={Reweighted Price Relative Tracking System for Automatic Portfolio Optimization}, 
+year={2020},
+volume={50},
+number={11},
+pages={4349-4361},
+doi={10.1109/TSMC.2018.2852651}
+}
+
+@article{Yang2020,
+author = {Xingyu Yang, Jin'an He and Yong Zhang},
+title = {Aggregating exponential gradient expert advice for online portfolio selection},
+journal = {Journal of the Operational Research Society},
+volume = {73},
+number = {3},
+pages = {587-597},
+year = {2020},
+publisher = {Taylor & Francis},
+doi = {10.1080/01605682.2020.1848358},
+}
+
+@article{Zhang2021,
+title = {Combining expert weights for online portfolio selection based on the gradient descent algorithm},
+journal = {Knowledge-Based Systems},
+volume = {234},
+pages = {107533},
+year = {2021},
+issn = {0950-7051},
+doi = {10.1016/j.knosys.2021.107533},
+author = {Yong Zhang and Hong Lin and Xingyu Yang and Wanrong Long},
+keywords = {Online portfolio selection, Gradient descent algorithm, Combining weights, Expert strategy},
+abstract = {In this paper, we propose a new online portfolio selection strategy based on a weighted learning technique and an online gradient descent algorithm. Our strategy, named combination weights based on online gradient descent (CW-OGD), achieves improved robustness by integrating different expert strategies and overcomes the difficult problem of complex computational time. First, an expert system including many basic expert strategies, in which we choose the strategy that invests in a single stock as the basic expert strategy, is established. Second, we exploit the loss function to evaluate the performance of different basic expert strategies and use the OGD algorithm to update the weight vector for the experts based on their losses. In addition, we theoretically prove that the proposed strategy has a regret bound. Finally, extensive experiments conducted on four stock combinations and seven benchmark datasets show that our strategy can outperform some state-of-the-art strategies in terms of the return, risk and computational time metrics. Furthermore, our strategy can achieve higher returns even at certain transaction cost rates, which illustrates its effectiveness in the actual stock market.}
+}
+
+@article{Li2022,
+title = {Exponential Gradient with Momentum for Online Portfolio Selection},
+journal = {Expert Systems with Applications},
+volume = {187},
+pages = {115889},
+year = {2022},
+issn = {0957-4174},
+doi = {10.1016/j.eswa.2021.115889},
+author = {Yuyuan Li and Xiaolin Zheng and Chaochao Chen and Jiawei Wang and Shuai Xu},
+keywords = {Online portfolio selection, High-frequency trading, Algorithmic trading, Online learning},
+abstract = {Online portfolio selection is a fundamental research problem, which has drawn extensive investigations in both machine learning and computational finance communities. The evolution of electronic trading has contributed to the growing prevalence of High-Frequency Trading (HFT) in recent years. Generally, HFT requires trading strategies to be fast in execution. However, the existing online portfolio selection strategies fail to either satisfy the demand for high execution speed or make effective utilization of historical data. In response, we propose a framework named Exponential Gradient with Momentum (EGM) which integrates EG with an acknowledged optimization method in stochastic learning, i.e., momentum. Specifically, momentum boosts the performance of EG by making full use of historical information. Most essentially, EGM can execute with only constant memory and running time in the number of assets per trading period, thus overcoming the drawback of most online strategies. The theoretical analysis reveals that EGM bounds the regret sublinearly. The extensive experiments conducted on four real-world datasets demonstrate that EGM outperforms relevant strategies with respect to comprehensive evaluation metrics.}
+}
+
+@article{Dai2022,
+title = {An online portfolio strategy based on trend promote price tracing ensemble learning algorithm},
+journal = {Knowledge-Based Systems},
+volume = {239},
+pages = {107957},
+year = {2022},
+issn = {0950-7051},
+doi = {10.1016/j.knosys.2021.107957},
+author = {Hong-Liang Dai and Chu-Xin Liang and Hong-Ming Dai and Cui-Yin Huang and Rana Muhammad Adnan},
+keywords = {Online portfolio investment, Price anomaly, Three-state price, Gradient projection, Ensemble learning algorithm, Investment ratio},
+abstract = {How to carry out an investment portfolio efficiently and reasonably has become a hot issue. This study mainly addresses the problem of the instability of forecasting stock price investment and the difficulty in determining investment proportion by proposing the trend peak price tracing (TPPT). First of all, because of the influence of stock price anomaly, TPPT strategy sets adjustable historical window width. It uses slope value to judge prediction direction to track price change, which uses exponential moving average and peak equal weight slope value three-state price prediction method. Secondly, the accumulated wealth target is refined, and the fast error Back Propagation based on gradient projection algorithm (BP) is added. The algorithm solves investment proportion and feedbacks the increasing ability of assets to the investment proportion in order to maximize the accumulated wealth. Finally, comparison of eight empirical strategies in five typical data and statistical tests show that TPPT strategy has great advantages in balancing risk and return, and it is a robust and effective online portfolio strategy.}
+}
+
+@article{Lin2024,
+title = {Online portfolio selection of integrating expert strategies based on mean reversion and trading volume},
+journal = {Expert Systems with Applications},
+volume = {238},
+pages = {121472},
+year = {2024},
+issn = {0957-4174},
+doi = {10.1016/j.eswa.2023.121472},
+author = {Hong Lin and Yong Zhang and Xingyu Yang},
+keywords = {Online portfolio selection, Online gradient update, Mean reversion, Trading volume, Regret bound},
+abstract = {In this paper, we propose an effective online portfolio selection strategy by integrating expert opinions, which are obtained based on mean reversion and trading volume. Existing studies have found that mean reversion and high volume premium exist in the stock market in the short term. Some online portfolio strategies have been proposed that rely upon mean reversion, but it is rare to consider both mean reversion and high volume premium, which is what we will do in this paper. First, a portfolio based on mean reversion and high volume premium is constructed using recent window data. Second, a pool of portfolios, also known as a pool of expert strategies or expert opinions, is established by changing the window size. Finally, the online gradient update algorithm is adopted to integrate a pool of expert strategies, and the MRvol strategy in this paper is proposed. Theoretically, we prove that the regret of MRvol is bounded. Empirically, we use the actual stock price and trading volume data from different markets to test the performance of MRvol. The results show that MRvol performs better than other online strategies in terms of final cumulative wealth and risk-adjusted return metrics in most cases, among which the annualized percentage yield on all datasets is 16%–37%, and the average values of Sharpe ratio, Calmar ratio and Information ratio are 1.113, 0.9216 and 0.0299, respectively. Additionally, MRvol has linear computational time complexity, and the running time of test results is all less than 1 s. Furthermore, it maintains strong robustness under different parameters and can bear reasonable transaction costs.}
+}
+
+@article{Xi2023,
+title = {Online portfolio selection with predictive instantaneous risk assessment},
+journal = {Pattern Recognition},
+volume = {144},
+pages = {109872},
+year = {2023},
+issn = {0031-3203},
+doi = {10.1016/j.patcog.2023.109872},
+author = {Wenzhi Xi and Zhanfeng Li and Xinyuan Song and Hanwen Ning},
+keywords = {Portfolio optimization, Online learning, High-dimensional covariance matrix, Ensemble learning, High-dimensional short-term data},
+abstract = {Online portfolio selection (OPS) has received increasing attention from machine learning and quantitative finance communities. Despite their effectiveness, the pioneering OPS methods have several key limitations. First, price predictions are usually based on predetermined trends, which is inadequate for a fast-changing market patterns. Second, each asset is treated individually, ignoring the pervading relevance among the assets. Third, the risk terms are usually missing or inappropriate in optimizations. This paper proposes a novel OPS method, namely, the online low-dimension ensemble method, to overcome the limitations. Motivated by the stylized facts for the co-movements of assets, the financial market is regarded as a high-dimensional dynamical system (HDS), and a large number of low-dimensional subsystems (LDSs) are randomly generated from the HDS to extract the correlation information among the assets. The assets’ price predictions are first made using these LDSs and then aggregated to formulate the final prediction using ensemble learning techniques. Thanks to the particular merits brought by our predicting scheme, we also develop a novel high-dimensional covariance matrix estimation/prediction method for short-term data, efficiently assessing the instantaneous risk of the projected portfolios. Compared with state-of-the-art methods, our approach obtains more accurate predictions as the correlation information is fully exploited. With the predictive instantaneous risk assessment, a more appropriate optimization problem is proposed, substantially improving the OPS setting and leading to significantly better investment performance. Therefore, this study develops a flexible and promising approach to learning fast-changing market patterns and demonstrates that the high-dimensional feature of the market is a crucial information source for financial modeling with short-term data rather than a barrier in the conventional sense. Extensive experiments on real-world datasets are conducted to illustrate our method further.}
+}
+
+@article{Zhong2023,
+title = {Distributed mean reversion online portfolio strategy with stock network},
+journal = {European Journal of Operational Research},
+year = {2023},
+issn = {0377-2217},
+doi = {10.1016/j.ejor.2023.11.021},
+author = {Yannan Zhong and Weijun Xu and Hongyi Li and Weiwei Zhong},
+keywords = {Portfolio optimization, Online portfolio, Stock network, Mean reversion, Distributed optimization},
+abstract = {Online portfolio selection is a practical problem in financial engineering and quantitative trading. Many empirical studies show that stock performance in the market is likely to follow mean reversion, and strategies based on mean reversion show better return performance than the market average. However, the existing mean reversion strategies are not universal and short selling is not allowed, which is unsuitable for real-time investment. In this paper, we propose a distributed mean reversion online portfolio strategy through a stock correlation sub-network to solve these problems. Theoretical analysis shows that our strategy is universal and the convergence rate is calculated. The empirical results show that our strategy is better than the existing universal strategies in terms of return performance, nor is it sensitive to transaction cost.}
+}

@@ -40,7 +40,7 @@ Algorithm trading researchers were used to analyze the market conditions and per
 While the tools mentioned above lack some features such as the novel OPS algorithms in the literature, being free to use, and well-documented, the `OnlinePortfolioSelection` package is designed to fill these gaps by providing a vast variety of OPS algorithms including the most novel algorithms published in the literature with detailed documentation and examples, that are freely available to use. The package is implemented in the `Julia` programming language, which is known for its high performance and readable syntax.  
 The package presents methods for the following OPS algorithms:
 
-| Row № | Algorithm |    Reference    |   FL  |   FW  |   PM  |   Meta-Learning |   Combinatorics |   Market |
+| Row № | Algorithm |    Reference    |   FL  |   FW  |   PM  |   Meta-Learning |  Combinatorics  |  Market  |
 |:-----:| :-------- | :-------------- | :---: | :---: | :---: | :-------------: | :-------------: | :------: |
 | 1     | 1/N       | -               |       |       |       |                 |                 |   ×      |
 | 2     | CRP       | [@Cover1991]    |       |       |       |                 |                 |   ×      |

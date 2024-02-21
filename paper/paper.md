@@ -1,16 +1,16 @@
 # Summary
 
-`OnlinePortfolioSelection` is a `Julia` package that implements a variety of prominent Online Portfolio Selection (OPS) algorithms to be used by researchers and developers of OPS algorithms. This package facilitates benchmarking for researchers who intend to compare their OPS algorithms with the statet-of-the-art OPS algorithms. Also, `OnlinePortfolioSelection` provides a set of tools for researchers to evaluate the performance of their proposed algorithms according to vaious well-known performance metrics in the OPS literature. Reaserchers can evaluate an OPS algorithm regarding the metrics by employing the `opsmetrics` function. The package brings together a variety of OPS algorithms and performance metrics to a relatively new programming language, `Julia`, which is known for its high performance and ease of use. In addition to the performance merits of `Julia`, the algorithms within this package are implemented in a way that follows the pseudocode and the mathematical signature of the original papers, which makes it easier for researchers to understand and compare the algorithms. This paper presents the basic of the Application Programming Interface (API), example usage, and code snippets for the `OnlinePortfolioSelection` package.
+`OnlinePortfolioSelection` is a `Julia` package that implements a variety of prominent Online Portfolio Selection (OPS) algorithms to be used by researchers and developers of OPS algorithms. This package facilitates benchmarking for researchers who intend to compare their OPS algorithms with state-of-the-art OPS algorithms. Also, `OnlinePortfolioSelection` provides a set of tools for researchers to evaluate the performance of their proposed algorithms according to various well-known performance metrics in the OPS literature. Researchers can evaluate an OPS algorithm regarding the metrics by employing the `opsmetrics` function. The package brings together a variety of OPS algorithms and performance metrics to a relatively new programming language, `Julia`, which is known for its high performance and ease of use. In addition to the performance merits of `Julia`, the algorithms within this package are implemented in a way that follows the pseudocode and the mathematical signature of the original papers, which makes it easier for researchers to understand and compare the algorithms. This paper presents the basics of the Application Programming Interface (API), example usage, and code snippets for the `OnlinePortfolioSelection` package.
 
 # Introduction
 
-The OPS algorithms update the portfolio after observing the new data, meaning that the whole algorithm takes in place by including the new data into the procedure. The main purpose of OPS algorithms is to select a portfolio vector $\mathbf{b}_t\in{\mathbb{R}^m}$ in each period $t$ that maximizes cumulative return of the portfolio over time, where $m$ is the number of stocks. The constructed portfolio in each period can be defined on the m-dimensional simplex as the weight of each asset is a positive value and sum of the weights in a portfolio should sum up to one:
+The OPS algorithms update the portfolio after observing the new data, meaning that the whole algorithm takes place by including the new data in the procedure. The main purpose of OPS algorithms is to select a portfolio vector $\mathbf{b}_t\in{\mathbb{R}^m}$ in each period $t$ that maximizes the cumulative return of the portfolio over time, where $m$ is the number of stocks. The constructed portfolio in each period can be defined on the m-dimensional simplex as the weight of each asset is a positive value and the sum of the weights in a portfolio should sum up to one:
 
 $$
 {{\Delta _m}}:=\left\{\mathbf{b}_t \in \mathbb{R}_ + ^m:\sum\limits_{i = 1}^m {{b_{i,t}} = 1}\right\}
 $$
 
-where $\mathbf{b}_t \in \mathbb{R}_ + ^m$ refers to the portfolio vector of the $t^{th}$ period with $m$ positive values, $b_{i,t}$ represents the proportion of wealth that should be invested in the $i^{th}$ stock in the $t^{th}$ period. The m-dimensional simplex divests shortselling capability from the algorithm and enforces it to invest the whole wealth in the portfolio selection.  
+where $\mathbf{b}_t \in \mathbb{R}_ + ^m$ refers to the portfolio vector of the $t^{th}$ period with $m$ positive values, $b_{i,t}$ represents the proportion of wealth that should be invested in the $i^{th}$ stock in the $t^{th}$ period. The m-dimensional simplex divests short-selling capability from the algorithm and enforces it to invest the whole wealth in the portfolio selection.  
 At the end of $t^{th}$ period, the cumulative wealth of the investment $S_t$ increases by a factor of $\mathbf{b}_t \times \mathbf{r}_t$, where $\mathbf{r}_t$ is the price relative vector of the stocks in the $t^{th}$ period and can be presented as ${\mathbf{r}_t} \triangleq \frac{{{\mathbf{p}_t}}}{{{\mathbf{p}_{t - 1}}}}$, where $\mathbf{p}_t=(p_{1,t}, p_{2,t}, \ldots, p_{m,t})\in\mathbb{R}^m_+$ is the vector of close prices of $m$ stocks in the $t^{th}$ period and the division "$\div$" is performed element-wise. The cumulative wealth of the investment at $t^{th}$ period can be defined as:
 
 $$
@@ -33,11 +33,11 @@ It is worth mentioning that in these algorithms it is assumed that the market is
 
 # State of the field
 
-Algorithm trading researchers were used to rely on analyse the market conditions and perform calculations by hand. Nowadays, with the advent of infrustructure, the amount of data and the speed of the data flow has increased dramatically. Therefore, market practitioners would lose good investment opportunities if they opt to manual computations. Thus, the need for algorithms that can process the data and perform computations in a short amount of time is felt. OPS algorithms are trading algorithms that are meant to process the data and make decisions in a time-efficient manner. The proposed approaches in the literature generaly involve Machine Learning (ML) concepts or directly employ ML algorithms as a part of the model in the decision-making and/or data processing procedure. Hence, developing open-sourced softwares that can provide these algorithms is justifiable as they can be used by researchers to compare their novel algorithms against the traditional algorithms and also for better grasping the idea behind the state-of-the-art algorithms. Accordingly, there are several tools in various languages that present OPS algorithms. Some of them provide a single algorithm, and some of them provide a variety of algorithms. `SSPO` provides the Matlab implementation of the 'sspo' algorithm by the authors of the related paper. `OLPS` is a Matlab toolbox that provides the implementation for a set of traditional OPS algorithms. Although the toolbox is open-sourced, its required software, Matlab, is not freely accessable. Furthermore, the aforementioned toolbox does not provide the implementation of the novel OPS algorithms. `universal-portfolios` is a Python package that only provides the traditional OPS algorithms and is poorly documented. `olpsR` presents a limited set of state-of-the-art OPS algorithms in R language .
+Algorithm trading researchers were used to analyze the market conditions and perform calculations by hand. Nowadays, with the advent of infrastructure, the amount of data and the speed of the data flow has increased dramatically. Therefore, market practitioners would lose good investment opportunities if they opt for manual computations. Thus, the need for algorithms that can process the data and perform computations in a short amount of time is felt. OPS algorithms are trading algorithms that are meant to process the data and make decisions in a time-efficient manner. The proposed approaches in the literature generally involve Machine Learning (ML) concepts or directly employ ML algorithms as a part of the model in the decision-making and/or data-processing procedure. Hence, developing open-source software that can provide these algorithms is justifiable as they can be used by researchers to compare their novel algorithms against the traditional algorithms and also for better grasping the idea behind the state-of-the-art algorithms. Accordingly, there are several tools in various languages that present OPS algorithms. Some of them provide a single algorithm, and some of them provide a variety of algorithms. `SSPO` provides the Matlab implementation of the 'sspo' algorithm by the authors of the related paper. `OLPS` is a Matlab toolbox that provides the implementation for a set of traditional OPS algorithms. Although the toolbox is open-sourced, its required software, Matlab, is not freely accessible. Furthermore, the aforementioned toolbox does not provide the implementation of the novel OPS algorithms. `universal-portfolios` is a Python package that only provides the traditional OPS algorithms and is poorly documented. `olpsR` presents a limited set of state-of-the-art OPS algorithms in R language.
 
 # Statement of need
 
-While the tools mentioned above lacking some features such as the novel OPS algorithms in the literature, being free to use, and well-documented, `OnlinePortfolioSelection` package is designed to fill these gaps by providing a vast variety of OPS algorithms including the most novel algorithms published in the literature with detailed documentation and examples, that are freely available to use. The package is implemented in `Julia` programming language, which is known for its high performance and readable syntax.  
+While the tools mentioned above lack some features such as the novel OPS algorithms in the literature, being free to use, and well-documented, the `OnlinePortfolioSelection` package is designed to fill these gaps by providing a vast variety of OPS algorithms including the most novel algorithms published in the literature with detailed documentation and examples, that are freely available to use. The package is implemented in the `Julia` programming language, which is known for its high performance and readable syntax.  
 The package presents methods for the following OPS algorithms:
 
 | Row № | Algorithm |    Reference    |   FL  |   FW  |   PM  |   Meta-Learning |   Combinatorics |   Market |
@@ -71,7 +71,7 @@ The package presents methods for the following OPS algorithms:
 | 27    | DMR       | [@Zhong2023]    |   ×   |       |       |                 |                 |          |
 | 28    | MRvol     | [@Lin2024]      |       |       |       |                 |   ×             |          |
 
-Additionally, the package provides a set of metrics that have been used in the literature for evaluating the performance of the algorithms. The metrics can easily get employed by researchers to evaluate the performance of their novel algorithms. The provided metrics are as follows:
+Additionally, the package provides a set of metrics that have been used in the literature for evaluating the performance of the algorithms. The metrics can easily the employed by researchers to evaluate the performance of their novel algorithms. The provided metrics are as follows:
 
 | Row № | Metric                                    | Abbreviation                        |
 |:-----:|:----------------------------------------- |:-----------------------------------:|
@@ -89,7 +89,7 @@ The full set of other tools and utility functions are listed and documented in t
 
 # Installation and basic usage
 
-`OnlinePortfolioSelection` package can be installed using the Julia package manager by entering the following commands in the Julia REPL:
+The `OnlinePortfolioSelection` package can be installed using the Julia package manager by entering the following commands in the Julia REPL:
 
 ```julia
 julia> using Pkg
@@ -102,7 +102,7 @@ After the installation, the package can be imported and used as follows:
 julia> using OnlinePortfolioSelection
 ```
 
-Suppose the 'CORN-U' algorithm is to be employed for the portfolio selection over the adjusted close prices of the 'MSFT', 'AAPL', 'META', and 'GOOGL' stocks from 1st January, 2024 to 6th January, 2024. The required data can be obtained from the Yahoo Finance. Assume that the data is as follows:
+Suppose the 'CORN-U' algorithm is to be employed for the portfolio selection over the adjusted close prices of the 'MSFT', 'AAPL', 'META', and 'GOOGL' stocks from 1st January 2024 to 6th January 2024. The required data can be obtained from the Yahoo Finance. Assume that the data is as follows:
 
 ```julia
 julia> prices = [
@@ -123,7 +123,7 @@ julia> model = cornu(prices, horizon, window_size)
 OPSAlgorithm{Float64}(4, [0.12513423100917873 0.1252014698797476 0.12364583463206219 0.0; 0.12513423100917873 0.6243955903607573 0.12364583463206219 0.0; 0.6245973069724639 0.1252014698797476 0.6290624961038135 0.5052279142063506; 0.12513423100917873 0.1252014698797476 0.12364583463206219 0.4947720857936494], "CORN-U")
 ```
 
-For the sake of coherence, all of the algorithms in the package return the same type of object, which is named `OPSAlgorithm`. The returned object has three different fields, number of assets, portfolio matrix, and the name of the algorithm. The portfolio matrix is the matrix of the portfolio vectors where the rows and columns represent the stocks and investment days, respectively. The fields of the `model` can be accessed as follows:
+For the sake of coherence, all of the algorithms in the package return the same type of object, which is named `OPSAlgorithm`. The returned object has three different fields, the number of assets, the portfolio matrix, and the name of the algorithm. The portfolio matrix is the matrix of the portfolio vectors where the rows and columns represent the stocks and investment days, respectively. The fields of the `model` can be accessed as follows:
 
 ```julia
 julia> model.n_assets
@@ -199,6 +199,6 @@ julia> metrics.AT
 0.45886426227669413
 ```
 
-For any method, `?methodname` shows the documentation as in the same way in other Julia packages.
+For any method, `?methodname` shows the documentation in the same way in other Julia packages.
 
 # References

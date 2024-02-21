@@ -1,12 +1,10 @@
 ---
 title = OnlinePortfolioSelection.jl: A package for Online Portfolio Selection algorithms in Julia
-
 tags:
   - Julia
   - Online Portfolio Selection
   - Algorithm Trading
   - Machine Learning
-
 authors:
   - name: Shayan Davoodi
     orcid: 0000-0002-7358-0443
@@ -14,11 +12,9 @@ authors:
   - name: Akbar Esfahanipour
     corresponding: true
     affiliation: 1
-
 affiliations:
   - name: Department of Industrial Engineering and Management Systems, Amirkabir University of Technology (Tehran Polytechnic), 424 Hafez Ave., Tehran 15916-34311, Iran
     index: 1
-
 date: 21 February 2024
 bibliography: paper.bib
 ---

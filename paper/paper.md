@@ -20,6 +20,8 @@ affiliations:
 
 date: 21 February 2024
 bibliography: paper.bib
+given-name-pattern: Jane
+family-name-pattern: Doe
 ---
 
 # Summary

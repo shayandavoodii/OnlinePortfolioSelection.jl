@@ -24,13 +24,6 @@
             <a href="https://codecov.io/gh/shayandavoodii/OnlinePortfolioSelection.jl"><img src="https://codecov.io/gh/shayandavoodii/OnlinePortfolioSelection.jl/branch/main/graph/badge.svg?token=BSZJR7AL1O"/></a>
         </td>
     </tr>
-    <!-- DOI -->
-    <tr>
-        <td>DOI</td>
-        <td>
-            <a href="https://doi.org/10.5281/zenodo.10251038"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.10251038.svg"/></a>
-        </td>
-    </tr>
 </table>
 
 </div>
@@ -51,7 +44,6 @@
   <li><a href="#to-do-list">TODO LIST</a></li>
   <li><a href="#contribution">Contribution</a></li>
   <li><a href="#motivation">Motivation</a></li>
-  <li><a href="#citation">Citation</a></li>
   <li><a href="#license">License</a></li>
   <li><a href="#contact">Contact</a></li>
 </ol>
@@ -306,32 +298,6 @@ Contributions are warmly welcome. Please feel free to open an issue and discuss 
 
 <div align="justify">
 I aimed to implement benchmark methods for Online Portfolio Selection (OPS) as part of my M.Sc. thesis to conduct comprehensive benchmarking experiments. The goal was to compare the performance of these benchmark methods with my proposed method from my thesis. I decided to transform this into an open-source package so that other researchers could leverage these established methods for their own research, sparing them the effort of reimplementing existing strategies. My intention is to continue developing and expanding this package to include more algorithms as I find it an exciting area of study. Ultimately, I hope this contribution proves beneficial to the research community.
-</div>
-
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
-
-<!-- Citation -->
-## Citation
-
-<div align="justify">
-If you use the package in your research, please cite the package using the following BibTeX entry:
-</div>
-
-```bibtex
-@software{shayan_davoodi_2023_10391027,
-  author       = {Shayan Davoodi},
-  title        = {{shayandavoodii/OnlinePortfolioSelection.jl: v2.10.0}},
-  month        = dec,
-  year         = 2023,
-  publisher    = {Zenodo},
-  version      = {v2.10.0},
-  doi          = {10.5281/zenodo.10391027},
-  url          = {https://doi.org/10.5281/zenodo.10391027}
-}
-```
-
-<div align="justify">
-Other citation styles can be found <a href="https://doi.org/10.5281/zenodo.7905042">here</a> at the bottom of the page (Export section).
 </div>
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>

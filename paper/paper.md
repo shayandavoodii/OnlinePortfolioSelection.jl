@@ -1,3 +1,8 @@
+---
+title = OnlinePortfolioSelection.jl: A package for Online Portfolio Selection algorithms in Julia
+bibliography: paper.bib
+---
+
 # Summary
 
 `OnlinePortfolioSelection` is a `Julia` package that implements a variety of prominent Online Portfolio Selection (OPS) algorithms to be used by researchers and developers of OPS algorithms. This package facilitates benchmarking for researchers who intend to compare their OPS algorithms with state-of-the-art OPS algorithms. Also, `OnlinePortfolioSelection` provides a set of tools for researchers to evaluate the performance of their proposed algorithms according to various well-known performance metrics in the OPS literature. Researchers can evaluate an OPS algorithm regarding the metrics by employing the `opsmetrics` function. The package brings together a variety of OPS algorithms and performance metrics to a relatively new programming language, `Julia`, which is known for its high performance and ease of use. In addition to the performance merits of `Julia`, the algorithms within this package are implemented in a way that follows the pseudocode and the mathematical signature of the original papers, which makes it easier for researchers to understand and compare the algorithms. This paper presents the basics of the Application Programming Interface (API), example usage, and code snippets for the `OnlinePortfolioSelection` package.

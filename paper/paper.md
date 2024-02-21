@@ -1,5 +1,5 @@
 ---
-title = OnlinePortfolioSelection.jl: A package for Online Portfolio Selection algorithms in Julia
+title: OnlinePortfolioSelection.jl: A package for Online Portfolio Selection algorithms in Julia
 tags:
   - Julia
   - Online Portfolio Selection

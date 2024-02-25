@@ -44,6 +44,7 @@ include("Algos/ONS.jl")
 include("Algos/DMR.jl")
 include("Algos/RMR.jl")
 include("Algos/SSPO.jl")
+include("Algos/WAEG.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
@@ -51,6 +52,7 @@ include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, bcrp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm, tppt, gwr, ons, dmr, rmr, sspo
+export waeg
 export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir, at
 export OPSAlgorithm, OPSMetrics, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
@@ -124,6 +126,7 @@ function opsmethods()
   println("       DMR: Distributed Mean Reversion (DMR) - Call `dmr`")
   println("       RMR: Robust Median Reversion - Call `rmr`")
   println("      SSPO: Short-term Sparse Portfolio Optimization - Call `sspo`")
+  println("      WAEG: Weak Aggregating Exponential Gradient - Call `waeg`")
 end
 # COV_EXCL_STOP
 

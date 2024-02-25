@@ -27,7 +27,7 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 | 11    | [Bᴷ](@ref)                                                                                          | PM       | 2006 | 26    | [DMR](@ref Distributed-Mean-Reversion-(DMR))                                    | FL       | 2023 |
 | 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                                                  | Combined | 2019 | 27    | [RMR](@ref Robust-Median-Reversion-(RMR))                                       | FL       | 2016 |
 | 13    | [MRvol](@ref)                                                                                       | Combined | 2023 | 28    | [SSPO](@ref Short-term-Sparse-Portfolio-Optimization-(SSPO))                    | FW       | 2018 |
-| 14    | [ClusLog](@ref)                                                                                     | PM       | 2020 | 
+| 14    | [ClusLog](@ref)                                                                                     | PM       | 2020 | 29    | [WAEG](@ref Weak-Aggregating-Exponential-Gradient-(WAEG))                       | ML       | 2020 |
 | 15    | [CW-OGD](@ref Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))                        | ML       | 2021 |
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.

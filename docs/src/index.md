@@ -7,7 +7,7 @@ end
 # Introduction
 
 Online Portfolio Selection (OPS) strategies represent trading algorithms that sequentially allocate capital among a pool of assets with the aim of maximizing investment returns. This forms a fundamental issue in computational finance, extensively explored across various research domains, including finance, statistics, artificial intelligence, machine learning, and data mining. Framed within an online machine learning context, OPS is defined as a sequential decision problem, providing a range of advanced approaches to tackle this challenge. These approaches categorize into benchmarks, “Follow-the-Winner” and “Follow-the-Loser” strategies, “Pattern-Matching” based methodologies, and "Meta-Learning" Algorithms [li2013online](@cite).
-This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, 28 algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
+This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, 30 algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
 
 !!! note
     In the following table, the abbreviations **PM**, **ML**, **FL**, and **FW** stand for **Pattern-Matching**, **Meta-Learning**, **Follow the Loser**, and **Follow the Winner**, respectively.
@@ -16,7 +16,7 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 |:-----:|:---------------------------------------------------------------------------------------------------:|:--------:|:----:|:-----:|:-------------------------------------------------------------------------------:|:--------:|:----:|
 | 1     | [CORN](@ref Correlation-driven-Nonparametric-Learning-(CORN))                                       | PM       | 2011 | 16    | [PAMR](@ref Passive-Aggressive-Mean-Reversion-(PAMR))                           | FL       | 2012 |
 | 2     | [DRICORN-K](@ref Dynamic-RIsk-CORrelation-driven-Non-parametric-(DRICORN))                          | PM       | 2020 | 17    | [PPT](@ref Price-Peak-Tracking-(PPT))                                           | FW       | 2018 | 
-| 3     | [BCRP](@ref Best-Constant-Rebalanced-Portfolio-(BCRP))                                                     | Market   | 1991 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                          | FL       | 2013 |
+| 3     | [BCRP](@ref Best-Constant-Rebalanced-Portfolio-(BCRP))                                              | Market   | 1991 | 18    | [CWMR](@ref Confidence-Weighted-Mean-Reversion-(CWMR))                   | FL       | 2013 |
 | 4     | [UP](@ref Universal-Portfolio-(UP))                                                                 | Market   | 1991 | 19    | [CAEG](@ref Continuous-Aggregating-Exponential-Gradient-(CAEG))                 | ML       | 2020 |
 | 5     | [EG](@ref Exponential-Gradient-(EG))                                                                | FW       | 1998 | 20    | [OLDEM](@ref Online-Low-Dimension-Ensemble-Method-(OLDEM))                      | PM       | 2023 |
 | 6     | [BS](@ref Best-Stock-(BS))                                                                          | Market   | 2007 | 21    | [AICTR](@ref Adaptive-Input-and-Composite-Trend-Representation-(AICTR))         | FW       | 2018 |
@@ -28,7 +28,7 @@ This package offers an efficient implementation of OPS algorithms in Julia, ensu
 | 12    | [LOAD](@ref LOcal-ADaptive-learning-system-(LOAD))                                                  | Combined | 2019 | 27    | [RMR](@ref Robust-Median-Reversion-(RMR))                                       | FL       | 2016 |
 | 13    | [MRvol](@ref)                                                                                       | Combined | 2023 | 28    | [SSPO](@ref Short-term-Sparse-Portfolio-Optimization-(SSPO))                    | FW       | 2018 |
 | 14    | [ClusLog](@ref)                                                                                     | PM       | 2020 | 29    | [WAEG](@ref Weak-Aggregating-Exponential-Gradient-(WAEG))                       | ML       | 2020 |
-| 15    | [CW-OGD](@ref Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))                        | ML       | 2021 |
+| 15    | [CW-OGD](@ref Combination-Weights-based-on-Online-Gradient-Descent-(CW-OGD))                        | ML       | 2021 | 30    | [MAEG](@ref Moving-window-based-Adaptive-Exponential-Gradient-(MAEG))           | ML       | 2022 |
 
 The available methods can be viewed by calling the [`opsmethods`](@ref) function.
 

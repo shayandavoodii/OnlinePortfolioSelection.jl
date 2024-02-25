@@ -65,6 +65,8 @@ using Statistics
   include("SSPO.jl")
   @info "Run unit tests in WAEG.jl"
   include("WAEG.jl")
+  @info "Run unit tests in MAEG.jl"
+  include("MAEG.jl")
 end
 
 @testset "metrics.jl" begin

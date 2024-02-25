@@ -18,6 +18,7 @@ n_assets = size(rel_pr, 1)
     @test_throws ArgumentError waeg(rel_pr, -0.01, 0.2, 20)
     @test_throws ArgumentError waeg(rel_pr, 0.01, -0.05, 20)
     @test_throws ArgumentError waeg(rel_pr, -0.07, -0.05, 20)
+    @test_throws ArgumentError waeg(rel_pr, 0.07, 0.05, 20)
     @test_throws ArgumentError waeg(rel_pr, 0.01, 0.2, 1)
   end
 end

@@ -4,6 +4,7 @@ Meta-learning strategies are employed to combine opinions from experts to formul
 
 1. [Combination Weights based on Online Gradient Descent (CW-OGD)](@ref)
 2. [Continuous Aggregating Exponential Gradient (CAEG)](@ref)
+3. [Weak Aggregating Exponential Gradient (WAEG)](@ref)
 
 ## Combination Weights based on Online Gradient Descent (CW-OGD)
 
@@ -128,6 +129,31 @@ Annualized Standard Deviation: 0.16251944416204514
 ```
 
 The result indicates that if we had invested in the given period, we would have gained ~5% profit. Please check the [Performance evaluation](@ref) section for more information.
+
+## Weak Aggregating Exponential Gradient (WAEG)
+
+Some OPS strategies aim to address the problem of finding optimal values for their parameters. For example, [Yang2020-if](@citet) intoduced another ML algorithm in the scope of OPS, called WAEG. The authors proposed a new online portfolio selection strategy that aggregates multiple Exponential Gradient ([EG](@ref "Exponential Gradient (EG)")) strategies with different learning rates using the weak aggregating algorithm. The strategy has a universal property that guarantees its average logarithmic growth rate to be the same as the best constant rebalanced portfolio in hindsight. The main difference between WAEG and [CAEG](@ref "Continuous Aggregating Exponential Gradient (CAEG)") is that the former uses a finit set of EG experts, while the latter uses a continuous set of EG experts.
+
+### Run WAEG
+
+Let's run the algorithm on the real market data (Also, see [`waeg`](@ref)):
+
+```julia
+julia> using OnlinePortfolioSelection
+
+julia> rel_pr = rand(4, 8);
+
+julia> m = waeg(rel_pr, 0.01, 0.2, 20);
+
+julia> m.b
+4×8 Matrix{Float64}:
+ 0.25  0.238126  0.24158   0.2619    0.261729  0.27466   0.25148   0.256611
+ 0.25  0.261957  0.259588  0.248465  0.228691  0.24469   0.256674  0.246801
+ 0.25  0.245549  0.247592  0.254579  0.27397   0.259982  0.272341  0.290651
+ 0.25  0.254368  0.25124   0.235057  0.23561   0.220668  0.219505  0.205937
+```
+
+One can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## References
 

@@ -6,7 +6,7 @@ rel_pr = [
 
 n_assets = size(rel_pr, 1)
 
-@testset "CAEG.jl" begin
+@testset "WAEG.jl" begin
   @testset "With valid arguments" begin
     model = waeg(rel_pr, 0.01, 0.2, 20)
     @test sum(model.b, dims=1) .|> isapprox(1.) |> all

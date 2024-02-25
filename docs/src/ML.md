@@ -5,6 +5,7 @@ Meta-learning strategies are employed to combine opinions from experts to formul
 1. [Combination Weights based on Online Gradient Descent (CW-OGD)](@ref)
 2. [Continuous Aggregating Exponential Gradient (CAEG)](@ref)
 3. [Weak Aggregating Exponential Gradient (WAEG)](@ref)
+4. [Moving-window-based Adaptive Exponential Gradient (MAEG)](@ref)
 
 ## Combination Weights based on Online Gradient Descent (CW-OGD)
 
@@ -151,6 +152,35 @@ julia> m.b
  0.25  0.261957  0.259588  0.248465  0.228691  0.24469   0.256674  0.246801
  0.25  0.245549  0.247592  0.254579  0.27397   0.259982  0.272341  0.290651
  0.25  0.254368  0.25124   0.235057  0.23561   0.220668  0.219505  0.205937
+```
+
+One can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
+
+## Moving-window-based Adaptive Exponential Gradient (MAEG)
+
+[Zhang2022-ht](@citet) proposed a novel ML algorithm that updates the learning rate of the [EG](@ref "Exponential Gradient (EG)") algorithm by maximizing the recent cumulative return using the price data in a fixed length moving window. MAEG uses the recent price data in a moving window of fixed length to exploit the “time heterogeneity” of historical market information. This algorithm gets a set of learning rates as one of the inputs. Then, it adaptively adjusts the learning rate to the market condition and directly uses the learning rate in the portfolio calculation process.
+
+### Run MAEG
+
+Let's run the algorithm on the real market data (Also, see [`maeg`](@ref)):
+
+```julia
+julia> using OnlinePortfolioSelection
+
+julia> rel_pr = rand(4, 10);
+
+julia> w = 3;
+
+julia> H = [0.01, 0.02, 0.2];
+
+julia> m = maeg(rel_pr, w, H);
+
+julia> m.b
+4×10 Matrix{Float64}:
+ 0.25  0.250307  0.25129   0.251673  0.250823  0.267687  0.313794  0.319425  0.378182  0.427249
+ 0.25  0.249138  0.248921  0.249289  0.250482  0.23192   0.202576  0.179329  0.160005  0.168903
+ 0.25  0.250026  0.250656  0.24931   0.24995   0.226647  0.237694  0.237879  0.216076  0.192437
+ 0.25  0.250528  0.249134  0.249728  0.248744  0.273746  0.245936  0.263367  0.245737  0.211411
 ```
 
 One can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.

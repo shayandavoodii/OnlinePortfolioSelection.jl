@@ -273,13 +273,10 @@ As you can see, the package can be used from Python easily. For more information
 <!-- TODO LIST -->
 ## To-do list
 
-- [ ] Implement BCRP
-- [x] ~~Implement CORN~~
-- [x] ~~Implement DRICORN~~
-- [x] ~~Implement BS~~
-- [x] ~~Implement Anticor~~
-- [x] ~~Implement $B^k$~~
 - [ ] Implement $B^{NN}$
+- [ ] Adopt hierarchical clustering for ClusLog algorithm
+- [ ] Implement CRP
+- [ ] Implement $B^H$
 - etc.
 
 <p align="right">🆙<a href="#top">Table of cotents</a></p>

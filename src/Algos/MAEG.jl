@@ -1,6 +1,6 @@
 function bₜ₊₁ᵢfunc!(bₜ₊₁::AbstractVector, bₜ::AbstractVector, ηₜ₊₁w::AbstractFloat, xₜ::AbstractVector)
-  bₜxₜ  = sum(bₜ.*xₜ)
-  bₜ₊₁ .= @. bₜ*exp(ηₜ₊₁w*xₜ/bₜxₜ)
+  bₜxₜ    = sum(bₜ.*xₜ)
+  @. bₜ₊₁ = bₜ*exp(ηₜ₊₁w*xₜ/bₜxₜ)
   normalizer!(bₜ₊₁)
 end
 

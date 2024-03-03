@@ -36,6 +36,9 @@ Run Weak Aggregating Exponential Gradient (WAEG) algorithm.
 # Returns
 - `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
+!!! warning "Beware!"
+    `x` should be a matrix of size `n_assets` × `n_periods`.
+
 # Example
 ```julia
 julia> using OnlinePortfolioSelection

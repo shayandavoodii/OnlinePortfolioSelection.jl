@@ -137,7 +137,7 @@ Some OPS strategies aim to address the problem of finding optimal values for the
 
 ### Run WAEG
 
-Let's run the algorithm on the real market data (Also, see [`waeg`](@ref)):
+Let's run the algorithm on synthetic data (Also, see [`waeg`](@ref)):
 
 ```julia
 julia> using OnlinePortfolioSelection
@@ -162,7 +162,7 @@ One can analyse the algorithm's performance using several metrics that have been
 
 ### Run MAEG
 
-Let's run the algorithm on the real market data (Also, see [`maeg`](@ref)):
+Let's run the algorithm on synthetic data (Also, see [`maeg`](@ref)):
 
 ```julia
 julia> using OnlinePortfolioSelection

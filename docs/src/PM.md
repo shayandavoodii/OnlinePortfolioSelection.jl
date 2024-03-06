@@ -31,33 +31,34 @@ julia> prices = prices |> permutedims;
 # run the algorithm on the last 5 days
 julia> horizon, w = 5, 10
 
+julia> rel_prices = prices[:, 2:end] ./ prices[:, 1:end-1]
+
 julia> model = cornu(prices, horizon, w)
+julia> model = cornu(rel_prices, horizon, w)
 
 julia> model.b
 5×5 Matrix{Float64}:
- 0.0       0.198536  0.0995612  0.0        0.0
- 0.0       0.389272  0.0        0.0        0.0980504
- 0.0       0.0       0.430479   0.0998267  0.0
- 0.714743  0.0       0.0        0.0        0.203183
- 0.285257  0.412192  0.46996    0.900173   0.698766
+ 0.759879   0.37932    0.518244   0.841716   0.538972
+ 0.0600301  0.0798703  0.0198005  0.0395709  0.0397726
+ 0.0600301  0.0798703  0.0198005  0.0395709  0.0397726
+ 0.0600301  0.0798703  0.0198005  0.0395709  0.0397726
+ 0.0600301  0.381069   0.422354   0.0395709  0.34171
 ```
 
 One can compute the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
-julia> sn(model.b, rel_price)
+julia> sn(model.b, rel_prices)
 6-element Vector{Float64}:
  1.0
- 0.9910701218600744
- 0.9956345799968089
- 1.0038929232387375
- 0.9914403615208097
- 0.9851289224781754
+ 0.9874863981778458
+ 0.9867337486209383
+ 0.997125392069827
+ 0.9899191819701306
+ 0.9791598729100073
 ```
 
-The result indicates that the algorithm experienced a loss of 1.5% of the initial wealth during the investment period. Further analysis of the algorithm's performance can be conducted using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. For more detailed information, refer to the [Performance evaluation](@ref) section.
+The result indicates that the algorithm experienced a loss of ~2% of the initial wealth during the investment period. Further analysis of the algorithm's performance can be conducted using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. For more detailed information, refer to the [Performance evaluation](@ref) section.
 
 ### Run CORN-K
 
@@ -67,27 +68,31 @@ The key parameters of CORN-K include `k` (number of best experts used for portfo
 # run the algorithm on the last 5 days
 julia> horizon, k, w, rho = 5, 10, 5, 5, 5;
 
-julia> model = cornk(prices, horizon, k, w, rho);
+julia> model = cornk(rel_prices, horizon, k, w, rho);
 
 julia> model.b
+5×5 Matrix{Float64}:
+ 0.679862   0.279356   0.681348   0.581841   0.678181
+ 0.0800344  0.0798487  0.0796631  0.0795637  0.079953
+ 0.0800344  0.0798487  0.0796631  0.0795637  0.079953
+ 0.0800344  0.0798487  0.0796631  0.0795637  0.079953
+ 0.0800344  0.481098   0.0796631  0.179468   0.0819602
 ```
 
 Last but not least, the cumulative wealth of the algorithm on the investment period and given dataset can be computed by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
-julia> sn(model.b, rel_price)
+julia> sn(model.b, rel_prices)
 6-element Vector{Float64}:
  1.0
- 0.9920219584145965
- 0.997769753240107
- 1.0153550964116513
- 1.004610801506029
- 1.0017637293758395
+ 0.9875572675972655
+ 0.9873565694624061
+ 0.9913102075729211
+ 0.9827281883555271
+ 0.9722491752324016
 ```
 
-Expectedly, CORN-K performed better than CORN-U on the same dataset. The result indicates that the algorithm has gained ~0.18% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+Expectedly, CORN-K performed better than CORN-U on the same dataset. The result indicates that the algorithm has lost ~3.1% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
 ## Dynamic RIsk CORrelation-driven Non-parametric (DRICORN)
 

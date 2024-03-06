@@ -76,7 +76,7 @@ function dricornk(
   ") |> throw
   length(relpr_market)==n_samples || ArgumentError("
     Insufficient number of data points for `relpr_market` ($(length(relpr_market))) \
-    is provided. At least the same number of data points as `x` \
+    is provided. The same number of data points as `x` \
     ($(n_samples)) is required.
   ") |> throw
 

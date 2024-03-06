@@ -1,13 +1,13 @@
 # Test data for DRICORN.jl. Assumption: 3 assets and 30 periods.
-adj_close = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
-adj_close_market = rand(30);
+rel_pr = rand(3, 30) .* [4., 3., 2.] .+ [1., 5., 4.];
+relpr_market = rand(30);
 
 @testset "DRICORNK" begin
   @testset "Arument Errors" begin
     @testset "invalid p" begin
       @test_throws ArgumentError dricornk(
-        adj_close,
-        adj_close_market,
+        rel_pr,
+        relpr_market,
         3,
         2,
         4,
@@ -15,21 +15,31 @@ adj_close_market = rand(30);
       )
     end
 
-    @testset "invalid horizon" begin
+    @testset "invalid number of data points" begin
       @test_throws ArgumentError dricornk(
-        adj_close,
-        adj_close_market,
-        31,
+        rel_pr,
+        relpr_market,
+        6,
         3,
         3,
         2
       )
     end
 
+    @testset "unmatched number of data points" begin
+      @test_throws ArgumentError dricornk(
+        rel_pr,
+        rand(29),
+        5,
+        3,
+        3,
+        2
+      )
+    end
     @testset "invalid k" begin
       @test_throws ArgumentError dricornk(
-        adj_close,
-        adj_close_market,
+        rel_pr,
+        relpr_market,
         3,
         15,
         3,
@@ -40,9 +50,9 @@ adj_close_market = rand(30);
 
   @testset "All good" begin
     res = dricornk(
-      adj_close,
-      adj_close_market,
-      2,
+      rel_pr,
+      relpr_market,
+      5,
       2,
       2,
       2

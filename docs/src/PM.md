@@ -98,35 +98,24 @@ Dynamic Risk CORrelation-driven Non-parametric (DRICORN)[10.1007/978-3-030-66151
 Given that this algorithm is constructed on the CORN-K model, it shares analogous parameters. However, DRICORN-K requires market index data (e.g., S&P 500) to calculate the portfolio's beta and the market trend. Additionally, a coefficient is used to regulate the portfolio's beta, with the default value set to `1e-3`. Let's execute DRICORN-K using the same data as CORN-U and CORN-K.
 
 ```julia
-# run the algorithm on the last 5 days
-julia> horizon, k, w, rho = 5, 10, 5, 5, 5;
+# run the algorithm on the last 4 days
+julia> horizon, k, w, rho = 4, 10, 5, 5, 5;
 
-julia> model = dricornk(prices, market_prices, horizon, k, w, rho);
+julia> rel_price = rand(4, 28);
+
+julia> market_prices = rand(28);
+
+julia> model = dricornk(rel_price, market_prices, horizon, k, w, rho);
 
 julia> model.b
-4×5 Matrix{Float64}:
- 0.0  0.25  0.25  0.25  0.17438
- 0.0  0.25  0.25  0.25  0.17438
- 0.0  0.25  0.25  0.25  0.174281
- 1.0  0.25  0.25  0.25  0.476959
+4×4 Matrix{Float64}:
+ 0.221173   0.529528   0.424046  0.389769
+ 0.597183   0.0863265  0.334074  0.349607
+ 0.1052     0.0        0.0       0.0
+ 0.0764436  0.384145   0.24188   0.260624
 ```
 
-Using [`sn`](@ref) function, one can compute the cumulative wealth during the investment period:
-
-```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
-julia> sn(model.b, rel_price)
-6-element Vector{Float64}:
- 1.0
- 0.9906902403938972
- 0.9867624995658737
- 0.9841621752990845
- 0.9754797369845584
- 0.9738144349688777
-```
-
-The result indicates that the algorithm has lost ~2.6% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+Using [`sn`](@ref) function, one can compute the cumulative wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
 
 ## Bᴷ
 

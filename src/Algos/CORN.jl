@@ -1,17 +1,17 @@
 """
     cornu(
-      adj_close::Matrix{T},
+      x::AbstractMatrix{T},
       horizon::M,
       w::M;
       rho::T=0.2,
       init_budg=1,
       progress::Bool=false
-    ) where {T<:Float64, M<:Int}
+    ) where {T<:AbstractFloat, M<:Integer}
 
 Run CORN-U algorithm.
 
 # Arguments
-- `adj_close::Matrix{T}`: Adjusted close prices of assets.
+- `x::AbstractMatrix{T}`: price relative matrix of assets.
 - `horizon::M`: The number of periods to invest.
 - `w::M`: maximum length of time window to be examined.
 
@@ -21,18 +21,18 @@ Run CORN-U algorithm.
 - `progress::Bool=false`: Whether to show the progress bar.
 
 !!! warning "Beware!"
-    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
+    `x` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
+- `::OPSAlgorithm`: An object of type [`OPSAlgorithm`](@ref).
 
 # Examples
 ```julia
 julia> using OnlinePortfolioSelection
 
-julia> adj_close = rand(5, 100);
+julia> x = rand(5, 100);
 
-julia> model = cornu(adj_close, 10, 5, 0.5);
+julia> model = cornu(x, 10, 5, 0.5);
 
 julia> model.alg
 "CORN-U"
@@ -47,32 +47,27 @@ See [`cornk`](@ref), and [`dricornk`](@ref).
 > [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
 """
 function cornu(
-  adj_close::Matrix{T},
+  x::AbstractMatrix{T},
   horizon::M,
   w::M;
   rho::T=0.2,
   init_budg=1,
   progress::Bool=false
-) where {T<:Float64, M<:Int}
-
+) where {T<:AbstractFloat, M<:Integer}
+  n_assets, _ = size(x)
   0≤rho<1 || ArgumentError("The value of `rho` should be in the range of [0, 1).") |> throw
-  n_experts = w
-
-  # Calculate relative prices
-  relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-  n_assets        = size(relative_prices, 1)
-  q               = 1/w
-
+  n_experts  = w
+  q          = 1/w
   # Store the budgets of experts in each period t
   Sₜ_        = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
   weights    = zeros(T, n_assets, horizon)
+  bₜ         = similar(x, n_assets, n_experts)
   for t ∈ 0:horizon-1
-    bₜ = Matrix{T}(undef, n_assets, n_experts)
     for ω ∈ 1:w
-      b           = corn_expert(relative_prices, horizon, ω, rho, t, n_assets)
+      b           = corn_expert(x, horizon, ω, rho, t, n_assets)
       bₜ[:, ω]    = b
-      Sₜ_[ω, t+2] = S(Sₜ_[ω, t+1], b, relative_prices[:, end-horizon+t+1])
+      Sₜ_[ω, t+2] = S(Sₜ_[ω, t+1], b, x[:, end-horizon+t+1])
     end
     progress && progressbar(stdout, horizon, t+1)
     weights[:, t+1] = final_weights(q, Sₜ_[:, t+2], bₜ)
@@ -83,19 +78,19 @@ end
 
 """
     cornk(
-      adj_close::Matrix{Float64},
+      x::AbstractMatrix{<:AbstractFloat},
       horizon::T,
       k::T,
       w::T,
       p::T;
       init_budg=1,
       progress::Bool=false
-    ) where T<:Int
+    ) where T<:Integer
 
 Run CORN-K algorithm.
 
 # Arguments
-- `adj_close::Matrix{Float64}`: Adjusted close prices of assets.
+- `x::AbstractMatrix{<:AbstractFloat}`: price relative matrix of assets.
 - `horizon::T`: The number of periods to invest.
 - `k::T`: The number of top experts to be selected.
 - `w::T`: maximum length of time window to be examined.
@@ -106,7 +101,7 @@ Run CORN-K algorithm.
 - `progress::Bool=false`: Whether to show the progress bar.
 
 !!! warning "Beware!"
-    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
+    `x` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
 - `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
@@ -115,9 +110,9 @@ Run CORN-K algorithm.
 ```julia
 julia> using OnlinePortfolioSelection
 
-julia> adj_close = rand(5, 100);
+julia> x = rand(5, 100);
 
-julia> model = cornk(adj_close, 10, 3, 5, 3);
+julia> model = cornk(x, 10, 3, 5, 3);
 
 julia> model.alg
 "CORN-K"
@@ -132,38 +127,34 @@ See [`cornu`](@ref), and [`dricornk`](@ref).
 > [CORN: Correlation-driven nonparametric learning approach for portfolio selection](https://doi.org/10.1145/1961189.1961193)
 """
 function cornk(
-  adj_close::Matrix{Float64},
+  x::AbstractMatrix{<:AbstractFloat},
   horizon::T,
   k::T,
   w::T,
   p::T;
   init_budg=1,
   progress::Bool=false
-) where T<:Int
-
+) where T<:Integer
   p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
   n_experts = w*(p+1)
   k>n_experts && ArgumentError(
     "The value of k ($k) is more than number of experts ($n_experts)"
   ) |> throw
-
-  # Calculate relative prices
-  relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
-  n_assets        = size(relative_prices, 1)
-  P               = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ∈0:p)
-  q               = 1/k
-  weights         = zeros(Float64, n_assets, horizon)
-  Sₜ_             = zeros(Float64, n_experts, horizon+1)
-  Sₜ_[:, 1]      .= init_budg
+  n_assets   = size(x, 1)
+  P          = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ∈0:p)
+  q          = 1/k
+  weights    = similar(x, n_assets, horizon)
+  Sₜ_        = similar(x, n_experts, horizon+1)
+  Sₜ_[:, 1] .= init_budg
+  bₜ = similar(x, n_assets, n_experts)
   for t ∈ 0:horizon-1
-    bₜ = Matrix{Float64}(undef, n_assets, n_experts)
     expert = 1
     for ω ∈ 1:w
-      for ρ ∈ P
-        b                = corn_expert(relative_prices, horizon, ω, ρ, t, n_assets)
-        bₜ[:, expert]    = b
-        Sₜ_[expert, t+2] = S(
-          Sₜ_[expert, t+1], b, relative_prices[:, end-horizon+t+1]
+      for (idxρ, ρ) ∈ enumerate(P)
+        b                = corn_expert(x, horizon, ω, ρ, t, n_assets)
+        bₜ[:, ω+idxρ]    = b
+        Sₜ_[ω+idxρ, t+2] = S(
+          Sₜ_[ω+idxρ, t+1], b, x[:, end-horizon+t+1]
         )
         expert += 1
       end
@@ -185,7 +176,7 @@ end
       rho::T,
       t::S,
       n_assets::S
-    ) where {T<:Float64, S<:Int}
+    ) where {T<:AbstractFloat, S<:Int}
 
 Create an expert to perform the algorithm according to the given parameters.
 
@@ -198,7 +189,7 @@ Create an expert to perform the algorithm according to the given parameters.
 - `n_assets::S`: number of assets.
 
 # Returns
-- `::Vector{Float64}`: Weights of assets.
+- `::Vector{AbstractFloat}`: Weights of assets.
 """
 function corn_expert(
   relative_prices::Matrix{T},
@@ -207,7 +198,7 @@ function corn_expert(
   rho::T,
   t::S,
   n_assets::S
-) where {T<:Float64, S<:Int}
+) where {T<:AbstractFloat, S<:Int}
 
   horizon≥size(relative_prices, 2) && ArgumentError("""The "horizon" ($horizon) is \
     bigger than data samples $(size(relative_prices, 2)).\nYou should either decrease \

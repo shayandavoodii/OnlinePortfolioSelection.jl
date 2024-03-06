@@ -150,11 +150,11 @@ function cornk(
   for t ∈ 0:horizon-1
     expert = 1
     for ω ∈ 1:w
-      for (idxρ, ρ) ∈ enumerate(P)
+      for ρ ∈ P
         b                = corn_expert(x, horizon, ω, ρ, t, n_assets)
-        bₜ[:, ω+idxρ]    = b
-        Sₜ_[ω+idxρ, t+2] = S(
-          Sₜ_[ω+idxρ, t+1], b, x[:, end-horizon+t+1]
+        bₜ[:, expert]    = b
+        Sₜ_[expert, t+2] = S(
+          Sₜ_[expert, t+1], b, x[:, end-horizon+t+1]
         )
         expert += 1
       end

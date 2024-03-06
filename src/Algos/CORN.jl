@@ -104,7 +104,7 @@ Run CORN-K algorithm.
     `x` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
+- `::OPSAlgorithm`: An object of type [`OPSAlgorithm`](@ref).
 
 # Examples
 ```julia

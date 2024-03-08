@@ -6,7 +6,8 @@ optimization (SPOLC).
 
 # Arguments
 - `x::AbstractMatrix`: Matrix of relative prices.
-- `𝛾::AbstractFloat`: Constraint parameter.
+- `𝛾::AbstractFloat`: Mixing parameter  that trades off between the increasing factor \
+  and the risk.
 - `w::Integer`: Window size.
 
 !!! warning "Beware!"

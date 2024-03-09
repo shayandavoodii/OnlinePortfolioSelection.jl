@@ -70,11 +70,11 @@ function simplexproj(v::AbstractVector, b::Integer)
   while maximum(abs.(v))>1e6
     @. v = v/2
   end
-  u = sort(v, rev=true)
+  u  = sort(v, rev=true)
   sv = cumsum(u)
-  ρ = findlast(u.>(sv.-b)./(1:length(u)))
-  θ = (sv[ρ] - b)/ρ
-  w = max.(v .- θ, 0)
+  ρ  = findlast(u.>(sv.-b)./(1:length(u)))
+  θ  = (sv[ρ] - b)/ρ
+  w  = max.(v .- θ, 0)
   return w
 end
 
@@ -82,16 +82,16 @@ function main(x::AbstractMatrix, 𝛾::AbstractFloat)
   n_assets, n_days = size(x)
   H = zeros(n_assets+1, n_assets+1)
   U_tmp,Sig_tmp,V_tmp = svd(x)
-  S = diagm(Sig_tmp)
+  S   = diagm(Sig_tmp)
   tol = maximum((n_days, n_days))*S[1]*eps(eltype(x))
-  r = sum(S .> tol)
-  U = U_tmp[:, 1:r]
-  V = V_tmp[:, 1:r]
-  S = S[1:r]
+  r   = sum(S .> tol)
+  U   = U_tmp[:, 1:r]
+  V   = V_tmp[:, 1:r]
+  S   = S[1:r]
   Sig = diagm(S)
-  Sig1 = Sig.^(2)
-  Sig2 = Sig1.-Sig*V'*ones(n_days, n_days)*V*Sig/n_days
-  ζ = Sig1[1, 1]/sqrt(tr(Sig2))/n_assets/(n_days-1)
+  Sig1  = Sig.^(2)
+  Sig2  = Sig1.-Sig*V'*ones(n_days, n_days)*V*Sig/n_days
+  ζ     = Sig1[1, 1]/sqrt(tr(Sig2))/n_assets/(n_days-1)
   Htmp2 = U[:, 1]*ζ*U[:, 1]'
   H[1:n_assets, 1:n_assets] = Htmp2
   f = vcat(zeros(n_assets), 1)
@@ -103,7 +103,7 @@ function ẑfunc(𝛾::AbstractFloat, H::AbstractMatrix, f::AbstractVector, A::A
   n_assets = size(A, 1)
   model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
   @variable(model, z[1:n_assets])
-  @constraint(model, z'*A .<= 0)
+  @constraint(model, z'*A .≤ 0)
   @constraint(model, 0. .≤ z[1:n_assets] .≤ 1.)
   @constraint(model, sum(z)==1)
   @objective(model, Min, 𝛾*z'*H*z+f'*z)

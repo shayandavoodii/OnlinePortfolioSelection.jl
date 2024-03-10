@@ -70,9 +70,9 @@ julia> model.b
  0.2   0.2   0.204027  0.210318   0.208166
 
 # TCO2
-model = tco(r, 5, 5, 1.1, 10, TCO2, [0.05, 0.05, 0.7, 0.2]);
+julia> model = tco(r, 5, 5, 0.04, 10, TCO2, [0.05, 0.05, 0.7, 0.2]);
 
-model.b
+julia> model.b
 4×5 Matrix{Float64}:
  0.05  0.0809567  0.0850694  0.0871646  0.0865584
  0.05  0.0809567  0.0830907  0.0890398  0.0885799
@@ -96,6 +96,8 @@ function tco(
   n_samples-w≥horizon || ArgumentError("`n_samples-w` must be greater than or equal to \
   `horizon`. `n_samples` is the number of observations ($(n_samples))") |> throw
   horizon>0 || ArgumentError("`horizon` must be greater than 0. $horizon is passed.") |> throw
+  w>1       || ArgumentError("`w` must be greater than 1. $w is passed.") |> throw
+  η>0       || ArgumentError("`η` must be greater than 0. $η is passed.") |> throw
   0<𝛾≤1     || ArgumentError("Transaction rate (𝛾) should be in 0<𝛾≤1. $𝛾 is passed.") |> throw
   𝛾>0.05 && @warn "Tha passed transaction rate ($𝛾) is considered to be high. Due to the nature \
   of the algorithm, there might be no difference between the result of the algorithm, whether \

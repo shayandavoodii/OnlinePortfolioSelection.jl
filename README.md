@@ -93,7 +93,7 @@ OPS algorithms have been evaluated using a set of promimnent metrics through the
 
 Further information about the metrics can be found in the <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval">documentation</a>.
 
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 <!-- Disclaimer -->
 ## Disclaimer
@@ -103,7 +103,7 @@ Further information about the metrics can be found in the <a href="https://shaya
 This package is designed exclusively for **research purposes** and **explicitly not for investment use**. The author(s) hold no responsibility for any financial losses or damages incurred from using this package for investment or financial purposes.
 
 </div>
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 ---
 <!-- Quick Start -->
@@ -135,7 +135,7 @@ Additionally, the development version of the package can be installed by executi
 pkg> dev OnlinePortfolioSelection
 ```
 
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 <!-- Example -->
 ### Example
@@ -215,7 +215,7 @@ julia> m_cornk.b
 <div align="justify">
 For further details regarding the implemented strategies and the API, please refer to the <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/">documentation</a>.
 </div>
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 <!-- Run from Python -->
 ### Run from Python
@@ -267,7 +267,7 @@ array([1., 1., 1., 1., 1., 1., 1., 1., 1., 1.])
 <div align="justify">
 As you can see, the package can be used from Python easily. For more information, check the <a href="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/python">documentation</a>.
 </div>
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 ---
 <!-- TODO LIST -->
@@ -279,7 +279,7 @@ As you can see, the package can be used from Python easily. For more information
 - [ ] Implement $B^H$
 - etc.
 
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 <!-- Contribution -->
 ## Contribution
@@ -288,7 +288,7 @@ As you can see, the package can be used from Python easily. For more information
 Contributions are warmly welcome. Please feel free to open an issue and discuss the changes you want to make. Afterward, fork the repo and make the changes. Then, open a pull request, and I will review and hopefully merge it.
 </div>
 
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 <!-- Motivation -->
 ## Motivation
@@ -297,7 +297,7 @@ Contributions are warmly welcome. Please feel free to open an issue and discuss 
 I aimed to implement benchmark methods for Online Portfolio Selection (OPS) as part of my M.Sc. thesis to conduct comprehensive benchmarking experiments. The goal was to compare the performance of these benchmark methods with my proposed method from my thesis. I decided to transform this into an open-source package so that other researchers could leverage these established methods for their own research, sparing them the effort of reimplementing existing strategies. My intention is to continue developing and expanding this package to include more algorithms as I find it an exciting area of study. Ultimately, I hope this contribution proves beneficial to the research community.
 </div>
 
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 <!-- License -->
 ## License
@@ -305,7 +305,7 @@ I aimed to implement benchmark methods for Online Portfolio Selection (OPS) as p
 <div align="justify">
 This project is licensed under the MIT License - see the <a href="https://github.com/shayandavoodii/OnlinePortfolioSelection.jl/blob/main/LICENSE">LICENSE</a> file for details.
 </div>
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>
 
 <!-- Contact -->
 ## Contact
@@ -313,4 +313,4 @@ This project is licensed under the MIT License - see the <a href="https://github
 <div align="justify">
 If you have any inquiries or suggestions, please don't hesitate to contact me via email at <a href="mailto:sh0davoodi@gmail.com">sh0davoodi@gmail.com</a>. Alternatively, feel free to open an issue in the repository.
 </div>
-<p align="right">🆙<a href="#top">Table of cotents</a></p>
+<p align="right">🆙<a href="#top">Table of contents</a></p>

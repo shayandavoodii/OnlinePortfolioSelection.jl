@@ -19,7 +19,10 @@ makedocs(;
     format=Documenter.HTML(;
         canonical="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl",
         prettyurls = get(ENV, "CI", nothing) == "true",
-        assets=String["assets/citations.css"],
+        assets=[
+          "assets/citations.css",
+          "assets/icon.ico"
+        ],
         footer="[$NAME.jl]($GITHUB) v$VERSION_ docs powered by [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl).",
     ),
     pages=Any[

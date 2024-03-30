@@ -20,4 +20,8 @@ w = 5
     @test_throws ArgumentError spolc(rel_pr, 0., w)
     @test_throws ArgumentError spolc(rel_pr, 𝛾, 1)
   end
+
+  @testset "Individual funcs" begin
+    @test OnlinePortfolioSelection.simplexproj([0.1, 0.2, 0.3], 3)≈[ 0.8999999999999999, 1.0, 1.0999999999999999]
+  end
 end

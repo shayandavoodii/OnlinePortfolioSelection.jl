@@ -22,6 +22,6 @@ w = 5
   end
 
   @testset "Individual funcs" begin
-    @test OnlinePortfolioSelection.simplexproj([1e6, 2e6, 3e6], 3)≈[ 0.8999999999999999, 1.0, 1.0999999999999999]
+    @test OnlinePortfolioSelection.simplexproj([1e6, 2e6, 3e6], 3)≈[0., 0., 3.]
   end
 end

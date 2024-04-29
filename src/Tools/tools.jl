@@ -582,7 +582,7 @@ of the same size.
 
 # Example
 ```julia
-julia> using HypothesisTests
+julia> using OnlinePortfolioSelection, HypothesisTests
 
 julia> apys = [
          [1, 2, 3, 4],

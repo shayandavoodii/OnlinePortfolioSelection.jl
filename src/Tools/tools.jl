@@ -560,3 +560,41 @@ function __LogVecOrMat__(mat, filename="output")
   end
 end
 # COV_EXCL_STOP
+
+"""
+    ttest(vec::AbstractVector{<:AbstractVector})
+
+Perform a one sample t-test of the null hypothesis that `n` values with mean `x̄` and sample \
+standard deviation stddev come from a distribution with mean ``μ\\_0`` against the alternative \
+hypothesis that the distribution does not have mean ``μ\\_0``. The t-test with 95% confidence \
+level applies on each pair of vectors in the `vec` vector. Each vector should contain the \
+Annual Percentage Yield (APY) of a different algorithm on various datasets.
+
+!!! note
+    You have to install and import the `HypothesisTests` package to use this function.
+
+# Arguments
+- `vec::AbstractVector{<:AbstractVector}`: A vector of vectors. Each inner vector should be \
+of the same size.
+
+# Returns
+- `::Matrix{<:AbstractFloat}`: A matrix of p-values for each pair of algorithms.
+
+# Example
+```julia
+julia> using HypothesisTests
+
+julia> apys = [
+         [1, 2, 3, 4],
+         [2, 7, 0, 1],
+         [3, 0, 0, 5]
+       ];
+
+julia> ttest(apys)
+3×3 Matrix{Float64}:
+ 0.0  1.0  0.702697
+ 0.0  0.0  0.843672
+ 0.0  0.0  0.0
+```
+"""
+function ttest end

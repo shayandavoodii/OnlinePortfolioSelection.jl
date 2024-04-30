@@ -179,7 +179,7 @@ julia> groupedbar(
 ```
 
 
-![alt-text](../assets/performance_eval.png)
+![alt-text](assets/performance_eval.png)
 
 The plot illustrates the value of each metric for each algorithm. 
 

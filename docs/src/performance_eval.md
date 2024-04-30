@@ -248,6 +248,40 @@ Annualized Standard Deviation: 0.31236709233949556
 
 As shown, the results are consistent with the results obtained using the [`opsmetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`at`](@ref) for more information).
 
+### T-test
+
+In order to investigate whether there are significant differences between some algorithms or not, a statistical analysis can be performed in which, a hypothesis test is considered for paired samples. In this hypothesis test, the difference between the paired samples is the target parameter in which, the paired samples are the [APY](@ref "Annualized Percentage Yield (APY)") of two algorithms applied on different datasets [KHEDMATI2020113546](@cite). Suppose you want to compare the performance of [`EG`](@ref "Exponential Gradient (EG)"), [`EGM`](@ref "Exponential Gradient with Momentum (EGM)"), and [`ONS`](@ref "Online Newton Step (ONS)") algorithms:
+
+!!! note
+    You have to install and import the [`HypothesisTests.jl`](https://github.com/JuliaStats/HypothesisTests.jl) package to use this function. One can install the aformentioned package using the following command in Julia REPL:
+    ```julia
+    pkg> add HypothesisTests
+    ```
+
+```julia
+julia> using OnlinePortfolioSelection, HypothesisTests
+
+# Vector of apy values for 3 datasets. I.e. apy value for EG algorithm for Dataset1 is 0.864
+julia> apy_EG = [0.864, 0.04, 0.98];
+
+julia> apy_WAEG = [0.754, 0.923, 0.123];
+
+julia> apy_MAEG = [0.512, 0.143, 0.0026];
+
+julia> apy_load = [0.952, 0.256, 0.156];
+
+julia> apys = [apy_EG, apy_WAEG, apy_MAEG, apy_load];
+
+julia> ttest(apys)
+4×4 Matrix{Float64}:
+ 0.0  0.960744  0.321744  0.649426
+ 0.0  0.0       0.201017  0.638612
+ 0.0  0.0       0.0       0.14941
+ 0.0  0.0       0.0       0.0
+```
+
+The lower the p-values, the better is the performance. The returned matrix by [`ttest`](@ref) function is a square matrix in which the rows and columns represent the algorithms and the values represent the p-values of t-student test between each pair of algorithms. According to the output above, the performance of the "MAEG" algorithm dominates the "LOAD" algorithm.
+
 ## References
 
 ```@bibliography

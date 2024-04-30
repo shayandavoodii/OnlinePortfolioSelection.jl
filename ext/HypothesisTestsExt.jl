@@ -4,6 +4,7 @@ using HypothesisTests
 using OnlinePortfolioSelection
 
 function OnlinePortfolioSelection.ttest(vec::AbstractVector{<:AbstractVector})
+  length(vec)>1 || ArgumentError("There should exist more than one inner vector in the `vec`.") |> throw
   ndatasets, nalgs = length(vec[1]), length(vec)
   for item ∈ vec
     li = length(item)

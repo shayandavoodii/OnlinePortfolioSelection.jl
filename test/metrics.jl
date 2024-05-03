@@ -1,4 +1,5 @@
 using HypothesisTests
+using GLM
 
 # Test data. Assumption: 3 assets and 40 periods.
 adj_close = rand(3, 40) .* [4., 3., 2.] .+ [1., 5., 4.];
@@ -85,5 +86,10 @@ end
     @test_throws ArgumentError ttest([[1,2,3]])
     @test_throws ArgumentError ttest([[1,2,3], [1,2]])
     @test_throws ArgumentError ttest([[1],[2]])
+
+    SB, Sₜ = rand(10), rand(10)
+    SF = 1.000156
+    @test ttest(SB, Sₜ, SF) isa StatsModels.TableRegressionModel
+    @test_throws ArgumentError ttest(rand(2), rand(3), SF)
   end
 end

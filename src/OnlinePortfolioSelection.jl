@@ -1,7 +1,7 @@
 module OnlinePortfolioSelection
 
 using Statistics:      cor, var, mean, median, std
-using LinearAlgebra:   I, norm, Symmetric, diagm, tr, diagind
+using LinearAlgebra:   I, norm, Symmetric, diagm, tr, diagind, svd
 using JuMP:            Model, @variable, @constraint, @NLobjective, @expression, @objective
 using JuMP:            value, @NLconstraint, set_silent, optimize!, optimizer_with_attributes, objective_value
 using Ipopt:           Optimizer
@@ -47,6 +47,7 @@ include("Algos/RMR.jl")
 include("Algos/SSPO.jl")
 include("Algos/WAEG.jl")
 include("Algos/MAEG.jl")
+include("Algos/SPOLC.jl")
 include("Algos/TCO.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
@@ -55,7 +56,7 @@ include("Tools/cornfam.jl")
 
 export up, eg, cornu, cornk, dricornk, bcrp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm, tppt, gwr, ons, dmr, rmr, sspo
-export waeg, maeg, tco
+export waeg, maeg, spolc, tco
 export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir, at
 export OPSAlgorithm, OPSMetrics, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
@@ -132,6 +133,7 @@ function opsmethods()
   println("      SSPO: Short-term Sparse Portfolio Optimization - Call `sspo`")
   println("      WAEG: Weak Aggregating Exponential Gradient - Call `waeg`")
   println("      MAEG: Moving-window-based Adaptive Exponential Gradient - Call `maeg`")
+  println("     SPOLC: loss control strategy for short-term portfolio optimization (SPOLC) - Call `spolc`")
   println("       TCO: Transaction Cost Optimization - Call `tco`")
 end
 # COV_EXCL_STOP

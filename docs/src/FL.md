@@ -10,6 +10,9 @@ The "Follow the Loser" (FL) strategy, introduced by [borodin2003can](@citet), in
 6. [Gaussian Weighting Reversion (GWR)](@ref)
 7. [Distributed Mean Reversion (DMR)](@ref)
 8. [Robust Median Reversion (RMR)](@ref)
+9. [Short-term portfolio optimization with loss control (SPOLC)](@ref)
+10. [Transaction Cost Optimization (TCO)](@ref)
+
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
 
@@ -552,7 +555,7 @@ You can analyse the algorithm's performance using several metrics that have been
 
 ## Distributed Mean Reversion (DMR)
 
-[ZHONG2023](@citet) proposed a novel mean reversion strategy in which they have allowed short-sells unlike other OPS strategies proposed in the literature. For each investment period ($k$), they have constructed a network of assets that have correlations more than a threshold ($\eta$) with other assets. Furthermore they select the $n$ assets that have the highest centrality degree in the network for investment. Finally, they combine portfolios selected by $n$ defined trading machines to form the final portfolio. See [`dmr`](@ref).
+[ZHONG2023](@citet) proposed a novel mean reversion strategy in which they have allowed short-sells unlike other Online Portfolio Selection (OPS) strategies proposed in the literature. For each investment period ($k$), they have constructed a network of assets that have correlations more than a threshold ($\eta$) with other assets. Furthermore they select the $n$ assets that have the highest centrality degree in the network for investment. Finally, they combine portfolios selected by $n$ defined trading machines to form the final portfolio. See [`dmr`](@ref).
 
 Let's run the algorithm on the real market data.
 
@@ -642,6 +645,72 @@ julia> model.b
  0.25  0.0         0.0       0.0         0.0
  0.25  0.0         0.0       0.0         0.0
  0.25  1.14513e-8  9.979e-9  9.99353e-9  1.03254e-8
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
+
+
+## Short-term portfolio optimization with loss control (SPOLC)
+
+Estimating covariance matrix in rapidly-changing financial markets is barely investigated in the loiterature of the OPS algorithms. [10.5555/3455716.3455813](@citet) proposed a novel online portfolio selection strategy called Short-term portfolio optimization with loss control (SPOLC) which addresses the issue and is very strong in controlling extreme losses. They proposed an innovative rank-one covariance estimate model which effectively catches the instantaneous risk structure of the current financial circumstance, and incorporate it in a short-term portfolio optimization (SPO) that minimizes the downside risk of the portfolio. See [`spolc`](@ref).
+
+Let's run the algorithm on the real market data.
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["AAPL", "AMZN", "GOOG", "MSFT"];
+
+julia> querry = [get_prices(ticker, startdt="2019-01-01", enddt="2019-01-25")["adjclose"] for ticker in tickers];
+
+julia> prices = stack(querry, dims=1);
+
+julia> rel_pr = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia> model = spolc(rel_pr, 0.025, 5);
+
+julia> model.b
+4×15 Matrix{Float64}:
+ 0.25  0.197923  0.244427  0.239965  …  0.999975    8.49064e-6  2.41014e-6
+ 0.25  0.272289  0.251802  0.276544     1.57258e-5  0.999983    0.999992
+ 0.25  0.269046  0.255524  0.240024     6.50008e-6  5.94028e-6  3.69574e-6
+ 0.25  0.260742  0.248247  0.243466     2.99939e-6  3.04485e-6  1.56805e-6
+
+julia> tickers = ["MSFT", "TSLA", "GOOGL", "NVDA"];
+
+julia> querry = [get_prices(ticker, startdt="2024-01-01", enddt="2024-03-01")["adjclose"] for ticker in tickers];
+
+julia> pr = stack(querry, dims=1);
+
+julia> r = pr[:, 2:end]./pr[:, 1:end-1];
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
+
+## Transaction Cost Optimization (TCO)
+
+Proportional transaction costs have also been investigated in the field of OPS algorithms. Transaction Cost Optimization (TCO) [1357831](@cite) is an algorithm that probes the aformentioned issue. The TCO framework integrates the L1 norm of successive allocations' differences with the goal of maximizing anticipated log return. This formulation is addressed through convex optimization, yielding two explicit portfolio update formulas, namely, TCO1 and TCO2. Both variants is implemented in this package and can be used for research purposes. See [`tco`](@ref).
+
+```julia
+# TCO1
+julia> model = tco(r, 5, 5, 0.04, 10, TCO1, [0.05, 0.05, 0.7, 0.2]);
+
+julia> model.b
+4×5 Matrix{Float64}:
+ 0.05  0.05  0.052937  0.0540085  0.0537137
+ 0.05  0.05  0.073465  0.0783877  0.0781003
+ 0.7   0.7   0.669571  0.657286   0.66002
+ 0.2   0.2   0.204027  0.210318   0.208166
+
+# TCO2
+julia> model = tco(r, 5, 5, 0.04, 10, TCO2, [0.05, 0.05, 0.7, 0.2]);
+
+julia> model.b
+4×5 Matrix{Float64}:
+ 0.05  0.0809567  0.0850694  0.0871646  0.0865584
+ 0.05  0.0809567  0.0830907  0.0890398  0.0885799
+ 0.7   0.730957   0.756827   0.746137   0.748113
+ 0.2   0.10713    0.0750128  0.0776584  0.0767483
 ```
 
 You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.

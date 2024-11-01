@@ -44,6 +44,7 @@ include("Algos/ONS.jl")
 include("Algos/DMR.jl")
 include("Algos/RMR.jl")
 include("Algos/SSPO.jl")
+include("Algos/KTPT.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
@@ -55,7 +56,7 @@ export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir, at
 export OPSAlgorithm, OPSMetrics, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
 export SMA, EMA, PP
-export EGE, EGR, EGA
+export EGE, EGR, EGA, ktpt
 export opsmethods
 
 @setup_workload begin
@@ -124,6 +125,8 @@ function opsmethods()
   println("       DMR: Distributed Mean Reversion (DMR) - Call `dmr`")
   println("       RMR: Robust Median Reversion - Call `rmr`")
   println("      SSPO: Short-term Sparse Portfolio Optimization - Call `sspo`")
+  println("      KTPT: kernel-based trend pattern tracking system - Call `ktpt`")
+
 end
 # COV_EXCL_STOP
 

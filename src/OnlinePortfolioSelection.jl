@@ -45,6 +45,7 @@ include("Algos/ONS.jl")
 include("Algos/DMR.jl")
 include("Algos/RMR.jl")
 include("Algos/SSPO.jl")
+include("Algos/KTPT.jl")
 include("Algos/WAEG.jl")
 include("Algos/MAEG.jl")
 include("Algos/SPOLC.jl")
@@ -61,7 +62,7 @@ export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir, at, ttest
 export OPSAlgorithm, OPSMetrics, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
 export SMAP, SMAR, EMA, PP
-export EGE, EGR, EGA
+export EGE, EGR, EGA, ktpt
 export TCO1, TCO2
 export opsmethods
 
@@ -135,6 +136,7 @@ function opsmethods()
   println("      MAEG: Moving-window-based Adaptive Exponential Gradient - Call `maeg`")
   println("     SPOLC: loss control strategy for short-term portfolio optimization (SPOLC) - Call `spolc`")
   println("       TCO: Transaction Cost Optimization - Call `tco`")
+  println("      KTPT: kernel-based trend pattern tracking system - Call `ktpt`")
 end
 # COV_EXCL_STOP
 

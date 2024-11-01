@@ -1,7 +1,7 @@
 name               = "OnlinePortfolioSelection"
 uuid               = "038f9fe3-14bd-47ca-b081-2e00e8c46dfa"
 authors            = ["Shayan Davoodi"]
-version            = "2.12.0"
+version            = "2.13.0"
 
 [deps]
 DataStructures     = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
@@ -18,12 +18,14 @@ Clustering         = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
 Distributions      = "31c24e10-a181-5473-b8eb-7969acd0382f"
 HypothesisTests    = "09f84164-cd44-5f33-b23f-e6b0d136a0d5"
 GLM                = "38e38edf-8417-5370-95a0-9cbb8c7f171a"
+Lasso              = "b4fcebef-c861-5a0f-a7e2-ba9dc32b180a"
 
 [extensions]
 CWMRModelExt       = "Distributions"
 ClusLogModelExt    = "Clustering"
 HypothesisTestsExt = "HypothesisTests"
 GLMExt             = "GLM"
+KTPTModelExt       = "Lasso"
 
 [compat]
 Clustering         = "0.15.7"
@@ -33,6 +35,7 @@ GLM                = "1.9.0"
 Distances          = "0.10"
 Distributions      = "0.25.0"
 StatsBase          = "0.34.2"
+Lasso              = "0.7.2"
 Ipopt              = "1.2"
 JuMP               = "1.10"
 LinearAlgebra      = "1"

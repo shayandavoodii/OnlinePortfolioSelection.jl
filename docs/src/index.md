@@ -7,7 +7,8 @@ end
 # Introduction
 
 Online Portfolio Selection (OPS) strategies represent trading algorithms that sequentially allocate capital among a pool of assets with the aim of maximizing investment returns. This forms a fundamental issue in computational finance, extensively explored across various research domains, including finance, statistics, artificial intelligence, machine learning, and data mining. Framed within an online machine learning context, OPS is defined as a sequential decision problem, providing a range of advanced approaches to tackle this challenge. These approaches categorize into benchmarks, “Follow-the-Winner” and “Follow-the-Loser” strategies, “Pattern-Matching” based methodologies, and "Meta-Learning" Algorithms [li2013online](@cite).
-This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, 33 algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:
+
+This package offers an efficient implementation of OPS algorithms in Julia, ensuring complete type stability. All algorithms yield an [`OPSAlgorithm`](@ref) object, permitting inquiries into portfolio weights, asset count, and algorithm names. Presently, 33 algorithms are incorporated, with ongoing plans for further additions. The existing algorithms are as follows:    
 
 !!! note
     In the following table, the abbreviations **PM**, **ML**, **FL**, and **FW** stand for **Pattern-Matching**, **Meta-Learning**, **Follow the Loser**, and **Follow the Winner**, respectively.
@@ -81,6 +82,9 @@ julia> pr = CSV.read("data\\sp500.csv", DataFrame) |> Matrix |> permutedims;
 
 julia> pr = pr[2:end, :];
 
+# calculate the relative prices
+julia> rel_pr = pr[:, 2:end] ./ pr[:, 1:end-1];
+
 julia> market_pr = pr[1, :];
 
 julia> rel_pr_market = market_pr[2:end] ./ market_pr[1:end-1];
@@ -92,9 +96,9 @@ julia> size(pr)
 The dataset encompasses adjusted close prices of 24 stocks in the S&P 500 across 1276 trading days. Suppose we aim to apply the strategies to the most recent 50 days of the dataset using default arguments:
 
 ```julia
-julia> m_corn_u = cornu(pr, 50, 3);
+julia> m_corn_u = cornu(rel_pr, 50, 3);
 
-julia> m_corn_k = cornk(pr, 50, 3, 2, 2);
+julia> m_corn_k = cornk(rel_pr, 50, 3, 2, 2);
 
 juila> m_drcorn_k = dricornk(pr, market_pr, 50, 5, 5, 5);
 ```
@@ -102,9 +106,6 @@ juila> m_drcorn_k = dricornk(pr, market_pr, 50, 5, 5, 5);
 Next, let's visualize the daily cumulative budgets' trends for each algorithm. To do this, we'll need to compute them by utilizing the attained portfolio weights and relative prices within the same time period.
 
 ```julia
-# calculate the relative prices
-julia> rel_pr = pr[:, 2:end] ./ pr[:, 1:end-1];
-
 julia> models = [m_corn_u, m_corn_k, m_drcorn_k];
 
 # calculate the cumulative wealth for each algorithm
@@ -119,11 +120,11 @@ julia> plot(
        )
 ```
 
-```@raw html
-<img src="assets/cumulative_budgets.png" width="100%">
-```
 
-The plot illustrates that the cumulative return of CORN-K consistently outperforms the other algorithms. It's important to note that the initial investment for all algorithms is standardized to 1, although this can be adjusted by setting the keyword argument `init_budg` for each algorithm. Now, let's delve into the performance analysis of the algorithms using prominent [performance metrics](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/):
+![alt-text](assets/cumulative_budgets.png)
+
+
+The plot illustrates that the cumulative wealth of CORN-K consistently outperforms the other algorithms. It's important to note that the initial investment for all algorithms is standardized to 1, although this can be adjusted by setting the keyword argument `init_budg` for each algorithm. Now, let's delve into the performance analysis of the algorithms using prominent [performance metrics](https://shayandavoodii.github.io/OnlinePortfolioSelection.jl/dev/performance_eval/):
 
 ```julia
 julia> all_metrics = opsmetrics.([m_corn_u.b, m_corn_k.b, m_drcorn_k.b], Ref(rel_pr), Ref(rel_pr_market));

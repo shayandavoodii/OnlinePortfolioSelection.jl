@@ -80,23 +80,13 @@ Here, $R_f$ denotes the risk-free rate, typically equivalent to the treasury bil
 
 ### Maximum Drawdown (MDD)
 
-The maximum drawdown is the largest loss observed from a peak to a trough within a portfolio, before a subsequent peak is attained. The calculation of MDD relies on the capital break value. Capital break serves as a critical criterion for assessing the capital market and equals the maximum decline from the peak of the portfolio cumulative function. Capital break is defined as:
+The maximum drawdown is the largest drop percentage of [CW](@ref "Cumulative Wealth (CW, Also known as $S_n$)") from its running maximum over all periods, which looks for the most considerable movement from a peak point to a trough point. Following the definition of [LI2022115889](@citet), the maximum drawdown is defined as:
 
 ```math
-\begin{aligned}
-DD\left( T \right) = \sup \left[ {0,{{\sup }_{i \in \left( {0,t} \right)}}{S_i} - {S_t}} \right]
-\end{aligned}
+MDD = \mathop {\max }\limits_{t \in \left[ {1,T} \right]} \frac{{{M_t} - {S_t}}}{{{M_t}}},\quad {M_t} = \mathop {\max }\limits_{k \in \left[ {1,t} \right]} {S_k}
 ```
 
-where $S_t$ denotes the portfolio cumulative function at time $t$. The maximum capital break, used to gauge risk, is defined as:
-
-```math
-\begin{aligned}
-MDD\left( n \right) = {\sup _{t \in \left( {0,n} \right)}}\left[ {DD\left( t \right)} \right]
-\end{aligned}
-```
-
-This metric can be calculated using the [`mdd`](@ref) function.
+where $M_t$ represents the running maximum of CW, and $S_t$ represents the CW at time $t$. This metric can be calculated using the [`mdd`](@ref) function.
 
 ### Calmar Ratio (CR)
 
@@ -188,9 +178,8 @@ julia> groupedbar(
        )
 ```
 
-```@raw html
-<img src="../assets/performance_eval.png" width="100%">
-```
+
+![alt-text](assets/performance_eval.png)
 
 The plot illustrates the value of each metric for each algorithm. 
 
@@ -199,7 +188,7 @@ The plot illustrates the value of each metric for each algorithm.
 The metrics can be calculated individually as well. For instance, in the next code block, I compute each metric individually for the 'CORNK' algorithm.
 
 ```julia
-# Compute the cumulative return
+# Compute the cumulative wealth
 julia> sn_ = sn(cornkm.b, rel_pr)
 31-element Vector{Float64}:
  1.0
@@ -245,7 +234,7 @@ julia> at(rel_pr, cornkm.b)
 
 julia> last(all_metrics_vals)
 
-            Cumulative Return: 1.066125303122296
+            Cumulative Wealth: 1.066125303122296
         Mean Excessive Return: 0.03318859854896919
             Information Ratio: 0.1479792121956763
   Annualized Percentage Yield: 0.7123372624638589
@@ -257,6 +246,75 @@ Annualized Standard Deviation: 0.31236709233949556
 ```
 
 As shown, the results are consistent with the results obtained using the [`opsmetrics`](@ref) function. Individual functions can be found in [Functions](@ref) (see [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_std`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), [`calmar`](@ref), and [`at`](@ref) for more information).
+
+### Tests
+
+In order to investigate whether there are significant differences between some algorithms or not, a statistical analysis can be performed in which, a hypothesis test is considered for paired samples. In this hypothesis test, the difference between the paired samples is the target parameter in which, the paired samples are the [APY](@ref "Annualized Percentage Yield (APY)") of two algorithms applied on different datasets [KHEDMATI2020113546](@cite). Suppose you want to compare the performance of [`EG`](@ref "Exponential Gradient (EG)"), [`EGM`](@ref "Exponential Gradient with Momentum (EGM)"), and [`ONS`](@ref "Online Newton Step (ONS)") algorithms:
+
+!!! note
+    You have to install and import the [`HypothesisTests.jl`](https://github.com/JuliaStats/HypothesisTests.jl) package to use this function. One can install the aformentioned package using the following command in Julia REPL:
+    ```julia
+    pkg> add HypothesisTests
+    ```
+
+```julia
+julia> using OnlinePortfolioSelection, HypothesisTests
+
+# Vector of apy values for 3 datasets. I.e. apy value for EG algorithm for Dataset1 is 0.864
+julia> apy_EG = [0.864, 0.04, 0.98];
+
+julia> apy_WAEG = [0.754, 0.923, 0.123];
+
+julia> apy_MAEG = [0.512, 0.143, 0.0026];
+
+julia> apy_load = [0.952, 0.256, 0.156];
+
+julia> apys = [apy_EG, apy_WAEG, apy_MAEG, apy_load];
+
+julia> ttest(apys)
+4×4 Matrix{Float64}:
+ 0.0  0.960744  0.321744  0.649426
+ 0.0  0.0       0.201017  0.638612
+ 0.0  0.0       0.0       0.14941
+ 0.0  0.0       0.0       0.0
+```
+
+The lower the p-values, the better is the performance. The returned matrix by [`ttest`](@ref) function is a square matrix in which the rows and columns represent the algorithms and the values represent the p-values of t-student test between each pair of algorithms. According to the output above, the performance of the "MAEG" algorithm dominates the "LOAD" algorithm.
+
+To evaluate if the return of the proposed strategy could be due to simple luck, a statistical test can be conducted to measure the probability of this occurrence [10.1145/3200692](@cite). It is possible to use the aformentioned [`ttest`](@ref) function to validate the rubustness of a trading algorithm. The following snippet code provides an example in this regard:
+
+!!! note
+    You have to install the [`GLM.jl`](https://github.com/JuliaStats/GLM.jl) package using the following command in Julia REPL:
+    ```julia
+    pkg> add GLM
+    ```
+
+```julia
+julia> using OnlinePortfolioSelection, GLM, YFinance
+
+julia> benchmark_prices = get_prices("^GSPC", startdt="2020-02-01", enddt="2020-02-29")["adjclose"]
+
+julia> benchmark_return = benchmark_prices[2:end]./benchmark_prices[1:end-1]
+
+julia> portfolio_return = rand(0.9:1e-5:1.1, length(benchmark_return))
+
+julia> daily_riskfree_return = 1.000156
+
+julia> ttest(benchmark_return, portfolio_return, daily_riskfree_return)
+StatsModels.TableRegressionModel{LinearModel{GLM.LmResp{Vector{Float64}}, GLM.DensePredChol{Float64, LinearAlgebra.CholeskyPivoted{Float64, Matrix{Float64}, Vector{Int64}}}}, Matrix{Float64}}
+
+y ~ 1 + x
+
+Coefficients:
+────────────────────────────────────────────────────────────────────────────
+                  Coef.  Std. Error      t  Pr(>|t|)   Lower 95%   Upper 95%
+────────────────────────────────────────────────────────────────────────────
+(Intercept)  -0.0224706   0.0117695  -1.91    0.0743  -0.0474209  0.00247968
+x            -0.0860158   0.724261   -0.12    0.9069  -1.62138    1.44935
+────────────────────────────────────────────────────────────────────────────
+```
+
+By analysing the table above, we can conclude that the returns gained by the algorithm are likely to be obtained by chance.
 
 ## References
 

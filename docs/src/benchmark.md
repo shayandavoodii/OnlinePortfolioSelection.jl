@@ -1,13 +1,14 @@
 # Benchmark Strategies
-In the domain of online portfolio selection, certain strategies are considered benchmark strategies. One of the simplest is the Buy and Hold (BH) strategy, often referred to as the *market strategy*. BH involves an equal investment in m assets at the beginning, maintaining these allocations throughout the subsequent periods, leading to passive weight adjustments based on the assets' price variations. An optimized version, the Best-Stock (BS) strategy, allocates all capital to the best-performing asset over the periods. These benchmark portfolio selection models are straightforward, lacking the use of sophisticated statistical or machine learning techniques to uncover data patterns. Consequently, they serve as baselines for evaluating the performance of newly developed models. Another benchmark strategy, the Constant Rebalanced Portfolio (CRP), maintains a fixed weight for each asset over a specified period. The currently implemented strategies in this package include:
 
-1. [Constant Rebalanced Portfolio (CRP)](@ref)
+In the domain of online portfolio selection, certain strategies are considered benchmark strategies. One of the simplest is the Buy and Hold (BH) strategy, often referred to as the *market strategy*. BH involves an equal investment in m assets at the beginning, maintaining these allocations throughout the subsequent periods, leading to passive weight adjustments based on the assets' price variations. An optimized version, the Best-Stock (BS) strategy, allocates all capital to the best-performing asset over the periods. These benchmark portfolio selection models are straightforward, lacking the use of sophisticated statistical or machine learning techniques to uncover data patterns. Consequently, they serve as baselines for evaluating the performance of newly developed models. Another benchmark strategy, the Best Constant Rebalanced Portfolio (BCRP), is a hindsight strategy which maintains the best portfolio over a specified period; the portfolio achieves the maximum return among a set of portfolios. The currently implemented strategies in this package include:
+
+1. [Best Constant Rebalanced Portfolio (BCRP)](@ref)
 2. [Best Stock (BS)](@ref)
 3. [Uniform Portfolio (1/N)](@ref)
 4. [Universal Portfolio (UP)](@ref)
 5. [Online Newton Step (ONS)](@ref)
 
-## Constant Rebalanced Portfolio (CRP)
+## Best Constant Rebalanced Portfolio (BCRP)
 Let's run the algorithm [COVER451321](@cite) on the real market data. Assume the data (named as `prices`) is collected as noted in the [Fetch Data](@ref) section.
 
 ```julia
@@ -20,51 +21,35 @@ julia> size(prices)
 # where each row is the price vector of the assets at a specific time period.
 julia> prices = prices |> permutedims;
 
-# Let's run the algorithm on the last 5 days of the data.
-julia> m_crp = crp(prices[:, end-4:end]);
+julia> rel_pr = prices[:, 2:end] ./ prices[:, 1:end-1];
 
-juila> m_crp.b
-5×5 Matrix{Float64}:
- 0.2  0.2  0.2  0.2  0.2
- 0.2  0.2  0.2  0.2  0.2
- 0.2  0.2  0.2  0.2  0.2
- 0.2  0.2  0.2  0.2  0.2
- 0.2  0.2  0.2  0.2  0.2
+julia> m_bcrp = bcrp(rel_pr);
+
+juila> m_bcrp.b
+5×16 Matrix{Float64}:
+ 2.47893e-7  2.47893e-7  2.47893e-7  …  2.47893e-7  2.47893e-7  2.47893e-7        
+ 2.42733e-7  2.42733e-7  2.42733e-7     2.42733e-7  2.42733e-7  2.42733e-7        
+ 2.74331e-7  2.74331e-7  2.74331e-7     2.74331e-7  2.74331e-7  2.74331e-7        
+ 1.88828e-7  1.88828e-7  1.88828e-7     1.88828e-7  1.88828e-7  1.88828e-7
+ 0.999999    0.999999    0.999999       0.999999    0.999999    0.999999
 ```
 
 One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
-julia> sn(m_crp.b, rel_price)
+julia> sn(m_bcrp.b, rel_pr)
 6-element Vector{Float64}:
+17-element Vector{Float64}:
  1.0
- 0.9879822623031318
- 0.9854808899164217
- 0.9871240426268018
- 0.977351149446221
- 0.9716459683279461
+ 0.9904417595935182
+ 1.0074055375392224
+ ⋮
+ 1.003358256415448
+ 0.9941445393197398
 ```
 
-The outcome demonstrates that if we had invested during the specified period, we would have incurred a loss of approximately 2.8% of our capital. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this instance. Let's further analyze the algorithm's performance based on some significant metrics:
-
-```julia
-julia> results = opsmetrics(m_crp.b, rel_price)
-
-            Cumulative Return: 0.972
-                          APY: -0.765
-Annualized Standard Deviation: 0.087
-      Annualized Sharpe Ratio: -9.008
-             Maximum Drawdown: 0.028
-                 Calmar Ratio: -26.993
-
-julia> results.
-APY         Ann_Sharpe  Ann_Std     Calmar      MDD         Sn
-
-julia> results.MDD
-0.02835403167205386
-```
+The outcome demonstrates that if we had invested during the specified period, we would have incurred a loss of approximately 0.6% of our capital. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this instance.  
+It is possible to analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## Best Stock (BS)
 
@@ -168,7 +153,7 @@ Additionally, this package offers functions for assessing the algorithm's perfor
 
 ## Universal Portfolio (UP)
 
-Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [COVER451321](@citet). This algorithm is designed to optimize the cumulative return of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
+Universal Portfolio (UP) is a Follow the Winner (FW) strategy introduced by [COVER451321](@citet). This algorithm is designed to optimize the cumulative wealth of a portfolio over the investment horizon. UP's approach is centered on daily stock market performance and the distribution of wealth invested in individual stocks.
 
 See [`up`](@ref).
 
@@ -185,42 +170,41 @@ julia> size(prices)
 
 # OnlinePortfolioSelection suppose that the data is in the form of a matrix
 # where each row is the price vector of the assets at a specific time period.
-julia> prices = prices |> permutedims;
+julia> prices = prices |> transpose;
 
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
 # Let's run the algorithm on the last 5 days of the data.
-julia> m_up = up(prices[:, end-4:end], eval_points=100);
+julia> m_up = up(rel_price[:, end-4:end], eval_points=100);
 
 juila> m_up.b
 5×5 Matrix{Float64}:
- 0.2  0.216518  0.216638  0.21681   0.216542
- 0.2  0.203395  0.203615  0.203754  0.203528
- 0.2  0.191899  0.191793  0.192316  0.192473
- 0.2  0.193023  0.192302  0.191687  0.19208
- 0.2  0.195164  0.195652  0.195433  0.195377
+ 0.2  0.208371  0.20835   0.208378  0.208491
+ 0.2  0.171292  0.17157   0.171647  0.171811
+ 0.2  0.221486  0.221459  0.221315  0.221753
+ 0.2  0.187741  0.187294  0.186637  0.186165
+ 0.2  0.21111   0.211327  0.212023  0.21178
 ```
 
 One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
 julia> sn(m_up.b, rel_price)
 6-element Vector{Float64}:
  1.0
- 0.9879822623031318
- 0.9856240412854884
- 0.9874863498385578
- 0.9778277061434468
- 0.9718529924971879
+ 0.9879822800563391
+ 0.9853362080114016
+ 0.9872299951993896
+ 0.9778393831200343
+ 0.9721457631543731
 ```
 
-The outcome shows that if we had invested during that period, we would have incurred a loss of approximately 2.8% in wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this context.
+The outcome shows that if we had invested during that period, we would have incurred a loss of approximately 2.7% in wealth. It's important to note that [`sn`](@ref) automatically considers the last 5 relative prices in this context.
 Let's now examine the algorithm's performance using various significant metrics.
 
 ```julia
 julia> results = opsmetrics(m_up.b, rel_price)
 
-            Cumulative Return: 0.972
+            Cumulative Wealth: 0.972
                           APY: -0.763
 Annualized Standard Deviation: 0.088
       Annualized Sharpe Ratio: -8.857

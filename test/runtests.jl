@@ -16,7 +16,7 @@ using Statistics
   @info "Run unit tests in EG.jl"
   include("EG.jl")
   @info "Run unit tests in CRP.jl"
-  include("CRP.jl")
+  include("BCRP.jl")
   @info "Run unit tests in BS.jl"
   include("BS.jl")
   @info "Run unit tests in Anticor.jl"
@@ -63,6 +63,14 @@ using Statistics
   include("RMR.jl")
   @info "Run unit tests in SSPO.jl"
   include("SSPO.jl")
+  @info "Run unit tests in WAEG.jl"
+  include("WAEG.jl")
+  @info "Run unit tests in MAEG.jl"
+  include("MAEG.jl")
+  @info "Run unit tests in SPOLC.jl"
+  include("SPOLC.jl")
+  @info "Run unit tests in TCO.jl"
+  include("TCO.jl")
   @info "Run unit tests in KTPT.jl"
   include("KTPT.jl")
 end

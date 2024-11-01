@@ -1,7 +1,7 @@
 """
     dricornk(
-      adj_close::Matrix{T},
-      adj_close_market::Vector{T},
+      x::AbstractMatrix{T},
+      relpr_market::AbstractVector{T},
       horizon::M,
       k::M,
       w::M,
@@ -9,13 +9,13 @@
       lambda::T=1e-3,
       init_budg=1,
       progress::Bool=false
-    ) where {T<:Float64, M<:Int}
+    ) where {T<:AbstractFloat, M<:Integer}
 
 Run the DRICORNK algorithm.
 
 # Arguments
-- `adj_close::Matrix{T}`: A matrix of adjusted close prices of the assets.
-- `adj_close_market::Vector{T}`: A vector of adjusted close prices of the market in the same period.
+- `x::AbstractMatrix{T}`: A matrix of relative prices of the assets.
+- `relpr_market::AbstractVector{T}`: A vector of relative prices of the market in the same period.
 - `horizon::M`: The investment horizon.
 - `k::M`: The number of experts.
 - `w::M`: maximum length of time window to be examined.
@@ -27,18 +27,18 @@ Run the DRICORNK algorithm.
 - `progress::Bool=false`: Whether to show the progress bar.
 
 !!! warning "Beware!"
-    `adj_close` should be a matrix of size `n_assets` × `n_periods`.
+    `x` should be a matrix of size `n_assets` × `n_periods`.
 
 # Returns
-- `::OPSAlgorithm(n_assets, b, alg)`: An object of type `OPSAlgorithm`.
+- `::OPSAlgorithm`: An object of type [`OPSAlgorithm`](@ref).
 
 # Example
 ```julia
 julia> using OnlinePortfolioSelection
 
-julia> stocks_adj, market_adj = rand(10, 100), rand(100);
+julia> stocks_ret, market_ret = rand(10, 100), rand(100);
 
-julia> m_dricornk = dricornk(stocks_adj, market_adj, 5, 2, 4, 3);
+julia> m_dricornk = dricornk(stocks_ret, market_ret, 5, 2, 4, 3);
 
 julia> sum(m_dricornk.b, dims=1) .|> isapprox(1.) |> all
 true
@@ -50,8 +50,8 @@ See [`cornk`](@ref), and [`cornu`](@ref).
 > [DRICORN-K: A Dynamic RIsk CORrelation-driven Non-parametric Algorithm for Online Portfolio Selection](https://www.doi.org/10.1007/978-3-030-66151-9_12)
 """
 function dricornk(
-  adj_close::Matrix{T},
-  adj_close_market::Vector{T},
+  x::AbstractMatrix{T},
+  relpr_market::AbstractVector{T},
   horizon::M,
   k::M,
   w::M,
@@ -59,26 +59,31 @@ function dricornk(
   lambda::T=1e-3,
   init_budg=1,
   progress::Bool=false
-) where {T<:Float64, M<:Int}
+) where {T<:AbstractFloat, M<:Integer}
 
+  n_assets, n_samples = size(x)
   p<2 && ArgumentError("The value of `p` should be more than 1.") |> throw
   n_experts = w*(p+1)
   k>n_experts && ArgumentError(
-    "The value of k ($k) is more than number of experts ($n_experts)"
+    "The value of k ($k) shouldn't be more than number of experts ($n_experts)"
   ) |> throw
-  size(adj_close, 2)-horizon>21 || ArgumentError(
-    "DRICORN-K needs adequate number of data samples to determine the \
-    market condition. With considering the passed arguments, you have to at least add \
-    $(21-size(adj_close, 2)+horizon+1) more samples."
-  ) |> throw
+  n_samples>2horizon+19 || ArgumentError("
+    Insufficient number of data points for `x` is provided. Considering the current \
+    value of `horizon` ($horizon), at least $(2horizon+20) data points is need. \
+    $(n_samples) is provided. Either provide more data points or decrease the value of \
+    `horizon` ($horizon). If you're willing to decrease the `horizon`, you should pass \
+    ($(ceil(Integer, (n_samples-19)/2)-1)).
+  ") |> throw
+  length(relpr_market)==n_samples || ArgumentError("
+    Insufficient number of data points for `relpr_market` ($(length(relpr_market))) \
+    is provided. The same number of data points as `x` \
+    ($(n_samples)) is required.
+  ") |> throw
 
-  # Calculate relative prices
-  relative_prices = adj_close[:, 2:end] ./ adj_close[:, 1:end-1]
   # Market's return
-  market_ret = log.(adj_close_market[2:end] ./ adj_close_market[1:end-1])
+  market_ret = log.(relpr_market)
   # Stocks' return
-  asset_ret  = log.(relative_prices)
-  n_assets   = size(relative_prices, 1)
+  asset_ret  = log.(x)
   P          = (iszero(pᵢ) ? 0. : (pᵢ-1)/pᵢ for pᵢ=0:p)
   q          = 1/k
   weights    = zeros(T, n_assets, horizon)
@@ -90,7 +95,7 @@ function dricornk(
     for ω ∈ 1:w
       for ρ ∈ P
         b = dricorn_expert(
-          relative_prices,
+          x,
           asset_ret,
           market_ret,
           horizon,
@@ -103,7 +108,7 @@ function dricornk(
 
         bₜ[:, expert]    = b
         Sₜ_[expert, t+2] = S(
-          Sₜ_[expert, t+1], b, relative_prices[:, end-horizon+t+1]
+          Sₜ_[expert, t+1], b, x[:, end-horizon+t+1]
         )
 
         expert += 1
@@ -120,23 +125,23 @@ end
 
 """
     dricorn_expert(
-      relative_prices::Matrix{T},
-      asset_ret::Matrix{T},
-      market_ret::Vector{T},
+      relative_prices::AbstractMatrix{T},
+      asset_ret::AbstractMatrix{T},
+      market_ret::AbstractVector{T},
       horizon::S,
       w::S,
       rho::T,
       t::S,
       n_assets::S,
       lambda::T
-    ) where {T<:Float64, S<:Int}
+    ) where {T<:AbstractFloat, S<:Integer}
 
 Create an expert to perform the algorithm according to the given parameters.
 
 # Arguments
-- `relative_prices::Matrix{T}`: A matrix of relative prices of the assets.
-- `asset_ret::Matrix{T}`: A matrix of assets' returns.
-- `market_ret::Vector{T}`: A vector of market's returns.
+- `relative_prices::AbstractMatrix{T}`: A matrix of relative prices of the assets.
+- `asset_ret::AbstractMatrix{T}`: A matrix of assets' returns.
+- `market_ret::AbstractVector{T}`: A vector of market's returns.
 - `horizon::S`: The investment horizon.
 - `w::S`: length of time window to be examined.
 - `rho::T`: The correlation coefficient threshold.
@@ -145,19 +150,19 @@ Create an expert to perform the algorithm according to the given parameters.
 - `lambda::T`: The regularization parameter.
 
 # Returns
-- `weight::Vector{T}`: The weights of the assets for the period `t`.
+- `weight::AbstractVector{T}`: The weights of the assets for the period `t`.
 """
 function dricorn_expert(
-  relative_prices::Matrix{T},
-  asset_ret::Matrix{T},
-  market_ret::Vector{T},
+  relative_prices::AbstractMatrix{T},
+  asset_ret::AbstractMatrix{T},
+  market_ret::AbstractVector{T},
   horizon::S,
   w::S,
   rho::T,
   t::S,
   n_assets::S,
   lambda::T
-) where {T<:Float64, S<:Int}
+) where {T<:AbstractFloat, S<:Integer}
 
   horizon≥size(relative_prices, 2) && ArgumentError("""The "horizon" ($horizon) is \
     bigger than data samples $(size(relative_prices, 2)).\nYou should either decrease \

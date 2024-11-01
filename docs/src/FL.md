@@ -10,6 +10,9 @@ The "Follow the Loser" (FL) strategy, introduced by [borodin2003can](@citet), in
 6. [Gaussian Weighting Reversion (GWR)](@ref)
 7. [Distributed Mean Reversion (DMR)](@ref)
 8. [Robust Median Reversion (RMR)](@ref)
+9. [Short-term portfolio optimization with loss control (SPOLC)](@ref)
+10. [Transaction Cost Optimization (TCO)](@ref)
+
 
 ## Reweighted Price Relative Tracking System for Automatic Portfolio Optimization (RPRT)
 
@@ -32,58 +35,39 @@ julia> size(prices)
 # where each row is the price vector of the assets at a specific time period.
 julia> prices = prices |> permutedims;
 
-julia> window_length, threshold, epsilon = 2, 0.6, 40;
+julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
 
-# Let's run the algorithm for the last 5 days of the data.
-julia> prices = prices[:, end-4:end];
+julia> horizon, window_length, v, epsilon = 7, 3, 0.6, 40;
 
-julia> m_rprt = rprt(prices, w=window_length, theta=threshold, epsilon=epsilon);
+julia> m_rprt = rprt(rel_price, horizon, window_length, v, epsilon);
 
 # Get the weights of the assets for each day
 juila> m_rprt.b
-5×5 Matrix{Float64}:
- 0.2  0.2  0.0  0.0  0.0
- 0.2  0.2  0.0  0.0  0.0
- 0.2  0.2  0.0  0.0  0.0
- 0.2  0.2  1.0  1.0  1.0
- 0.2  0.2  0.0  0.0  0.0
+5×7 Matrix{Float64}:
+ 0.2  0.0         0.0         0.0         0.0        0.0         0.0
+ 0.2  1.98902e-8  1.0         1.0         1.0        1.98959e-8  1.9889e-8
+ 0.2  0.0         0.0         0.0         0.0        0.0         0.0
+ 0.2  0.0         0.0         0.0         2.0457e-8  1.0         1.0
+ 0.2  1.0         1.99133e-8  1.98933e-8  0.0        0.0         0.0
 ```
 
 One can calculate the cumulative wealth during the investment period by using the [`sn`](@ref) function:
 
 ```julia
-julia> rel_price = prices[:, 2:end] ./ prices[:, 1:end-1];
-
 julia> sn(m_rprt.b, rel_price)
-6-element Vector{Float64}:
+8-element Vector{Float64}:
  1.0
- 0.9879822800308067
- 0.985480892911241
- 0.9646654456994471
- 0.9392966194100733
- 0.9448257537201438
+ 1.0010783376762362
+ 0.9979108682071396
+ 0.9675830381758964
+ 0.9769305815452377
+ 0.9844087616434942
+ 0.9585207785955709
+ 0.9641629932083053
 ```
 
-The outcome reveals an approximate loss of ~6.3% if an investment were made during the provided period. It's important to note that in this scenario, [`sn`](@ref) automatically considers the last 5 relative prices. Next, let's examine the algorithm's performance based on several significant metrics.
-
-```julia
-julia> results = opsmetrics(m_rprt.b, rel_price)
-
-            Cumulative Return: 0.945
-                          APY: -0.943
-Annualized Standard Deviation: 0.202
-      Annualized Sharpe Ratio: -4.760
-             Maximum Drawdown: 0.061
-                 Calmar Ratio: -15.531
-
-julia> results.
-APY         Ann_Sharpe  Ann_Std     Calmar      MDD         Sn
-
-julia> results.MDD
-0.06070338058992675
-```
-
-It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
+The outcome reveals an approximate loss of ~3.6% if an investment were made during the provided period. It's important to note that in this scenario, [`sn`](@ref) automatically considers the last 5 relative prices. Next, let's examine the algorithm's performance based on several significant metrics.  
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## Anti-Correlation (Anticor)
 
@@ -148,7 +132,7 @@ Let's now assess the algorithm's performance based on several key metrics.
 ```julia
 julia> results = opsmetrics(m_anticor.b, rel_price)
 
-            Cumulative Return: 0.8969343557511426
+            Cumulative Wealth: 0.8969343557511426
                           APY: -0.8391655504688253
 Annualized Standard Deviation: 0.1618626725690273
       Annualized Sharpe Ratio: -5.307990636954478
@@ -215,7 +199,7 @@ The outcome highlights a potential gain of ~0.7% if an investment were made duri
 ```julia
 julia> results = opsmetrics(m_olmar.b, rel_pr)
 
-            Cumulative Return: 1.0065266263361812
+            Cumulative Wealth: 1.0065266263361812
         Mean Excessive Return: -0.009414275874519928
   Annualized Percentage Yield: 0.38801292579932145
 Annualized Standard Deviation: 0.18519745676483274
@@ -266,7 +250,7 @@ Finally, let's assess the algorithm's performance based on several key metrics.
 ```julia
 julia> results = opsmetrics(model.b, rel_pr)
 
-            Cumulative Return: 1.0099455075377595
+            Cumulative Wealth: 1.0099455075377595
         Mean Excessive Return: -0.008744240554973382
   Annualized Percentage Yield: 0.6467067326806284
 Annualized Standard Deviation: 0.16828625245124013
@@ -275,7 +259,7 @@ Annualized Standard Deviation: 0.16828625245124013
                  Calmar Ratio: 73.22785427708125
 ```
 
-As can be seen, 'BAH(OLMAR)' has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio compared to the 'OLMAR' algorithm. However, the maximum drawdown is slightly higher than the 'OLMAR' algorithm. In this case, 'BAH(OLMAR)' algorithm performed better than the 'OLMAR' algorithm in terms of the 'Mean Excessive Return' and 'Annualized Percentage Yield' metrics.
+As can be seen, 'BAH(OLMAR)' has a better performance in terms of the cumulative wealth, annualized sharpe ratio, and calmar ratio compared to the 'OLMAR' algorithm. However, the maximum drawdown is slightly higher than the 'OLMAR' algorithm. In this case, 'BAH(OLMAR)' algorithm performed better than the 'OLMAR' algorithm in terms of the 'Mean Excessive Return' and 'Annualized Percentage Yield' metrics.
 
 Note that one can individually investigate the performance of the algorithm regarding each metric. See [Performance evaluation](@ref) section for more information.
 
@@ -359,7 +343,7 @@ Now, let's investiagte the performance of the algorithm according to some of the
 ```julia
 julia> results = opsmetrics(result.b, rel_pr)
 
-            Cumulative Return: 1.4768989860970627
+            Cumulative Wealth: 1.4768989860970627
                           MER: -0.4153297366246913
                           APY: 0.47919522668054726
 Annualized Standard Deviation: 0.2379066078050204
@@ -380,7 +364,7 @@ julia> result = PAMR(rel_pr, eps, model);
 
 julia> results = opsmetrics(result.b, rel_pr)
 
-            Cumulative Return: 1.4875128237671749
+            Cumulative Wealth: 1.4875128237671749
                           MER: -0.41530107834650865
                           APY: 0.48986807082085115
 Annualized Standard Deviation: 0.2365856617445457
@@ -389,7 +373,7 @@ Annualized Standard Deviation: 0.2365856617445457
                  Calmar Ratio: 3.4997729172537
 ```
 
-In this case, the algorithm has a better performance in terms of the cumulative return, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see [`PAMR2`](@ref)).
+In this case, the algorithm has a better performance in terms of the cumulative wealth, annualized sharpe ratio, and calmar ratio. However, the maximum drawdown is slightly higher than the PAMR algorithm. The same procedure can be applied to the PAMR-2 algorithm (see [`PAMR2`](@ref)).
 
 It is worth mentioning that each metric can be accessed individually by writing `results.` and pressing the `Tab` key. Note that one can individually investigate the performance of the algorithm regarding each metric. See [`sn`](@ref), [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref). See [Performance evaluation](@ref) section for more information.
 
@@ -571,7 +555,7 @@ You can analyse the algorithm's performance using several metrics that have been
 
 ## Distributed Mean Reversion (DMR)
 
-[ZHONG2023](@citet) proposed a novel mean reversion strategy in which they have allowed short-sells unlike other OPS strategies proposed in the literature. For each investment period ($k$), they have constructed a network of assets that have correlations more than a threshold ($\eta$) with other assets. Furthermore they select the $n$ assets that have the highest centrality degree in the network for investment. Finally, they combine portfolios selected by $n$ defined trading machines to form the final portfolio. See [`dmr`](@ref).
+[ZHONG2023](@citet) proposed a novel mean reversion strategy in which they have allowed short-sells unlike other Online Portfolio Selection (OPS) strategies proposed in the literature. For each investment period ($k$), they have constructed a network of assets that have correlations more than a threshold ($\eta$) with other assets. Furthermore they select the $n$ assets that have the highest centrality degree in the network for investment. Finally, they combine portfolios selected by $n$ defined trading machines to form the final portfolio. See [`dmr`](@ref).
 
 Let's run the algorithm on the real market data.
 
@@ -661,6 +645,72 @@ julia> model.b
  0.25  0.0         0.0       0.0         0.0
  0.25  0.0         0.0       0.0         0.0
  0.25  1.14513e-8  9.979e-9  9.99353e-9  1.03254e-8
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
+
+
+## Short-term portfolio optimization with loss control (SPOLC)
+
+Estimating covariance matrix in rapidly-changing financial markets is barely investigated in the loiterature of the OPS algorithms. [10.5555/3455716.3455813](@citet) proposed a novel online portfolio selection strategy called Short-term portfolio optimization with loss control (SPOLC) which addresses the issue and is very strong in controlling extreme losses. They proposed an innovative rank-one covariance estimate model which effectively catches the instantaneous risk structure of the current financial circumstance, and incorporate it in a short-term portfolio optimization (SPO) that minimizes the downside risk of the portfolio. See [`spolc`](@ref).
+
+Let's run the algorithm on the real market data.
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance
+
+julia> tickers = ["AAPL", "AMZN", "GOOG", "MSFT"];
+
+julia> querry = [get_prices(ticker, startdt="2019-01-01", enddt="2019-01-25")["adjclose"] for ticker in tickers];
+
+julia> prices = stack(querry, dims=1);
+
+julia> rel_pr = prices[:, 2:end] ./ prices[:, 1:end-1];
+
+julia> model = spolc(rel_pr, 0.025, 5);
+
+julia> model.b
+4×15 Matrix{Float64}:
+ 0.25  0.197923  0.244427  0.239965  …  0.999975    8.49064e-6  2.41014e-6
+ 0.25  0.272289  0.251802  0.276544     1.57258e-5  0.999983    0.999992
+ 0.25  0.269046  0.255524  0.240024     6.50008e-6  5.94028e-6  3.69574e-6
+ 0.25  0.260742  0.248247  0.243466     2.99939e-6  3.04485e-6  1.56805e-6
+
+julia> tickers = ["MSFT", "TSLA", "GOOGL", "NVDA"];
+
+julia> querry = [get_prices(ticker, startdt="2024-01-01", enddt="2024-03-01")["adjclose"] for ticker in tickers];
+
+julia> pr = stack(querry, dims=1);
+
+julia> r = pr[:, 2:end]./pr[:, 1:end-1];
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
+
+## Transaction Cost Optimization (TCO)
+
+Proportional transaction costs have also been investigated in the field of OPS algorithms. Transaction Cost Optimization (TCO) [1357831](@cite) is an algorithm that probes the aformentioned issue. The TCO framework integrates the L1 norm of successive allocations' differences with the goal of maximizing anticipated log return. This formulation is addressed through convex optimization, yielding two explicit portfolio update formulas, namely, TCO1 and TCO2. Both variants is implemented in this package and can be used for research purposes. See [`tco`](@ref).
+
+```julia
+# TCO1
+julia> model = tco(r, 5, 5, 0.04, 10, TCO1, [0.05, 0.05, 0.7, 0.2]);
+
+julia> model.b
+4×5 Matrix{Float64}:
+ 0.05  0.05  0.052937  0.0540085  0.0537137
+ 0.05  0.05  0.073465  0.0783877  0.0781003
+ 0.7   0.7   0.669571  0.657286   0.66002
+ 0.2   0.2   0.204027  0.210318   0.208166
+
+# TCO2
+julia> model = tco(r, 5, 5, 0.04, 10, TCO2, [0.05, 0.05, 0.7, 0.2]);
+
+julia> model.b
+4×5 Matrix{Float64}:
+ 0.05  0.0809567  0.0850694  0.0871646  0.0865584
+ 0.05  0.0809567  0.0830907  0.0890398  0.0885799
+ 0.7   0.730957   0.756827   0.746137   0.748113
+ 0.2   0.10713    0.0750128  0.0776584  0.0767483
 ```
 
 You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.

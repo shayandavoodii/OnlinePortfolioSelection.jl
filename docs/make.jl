@@ -1,6 +1,7 @@
 using OnlinePortfolioSelection
 using Documenter
 using DocumenterCitations
+using DocumenterVitepress
 using Pkg
 
 DocMeta.setdocmeta!(OnlinePortfolioSelection, :DocTestSetup, :(using OnlinePortfolioSelection); recursive=true)
@@ -16,11 +17,11 @@ makedocs(;
     sitename="OnlinePortfolioSelection.jl",
     checkdocs=:exports,
     plugins=[bib],
-    format=Documenter.HTML(;
-        canonical="https://shayandavoodii.github.io/OnlinePortfolioSelection.jl",
-        prettyurls = get(ENV, "CI", nothing) == "true",
-        assets=String["assets/citations.css"],
-        footer="[$NAME.jl]($GITHUB) v$VERSION_ docs powered by [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl).",
+    format=DocumenterVitepress.MarkdownVitepress(
+      repo = "https://github.com/shayandavoodii/OnlinePortfolioSelection.jl",
+      devbranch = "main",
+      devurl = "dev",
+      build_vitepress = true
     ),
     pages=Any[
         "Home" => "index.md",
@@ -44,4 +45,5 @@ makedocs(;
 deploydocs(;
     repo="github.com/shayandavoodii/OnlinePortfolioSelection.jl.git",
     devbranch="main",
+    push_preview=true
 )

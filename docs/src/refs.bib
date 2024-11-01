@@ -379,3 +379,78 @@ url     = {http://jmlr.org/papers/v19/17-558.html}
   month = jul,
   pages = {1708–1734}
 }
+
+@ARTICLE{Yang2020-if,
+title    = {Boosting Exponential Gradient Strategy for Online Portfolio Selection: An Aggregating Experts' Advice Method},
+author   = {Yang, Xingyu and He, Jin'an and Lin, Hong and Zhang, Yong},
+abstract = {Online portfolio selection is one of the fundamental problems in the field of computational finance. Although existing online portfolio strategies have been shown to achieve good performance, we always have to set the values for different parameters of online portfolio strategies, where the optimal values can only be known in hindsight. To tackle the limits of existing strategies, we present a new online portfolio strategy based on the online learning character of Weak Aggregating Algorithm (WAA). Firstly, we consider a number of Exponential Gradient (EG$$(\textbackslasheta )$$) strategies of different values of parameter $$\textbackslasheta $$ as experts, and then determine the next portfolio by using the WAA to aggregate the experts' advice. Furthermore, we theoretically prove that our strategy asymptotically achieves the same increasing rate as the best EG$$(\textbackslasheta )$$ expert. We prove our strategy, as EG$$(\textbackslasheta )$$ strategies, is universal. We present numerical analysis by using actual stock data from the American and Chinese markets, and the results show that it has good performance.},
+journal  = {Computational Economics},
+volume   =  {55},
+number   =  {1},
+pages    = {231--251},
+month    =  {jan},
+year     =  {2020},
+doi      = {10.1007/s10614-019-09890-2},
+}
+
+@ARTICLE{Zhang2022-ht,
+title    = {Adaptive online portfolio strategy based on exponential gradient updates},
+author   = {Zhang, Yong and Lin, Hong and Zheng, Lina and Yang, Xingyu},
+abstract = {Based on the momentum principle and adaptive learning mechanism, we design online portfolio selection strategies, which are suitable for nonstationary financial market. Firstly, we propose a Moving-window-based Adaptive Exponential Gradient (MAEG) strategy, which updates the learning rate of the EG algorithm by maximizing the recent cumulative return using the price data in a fixed length moving window. Secondly, we consider a special case where all-historical price data is used to design another strategy named Adaptive Exponential Gradient (AEG). Finally, we conduct an extensive numerical analysis using real price data and the empirical results show that the performance of the proposed strategies is steadily superior to some online strategies. In addition, MAEG and AEG are able to withstand certain transaction costs, which further supports their practical applicability in trading applications.},
+journal  = {Journal of Combinatorial Optimization},
+volume   =  {43},
+number   =  {3},
+pages    = {672--696},
+month    =  {apr},
+year     =  {2022},
+doi      = {10.1007/s10878-021-00800-7},
+}
+
+@article{10.1145/3200692,
+author = {Huang, Dingjiang and Yu, Shunchang and Li, Bin and Hoi, Steven C. H. and Zhou, Shuigeng},
+title = {Combination Forecasting Reversion Strategy for Online Portfolio Selection},
+year = {2018},
+issue_date = {September 2018},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {9},
+number = {5},
+issn = {2157-6904},
+doi = {10.1145/3200692},
+abstract = {Machine learning and artificial intelligence techniques have been applied to construct online portfolio selection strategies recently. A popular and state-of-the-art family of strategies is to explore the reversion phenomenon through online learning algorithms and statistical prediction models. Despite gaining promising results on some benchmark datasets, these strategies often adopt a single model based on a selection criterion (e.g., breakdown point) for predicting future price. However, such model selection is often unstable and may cause unnecessarily high variability in the final estimation, leading to poor prediction performance in real datasets and thus non-optimal portfolios. To overcome the drawbacks, in this article, we propose to exploit the reversion phenomenon by using combination forecasting estimators and design a novel online portfolio selection strategy, named Combination Forecasting Reversion&nbsp;(CFR), which outputs optimal portfolios based on the improved reversion estimator. We further present two efficient CFR implementations based on online Newton step (ONS) and online gradient descent (OGD) algorithms, respectively, and theoretically analyze their regret bounds, which guarantee that the online CFR model performs as well as the best CFR model in hindsight. We evaluate the proposed algorithms on various real markets with extensive experiments. Empirical results show that CFR can effectively overcome the drawbacks of existing reversion strategies and achieve the state-of-the-art performance.},
+journal = {ACM Trans. Intell. Syst. Technol.},
+month = {jun},
+articleno = {58},
+numpages = {22},
+keywords = {Portfolio selection, combination forecasting estimators, combination forecasting reversion, mean reversion, online learning}
+}
+
+@article{10.5555/3455716.3455813,
+author = {Lai, Zhao-Rong and Tan, Liming and Wu, Xiaotian and Fang, Liangda},
+title = {Loss control with rank-one covariance estimate for short-term portfolio optimization},
+year = {2020},
+issue_date = {January 2020},
+publisher = {JMLR.org},
+volume = {21},
+number = {1},
+issn = {1532-4435},
+abstract = {In short-term portfolio optimization (SPO), some financial characteristics like the expected return and the true covariance might be dynamic. Then there are only a small window size w of observations that are sufficiently close to the current moment and reliable to make estimations. w is usually much smaller than the number of assets d, which leads to a typical undersampled problem. Worse still, the asset price relatives are not likely subject to any proper distributions. These facts violate the statistical assumptions of the traditional covariance estimates and invalidate their statistical efficiency and consistency in risk measurement. In this paper, we propose to reconsider the function of covariance estimates in the perspective of operators, and establish a rank-one covariance estimate in the principal rank-one tangent space at the observation matrix. Moreover, we propose a loss control scheme with this estimate, which effectively catches the instantaneous risk structure and avoids extreme losses. We conduct extensive experiments on 7 real-world benchmark daily or monthly data sets with stocks, funds and portfolios from diverse regional markets to show that the proposed method achieves state-of-the-art performance in comprehensive downside risk metrics and gains good investing incomes as well. It offers a novel perspective of rank-related approaches for undersampled estimations in SPO.},
+journal = {J. Mach. Learn. Res.},
+month = {jan},
+articleno = {97},
+numpages = {37},
+keywords = {rank-one covariance estimate, short-term portfolio optimization, undersampled condition, loss control, downside risk},
+url = {https://dl.acm.org/doi/abs/10.5555/3455716.3455813}
+}
+
+@article{1357831,
+author = {Bin, Li and Jialei, Wang and Dingjiang, Huang and Steven C. H. Hoi},
+title = {Transaction cost optimization for online portfolio selection},
+journal = {Quantitative Finance},
+volume = {18},
+number = {8},
+pages = {1411-1424},
+year = {2018},
+publisher = {Routledge},
+doi = {10.1080/14697688.2017.1357831},
+}

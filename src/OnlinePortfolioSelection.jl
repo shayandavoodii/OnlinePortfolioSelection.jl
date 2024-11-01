@@ -1,9 +1,9 @@
 module OnlinePortfolioSelection
 
 using Statistics:      cor, var, mean, median, std
-using LinearAlgebra:   I, norm, Symmetric, diagm, tr, diagind
+using LinearAlgebra:   I, norm, Symmetric, diagm, tr, diagind, svd
 using JuMP:            Model, @variable, @constraint, @NLobjective, @expression, @objective
-using JuMP:            value, @NLconstraint, set_silent, optimize!, optimizer_with_attributes
+using JuMP:            value, @NLconstraint, set_silent, optimize!, optimizer_with_attributes, objective_value
 using Ipopt:           Optimizer
 using PrecompileTools: @setup_workload, @compile_workload
 using StatsBase:       sample
@@ -15,8 +15,9 @@ include("Types/CWMR.jl")
 include("Types/AICTR.jl")
 include("Types/EGM.jl")
 include("Types/RMR.jl")
+include("Types/TCO.jl")
 include("Types/Metrics.jl")
-include("Algos/CRP.jl")
+include("Algos/BCRP.jl")
 include("Algos/CW-OGD.jl")
 include("Algos/EG.jl")
 include("Algos/RPRT.jl")
@@ -45,18 +46,24 @@ include("Algos/DMR.jl")
 include("Algos/RMR.jl")
 include("Algos/SSPO.jl")
 include("Algos/KTPT.jl")
+include("Algos/WAEG.jl")
+include("Algos/MAEG.jl")
+include("Algos/SPOLC.jl")
+include("Algos/TCO.jl")
 include("Tools/metrics.jl")
 include("Tools/show.jl")
 include("Tools/tools.jl")
 include("Tools/cornfam.jl")
 
-export up, eg, cornu, cornk, dricornk, crp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
+export up, eg, cornu, cornk, dricornk, bcrp, bs, rprt, anticor, olmar, bk, load, mrvol, cwogd
 export uniform, cluslog, pamr, ppt, cwmr, caeg, oldem, aictr, egm, tppt, gwr, ons, dmr, rmr, sspo
-export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir, at
+export waeg, maeg, spolc, tco
+export opsmetrics, sn, mer, apy, ann_std, ann_sharpe, mdd, calmar, ir, at, ttest
 export OPSAlgorithm, OPSMetrics, KMNLOG, KMDLOG, PAMR, PAMR1, PAMR2
 export CWMRD, CWMRS, Var, Stdev
-export SMA, EMA, PP
+export SMAP, SMAR, EMA, PP
 export EGE, EGR, EGA, ktpt
+export TCO1, TCO2
 export opsmethods
 
 @setup_workload begin
@@ -101,7 +108,7 @@ function opsmethods()
   println("     CORNU: CORN-U - Call `cornu`")
   println("     CORNK: CORN-K - Call `cornk`")
   println("  DRICORNK: DRICORN-K - Call `dricornk`")
-  println("       CRP: Constant Rebalanced Portfolio - Call `crp`")
+  println("      BCRP: Best Constant Rebalanced Portfolio - Call `crp`")
   println("        BS: Best Stock - Call `bs`")
   println("      RPRT: Reweighted Price Relative Tracking - Call `rprt`")
   println("   ANTICOR: Anticor - Call `anticor`")
@@ -125,8 +132,11 @@ function opsmethods()
   println("       DMR: Distributed Mean Reversion (DMR) - Call `dmr`")
   println("       RMR: Robust Median Reversion - Call `rmr`")
   println("      SSPO: Short-term Sparse Portfolio Optimization - Call `sspo`")
+  println("      WAEG: Weak Aggregating Exponential Gradient - Call `waeg`")
+  println("      MAEG: Moving-window-based Adaptive Exponential Gradient - Call `maeg`")
+  println("     SPOLC: loss control strategy for short-term portfolio optimization (SPOLC) - Call `spolc`")
+  println("       TCO: Transaction Cost Optimization - Call `tco`")
   println("      KTPT: kernel-based trend pattern tracking system - Call `ktpt`")
-
 end
 # COV_EXCL_STOP
 

@@ -7,6 +7,7 @@ Pattern-matching algorithms stand among the most popular strategies in the domai
 3. [Bᴷ](@ref)
 4. [ClusLog](@ref)
 5. [Online Low Dimension Ensemble Method (OLDEM)](@ref)
+6. [Kernel-based Trend Pattern Tracking (KTPT)](@ref)
 
 ## Correlation-driven Nonparametric Learning (CORN)
 
@@ -292,6 +293,48 @@ julia> sn(model.b, x)
 ```
 
 The result indicates that the algorithm has lost ~1.2% of the initial wealth during the investment period. Further analysis of the algorithm can be done by using the [`mer`](@ref), [`ir`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`ann_std`](@ref), [`calmar`](@ref), and [`mdd`](@ref) functions. See [Performance evaluation](@ref) section for more information.
+
+## Kernel-based Trend Pattern Tracking (KTPT)
+
+[Lai2018](@citet) introduced an innovative kernel-based trend tracking (KTPT) system designed for OPS. This system employs a three-phase price forecasting model that identifies both trend-following and trend-reversing patterns in asset prices to aid in predicting future movements. Additionally, KTPT features a unique kernel-driven tracking mechanism that optimizes the portfolio by effectively capturing potential asset price growth. Unlike earlier kernels that estimate the likelihood of a price relative, this kernel evaluates the alignment between the current portfolio and predicted price to modulate each asset's influence during the optimization process.
+
+### Run KTPT
+
+Let's run KTPT on the real market data:
+
+```julia
+julia> using OnlinePortfolioSelection, YFinance, Lasso
+
+julia> tickers = ["GOOG", "AAPL", "MSFT", "AMZN"];
+
+julia> querry = [get_prices(ticker, startdt="2020-01-01", enddt="2020-01-31")["adjclose"] for ticker=tickers];
+
+julia> prices = stack(querry, dims=1);
+
+julia> h, w, q, eta, v, phat_t, bhat_t = 5, 5, 6, 1000, 0.5, rand(length(tickers)), nothing
+
+julia> model = ktpt(prices, h, w, q, eta, v, phat_t, bhat_t);
+
+julia> model.b
+4×5 Matrix{Float64}:
+ 0.25  0.0  1.0  1.0  1.0
+ 0.25  0.0  0.0  0.0  0.0
+ 0.25  1.0  0.0  0.0  0.0
+ 0.25  0.0  0.0  0.0  0.0
+
+julia> x = prices[:, 2:end]./prices[:, 1:end-1];
+
+julia> sn(model.b, x)
+6-element Vector{Float64}:
+ 1.0
+ 0.9903640322766385
+ 0.9682097787851796
+ 0.9808095798904469
+ 0.984908122467024
+ 0.9830242099475751
+```
+
+You can analyse the algorithm's performance using several metrics that have been provided in this package. Check out the [Performance evaluation](@ref) section for more details.
 
 ## References
 

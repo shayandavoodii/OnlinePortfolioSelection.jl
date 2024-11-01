@@ -1,127 +1,67 @@
-using JuMP, Ipopt, LinearAlgebra, Statistics
+"""
+    function ktpt(
+      prices::AbstractMatrix,
+      horizon::S,
+      w::S,
+      q::S,
+      η::S,
+      ν::T,
+      p̂ₜ::AbstractVector,
+      b̂ₜ::Union{Nothing, AbstractVector{T}}
+    ) where {S<:Integer, T<:AbstractFloat}
 
-p̃ₜ₊₁func(p::AbstractMatrix) = maximum(p, dims=2) |> vec
+Run kernel-based trend pattern tracking system for portfolio optimization model.
 
-yₜ₊₁func(p̃ₜ₊₁::AbstractVector, p̂ₜ::AbstractVector, ν::AbstractFloat) = ν*p̃ₜ₊₁ .+ (1-ν)*p̂ₜ
+!!! note "Important note"
+    In order to use this function, you have to install the \
+    [Lasso.jl](https://github.com/JuliaStats/Lasso.jl) package first, and \
+    then import it along with the OnlinePortfolioSelection.jl package:
+    ```julia
+    julia> using Pkg; Pkg.add("Lasso")
+    julia> using Lasso, OnlinePortfolioSelection
+    ```
 
-function ẑₜfunc(yₜ₊₁::AbstractVector, Pₜ::AbstractMatrix, ϑ::AbstractFloat, 𝛾::AbstractFloat)
-  w     = size(Pₜ, 2)
-  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
-  @variable(model, z[1:w])
-  @expression(model, firstterm, √(sum((yₜ₊₁ - vec(Pₜ*z')).^2))^2)
-  @expression(model, secondterm, 2ϑ*𝛾*sum(abs, z))
-  @expression(model, thirdterm, (1-ϑ)*𝛾*√(sum(z.^2)))
-  @objective(model, Min, firstterm + secondterm + thirdterm)
-  optimize!(model)
-  return value.(z)
-end
+# Arguments
+- `prices::AbstractMatrix`: Matrix of daily prices of assets.
+- `horizon::S`: The horizon to run the algorithm for.
+- `w::S`: The window size.
+- `q::S`: The value of `q` in the algorithm.
+- `η::S`: The value of `η` in the algorithm.
+- `ν::T`: The value of `ν` in the algorithm.
+- `p̂ₜ::AbstractVector`: The vector of size `n_assets` at time `t`.
+- `b̂ₜ::Union{Nothing, AbstractVector{T}}`: The vector of portfolio weights at time `t`.
 
-function projection(b̂ₜ₊₁::AbstractVector)
-  d = length(b̂ₜ₊₁)
-  model = Model(optimizer_with_attributes(Optimizer, "print_level" => 0))
-  @variable(model, b[1:d])
-  @constraint(model, b .>= 0)
-  @constraint(model, sum(b) == 1)
-  @objective(model, Min, sum((b .- b̂ₜ₊₁).^2))
-  optimize!(model)
-  return value.(b)
-end
 
-ŷₜ₊₁func(Pₜ::AbstractMatrix, ẑₜ::AbstractVector) = Pₜ*ẑₜ' |> vec
+!!! warning "Beware!"
+    `prices` should be a matrix of size `n_assets` × `n_periods`.
 
-signp(val::Real) = val > 0
 
-function λₜ₊₁func(P̃::AbstractMatrix, coeff::AbstractFloat)
-  d, t       = size(P̃)
-  firstterm  = coeff*ones(d)'
-  secondterm = signp.((P̃[:, t].-P̃[:, t-1]).*(P̃[:, t-2].-P̃[:, t-1])) * ones(Int((coeff*d)^-1))''
-  return firstterm * secondterm
-end
+# Returns
+- `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
 
-ιfunc!(v::AbstractVector) = v[v.>1] .= 1.
+# Example
+```julia
+julia> using OnlinePortfolioSelection, YFinance, Lasso
 
-function p̂ₜ₊₁func(λₜ₊₁::AbstractFloat, xₜ::AbstractVector, p̃ₜ₊₁::AbstractVector, ŷₜ₊₁::AbstractVector)
-  val = λₜ₊₁./(2xₜ)
-  ιfunc!(val)
-  return val.*p̃ₜ₊₁ .+ (1 .- val).*ŷₜ₊₁
-end
+julia> tickers = ["GOOG", "AAPL", "MSFT", "AMZN"];
 
-b̃ₜfunc(b̂ₜ::AbstractVector) = b̂ₜ .- mean(b̂ₜ)
+julia> querry = [get_prices(ticker, startdt="2020-01-01", enddt="2020-01-31")["adjclose"] for ticker=tickers];
 
-x̃ₜ₊₁func(x̂ₜ₊₁::AbstractVector) = b̃ₜfunc(x̂ₜ₊₁)
+julia> prices = stack(querry, dims=1);
 
-function K̂ₜfunc(b̃ₜ::AbstractVector, x̃ₜ₊₁::AbstractVector, q::Integer)
-  diagvals = @. exp(-(abs(b̃ₜ-x̃ₜ₊₁))^(1/q))
-  return diagm(diagvals)
-end
+julia> h, w, q, eta, v, phat_t, bhat_t = 5, 5, 6, 1000, 0.5, rand(length(tickers)), nothing
 
-function bₜ₊₁func(x̃ₜ₊₁::AbstractVector, b̂ₜ₊₁::AbstractVector, K̂ₜ::AbstractMatrix, η::AbstractFloat)
-  if norm(x̃ₜ₊₁)==0.
-    bₜ₊₁ = b̂ₜ₊₁
-  else
-    bₜ₊₁ = b̂ₜ₊₁ .+ η*K̂ₜ*x̃ₜ₊₁
-  end
-  return bₜ₊₁
-end
+julia> model = ktpt(prices, h, w, q, eta, v, phat_t, bhat_t);
 
-function ktpt(
-  prices::AbstractMatrix,
-  horizon::S,
-  w::S,
-  q::S,
-  η::S,
-  ν::T,
-  p̂ₜ::AbstractVector,
-  b̂ₜ::Union{Nothing, AbstractVector{T}}
-) where {S<:Integer, T<:AbstractFloat}
-  n_assets, n_samples = size(prices)
-  x    = prices[:, 2:end] ./ prices[:, 1:end-1]
-  b̂ₜ₊₁ = similar(prices, n_assets, horizon)
-  if isnothing(b̂ₜ)
-    b̂ₜ₊₁[:, 1] .= 1/n_assets
-  else
-    b̂ₜ₊₁[:, 1] .= b̂ₜ
-  end
-  _1 = n_samples-horizon+1
-  for t ∈ 1:horizon
-    t_ = n_samples-horizon+t
-    if t<w
-      p̃ₜ₊₁ = p̃ₜ₊₁func(prices[:, _1:t_])
-    else
-      p̃ₜ₊₁ = p̃ₜ₊₁func(prices[:, t_-w+1:t_])
-    end
-    yₜ₊₁ = yₜ₊₁func(p̃ₜ₊₁, p̂ₜ, ν)
-    if t<w
-      ẑₜ = ẑₜfunc(yₜ₊₁, prices[:, _1:t_], η, 1)
-    else
-      ẑₜ = ẑₜfunc(yₜ₊₁, prices[:, t_-w+1:t_], η, 1)
-    end
-    ŷₜ₊₁ = ŷₜ₊₁func(prices[:, t_-w+1:t_], ẑₜ)
-    if t<2w+1
-      λₜ₊₁ = λₜ₊₁func(prices[:, t_-3:t_], η)
-    else
-      λₜ₊₁ = λₜ₊₁func(prices[:, t_-2w:t_], η)
-    end
-    p̂ₜ₊₁ = p̂ₜ₊₁func(λₜ₊₁, x[:, t_], p̃ₜ₊₁, ŷₜ₊₁)
-    x̂ₜ₊₁ = p̂ₜ₊₁./prices[:, t_]
-    b̃ₜ   = b̃ₜfunc(b̂ₜ₊₁[:, t])
-    x̃ₜ₊₁ = x̃ₜ₊₁func(x̂ₜ₊₁)
-    K̂ₜ   = K̂ₜfunc(b̃ₜ, x̃ₜ₊₁, q)
-    bₜ₊₁ = bₜ₊₁func(x̃ₜ₊₁, b̂ₜ₊₁[:, t], K̂ₜ, η)
-    b̂ₜ₊₁[:, t] .= projection(bₜ₊₁)
-  end
-  return b̂ₜ₊₁
-end
+julia> model.b
+4×5 Matrix{Float64}:
+ 0.25  0.0  1.0  1.0  1.0
+ 0.25  0.0  0.0  0.0  0.0
+ 0.25  1.0  0.0  0.0  0.0
+ 0.25  0.0  0.0  0.0  0.0
+```
 
-p = rand(4, 100);
-h = 10;
-w = 5;
-q = 6;
-η = 1000;
-ν = 0.5;
-p̂ = rand(4);
-b̂ = nothing;
-ktpt(p, h, w, q, η, ν, p̂, b̂)
-
-# TODO
-#[ ] There should be a procedure to find the suitable 𝛾 value (page 7)
+# Reference
+> [A kernel-based trend pattern tracking system for portfolio optimization](https://doi.org/10.1007/s10618-018-0579-5)
+"""
+function ktpt end

@@ -95,60 +95,6 @@ function bₜ₊₁func(x̃ₜ₊₁::AbstractVector, b̂ₜ₊₁::AbstractVect
   return bₜ₊₁
 end
 
-"""
-    function ktpt(
-      prices::AbstractMatrix,
-      horizon::S,
-      w::S,
-      q::S,
-      η::S,
-      ν::T,
-      p̂ₜ::AbstractVector,
-      b̂ₜ::Union{Nothing, AbstractVector{T}}
-    ) where {S<:Integer, T<:AbstractFloat}
-
-Run kernel-based trend pattern tracking system for portfolio optimization model.
-
-# Arguments
-- `prices::AbstractMatrix`: Matrix of daily prices of assets.
-- `horizon::S`: The horizon to run the algorithm for.
-- `w::S`: The window size.
-- `q::S`: The value of `q` in the algorithm.
-- `η::S`: The value of `η` in the algorithm.
-- `ν::T`: The value of `ν` in the algorithm.
-- `p̂ₜ::AbstractVector`: The vector of size `n_assets` at time `t`.
-- `b̂ₜ::Union{Nothing, AbstractVector{T}}`: The vector of portfolio weights at time `t`.
-
-# Returns
-- `::OPSAlgorithm`: An [`OPSAlgorithm`](@ref) object.
-
-# Example
-```julia
-julia> using OnlinePortfolioSelection, YFinance
-
-julia> tickers = ["GOOG", "AAPL", "MSFT", "AMZN"]
-
-julia> querry = [get_prices(ticker, startdt="2020-01-01", enddt="2020-01-31")["adjclose"] for ticker=tickers]
-
-julia> prices = stack(querry, dims=1)
-
-julia> h = 5
-
-julia> w = 5
-
-julia> model = sspo(prices, h, w);
-
-julia> model.b
-4×5 Matrix{Float64}:
- 0.25  9.92018e-9  1.0         1.0  1.0
- 0.25  0.0         0.0         0.0  0.0
- 0.25  0.0         0.0         0.0  0.0
- 0.25  1.0         9.94367e-9  0.0  0.0
-```
-
-# Reference
-> [A kernel-based trend pattern tracking system for portfolio optimization](https://doi.org/10.1007/s10618-018-0579-5)
-"""
 function OnlinePortfolioSelection.ktpt(
   prices::AbstractMatrix,
   horizon::S,

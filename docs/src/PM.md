@@ -294,7 +294,7 @@ The result indicates that the algorithm has lost ~1.2% of the initial wealth dur
 
 ### Run KTPT
 
-Let's run KTPT on the real market data:
+Let's run [`ktpt`](@ref) on the real market data:
 
 ```julia
 julia> using OnlinePortfolioSelection, YFinance, Lasso

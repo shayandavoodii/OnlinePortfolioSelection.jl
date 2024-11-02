@@ -292,6 +292,13 @@ The result indicates that the algorithm has lost ~1.2% of the initial wealth dur
 
 [Lai2018](@citet) introduced an innovative kernel-based trend tracking (KTPT) system designed for OPS. This system employs a three-phase price forecasting model that identifies both trend-following and trend-reversing patterns in asset prices to aid in predicting future movements. Additionally, KTPT features a unique kernel-driven tracking mechanism that optimizes the portfolio by effectively capturing potential asset price growth. Unlike earlier kernels that estimate the likelihood of a price relative, this kernel evaluates the alignment between the current portfolio and predicted price to modulate each asset's influence during the optimization process.
 
+!!! note
+    In order to use this algorithm, you have to install [`Lasso.jl`](https://github.com/JuliaStats/Lasso.jl) package. After a successful installation and importing, you can use this algorithm:
+    ```julia
+    julia> using Pkg; Pkg.add("Lasso")
+    julia> using OnlinePortfolioSelection, Lasso
+    ```
+
 ### Run KTPT
 
 Let's run [`ktpt`](@ref) on the real market data:

@@ -25,9 +25,9 @@ Run kernel-based trend pattern tracking system for portfolio optimization model.
 - `prices::AbstractMatrix`: Matrix of daily prices of assets.
 - `horizon::S`: The horizon to run the algorithm for.
 - `w::S`: The window size.
-- `q::S`: The value of `q` in the algorithm.
-- `η::S`: The value of `η` in the algorithm.
-- `ν::T`: The value of `ν` in the algorithm.
+- `q::S`: Coefficient.
+- `η::S`: Step size to optimize the portfolio.
+- `ν::T`: is a mixing parameter that tunes the proportion of ℓ1 and ℓ2 regularization.
 - `p̂ₜ::AbstractVector`: The vector of size `n_assets` at time `t`.
 - `b̂ₜ::Union{Nothing, AbstractVector{T}}`: The vector of portfolio weights at time `t`.
 

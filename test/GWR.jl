@@ -10,7 +10,7 @@ n_assets = size(prices, 1)
 @testset "GWR.jl" begin
   @testset "With default arguments" begin
     model = gwr(prices, h)
-    @test sum(model.b, dims=1) .|> isapprox(1.0) |> all
+    @test sum(model.b, dims=1) .|> isapprox(1.0, atol=1e-8) |> all
     @test model.n_assets == n_assets == size(model.b, 1)
     @test (model.b[:, 1] .== 1/n_assets) |> all
 

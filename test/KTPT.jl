@@ -38,6 +38,6 @@ h, w, q, eta, v, phat_t, bhat_t = 4, 5, 6, 1000, 0.5, rand(n_assets), nothing
     @test_throws ArgumentError ktpt(prices, h, w, q, eta, v, [0.5, 0.2], bhat_t)
     @test_throws ArgumentError ktpt(prices, 5, w, q, eta, v, phat_t, bhat_t)
     @test_throws ArgumentError ktpt(prices[:, 1:end-1], h, w, q, eta, v, phat_t, bhat_t)
-
+    @test_throws ArgumentError ktpt(prices[:, 1:end-5], 10, w, q, eta, v, phat_t, bhat_t)
   end
 end

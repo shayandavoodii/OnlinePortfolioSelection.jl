@@ -115,12 +115,16 @@ function OnlinePortfolioSelection.ktpt(
   number of assets. It's '$(length(p̂ₜ))'") |> throw
   isnothing(b̂ₜ) || length(b̂ₜ)==size(prices, 1) || ArgumentError("The size of `b̂ₜ` should be \
   equal to the number of assets. It's '$(length(b̂ₜ))'") |> throw
-  n_samples-horizon+1-2w>0 || ArgumentError("Either provide more data samples, or decrease the \
-  horizon ($horizon), or decrease the window size ($w). The expression 'n_samples-horizon+1-2w' should \
-  evaluate to a positive number (currently $(n_samples-horizon+1-2w)).") |> throw
-  size(prices, 2)≥n_samples-horizon+1-2w || ArgumentError("The number of samples should be greater \
-  than or equal to the expression 'n_samples-horizon+1-2w'. The expression 'n_samples-horizon+1-2w' should \
-  evaluate to a positive number (currently $(n_samples-horizon+1-2w)).") |> throw
+  n_samples-horizon+1-2w>0 || ArgumentError("Either provide more data samples, or decrease \
+  the horizon ($horizon), or decrease the window size ($w). The expression \
+  'n_samples-horizon+1-2w' should evaluate to a positive number (currently \
+  $(n_samples-horizon+1-2w)).") |> throw
+  size(prices, 2)≥n_samples-horizon+1-2w || ArgumentError("The number of samples should be \
+  greater than or equal to the expression 'n_samples-horizon+1-2w'. The expression \
+  'n_samples-horizon+1-2w' should evaluate to a positive number (currently \
+  $(n_samples-horizon+1-2w)).") |> throw
+  n_samples-horizon+1>0 || ArgumentError("the expression `n_samples-horizon>-1` should stand \
+  still. Either decrease the `horizon` value or increase the number of samples.") |> throw
   x    = prices[:, 2:end] ./ prices[:, 1:end-1]
   b̂ₜ₊₁ = similar(prices, n_assets, horizon)
   if isnothing(b̂ₜ)

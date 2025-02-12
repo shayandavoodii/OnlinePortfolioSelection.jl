@@ -13,6 +13,10 @@ Find similar time windows based on the correlation coefficient threshold.
 - `::Vector{S}`: Index of similar time windows.
 """
 function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float64, S<:Int}
+  size(rel_price, 2)-w+1>0 || DomainError("Either a smaller window length should be chosen \
+    (w<$(size(rel_price, 2)+1) domain is allowed) or more data samples should be added. (At \
+    least $(w-size(rel_price, 2)+1) more data samples are needed)."
+  ) |> throw
   idx_day_after_tw = Vector{S}()
   # current time window
   curr_tw = rel_price[:, end-w+1:end] |> Base.Flatten |> collect

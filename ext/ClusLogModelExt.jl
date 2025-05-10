@@ -92,7 +92,7 @@ function cor_between_tws(rel_pr::AbstractMatrix{<:AbstractFloat}, len_tw, ntw)
 end
 
 function nclusopt(model::Type{<:OnlinePortfolioSelection.ClusLogVariant}, cor_tw, nclusters)
-  sils      = zeros(Float64, nclusters)
+  sils      = zeros(nclusters)
   for nclus ∈ 2:nclusters
     fitted  = clustering(model, cor_tw, nclus)
     dists   = pairwise(Euclidean(), cor_tw)

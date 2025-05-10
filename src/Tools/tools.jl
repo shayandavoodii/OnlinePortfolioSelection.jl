@@ -237,7 +237,7 @@ the weights is not exactly 1. (in some situation the sum of the weights is 0.999
 # methods
 
 """
-normalizer!(vec::AbstractVector)::Vector{<:AbstractFloat} = vec ./= sum(vec)
+normalizer!(vec::AbstractVector) = vec ./= sum(vec)
 
 """
     S(prev_s, w::T, rel_pr::T) where {T<:Vector{<:AbstractFloat}}

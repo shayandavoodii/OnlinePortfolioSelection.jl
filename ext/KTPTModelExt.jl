@@ -23,7 +23,7 @@ function ẑₜfunc(yₜ₊₁::AbstractVector, Pₜ::AbstractMatrix)
   w = size(Pₜ, 2)
   m  = fit(GammaLassoPath, Pₜ, yₜ₊₁, α=0.99)
   coefs = coef(m)
-  ẑₜ::Vector{Float64} = coefs.nzval[1:w]
+  ẑₜ::Vector{<:AbstractFloat} = coefs.nzval[1:w]
   return ẑₜ
 end
 

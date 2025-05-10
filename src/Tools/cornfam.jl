@@ -1,5 +1,5 @@
 """
-    locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float64, S<:Int}
+    locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:AbstractFloat, S<:Int}
 
 Find similar time windows based on the correlation coefficient threshold.
 
@@ -12,7 +12,7 @@ Find similar time windows based on the correlation coefficient threshold.
 # Returns
 - `::Vector{S}`: Index of similar time windows.
 """
-function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float64, S<:Int}
+function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:AbstractFloat, S<:Int}
   idx_day_after_tw = Vector{S}()
   # current time window
   curr_tw = rel_price[:, end-w+1:end] |> Base.Flatten |> collect
@@ -29,7 +29,7 @@ function locate_sim(rel_price::Matrix{T1}, w::S, T::S, ρ::T1) where {T1<:Float6
 end
 
 """
-    final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:Float64
+    final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:AbstractFloat
 
 Calculate the final weights of assets according to the experts.
 
@@ -41,7 +41,7 @@ Calculate the final weights of assets according to the experts.
 # Returns
 - `Vector{T}`: Final weights of assets in the current period.
 """
-function final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:Float64
+function final_weights(q::T, s::Vector{T}, b::Matrix{T})::Vector{T} where T<:AbstractFloat
   numerator_   = zeros(T, size(b, 1))
   denominator_ = zero(T)
   for idx_expert ∈ eachindex(s)

@@ -1,5 +1,5 @@
 """
-    bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:Float64}
+    bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:AbstractFloat}
 
 Run the Best So Far algorithm on the given data.
 
@@ -38,7 +38,7 @@ true
 # References
 > [KERNEL-BASED SEMI-LOG-OPTIMAL EMPIRICAL PORTFOLIO SELECTION STRATEGIES](https://doi.org/10.1142/S0219024907004251)
 """
-function bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:Float64}
+function bs(adj_close::Matrix{T}; last_n::Int=0) where {T<:AbstractFloat}
   n_assets, n_periods = size(adj_close)
 
   # Calculate relative prices

@@ -1,1 +1,0 @@
-import{_ as e,c as r,o as n,a7 as o}from"./chunks/framework.BasOtKVC.js";const c=JSON.parse('{"title":"References","description":"","frontmatter":{},"headers":[],"relativePath":"refs.md","filePath":"refs.md","lastUpdated":null}'),t={name:"refs.md"},a=o("",4),i=[a];function l(s,g,p,h,f,d){return n(),r("div",null,i)}const S=e(t,[["render",l]]);export{c as __pageData,S as default};

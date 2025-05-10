@@ -1,0 +1,1 @@
+import{_ as e,c as r,o as a,a7 as n}from"./chunks/framework.CZSXtTFq.js";const c=JSON.parse('{"title":"References","description":"","frontmatter":{},"headers":[],"relativePath":"refs.md","filePath":"refs.md","lastUpdated":null}'),o={name:"refs.md"},t=n("",2),i=[t];function l(s,g,p,d,f,h){return a(),r("div",null,i)}const S=e(o,[["render",l]]);export{c as __pageData,S as default};

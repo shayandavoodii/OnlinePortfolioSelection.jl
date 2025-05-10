@@ -1,5 +1,5 @@
 """
-    fᵢ(adj_price::AbstractMatrix{T}) where T<:Float64
+    fᵢ(adj_price::AbstractMatrix{T}) where T<:AbstractFloat
 
 Fit regression on the adjusted close price data of stocks and return the gradient of the \
 regression.
@@ -10,7 +10,7 @@ regression.
 # Returns
 - `fᵢ::Vector{T}`: Gradient of the regression.
 """
-function fᵢ(adj_price::AbstractMatrix{T}) where T<:Float64
+function fᵢ(adj_price::AbstractMatrix{T}) where T<:AbstractFloat
   n_assets, n_days = size(adj_price)
   t = 1:n_days
   # Fit a linear regression on each row of the adjusted price matrix against t and store \
@@ -23,7 +23,7 @@ function fᵢ(adj_price::AbstractMatrix{T}) where T<:Float64
 end
 
 """
-    predict(η::T, aᵢ::AbstractVector{T}, adj_price::AbstractMatrix{T}, α::T) where T<:Float64
+    predict(η::T, aᵢ::AbstractVector{T}, adj_price::AbstractMatrix{T}, α::T) where T<:AbstractFloat
 
 Predict the price of each asset at time t+1.
 
@@ -36,7 +36,7 @@ Predict the price of each asset at time t+1.
 # Returns
 - `p̂ₜ₊₁::Vector{T}`: Predicted price of each asset at time t+1.
 """
-function predict(η::T, aᵢ::AbstractVector{T}, adj_price::AbstractMatrix{T}, α::T) where T<:Float64
+function predict(η::T, aᵢ::AbstractVector{T}, adj_price::AbstractMatrix{T}, α::T) where T<:AbstractFloat
   n_assets, n_days = size(adj_price)
   p̂ₜ₊₁ = zeros(T, n_assets)
   for asset ∈ 1:n_assets
@@ -71,7 +71,7 @@ function next_pr_rel(adj_close::T, pred_price::T) where T<:AbstractVector
 end
 
 """
-    optimization(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:Float64}
+    optimization(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:AbstractFloat}
 
 Calculate the weights of each asset at time t+1.
 
@@ -83,12 +83,12 @@ Calculate the weights of each asset at time t+1.
 # Returns
 - `b̂::T`: Weights of each asset at time t+1.
 """
-function optimization(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:Float64}
+function optimization(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:AbstractFloat}
   γ = γfunc(b, pr_rel, ϵ)
   return b .+ (pr_rel .- mean(pr_rel))*γ
 end
 
-function γfunc(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:Float64}
+function γfunc(b::T, pr_rel::T, ϵ::S) where {T<:AbstractVector, S<:AbstractFloat}
   bᵀx̂ₜ = sum(b .* pr_rel)
   euclidean_norm = norm(pr_rel .- mean(pr_rel))
   return max(0, (ϵ - bᵀx̂ₜ) / euclidean_norm)
@@ -122,7 +122,7 @@ function portfolio_projection(b̂::T, pred_rel::T, ϵ::S) where {T<:AbstractVect
 end
 
 """
-    load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T, ϵ::T=1.5) where {T<:Float64, S<:Int}
+    load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T, ϵ::T=1.5) where {T<:AbstractFloat, S<:Int}
 
 Run LOAD algorithm.
 
@@ -171,7 +171,7 @@ true
 # References
 > [A local adaptive learning system for online portfolio selection](https://doi.org/10.1016/j.knosys.2019.104958)
 """
-function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T; ϵ::T=1.5) where {T<:Float64, S<:Int}
+function load(adj_close::AbstractMatrix{T}, α::T, ω::S, horizon::S, η::T; ϵ::T=1.5) where {T<:AbstractFloat, S<:Int}
   n_assets, n_days = size(adj_close)
   n_days > 1 || DomainError("The number of days must be greater than 1.") |> throw
   n_assets > 1 || DomainError("The number of assets must be greater than 1.") |> throw

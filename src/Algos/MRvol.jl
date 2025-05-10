@@ -33,7 +33,7 @@ asset 𝑖 divided by the (t - 1)ᵗʰ trading volume of asset 𝑖.
 - `Wₘₐₓ::S`: Maximum window size.
 
 # Returns
-- `::Matrix{Float64}`: A matrix of weights for each expert strategy.
+- `::Matrix{<:AbstractFloat}`: A matrix of weights for each expert strategy.
 
 # Example
 ```julia

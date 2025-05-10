@@ -62,8 +62,8 @@ function anticor(adj_close::Matrix{T}, window::Int) where {T<:Real}
   for period ∈ 1:nperiods-1
     related_corₚ = rcor[:, :, period]
     μₚ           = m₁[period, :]
-    claimᵢⱼ      = zeros(Float64, nassets, nassets)
-    transferᵢⱼ   = zeros(Float64, nassets, nassets)
+    claimᵢⱼ      = zeros(nassets, nassets)
+    transferᵢⱼ   = zeros(nassets, nassets)
 
     for assetᵢ ∈ rng
       for assetⱼ ∈ rng

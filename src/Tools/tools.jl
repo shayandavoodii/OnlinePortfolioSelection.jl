@@ -169,7 +169,7 @@ Generate a simplex with the size of `points` × (`d`+1).
 - `points::Int`: The number of points in the simplex.
 
 # Returns
-- `::Matrix{Float64}`: The simplex.
+- `::Matrix{<:AbstractFloat}`: The simplex.
 
 # Example
 ```julia
@@ -182,14 +182,14 @@ julia> sum(res, dims=2)
  1.0
 ```
 """
-function simplex(d::S, points::S)::Matrix{Float64} where {S<:Int}
+function simplex(d::S, points::S)::Matrix{<:AbstractFloat} where {S<:Int}
   a = sort(rand(points, d), dims=2)
   a = [zeros(points) a ones(points)]
   return diff(a, dims=2)
 end
 
 """
-    normalizer!(mat::Matrix{T}) where T<:Float64
+    normalizer!(mat::Matrix{T}) where T<:AbstractFloat
 
 Force normilize the given matrix column by column.
 
@@ -209,18 +209,18 @@ julia> sum(mat, dims=1) .|> isapprox(1.0) |> all
 true
 ```
 """
-function normalizer!(mat::AbstractMatrix{T}) where T<:Float64
+function normalizer!(mat::AbstractMatrix{T}) where T<:AbstractFloat
   @inbounds @simd for idx_col ∈ axes(mat, 2)
     @views normalizer!(mat[:, idx_col])
   end
 end
 
-function normalizer!(mat::AbstractMatrix{T}, idx_col::S) where {T<:Float64, S<:Int}
+function normalizer!(mat::AbstractMatrix{T}, idx_col::S) where {T<:AbstractFloat, S<:Int}
   normalizer!(@views mat[:, idx_col])
 end
 
 """
-    normalizer!(vec::AbstractVector)::Vector{Float64}
+    normalizer!(vec::AbstractVector)::Vector{<:AbstractFloat}
 
 Force normilize the given vector.
 
@@ -229,7 +229,7 @@ the weights is not exactly 1. (in some situation the sum of the weights is 0.999
 1.000000001 due to inexactness of Ipopt solver)
 
 # Arguments
-- `vec::Vector{Float64}`: The vector that is going to be normalized.
+- `vec::Vector{<:AbstractFloat}`: The vector that is going to be normalized.
 
 # Returns
 - `::Nothing`: The vector is normalized in place.
@@ -237,22 +237,22 @@ the weights is not exactly 1. (in some situation the sum of the weights is 0.999
 # methods
 
 """
-normalizer!(vec::AbstractVector)::Vector{Float64} = vec ./= sum(vec)
+normalizer!(vec::AbstractVector) = vec ./= sum(vec)
 
 """
-    S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}}
+    S(prev_s, w::T, rel_pr::T) where {T<:Vector{<:AbstractFloat}}
 
 Calculate the budget of the current period.
 
 # Arguments
-- `prev_s::Float64`: Budget of the previous period.
-- `w::Vector{Float64}`: Weights of assets.
-- `rel_pr::Vector{Float64}`: Relative prices of assets in the current period.
+- `prev_s::AbstractFloat`: Budget of the previous period.
+- `w::Vector{<:AbstractFloat}`: Weights of assets.
+- `rel_pr::Vector{<:AbstractFloat}`: Relative prices of assets in the current period.
 
 # Returns
-- `Float64`: Budget of the current period.
+- `::AbstractFloat`: Budget of the current period.
 """
-S(prev_s, w::T, rel_pr::T) where {T<:Vector{Float64}} = prev_s*sum(w.*rel_pr)
+S(prev_s, w::T, rel_pr::T) where {T<:Vector{<:AbstractFloat}} = prev_s*sum(w.*rel_pr)
 
 """
     rolling(f::Function, m::Matrix{T}, window::Int)

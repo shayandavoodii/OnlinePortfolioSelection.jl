@@ -43,7 +43,9 @@ function p̂ₜ₊₁func(kₜ::AbstractMatrix, p::AbstractMatrix, w::Integer, �
   idx_under_zero        = vec(sum(kₜ, dims=2)).<0.
   idx_equal_zero        = vec(sum(kₜ, dims=2)).==0.
   p̂ₜ₊₁                  = similar(kₜ, n_assets)
-  p̂ₜ₊₁[idx_under_zero] .= maximum(p[idx_under_zero, :], dims=2)
+  if any(idx_under_zero)
+    p̂ₜ₊₁[idx_under_zero] .= maximum(p[idx_under_zero, :], dims=2)
+  end
   p̂ₜ₊₁[idx_equal_zero] .= p[idx_equal_zero, end]
   p̂ₜ₊₁[idx_over_zero]  .= sum(α*(1-α)^(w-i) *p[idx_over_zero, w-i] for i=0:w-1)
   return p̂ₜ₊₁

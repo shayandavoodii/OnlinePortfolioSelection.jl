@@ -457,15 +457,34 @@ function bAdjusted(wₜ, relprₜ)
   return (wₜ .* relprₜ)/sum(wₜ .* relprₜ)
 end
 
-function progressbar(io, ntimes::S, current::S) where S<:Int
-  val = current/ntimes
-  val_rounded = round(S, val*10)
-  bars = "████" ^ val_rounded
-  remainder = "    " ^ (10 - val_rounded)
-  joined = bars*remainder
-  percentage = round(val*100, digits=2)
-  printstyled(io, "┣$(joined)┫ $percentage% |$current/$ntimes \r")
+function progressbar(io, ntimes::Int, current::Int; start_time::Float64 = time())
+  val         = current / ntimes
+  val_rounded = round(Int, val * 10)
+  bars        = "████" ^ val_rounded
+  remainder   = "    " ^ (10 - val_rounded)
+  joined      = bars * remainder
+  percentage  = round(val * 100, digits = 2)
+
+  # Time calculations
+  elapsed   = time() - start_time
+  est_total = elapsed / max(current, 1) * ntimes
+  remaining = max(est_total - elapsed, 0.0)
+
+  # Manual formatting (HH:MM:SS)
+  h = floor(Int, remaining / 3600)
+  m = floor(Int, (remaining % 3600) / 60)
+  s = floor(Int, remaining % 60)
+
+  hh = lpad(string(h), 2, '0')
+  mm = lpad(string(m), 2, '0')
+  ss = lpad(string(s), 2, '0')
+
+  # In-place output
+  print(io, "\r")
+  printstyled(io, "┣$(joined)┫ $percentage% |$current/$ntimes | ETA: $hh:$mm:$ss")
+  flush(io)
 end
+
 
 function Δfunc(a::T, b::T, c::T) where T<:AbstractFloat
   Δ = b^2-4*a*c

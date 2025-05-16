@@ -44,6 +44,7 @@ function OnlinePortfolioSelection.cluslog(
   horizon > 0 || DomainError("`horizon` must be > 0") |> throw
 
   b = zeros(nassets, horizon)
+  progress && (start = time())
   for idx_day ∈ 1:horizon
     rel_pr_ = @view rel_pr[:, 1:end-horizon+idx_day]
     for tw ∈ 2:TW
@@ -65,7 +66,7 @@ function OnlinePortfolioSelection.cluslog(
         b[:, idx_day]                = optimization(cor_similar_tws, rel_pr_day_after_similar_tws, boundries)
       end
     end
-    progress && OnlinePortfolioSelection.progressbar(stdout, horizon, idx_day)
+    progress && OnlinePortfolioSelection.progressbar(stdout, horizon, idx_day, start_time=start)
   end
   return OPSAlgorithm(nassets, b, cluslogalgname(model))
 end

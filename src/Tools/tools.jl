@@ -457,7 +457,7 @@ function bAdjusted(wₜ, relprₜ)
   return (wₜ .* relprₜ)/sum(wₜ .* relprₜ)
 end
 
-function progressbar(io, ntimes::Int, current::Int; start_time::Float64 = time())
+function progressbar(io, ntimes::Int, current::Int; start_time::AbstractFloat = time())
   val         = current / ntimes
   val_rounded = round(Int, val * 10)
   bars        = "████" ^ val_rounded

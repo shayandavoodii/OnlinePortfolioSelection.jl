@@ -63,13 +63,14 @@ function cornu(
   Sₜ_[:, 1] .= init_budg
   weights    = zeros(T, n_assets, horizon)
   bₜ         = similar(x, n_assets, n_experts)
+  progress && (start = time())
   for t ∈ 0:horizon-1
     for ω ∈ 1:w
       b           = corn_expert(x, horizon, ω, rho, t, n_assets)
       bₜ[:, ω]    = b
       Sₜ_[ω, t+2] = S(Sₜ_[ω, t+1], b, x[:, end-horizon+t+1])
     end
-    progress && progressbar(stdout, horizon, t+1)
+    progress && progressbar(stdout, horizon, t+1, start_time=start)
     weights[:, t+1] = final_weights(q, Sₜ_[:, t+2], bₜ)
   end
 
@@ -147,6 +148,7 @@ function cornk(
   Sₜ_        = similar(x, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
   bₜ = similar(x, n_assets, n_experts)
+  progress && (start = time())
   for t ∈ 0:horizon-1
     expert = 1
     for ω ∈ 1:w
@@ -162,7 +164,7 @@ function cornk(
 
     idx_top_k       = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
     weights[:, t+1] = final_weights(q, Sₜ_[idx_top_k, t+2], bₜ[:, idx_top_k])
-    progress && progressbar(stdout, horizon, t+1)
+    progress && progressbar(stdout, horizon, t+1, start_time=strat)
   end
 
   return OPSAlgorithm(n_assets, weights, "CORN-K")

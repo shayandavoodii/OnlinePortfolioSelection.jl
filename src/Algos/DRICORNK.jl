@@ -89,6 +89,7 @@ function dricornk(
   weights    = zeros(T, n_assets, horizon)
   Sₜ_        = zeros(T, n_experts, horizon+1)
   Sₜ_[:, 1] .= init_budg
+  progress && (start = time())
   for t ∈ 0:horizon-1
     bₜ = Matrix{T}(undef, n_assets, n_experts)
     expert = 1
@@ -117,7 +118,7 @@ function dricornk(
 
     idx_top_k       = sortperm(Sₜ_[:, t+2], rev=true)[1:k]
     weights[:, t+1] = final_weights(q, Sₜ_[idx_top_k, t+2], bₜ[:, idx_top_k])
-    progress && progressbar(stdout, horizon, t+1)
+    progress && progressbar(stdout, horizon, t+1, start_time=start)
   end
 
   return OPSAlgorithm(n_assets, weights, "DRICORN-K")

@@ -647,7 +647,7 @@ function oldem(
   b = similar(rel_pr, n_assets, horizon)
   b[:, 1] = bt
   l = createLDES(L, s, n_assets)
-
+  progress && (start = time())
   for t ∈ 1:horizon-1
     x = rel_pr[:, 1:end-horizon+t]
     x̂ₜ₊₁, vₜ, β̂ₖ = x̂ₜ₊₁func(x, l, σ, w, n_samples-horizon+t)
@@ -655,7 +655,7 @@ function oldem(
     cₜ₊₁ = cₜ₊₁func(x̂ₜ₊₁, Σ̂ₜ₊₁, γ, ξ, bt)
     bₜ₊₁ = cₜ₊₁ + bt
     b[:, t+1] = normptf(bₜ₊₁)
-    progress && progressbar(stdout, horizon-1, t)
+    progress && progressbar(stdout, horizon-1, t, start_time=start)
   end
 
   any(b.<0) && b |> positify! |> normalizer!

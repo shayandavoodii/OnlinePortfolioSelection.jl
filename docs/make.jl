@@ -42,8 +42,9 @@ makedocs(;
     ],
 )
 
-deploydocs(;
+DocumenterVitepress.deploydocs(;
     repo="github.com/shayandavoodii/OnlinePortfolioSelection.jl.git",
     devbranch="main",
+    branch = "gh-pages",
     push_preview=true
 )

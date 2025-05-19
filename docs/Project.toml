@@ -5,4 +5,4 @@ DocumenterVitepress = "4710194d-e776-4893-9690-8d956a29c365"
 OnlinePortfolioSelection = "038f9fe3-14bd-47ca-b081-2e00e8c46dfa"
 
 [compat]
-DocumenterVitepress = "0.1.3"
+DocumenterVitepress = "0.2.0"

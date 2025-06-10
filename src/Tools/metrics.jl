@@ -22,13 +22,16 @@ function alignperiods(weights, rel_pr)
 end
 
 """
-    b̂func(rel_pr::AbstractMatrix, weights::AbstractMatrix)
+    b̂func(rel_pr::AbstractMatrix{T}, weights::AbstractMatrix{T}) where T<:AbstractFloat
 
 This function is also known as the `b̃` in the literature.
+
+!!! warning
+    The `eltype(rel_pr)` and `eltype(weights)` must be the same.
 """
-function b̂func(rel_pr::AbstractMatrix, weights::AbstractMatrix)
+function b̂func(rel_pr::AbstractMatrix{T}, weights::AbstractMatrix{T}) where T<:AbstractFloat
   n_assets, n_periods = size(rel_pr)
-  b̂ = Matrix{Float64}(undef, n_assets, n_periods)
+  b̂ = similar(weights)
   for t ∈ 1:n_periods
     product_ = weights[:, t] .* rel_pr[:, t]
     b̂[:, t] = (product_)/sum(product_)
@@ -37,7 +40,7 @@ function b̂func(rel_pr::AbstractMatrix, weights::AbstractMatrix)
 end
 
 """
-    sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv::T=1.) where T<:AbstractFloat
+    sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv=one(T)) where T<:AbstractFloat
 
 Calculate the cumulative wealth of the portfolio during a period of time. Also, \
 see [`mer`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), \
@@ -62,6 +65,9 @@ of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-t
 !!! warning "Beware!"
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
 
+!!! warning
+    Note that the `typeof(init_inv)` must be the same as `eltype(weights)` and `eltype(rel_pr)`.
+
 !!! note
     If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last \
     `size(weights, 2)` columns of `rel_pr` will be used.
@@ -69,7 +75,7 @@ of weights of the period ``t``, and ``x_t`` is the relative price of the ``t``-t
 # Returns
 - `all_sn::Vector{T}`: the cumulative wealth of investment during the investment period.
 """
-function sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv::T=1.) where T<:AbstractFloat
+function sn(weights::AbstractMatrix{T}, rel_pr::AbstractMatrix{T}; init_inv=one(T)) where T<:AbstractFloat
   n_periods = size(rel_pr, 2)
   conditionset1(weights, rel_pr)
   rel_pr, n_periods = alignperiods(weights, rel_pr)
@@ -86,7 +92,7 @@ end
     mer(
       weights::AbstractMatrix{T},
       rel_pr::AbstractMatrix{T},
-      𝘷::T=0.
+      𝘷=zero(T)
     ) where T<:AbstractFloat
 
 Calculate the investments's Mean excess return (MER). Also, see [`sn`](@ref), [`ann_std`](@ref), \
@@ -100,6 +106,9 @@ Calculate the investments's Mean excess return (MER). Also, see [`sn`](@ref), [`
 !!! warning
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
 
+!!! warning
+    Note that the `typeof(𝘷)` must be the same as `eltype(weights)` and `eltype(rel_pr)`.
+
 !!! note
     If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last \
     `size(weights, 2)` columns of `rel_pr` will be used.
@@ -110,15 +119,16 @@ Calculate the investments's Mean excess return (MER). Also, see [`sn`](@ref), [`
 function mer(
   weights::AbstractMatrix{T},
   rel_pr::AbstractMatrix{T},
-  𝘷::T=0.
+  𝘷=zero(T)
 ) where T<:AbstractFloat
   n_assets, n_periods = size(rel_pr)
   conditionset1(weights, rel_pr)
   rel_pr, n_periods = alignperiods(weights, rel_pr)
   b̃ = b̂func(rel_pr, weights)
-  R = Vector{Float64}(undef, n_periods)
-  Rstar = Vector{Float64}(undef, n_periods)
-  bstar = ones(n_assets)/n_assets
+  T_ = eltype(weights)
+  R = Vector{T_}(undef, n_periods)
+  Rstar = similar(R)
+  bstar = ones(T_, n_assets)/n_assets
   for t ∈ 1:n_periods
     product_ = rel_pr[:, t].*weights[:, t]
     second_term = 1-((𝘷/2)*(sum(abs.(weights-b̃))))
@@ -126,7 +136,7 @@ function mer(
     Rstar[t] = sum(rel_pr[:, t].*bstar) - 1
   end
   MER = 1/n_periods * sum(R) - sum(Rstar)
-  return MER
+  return MER |> eltype(weights)
 end
 
 """
@@ -134,7 +144,7 @@ end
       weights::AbstractMatrix{S},
       rel_pr::AbstractMatrix{S},
       rel_pr_market::AbstractVector{S};
-      init_inv::S=1.
+      init_inv=one(S)
     ) where S<:AbstractFloat
 
 Calculate the Information Ratio (IR) of portfolio. Also, see [`sn`](@ref), [`mer`](@ref), \
@@ -164,6 +174,10 @@ return is used.
 !!! warning
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
 
+!!! warning
+    Note that the `typeof(init_inv)` must be the same as `eltype(weights)`, `eltype(rel_pr)` \
+    and `eltype(rel_pr_market)`.
+
 !!! note
     If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last \
     `size(weights, 2)` columns of `rel_pr` will be used. The size of `rel_pr_market` will \
@@ -179,7 +193,7 @@ function ir(
   weights::AbstractMatrix{S},
   rel_pr::AbstractMatrix{S},
   rel_pr_market::AbstractVector{S};
-  init_inv::S=1.
+  init_inv=one(S)
 ) where S<:AbstractFloat
 
   rel_pr_market, _ = alignperiods(weights, rel_pr_market')
@@ -209,7 +223,7 @@ investment period.
 - `::AbstractFloat`: the Annualized Standard Deviation (``\\sigma_p``) of portfolio.
 """
 function ann_std(cum_ret::AbstractVector{<:AbstractFloat}; dpy)
-  return (cum_ret |> diff |> std) * sqrt(dpy)
+  return (cum_ret |> diff |> std) * sqrt(dpy) |> eltype(cum_ret)
 end
 
 """
@@ -228,7 +242,7 @@ Calculate the Annual Percentage Yield (APY) of investment. Also, see [`sn`](@ref
 """
 function apy(Sn::AbstractFloat, n_periods::S; dpy::S=252) where S<:Int
   y = n_periods/dpy
-  return (Sn)^(1/y) - 1
+  return ((Sn)^(1/y) - 1) |> typeof(Sn)
 end
 
 """
@@ -241,6 +255,9 @@ Calculate the Annualized Sharpe Ratio of investment. Also, see [`sn`](@ref), [`m
 - `APY::T`: the APY of investment.
 - `Rf::T`: the risk-free rate of return.
 - `sigma_prtf::T`: the standard deviation of the portfolio ``\\sigma_p``.
+
+!!! warning
+    The `typeof(APY)`, `typeof(Rf)`, and `typeof(sigma_prtf)` must be the same.
 
 # Returns
 - `::AbstractFloat`: the Annualized Sharpe Ratio of investment.
@@ -279,13 +296,16 @@ Calculate the Calmar Ratio of investment. Also, see [`sn`](@ref), [`mer`](@ref),
 - `APY::T`: the APY of investment.
 - `MDD::T`: the MDD of investment.
 
+!!! warning
+    The `typeof(APY)` and `typeof(MDD)` must be the same.
+
 # Returns
 - `::AbstractFloat`: the Calmar Ratio of investment.
 """
 calmar(APY::T, MDD::T) where T<:AbstractFloat = APY/MDD;
 
 """
-    at(rel_pr::AbstractMatrix, b::AbstractMatrix)
+    at(rel_pr::AbstractMatrix{T}, b::AbstractMatrix{T}) where T<:AbstractFloat
 
 Calculate the average turnover of the portfolio. Also, see [`sn`](@ref), [`mer`](@ref), \
 [`ir`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), and \
@@ -295,14 +315,17 @@ Calculate the average turnover of the portfolio. Also, see [`sn`](@ref), [`mer`]
 - `rel_pr::AbstractMatrix`: The relative price of the stocks.
 - `b::AbstractMatrix`: The weights of the portfolio.
 
+!!! warning
+    The `eltype(rel_pr)` and `eltype(b)` must be the same.
+
 # Returns
 - `::AbstractFloat`: the average turnover of the portfolio.
 """
-function at(rel_pr::AbstractMatrix, b::AbstractMatrix)
+function at(rel_pr::AbstractMatrix{S}, b::AbstractMatrix{S}) where S<:AbstractFloat
   conditionset1(b, rel_pr)
   rel_pr, _ = alignperiods(b, rel_pr)
   T         = size(b, 2)
-  turnover_ = 0.
+  turnover_ = zero(S)
   b̂ₜ₊₁      = b̂func(rel_pr, b)
   for t ∈ 2:T
     turnover_ += norm(b[:, t] .- b̂ₜ₊₁[:, t-1], 1)
@@ -315,12 +338,11 @@ end
       weights::AbstractMatrix{T},
       rel_pr::AbstractMatrix{T},
       rel_pr_market::AbstractVector{T};
-      init_inv::T=1.,
-      Rf::T=0.02
-      dpy::S=252,
-      v::T=0.
-      dpy::S=252
-    ) where {T<:AbstractFloat, S<:Int}
+      init_inv=one(T),
+      Rf=T(0.02),
+      dpy::Int=252,
+      v=zero(T)
+    ) where T<:AbstractFloat
 
 Calculate the metrics of an OPS algorithm. Also, see [`sn`](@ref), [`mer`](@ref), \
 [`ir`](@ref), [`ann_std`](@ref), [`apy`](@ref), [`ann_sharpe`](@ref), [`mdd`](@ref), \
@@ -333,12 +355,16 @@ and [`calmar`](@ref).
 
 ## Keyword Arguments
 - `init_inv::T=1`: the initial investment.
-- `Rf::T=0.02`: the risk-free rate of return.
+- `Rf::T=T(0.02)`: the risk-free rate of return.
 - `dpy::S=252`: the number of days in a year.
 - `v::T=0.`: the transaction cost rate.
 
 !!! warning
     The size of `weights` and `rel_pr` must be `(n_stocks, n_periods)`.
+
+!!! warning
+    Note that the `typeof(init_inv)`, `typeof(Rf)`, `typeof(dpy)`, and `typeof(v)` must be \
+    the same as `eltype(weights)` and `eltype(rel_pr)`.
 
 !!! note
     If `size(rel_pr, 2)` is greater than `size(weights, 2)`, then the last `size(weights, 2)` \
@@ -351,14 +377,13 @@ function opsmetrics(
   weights::AbstractMatrix{T},
   rel_pr::AbstractMatrix{T},
   rel_pr_market::AbstractVector{T};
-  init_inv::T=1.,
-  Rf::T=0.02,
-  dpy::S=252,
-  v::T=0.
-) where {T<:AbstractFloat, S<:Int}
+  init_inv=one(T),
+  Rf=T(0.02),
+  dpy::Int=252,
+  v=zero(T)
+) where T<:AbstractFloat
 
   rel_pr, n_periods = alignperiods(weights, rel_pr)
-
   all_sn     = sn(weights, rel_pr, init_inv=init_inv)
   MER        = mer(weights, rel_pr, v)
   IR         = ir(weights, rel_pr, rel_pr_market, init_inv=init_inv)
@@ -368,6 +393,5 @@ function opsmetrics(
   MDD        = mdd(all_sn)
   Calmar     = calmar(APY, MDD)
   AT         = at(rel_pr, weights)
-
   return OPSMetrics(all_sn, MER, IR, APY, σₚ, ann_Sharpe, MDD, Calmar, AT)
 end
